@@ -23,21 +23,11 @@ jobs:
           hugo-version: 'latest'
           extended: true
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
+      - name: Install dependencies
+        run: npm install postcss-cli
 
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - run: npm install postcss-cli
-      - run: hugo --minify
+      - name: Build
+        run: hugo --minify
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
