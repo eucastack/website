@@ -2,3 +2,8 @@
 
 tasks:
   - init: npm install postcss && brew install hugo
+    command: hugo serve -p 8080 -b $(gp url 8080) --appendPort=false
+
+ports:
+  - port: 8080
+    onOpen: open-preview
