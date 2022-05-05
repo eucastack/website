@@ -1,8 +1,11 @@
 # .gitpod.yml
 
 tasks:
-  - init: npm install postcss && brew install hugo
+  - name: Hugo
+    before: |
+      npm install postcss && brew install hugo
     command: hugo serve -p 8080 -b $(gp url 8080) --appendPort=false
+  - command: gp await-port 8080
 
 ports:
   - port: 8080
