@@ -1,7 +1,7 @@
 # .gitpod.yml
 
 tasks:
-  - init: npm install postcss && brew install hugo
+  - before: npm install postcss && brew install hugo
     command: hugo serve -p 8080 -b $(gp url 8080) --appendPort=false
 
 ports:
