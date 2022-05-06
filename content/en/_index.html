@@ -4,10 +4,10 @@ linkTitle = "EucaStack"
 
 +++
 
-{{< blocks/cover title="Welcome to EucaStack!" image_anchor="top" height="full" color="orange" >}}
+{{< blocks/cover title="Welcome to EucaStack!" image_anchor="center" color="primary" >}}
 <div class="mx-auto">
-	<a class="btn btn-lg btn-primary mr-3 mb-4" href="{{< relref "/docs" >}}">
-		Learn More <i class="fas fa-arrow-alt-circle-right ml-2"></i>
+	<a class="btn btn-lg btn-dark mr-3 mb-4" href="{{< relref "/docs" >}}">
+		Get Started <i class="fas fa-arrow-alt-circle-right ml-2"></i>
 	</a>
 	<a class="btn btn-lg btn-secondary mr-3 mb-4" href="https://github.com/eucastack">
 		Contribute <i class="fab fa-github ml-2 "></i>
@@ -18,26 +18,41 @@ linkTitle = "EucaStack"
 {{< /blocks/cover >}}
 
 
-{{% blocks/lead color="primary" %}}
-EucaStack is an open source AWS-compatible hybrid cloud powered by Eucalyptus.
-
+{{% blocks/lead color="white" %}}
+<p class="-text-primary pt-3 display-4">What is EucaStack?</p>
 EucaStack extends the open source Eucalyptus and Midonet projects to provide an on-premise cloud you can run in your datacenter. Having an on-premise private cloud with AWS-compatible APIs creates a hybrid cloud experience for organizations running workloads in public AWS regions.
 {{% /blocks/lead %}}
 
-{{< blocks/section color="dark" >}}
-{{% blocks/feature icon="fab fa-discord" title="Join us on Discord!" url="https://discord.gg/A9UPtck4" %}}
-Chat with other project developers.
+
+{{< blocks/section type="features" color="secondary" >}}
+
+{{% blocks/feature icon="fas fa-server fa-2x" title="Private Cloud" height="auto" color="blue" %}}
+An enterprise-grade private cloud that manages KVM hypervisors in scale.
 {{% /blocks/feature %}}
 
+{{% blocks/feature icon="fas fa-id-card fa-2x" title="Multi-Tenancy" height="auto" color="blue" %}}
+A complete multi-tenancy RBAC-enabled IAM (identity and access management) system.
+{{% /blocks/feature %}}
+
+{{% blocks/feature icon="fas fa-code fa-2x" title="Unified APIs" height="auto" color="blue" %}}
+One set of feature-rich APIs to access a wide range of AWS resources from on-premise to public cloud.
+{{% /blocks/feature %}}
+
+{{< /blocks/section >}}
+
+
+{{< blocks/section color="300" >}}
+
+{{% blocks/feature icon="fab fa-discord" title="Join us on Discord!" url="https://discord.gg/A9UPtck4" url_text="Invite link" %}}
+Chat with other project developers.
+{{% /blocks/feature %}}
 
 {{% blocks/feature icon="fab fa-github" title="Contributions welcome!" url="https://github.com/eucastack" %}}
 We do a [Pull Request](https://github.com/eucastack/eucalyptus/pulls) contributions workflow on **GitHub**. New users are always welcome!
 {{% /blocks/feature %}}
 
-
-{{% blocks/feature icon="fab fa-twitter" title="Follow us on Twitter!" url="https://twitter.com/eucastack" %}}
+{{% blocks/feature icon="fab fa-twitter" title="Follow us on Twitter!" url="https://twitter.com/eucastack" url_text="Follow us" %}}
 For announcement of latest features etc.
 {{% /blocks/feature %}}
-
 
 {{< /blocks/section >}}
