@@ -1,0 +1,35 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – EBS EMI Creation Overview</title><link>https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_types/ebs_backed_instances/create_an_emi/</link><description>Recent content in EBS EMI Creation Overview on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_types/ebs_backed_instances/create_an_emi/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Create an EBS EMI</title><link>https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_types/ebs_backed_instances/create_an_emi/create_ebs_emi/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_types/ebs_backed_instances/create_an_emi/create_ebs_emi/</guid><description>
+&lt;p>To create a new EMI that is used to boot EBS-backed instances:&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Create a new volume whose size matches the size of the bootable file:&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Attach the volume to a helper instance:&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Log in to the instance and copy the bootable image from its source to the helper instance.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>While logged in to the helper instance, copy a bootable image to the attached volume:&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>While logged in to the helper instance, flush the file system buffers after running the command:&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Detach the volume from the instance:&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Create a snapshot of the bootable volume:&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Register the bootable volume as a new EMI:&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Run a new EBS-backed instance:&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The snapshot cannot be deleted unless the EMI is first deregistered.
+&lt;/div></description></item></channel></rss>

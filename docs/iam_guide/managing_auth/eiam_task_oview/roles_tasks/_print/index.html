@@ -1,0 +1,323 @@
+<!doctype html><html lang=en class=no-js><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=generator content="Hugo 0.99.0"><link rel=canonical type=text/html href=https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/><link rel=alternate type=application/rss+xml href=https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/index.xml><meta name=robots content="noindex, nofollow"><link rel="shortcut icon" href=/favicons/favicon.ico><link rel=apple-touch-icon href=/favicons/apple-touch-icon-180x180.png sizes=180x180><link rel=icon type=image/png href=/favicons/favicon-16x16.png sizes=16x16><link rel=icon type=image/png href=/favicons/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=/favicons/android-36x36.png sizes=36x36><link rel=icon type=image/png href=/favicons/android-48x48.png sizes=48x48><link rel=icon type=image/png href=/favicons/android-72x72.png sizes=72x72><link rel=icon type=image/png href=/favicons/android-96x96.png sizes=96x96><link rel=icon type=image/png href=/favicons/android-144x144.png sizes=144x144><link rel=icon type=image/png href=/favicons/android-192x192.png sizes=192x192><title>Roles | EucaStack</title><meta name=description content="Roles
+A role is a mechanism that allows applications to request temporary security credentials on a user or application&rsquo;s behalf.
+
+
+
+Note …"><meta property="og:title" content="Roles"><meta property="og:description" content="A Docsy example site"><meta property="og:type" content="website"><meta property="og:url" content="https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/"><meta property="og:site_name" content="EucaStack"><meta itemprop=name content="Roles"><meta itemprop=description content="A Docsy example site"><meta name=twitter:card content="summary"><meta name=twitter:title content="Roles"><meta name=twitter:description content="A Docsy example site"><link rel=preload href=/scss/main.min.dbc832a6b41f9cb352db274e4a5e4f9087c9f9f914bcd919a25e9dad92d530f3.css as=style><link href=/scss/main.min.dbc832a6b41f9cb352db274e4a5e4f9087c9f9f914bcd919a25e9dad92d530f3.css rel=stylesheet integrity><script src=https://code.jquery.com/jquery-3.6.0.min.js integrity=sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK crossorigin=anonymous></script>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-00000000-0","auto"),ga("send","pageview"))</script><script async src=https://www.google-analytics.com/analytics.js></script></head><body class=td-section><header><nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar"><a class=navbar-brand href=/><span class=navbar-logo><svg viewBox="0 0 1388.9 333.38" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g transform="translate(-136.21 41.582)"><path transform="matrix(.26458 0 0 .26458 136.21 -41.582)" d="m1616.4 487.23c-38.46.0-73.324 9.8216-104.59 29.467s-55.615 47.177-73.047 82.594c-17.155 35.14-25.732 75.123-25.732 119.95v12.451c0 66.96 19.782 120.64 59.35 161.04 39.844 40.12 91.725 60.18 155.64 60.18 37.354.0 70.971-7.3314 100.85-21.996 30.16-14.941 54.232-35.833 72.217-62.672l-54.369-51.879c-29.053 37.354-66.683 56.029-112.89 56.029-32.926.0-60.319-10.791-82.178-32.373-21.582-21.582-33.896-50.911-36.939-87.988h293.43v-40.674c0-71.387-16.741-126.59-50.221-165.6-33.203-39.014-80.378-58.52-141.53-58.52zm927.61.0c-63.086.0-112.89 20.613-149.41 61.84-36.523 40.951-54.785 95.598-54.785 163.94v10.377c0 71.663 18.399 127.83 55.199 168.51 36.8 40.674 86.605 61.01 149.41 61.01 32.373.0 62.532-7.0547 90.478-21.166 27.946-14.111 50.081-33.203 66.406-57.275 16.325-24.349 25.042-50.497 26.148-78.443h-95.045c-1.1067 21.582-9.9609 39.706-26.562 54.371-16.602 14.665-37.491 21.996-62.67 21.996-33.203.0-58.659-11.898-76.367-35.693-17.432-24.072-26.148-60.456-26.148-109.15v-16.188c.2767-48.145 9.2702-83.975 26.978-107.49 17.708-23.796 42.887-35.695 75.537-35.695 25.456.0 46.345 8.3008 62.67 24.902 16.602 16.602 25.456 37.77 26.562 63.502h95.045c-1.6602-50.635-19.368-91.448-53.125-122.44-33.48-31.266-76.921-46.898-130.32-46.898zm439.94.0c-34.587.0-65.992 6.0872-94.215 18.262-27.946 12.174-50.081 29.053-66.406 50.635-16.325 21.305-24.486 44.271-24.486 68.896h100.85c0-17.708 7.3333-32.236 21.998-43.58 14.665-11.621 33.48-17.432 56.445-17.432 26.562.0 46.345 7.0566 59.35 21.168 13.004 13.835 19.508 32.373 19.508 55.615v29.469h-61.842c-66.13.0-117.04 12.865-152.73 38.598-35.417 25.456-53.125 62.118-53.125 109.99.0 37.907 14.251 69.727 42.75 95.459s65.299 38.598 110.4 38.598c46.484.0 85.775-16.739 117.87-50.219 3.3203 19.369 7.194 33.34 11.621 41.918h102.93v-7.0547c-11.344-24.072-17.018-56.308-17.018-96.705v-202.54c-.8301-47.868-16.878-84.945-48.144-111.23-31.266-26.563-73.184-39.844-125.76-39.844zm-1099.9 8.3008v290.94c0 53.955 12.451 95.182 37.354 123.68 25.179 28.499 62.118 42.748 110.82 42.748 54.508.0 96.566-17.432 126.17-52.295l2.4903 43.994h95.045v-449.07h-100.86v322.49c-17.155 35.14-50.221 52.709-99.195 52.709-47.314.0-70.971-28.499-70.971-85.498v-289.7h-100.86zm-268.12 72.631c27.946.0 49.805 8.7168 65.576 26.148 15.772 17.155 24.765 42.611 26.978 76.367v7.4707h-192.16c4.7038-34.587 15.495-61.563 32.373-80.932 17.155-19.369 39.567-29.055 67.236-29.055zm1386.6 165.6h54.371v84.668c-8.8542 16.325-22.135 29.329-39.844 39.014-17.432 9.6842-36.109 14.527-56.031 14.527-21.582.0-38.874-5.6732-51.879-17.018-12.728-11.621-19.092-27.116-19.092-46.484.0-23.796 9.4075-42.195 28.223-55.199 18.815-13.005 46.898-19.508 84.252-19.508z" fill="#fff"/><path transform="matrix(.26458 0 0 .26458 136.21 -41.582)" d="m4889.8 307.1v637.5h100.85V798.09l44.824-46.07 133.23 192.58h116.62l-184.69-261.89 166.85-187.18h-121.19l-124.1 139.87-31.543 39.43V307.11h-100.85zm-1162.1 79.271v109.16h-73.877v74.707h73.877v254.42c0 85.498 38.737 128.25 116.21 128.25 21.305.0 43.441-3.181 66.406-9.5449v-78.027c-11.898 2.7669-23.656 4.1504-35.277 4.1504-17.432.0-29.606-3.7364-36.523-11.207-6.6406-7.7474-9.9609-20.199-9.9609-37.354v-250.68h79.272v-74.707h-79.272v-109.16h-100.86zm-296.34 100.86c-50.358.0-91.862 13.005-124.51 39.014-32.65 26.009-48.975 58.382-48.975 97.119.0 46.208 25.179 81.487 75.537 105.84 22.965 11.068 51.602 20.199 85.912 27.393 34.31 7.194 58.798 15.495 73.463 24.902 14.942 9.4076 22.412 23.103 22.412 41.088.0 16.325-6.9174 29.606-20.752 39.844-13.835 9.9609-34.033 14.941-60.596 14.941-27.392.0-49.39-6.3639-65.992-19.092-16.602-13.005-25.593-31.404-26.977-55.199h-97.949c0 26.839 8.0241 51.879 24.072 75.121 16.048 23.242 38.46 41.504 67.236 54.785s61.563 19.922 98.363 19.922c54.232.0 98.088-12.451 131.57-37.354 33.48-25.179 50.221-57.966 50.221-98.363.0-24.072-5.5338-44.548-16.602-61.426-10.791-16.878-27.532-31.266-50.221-43.164-22.412-12.174-53.402-22.551-92.969-31.129-39.567-8.8542-65.853-17.569-78.857-26.146-13.005-8.5775-19.508-20.615-19.508-36.109.0-17.155 6.9173-30.852 20.752-41.09 14.112-10.238 32.236-15.355 54.371-15.355 23.795.0 42.887 6.5013 57.275 19.506 14.388 12.728 21.582 28.776 21.582 48.145h100.86c0-42.334-16.602-76.781-49.805-103.34-32.926-26.563-76.23-39.844-129.91-39.844zm733.79.0c-34.587.0-65.99 6.0872-94.213 18.262-27.946 12.174-50.081 29.053-66.406 50.635-16.325 21.305-24.488 44.271-24.488 68.896h100.86c0-17.708 7.3313-32.236 21.996-43.58 14.665-11.621 33.48-17.432 56.445-17.432 26.562.0 46.347 7.0566 59.352 21.168 13.005 13.835 19.506 32.373 19.506 55.615v29.469h-61.84c-66.13.0-117.04 12.865-152.73 38.598-35.417 25.456-53.125 62.118-53.125 109.99.0 37.907 14.249 69.727 42.748 95.459 28.499 25.732 65.3 38.598 110.4 38.598 46.484.0 85.775-16.739 117.87-50.219 3.3202 19.369 7.194 33.34 11.621 41.918h102.93v-7.0547c-11.344-24.072-17.016-56.308-17.016-96.705v-202.54c-.83-47.868-16.878-84.945-48.144-111.23-31.266-26.563-73.186-39.844-125.76-39.844zm464.84.0c-63.086.0-112.89 20.613-149.41 61.84-36.524 40.951-54.785 95.598-54.785 163.94v10.377c0 71.663 18.401 127.83 55.201 168.51 36.8 40.674 86.605 61.01 149.41 61.01 32.373.0 62.532-7.0547 90.479-21.166 27.946-14.111 50.081-33.203 66.406-57.275 16.325-24.349 25.042-50.497 26.148-78.443h-95.045c-1.1066 21.582-9.9608 39.706-26.562 54.371-16.601 14.665-37.493 21.996-62.672 21.996-33.203.0-58.659-11.898-76.367-35.693-17.432-24.072-26.146-60.456-26.146-109.15V711.36c.2769-48.145 9.2682-83.975 26.976-107.49 17.708-23.796 42.888-35.695 75.537-35.695 25.456.0 46.347 8.3008 62.672 24.902 16.602 16.602 25.456 37.77 26.562 63.502h95.045c-1.6602-50.635-19.37-91.448-53.127-122.44-33.48-31.266-76.921-46.898-130.32-46.898zm-446.17 246.53h54.369v84.668c-8.8541 16.325-22.135 29.329-39.844 39.014-17.432 9.6842-36.107 14.527-56.029 14.527-21.582.0-38.876-5.6732-51.881-17.018-12.728-11.621-19.092-27.116-19.092-46.484.0-23.796 9.4075-42.195 28.223-55.199 18.815-13.005 46.9-19.508 84.254-19.508z" fill="#8bc13a"/></g><g transform="translate(9.5814 7.9375)"><path transform="scale(.26458)" d="m560.34-22.102-558.42 231.31c-21.06 8.7235-38.133 34.275-38.133 57.07v688.09c0 11.398 8.5364 24.173 19.067 28.535l577.49 239.2c10.53 4.3617 27.603 4.3617 38.133.0l558.42-231.31c21.06-8.7235 38.133-34.275 38.133-57.07v-688.09c0-11.398-8.5364-24.173-19.067-28.535l-577.49-239.2c-10.53-4.3617-27.603-4.3617-38.133.0z" fill="#fff"/></g><g transform="translate(-1331.7 150.96)"><g transform="translate(-.13227 -.14313)"><path transform="scale(.26458)" d="m5651.4-517.82c-4.3107-.18795-9.0505.68347-14.025 2.7441l-507.35 210.15c-19.9 8.2427-36.031 32.385-36.031 53.924v642c0 11.537 4.7163 19.84 12.072 23.934v.06641l1.0156.41992c1.147.55934 2.2859 1.1151 3.5469 1.4688l116.15 48.111v-90l410.6-170.08c19.9-8.2427 36.031-32.385 36.031-53.924v-581l108.64 45v-80l-120.26-49.812c-3.0346-1.7765-6.523-2.8394-10.385-3.0078z" fill="#8bc13a"/><path d="m1379.7 116.68V-53.18c0-5.6989 4.2682-12.087 9.5333-14.268l134.24-55.602c5.2651-2.1809 9.5333.67105 9.5333 6.3699v169.86c0 5.6989-4.2682 12.087-9.5333 14.268l-134.24 55.602c-5.2651 2.1809-9.5333-.67105-9.5333-6.3699z" fill="#003556"/><path transform="scale(.26458)" d="m5856.6-432.82c-4.3107-.18795-9.0505.68347-14.025 2.7441l-507.35 210.15c-19.9 8.2427-36.031 32.385-36.031 53.924v642c0 11.536 4.7155 19.84 12.07 23.934v.06641l1.0352.42969c1.1397.55448 2.2713 1.1073 3.5234 1.459l116.15 48.111v-90l410.6-170.08c19.9-8.2427 36.031-32.385 36.031-53.924v-561l108.64 45v-1e2l-120.26-49.812c-3.0347-1.7765-6.525-2.8394-10.387-3.0078z" fill="#8bc13a"/><path d="m1434 139.17V-30.69c0-5.6989 4.2682-12.087 9.5333-14.268l134.24-55.602c5.2651-2.1809 9.5333.67105 9.5333 6.3699v169.86c0 5.6989-4.2682 12.087-9.5333 14.268l-134.24 55.602c-5.2651 2.1809-9.5333-.67105-9.5333-6.3699z" fill="#003556"/><path transform="scale(.26458)" d="m6061.8-347.82c-4.3107-.18795-9.0505.68347-14.025 2.7441l-507.35 210.15c-19.9 8.2427-36.031 32.385-36.031 53.924v642c1e-4 11.537 4.7163 19.84 12.072 23.934v.06641l1.0156.41992c1.147.55934 2.2859 1.1151 3.5469 1.4688l116.15 48.111v-90l410.6-170.08c19.9-8.2427 36.031-32.385 36.031-53.924v-561l108.64 45v-1e2l-120.25-49.811c-3.036-1.7784-6.5287-2.8413-10.393-3.0098z" fill="#8bc13a"/><path d="m1488.3 161.66v-169.86c0-5.6989 4.2682-12.087 9.5333-14.268l134.24-55.602c5.2651-2.1809 9.5333.67105 9.5333 6.3699v169.86c0 5.6989-4.2682 12.087-9.5333 14.268l-134.24 55.602c-5.2651 2.1809-9.5333-.67105-9.5333-6.3699z" fill="#003556"/><path d="m1520.2-14.532 89.523-37.082c5.2651-2.1809 9.5333.67105 9.5333 6.3699v135.47c0 5.6989-4.2682 12.087-9.5333 14.268l-89.523 37.082c-5.2651 2.1809-9.5333-.67104-9.5333-6.3699v-135.47c0-5.6989 4.2682-12.087 9.5333-14.268z" fill="#fff"/><path d="m1596.9 85.99-63.876 26.458-1e-4-46.302 49.504-20.505V29.766l-49.504 20.505 1e-4-46.302 63.876-26.458z" fill="#8bc13a"/></g></g></svg></a><div class="td-navbar-nav-scroll ml-md-auto" id=main_navbar><ul class="navbar-nav mt-2 mt-lg-0"><li class="nav-item mr-4 mb-2 mb-lg-0"><a class="nav-link active" href=/docs/><i class="fas fa-book"></i><span class=active>Documentation</span></a></li><li class="nav-item mr-4 mb-2 mb-lg-0"><a class=nav-link href=/blog/><i class="fas fa-rss"></i><span>Blog</span></a></li><li class="nav-item mr-4 mb-2 mb-lg-0"><a class=nav-link href=/community/><i class="fas fa-users"></i><span>Community</span></a></li></ul></div><div class="navbar-nav d-none d-lg-block"><input type=search class="form-control td-search-input" placeholder="&#xf002; Search this site…" aria-label="Search this site…" autocomplete=off></div></nav></header><div class="container-fluid td-outer"><div class=td-main><div class="row flex-xl-nowrap"><main class="col-12 col-md-9 col-xl-8 pl-md-5" role=main><div class=td-content><div class="pageinfo pageinfo-primary d-print-none"><p>This is the multi-page printable view of this section.
+<a href=# onclick="return print(),!1">Click here to print</a>.</p><p><a href=/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/>Return to the regular view of this page</a>.</p></div><h1 class=title>Roles</h1><ul><li>1: <a href=#pg-2f6d69b689bb4ca2ac8340b80c6b0b8e>Launch an Instance with a Role</a></li><ul></ul><li>2: <a href=#pg-5560a10e0d26af09b396e8fac12da746>Use a Role with an Instance Application</a></li><ul></ul><li>3: <a href=#pg-28ddd1def442ce481c7968ae53b8633c>Assume a Role</a></li><ul></ul><li>4: <a href=#pg-67ba8f7be3147b2c7fbd12e16b4e0725>Delegate Access Across Your Accounts Using Roles</a></li><ul></ul></ul><div class=content><h1 id=roles>Roles</h1><p>A <strong>role</strong> is a mechanism that allows applications to request temporary security credentials on a user or application&rsquo;s behalf.</p><div class="alert alert-success" role=alert><h4 class=alert-heading>Note</h4>Eucalyptus roles are managed through the Eucalyptus Euare service, which is compatible with Amazon&rsquo;s Identity and Access Management (IAM) service.</div></div></div><div class=td-content><h1 id=pg-2f6d69b689bb4ca2ac8340b80c6b0b8e>1 - Launch an Instance with a Role</h1><p>To create a role for a Eucalyptus instance, you must first create a trust policy that you can use for it.</p><h2 id=create-trust-policy>Create Trust Policy</h2><p>You can create trust policies in two ways:</p><ul><li>a file method</li><li>a command line method</li></ul><h2 id=create-trust-policy-using-a-file>Create trust policy using a file</h2><p>Create a trust policy file with the contents below and save it in a text file called <code>role-trust-policy.json</code> :</p><pre><code>{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+    {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Principal&quot;: { &quot;Service&quot;: &quot;ec2.amazonaws.com&quot;},
+      &quot;Action&quot;: &quot;sts:AssumeRole&quot;
+    }
+  ]
+}
+</code></pre><p>Create the role using the <code>euare-rolecreate</code> command, specifying the trust policy file that was previously created:</p><pre><code># euare-rolecreate --role-name describe-instances -f role-trust-policy.json
+# euare-rolelistbypath 
+arn:aws:iam::408396244283:role/describe-instances
+</code></pre><p>Proceed with applying an access policy to a role.</p><h2 id=create-trust-policy-using-the-command-line>Create trust policy using the command line</h2><p>The other way to create the role is to use the command line options to specify the trust policy:Issue the following string on the command line:</p><pre><code># euare-rolecreate --role-name describe-instances --service http://compute.acme.eucalyptus-systems.com:8773/
+# euare-rolelistbypath 
+arn:aws:iam::408396244283:role/describe-instances
+</code></pre><p>Proceed with applying an access policy to a role.</p><h2 id=create-and-apply-an-access-policy-to-a-role>Create and apply an access policy to a role</h2><p>Create a policy and save it in a text file with a <code>.json</code> extension. The following example shows a policy that allows listing the contents of an S3 bucket called &ldquo;mybucket&rdquo;:</p><pre><code>{
+  &quot;Statement&quot;: [
+    {
+      &quot;Action&quot;: [
+        &quot;s3:ListBucket&quot;
+      ],
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Resource&quot;: &quot;arn:aws:s3:::mybucket&quot;
+    }
+  ]
+}
+</code></pre><p><div class="alert alert-success" role=alert><h4 class=alert-heading>Note</h4>For more information on policies, see .</div>Apply the access policy to the role using the <code>euare-roleuploadpolicy</code> command, passing in the filename of the policy you created in the previous step: <code>euare-roleuploadpolicy --role-name mytestrole --policy-name s3-list-bucket --policy-document my-test-policy.json</code></p></div><div class=td-content style=page-break-before:always><h1 id=pg-5560a10e0d26af09b396e8fac12da746>2 - Use a Role with an Instance Application</h1><p>You can use the AWS Java SDK to programmatically perform IAM role-related operations in your Eucalyptus cloud. This example shows how to use the AWS SDK to retrieve the credentials for the IAM role associated with the Eucalyptus instance.The following program lists the contents of the bucket &ldquo;my-test-bucket&rdquo; using the credentials stored in the Java system properties:</p><pre><code>import com.amazonaws.auth.*;
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
+import com.amazonaws.services.ec2.AmazonEC2;
+import com.amazonaws.services.ec2.AmazonEC2Client;
+import com.amazonaws.services.s3.*;
+import com.amazonaws.services.s3.model.*;
+
+public class MyTestApp {
+
+    static AmazonEC2 ec2;
+    static AmazonS3 s3;
+
+    private static void init() throws Exception {
+
+        AWSCredentialsProvider credentials = new ClasspathPropertiesFileCredentialsProvider();
+ 
+        s3 = new AmazonS3Client(credentials);
+        s3.setEndpoint(&quot;http://128.0.0.1:8773/services/Walrus&quot;);
+    }
+
+
+    public static void main(String[] args) throws Exception {
+
+        init();
+
+        try {
+           
+            String bucketName = &quot;my-test-bucket&quot;;           
+            System.out.println(&quot;Listing bucket &quot; + bucketName + &quot;:&quot;);
+            ListObjectsRequest listObjectsRequest = new ListObjectsRequest(bucketName, &quot;&quot;, &quot;&quot;, &quot;&quot;, 200);
+            ObjectListing bucketList;
+            do {
+                bucketList = s3.listObjects(listObjectsRequest);
+                for (S3ObjectSummary objectInfo :
+                        bucketList.getObjectSummaries()) {
+                    System.out.println(&quot; - &quot; + objectInfo.getKey() + &quot;  &quot; +
+                            &quot;(size = &quot; + objectInfo.getSize() +
+                            &quot;)&quot;);
+                }
+                listObjectsRequest.setMarker(bucketList.getNextMarker());
+            } while (bucketList.isTruncated());
+
+        } catch (AmazonServiceException eucaServiceException ) {
+            System.out.println(&quot;Exception: &quot; + eucaServiceException.getMessage());
+            System.out.println(&quot;Status Code: &quot; + eucaServiceException.getStatusCode());
+            System.out.println(&quot;Error Code: &quot; + eucaServiceException.getErrorCode());
+            System.out.println(&quot;Request ID: &quot; + eucaServiceException.getRequestId());
+        } catch (AmazonClientException eucaClientException) {
+            System.out.println(&quot;Error Message: &quot; + eucaClientException.getMessage());
+        }
+        System.out.println(&quot;===== FINISHED =====&quot;);
+    }
+
+}                    
+</code></pre><p>This application produces output similar to the following:</p><pre><code>Listing bucket my-test-bucket:
+ - precise-server-cloudimg-amd64-vmlinuz-virtual.manifest.xml  (size = 3553)
+ - precise-server-cloudimg-amd64-vmlinuz-virtual.part.0  (size = 4904032)
+ - precise-server-cloudimg-amd64.img.manifest.xml  (size = 7014)
+ - precise-server-cloudimg-amd64.img.part.0  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.1  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.10  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.11  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.12  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.13  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.14  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.15  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.16  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.17  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.18  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.19  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.2  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.20  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.21  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.22  (size = 2570400)
+ - precise-server-cloudimg-amd64.img.part.3  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.4  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.5  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.6  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.7  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.8  (size = 10485760)
+ - precise-server-cloudimg-amd64.img.part.9  (size = 10485760)
+===== FINISHED =====
+</code></pre><p>The problem with this approach is that the credentials are hardcoded into the application - this makes them less secure, and makes the application more difficult to maintain. Using IAM roles is a more secure and easier way to manage credentials for applications that run on Eucalyptus cloud instances.</p><p>Create a role with a policy that allows an instance to list the contents of a specific bucket, and then launch an instance with that role (for an example, see <a href=https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/roles_tasks_create_role_application/>Launch an Instance with a Role</a> . An example policy that allows listing of a specific bucket will look similar to the following:</p><pre><code>{
+  &quot;Statement&quot;: [
+    {
+      &quot;Action&quot;: [
+        &quot;s3:ListBucket&quot;
+      ],
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Resource&quot;: &quot;arn:aws:s3:::my-test-bucket&quot;
+    }
+  ]
+}             
+</code></pre><p>The following line of code retrieves the credentials that are stored in the application&rsquo;s credentials profile: <code>AWSCredentialsProvider credentials = new ClasspathPropertiesFileCredentialsProvider();</code> To use the role-based credentials associated with the instance, replace that line of code with the following: <code>AWSCredentialsProvider credentials = new InstanceProfileCredentialsProvider();</code> The program now looks like this:</p><pre><code>import com.amazonaws.auth.*;
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
+import com.amazonaws.services.ec2.AmazonEC2;
+import com.amazonaws.services.ec2.AmazonEC2Client;
+import com.amazonaws.services.s3.*;
+import com.amazonaws.services.s3.model.*;
+
+public class MyTestApp {
+
+    static AmazonEC2 ec2;
+    static AmazonS3 s3;
+
+    private static void init() throws Exception {
+
+        AWSCredentialsProvider credentials = new InstanceProfileCredentialsProvider();
+ 
+        s3 = new AmazonS3Client(credentials);
+        s3.setEndpoint(&quot;http://128.0.0.1:8773/services/Walrus&quot;);
+    }
+
+
+    public static void main(String[] args) throws Exception {
+
+        init();
+
+        try {
+           
+            String bucketName = &quot;my-test-bucket&quot;;
+           
+            System.out.println(&quot;Listing bucket &quot; + bucketName + &quot;:&quot;);
+            ListObjectsRequest listObjectsRequest = new ListObjectsRequest(bucketName, &quot;&quot;, &quot;&quot;, &quot;&quot;, 200);
+            ObjectListing bucketList;
+            do {
+                bucketList = s3.listObjects(listObjectsRequest);
+                for (S3ObjectSummary objectInfo :
+                        bucketList.getObjectSummaries()) {
+                    System.out.println(&quot; - &quot; + objectInfo.getKey() + &quot;  &quot; +
+                            &quot;(size = &quot; + objectInfo.getSize() +
+                            &quot;)&quot;);
+                }
+                listObjectsRequest.setMarker(bucketList.getNextMarker());
+            } while (bucketList.isTruncated());
+
+        } catch (AmazonServiceException eucaServiceException ) {
+            System.out.println(&quot;Exception: &quot; + eucaServiceException.getMessage());
+            System.out.println(&quot;Status Code: &quot; + eucaServiceException.getStatusCode());
+            System.out.println(&quot;Error Code: &quot; + eucaServiceException.getErrorCode());
+            System.out.println(&quot;Request ID: &quot; + eucaServiceException.getRequestId());
+        } catch (AmazonClientException eucaClientException) {
+            System.out.println(&quot;Error Message: &quot; + eucaClientException.getMessage());
+        }
+        System.out.println(&quot;===== FINISHED =====&quot;);
+    }
+
+}
+</code></pre><p>NOTE: Running this code outside of an instance will result in the following error message:</p><pre><code>Listing bucket my-test-bucket:
+Error Message: Unable to load credentials from Amazon EC2 metadata service
+</code></pre><p>When the application is running on an instance that was launched with the role you created, the credentials for the role assigned to the instance will be retrieved from the Instance Metadata Service.</p></div><div class=td-content style=page-break-before:always><h1 id=pg-28ddd1def442ce481c7968ae53b8633c>3 - Assume a Role</h1><p>A role is assigned a specific set of tasks and permissions. Users may assume a different role than the one they have in order to perform a different set of tasks. For example, the primary administrator is unavailable and the backup administrator is asked to assume the role of the primary administrator during his or her absence. A few points to consider before assuming a role:</p><ul><li>A role must first be set up by an administrator.</li><li>You must log in as an IAM user, not as an account root user.</li><li>Once you assume another role, you temporarily give up your existing user permissions and assume the permissions of your new role.</li><li>When you are no longer assuming another role, your usual user permissions are automatically restored.</li></ul><h2 id=create-role>Create Role</h2><p>The scenario described in this section outlines the procedure for creating a role in order to delegate permissions to an IAM user.Create a role that allows users of an account to manage keypairs. Management of keypairs include the following EC2 actions:</p><ul><li><p>CreateKeyPair</p></li><li><p>DeleteKeyPair</p></li><li><p>DescribeKeyPairs</p></li><li><p>ImportKeyPair
+Create a role for managing keypairs for the account. In this example, the admin user of &lsquo;devops&rsquo; account (001827830003) is creating the role:</p><h1 id=cat-devops-role-trustpolicyjson>cat devops-role-trustpolicy.json</h1><p>{
+&ldquo;Version&rdquo;: &ldquo;2012-10-17&rdquo;,
+&ldquo;Statement&rdquo;: [{
+&ldquo;Effect&rdquo;: &ldquo;Allow&rdquo;,
+&ldquo;Principal&rdquo;: {&ldquo;AWS&rdquo;: &ldquo;arn:aws:iam::001827830003:root&rdquo;},
+&ldquo;Action&rdquo;: &ldquo;sts:AssumeRole&rdquo;
+}]
+}</p><h1 id=euare-rolecreate--f-devops-role-trustpolicyjson-devops-ec2-keypair-mgmt-role---region-devops-adminfuture>euare-rolecreate -f devops-role-trustpolicy.json devops-ec2-keypair-mgmt-role &ndash;region devops-admin@future</h1></li></ul><p>Add IAM access policy for keypair management to the role:</p><pre><code># cat keypair-mgmt-policy.json
+{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+    {
+      &quot;Sid&quot;: &quot;Stmt1445362739663&quot;,
+      &quot;Action&quot;: [
+        &quot;ec2:CreateKeyPair&quot;,
+        &quot;ec2:DeleteKeyPair&quot;,
+        &quot;ec2:DescribeKeyPairs&quot;,
+        &quot;ec2:ImportKeyPair&quot;
+      ],
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Resource&quot;: &quot;*&quot;
+    }
+  ]
+}
+
+# euare-roleuploadpolicy --policy-name ec2-keypair-actions --policy-document keypair-mgmt-policy.json devops-ec2-keypair-mgmt-role --region devops-admin@future
+</code></pre><p>Now that the role has been created, follow the <a href=http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html#use-groups-for-permissions>AWS IAM best practice of using groups to assign permission to IAM users</a> and attach an IAM access policy to the group to allow any members (example shows &lsquo;user01&rsquo; user) to assume the &lsquo;devops-ec2-keypair-mgmt-role&rsquo; role:</p><pre><code># euare-groupcreate -g Key-Managers --region devops-admin@future
+# euare-groupadduser -u user01 -g Key-Managers --region devops-admin@future
+# cat devops-keypair-mgmt-assume-role-policy.json
+{
+ &quot;Version&quot;: &quot;2012-10-17&quot;,
+ &quot;Statement&quot;: [{
+ &quot;Effect&quot;: &quot;Allow&quot;,
+ &quot;Action&quot;: &quot;sts:AssumeRole&quot;,
+ &quot;Resource&quot;: &quot;arn:aws:iam::001827830003:role/devops-ec2-keypair-mgmt-role&quot;
+ }]
+}
+# euare-groupuploadpolicy -p keypair-mgmt-role-perm -f devops-keypair-mgmt-assume-role-policy.json Key-Managers --region devops-admin@future
+</code></pre><p>Now that members can assume the &lsquo;devops-ec2-keypair-mgmt-role&rsquo; role, run the following command to list all keypairs under the account:</p><pre><code># eval `/usr/bin/euare-assumerole devops-ec2-keypair-mgmt-role --region devops-user01@future`
+# euca-describe-keypairs --region @future
+KEYPAIR	devops-admin	9e:1a:bc:ac:98:b1:97:7c:65:b0:b3:7c:96:f5:d5:7b:a1:3e:36:a6
+</code></pre><p>When done assuming the role, the role must be released using <code>euare-releaserole</code> :</p><pre><code># eval `/usr/bin/euare-releaserole --region devops-user01@future`
+</code></pre></div><div class=td-content style=page-break-before:always><h1 id=pg-67ba8f7be3147b2c7fbd12e16b4e0725>4 - Delegate Access Across Your Accounts Using Roles</h1><p>A role can be used to delegate access to resources that are in different accounts that you own.Using roles to access resources across different accounts allows users to assume a role that can access all the resources in in different acccounts, rather than having users log into different accounts to achieve the same result.</p><h2 id=using-roles-to-access-resources-in-another-account>Using Roles to Access Resources in Another Account</h2><p>The scenario described in this section outlines the procedure for a user in Account B to create a role that provides access to a particular OSGObject Storage Gateway (OSG) bucket owned by Account B, which can be assumed by user in Account A.Using <a href=https://github.com/s3tools/s3cmd>s3cmd</a> , list bucket that will be shared through role:</p><pre><code># ./s3cmd/s3cmd --config=.s3cfg-acctB-user11 ls s3://mongodb-snapshots
+2014-12-01 22:34 188563920   s3://mongodb-snapshots/mongodb-backup-monday.img.xz
+2014-12-02 13:34 188564068   s3://mongodb-snapshots/mongodb-backup-tuesday.img.xz
+</code></pre><p>Create Role in Account B with Trust Policy for User from Account A:</p><pre><code># cat acctB-role-trust-acctA-policy.json
+{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [{
+    &quot;Effect&quot;: &quot;Allow&quot;,
+    &quot;Principal&quot;: {&quot;AWS&quot;: &quot;arn:aws:iam::290122656840:user/user01&quot;},
+    &quot;Action&quot;: &quot;sts:AssumeRole&quot;
+  }]
+}
+
+# euare-rolecreate --role-name cross-bucket-access-mongodb-logs --policy-document acctB-role-trust-acctA-policy.json
+</code></pre><p>Upload IAM Access Policy for Role in Account B:</p><pre><code># cat acctB-mongodb-snapshots-bucket-access-policy.json
+{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+    {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Action&quot;: &quot;s3:ListBucket&quot;,
+      &quot;Resource&quot;: &quot;arn:aws:s3:::mongodb-snapshots&quot;
+    },
+    {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Action&quot;: [
+        &quot;s3:GetObject&quot;,
+        &quot;s3:PutObject&quot;,
+        &quot;s3:DeleteObject&quot;
+      ],
+      &quot;Resource&quot;: &quot;arn:aws:s3:::mongodb-snapshots/*&quot;
+    }
+  ]
+}
+
+# euare-roleuploadpolicy --role-name cross-bucket-access-mongodb-logs --policy-document acctB-mongodb-snapshots-bucket-access-policy.json --policy-name mongodb-logs-bucket-access
+</code></pre><p>Upload IAM access policy to Group (e.g. Testers) associated with user in Account A to allow for Role in Account B to be assumed. For more information, go to <a href=http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html#use-groups-for-permissions>Amazon Web Services IAM Best Practices</a> .</p><pre><code># cat acctA-assume-role-acctB-policy.json
+{
+  &quot;Statement&quot;: [
+    {
+      &quot;Sid&quot;: &quot;Stmt1417531456446&quot;,
+      &quot;Action&quot;: [
+        &quot;sts:AssumeRole&quot;
+      ],
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Resource&quot;: &quot;arn:aws:iam::325271821652:role/cross-bucket-access-mongodb-logs&quot;
+    }
+  ]
+}
+
+# euare-groupuploadpolicy --policy-name mongodb-bucket-access-role --group-name Testers --policy-document acctA-assume-role-acctB-policy.json
+</code></pre><p>The example below demonstrates how to use a python script leveraging the <a href=http://boto.readthedocs.org/en/latest/index.html>boto</a> library. Another way to assume this role is to run the Euca2ools command, <code>euare-assumerole</code> , using the AccountA/user01 credentials. For more information regarding assuming a role, see an example from the <a href=https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/roles_tasks_assume_role_application/>Assume a Role</a> section. The script below performs the following actions:</p><ul><li><p>Accesses STS to get temporary access key, secret key and token</p></li><li><p>List contents of bucket &ldquo;mongodb-snapshots&rdquo;</p><p>=======================
+#!/bin/env python</p><p>import boto
+from boto.sts import STSConnection
+from boto.s3.connection import S3Connection
+from boto.s3.connection import OrdinaryCallingFormat</p><p>if <strong>name</strong> == &ldquo;<strong>main</strong>&rdquo;:
+"""
+Assuming &lsquo;cross-bucket-access-mongodb-logs&rsquo; role by AccountA, User01 user
+"""
+STSConnection.DefaultRegionEndpoint = &ldquo;tokens.future.euca-hasp.cs.prc.eucalyptus-systems.com&rdquo;
+sts_connection = STSConnection(aws_access_key_id="<accounta user01 access key id>",
+aws_secret_access_key="<accounta user01 secret key>",
+is_secure=False, port=&ldquo;8773&rdquo;)
+assumedRoleObject = sts_connection.assume_role(
+role_arn=&ldquo;arn:aws:iam::325271821652:role/cross-bucket-access-mongodb-logs&rdquo;,
+role_session_name=&ldquo;AcctAUser01MongoDBBucketAccess&rdquo;)</p><pre><code>  s3 = S3Connection(aws_access_key_id=assumedRoleObject.credentials.access_key,
+  aws_secret_access_key=assumedRoleObject.credentials.secret_key,
+  security_token=assumedRoleObject.credentials.session_token,
+  host=&quot;objectstorage.future.euca-hasp.cs.prc.eucalyptus-systems.com&quot;,
+  is_secure=False, port=8773, calling_format=OrdinaryCallingFormat())
+
+  bucket_name = &quot;mongodb-snapshots&quot;
+  bucket = s3.lookup(bucket_name)
+  if bucket:
+      print &quot;Bucket Information [%s]:&quot; % bucket_name
+      print &quot;------------------------------------------------------------&quot;
+      for key in bucket:
+          print &quot;\t&quot; + key.name
+  else:
+      print &quot;Bucket is not available: &quot; + bucket_name + &quot;\n&quot;
+</code></pre><p>==================</p></li></ul><p>Run the script:</p><pre><code># ./describe-bucket-script.py
+Bucket Information [mongodb-snapshots]:
+------------------------------------------------------------
+	mongodb-backup-monday.img.xz
+	mongodb-backup-tuesday.img.xz
+</code></pre></div></main></div></div><footer class="bg-dark py-5 row d-print-none"><div class="container-fluid mx-sm-5"><div class=row><div class="col-6 col-sm-4 text-xs-center order-sm-2"><ul class="list-inline mb-0"><li class="list-inline-item mx-2 h3" data-toggle=tooltip data-placement=top title="Community forums" aria-label="Community forums"><a class=text-white target=_blank rel=noopener href=https://github.com/orgs/eucastack/discussions aria-label="Community forums"><i class="fa fa-comments"></i></a></li><li class="list-inline-item mx-2 h3" data-toggle=tooltip data-placement=top title=Twitter aria-label=Twitter><a class=text-white target=_blank rel=noopener href=https://twitter.com/eucastack aria-label=Twitter><i class="fab fa-twitter"></i></a></li><li class="list-inline-item mx-2 h3" data-toggle=tooltip data-placement=top title="Stack Overflow" aria-label="Stack Overflow"><a class=text-white target=_blank rel=noopener href=https://stackoverflow.com/questions/tagged/eucastack aria-label="Stack Overflow"><i class="fab fa-stack-overflow"></i></a></li></ul></div><div class="col-6 col-sm-4 text-right text-xs-center order-sm-3"><ul class="list-inline mb-0"><li class="list-inline-item mx-2 h3" data-toggle=tooltip data-placement=top title=GitHub aria-label=GitHub><a class=text-white target=_blank rel=noopener href=https://github.com/eucastack aria-label=GitHub><i class="fab fa-github"></i></a></li><li class="list-inline-item mx-2 h3" data-toggle=tooltip data-placement=top title=Discord aria-label=Discord><a class=text-white target=_blank rel=noopener href=https://discord.gg/A9UPtck4 aria-label=Discord><i class="fab fa-discord"></i></a></li></ul></div><div class="col-12 col-sm-4 text-center py-2 order-sm-2"><small class=text-white>&copy; 2022 EucaStack All Rights Reserved</small>
+<small class=ml-1><a href=https://policies.google.com/privacy target=_blank rel=noopener>Privacy Policy</a></small></div></div></div></footer></div><script src=https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js integrity=sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA==" crossorigin=anonymous></script>
+<script src=/js/tabpane-persist.js></script>
+<script src=/js/main.min.6f618f935d0e212fc39316b4023fa69460fd4a5779211bdc3535ec542578f225.js integrity="sha256-b2GPk10OIS/Dkxa0Aj+mlGD9Sld5IRvcNTXsVCV48iU=" crossorigin=anonymous></script></body></html>

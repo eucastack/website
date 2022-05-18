@@ -1,0 +1,90 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Common Problems</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_common_problems/</link><description>Recent content in Common Problems on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_common_problems/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Problem: can't communicate with instance</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_common_problems/ops_ts_instance_com/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_common_problems/ops_ts_instance_com/</guid><description>
+&lt;p>Use ping from a client (not the CLC). Can you ping it?&lt;/p>
+&lt;p>Yes: Check the open ports on security groups and retry connection using SSH or HTTP. Can you connect now? Yes. Okay, then. You&amp;rsquo;re work is done. No: Try the same procedure as if you can&amp;rsquo;t ping it up front. No: Is your cloud running in Edge networking mode?&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>Yes: Run &lt;code>euca-describe-nodes&lt;/code> . Is your instance there?&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>No, it is not in Edge networking mode:&lt;/p>
+&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Problem: install-time checks</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_common_problems/ops_ts_install/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_common_problems/ops_ts_install/</guid><description>
+&lt;p>Eucalyptus offers installation checks for any Eucalyptus component or service (CLC, Walrus, SC, NC, SC, services, and more). When Eucalyptus encounters an error, it presents the problem to the operator. These checks are used for install-time problems. They provide resolutions to some of the fault conditions.&lt;/p>
+&lt;p>Each problematic condition contains the following information:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Heading&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">Condition&lt;/td>
+&lt;td style="text-align:left">The fault found by Eucalyptus&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Cause&lt;/td>
+&lt;td style="text-align:left">The cause of the condition&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Initiator&lt;/td>
+&lt;td style="text-align:left">What is at fault&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Location&lt;/td>
+&lt;td style="text-align:left">Where to go to fix the fault&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Resolution&lt;/td>
+&lt;td style="text-align:left">The steps to take to resolve the fault&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>&lt;img src="https://www.eucastack.io/images/install-check.png" alt="image">&lt;/p>
+&lt;p>For more information about all the faults we support, go to &lt;a href="https://github.com/eucalyptus/eucalyptus/blob/master/util/README.faults">https://github.com/eucalyptus/eucalyptus/tree/master/util/faults/en_US&lt;/a> .&lt;/p></description></item><item><title>Docs: Problem: instance runs but fails</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_common_problems/ops_ts_instance_fails/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_common_problems/ops_ts_instance_fails/</guid><description>
+&lt;p>Run &lt;code>euca-describe-nodes&lt;/code> to verify if instance is there. Is the instance there?&lt;/p>
+&lt;p>Yes: Go to the &lt;a href="https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_logs/">NC log&lt;/a> for that NC and grep your instance ID. Did you find the instance?&lt;/p>
+&lt;ul>
+&lt;li>Yes: Is there an error message?&lt;/li>
+&lt;/ul>
+&lt;p>No: Go to the &lt;a href="https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_logs/">CC log&lt;/a> and grep the instance ID. Is it there error message?&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>Yes: The error message should give you some helpful information.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>No: grep the instance ID in &lt;a href="https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_logs/">cloud-output.log&lt;/a> . Is there error message?&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>No: Log in as admin and run &lt;code>euca-describe-instance&lt;/code> . Is the instance there?&lt;/p>
+&lt;ul>
+&lt;li>Yes:&lt;/li>
+&lt;li>No: Start over and run a new instance, recreate failure, and start these steps over.&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Problem: snapshot creation failed</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_common_problems/ops_ts_snapshot_fail/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_common_problems/ops_ts_snapshot_fail/</guid><description>
+&lt;p>On the SC, depending on the backend used for storage:&lt;/p>
+&lt;ul>
+&lt;li>For Overlay, use the command to check the disk space in .&lt;/li>
+&lt;li>For DAS, use the command to check the disk space in the DAS volumes.&lt;/li>
+&lt;li>For any other backend, use its specific commands to check the free space for storage allocated for volumes.
+Is there enough space?&lt;/li>
+&lt;/ul>
+&lt;p>Yes: On the OSG host, depending on the backend used for object storage:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>For Walrus, use the command to check the disk space in .&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>For RiakCS or Ceph-RGW, use its specific commands to check the free space for storage allocated for buckets and objects.
+Is there enough space? Yes.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Use and note the IP addresses for the OSG and SC.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>SSH to SC and ping the OSG. Are there error messages?&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>No: Delete volumes or add disk space. No: Delete volumes or add disk space.&lt;/p></description></item><item><title>Docs: Problem: volume creation failed</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_common_problems/ops_ts_volume_creation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_common_problems/ops_ts_volume_creation/</guid><description>
+&lt;p>Symptom: Went from available to fail. This is typically caused by the CLC and the SC.On the SC, use &lt;code>df&lt;/code> or &lt;code>lvdisplay&lt;/code> to check the disk space. Is there enough space?&lt;/p>
+&lt;p>Yes: Check the &lt;a href="https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_logs/">SC log&lt;/a> and grep the volume ID. Is there error message? Yes. This provides clues to helpful information. No: Check &lt;a href="https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_logs/">cloud-output.log&lt;/a> for a volume ID error. No: Delete volumes or add disk space.&lt;/p></description></item></channel></rss>

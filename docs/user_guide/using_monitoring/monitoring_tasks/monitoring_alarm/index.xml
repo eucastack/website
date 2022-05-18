@@ -1,0 +1,31 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Configuring Alarms</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_alarm/</link><description>Recent content in Configuring Alarms on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_alarm/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Create an Alarm</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_alarm/monitoring_alarms_tasks/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_alarm/monitoring_alarms_tasks/</guid><description>
+&lt;p>You can create a CloudWatch alarm using a resource&amp;rsquo;s metric, and then add an action using the action’s dedicated Amazon Resource Name (ARN). You can add the action to any alarm state.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Eucalyptus currently only supports actions for executing Auto Scaling policies.
+&lt;/div>
+To create an alarm, perform the following step.&lt;/p>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euwatch-put-metric-alarm [alarm_name] --unit Percent --namespace &amp;quot;AWS/EC2&amp;quot;
+-- dimensions &amp;quot;InstanceId=[instance_id]&amp;quot; --statistic [statistic] --metric-name
+[metric] --comparison-operator [operator] --threshold [value] --period
+[seconds] --evaluation-periods [value] -- alarm-actions [action]
+&lt;/code>&lt;/pre>
+&lt;p>For example, the following triggers an Auto Scaling policy if the average CPUUtilization is less than 10 percent over a 24 hour period.&lt;/p>
+&lt;pre>&lt;code>euwatch-put-metric-alarm test-Alarm --unit Percent --namespace &amp;quot;AWS/EC2&amp;quot;
+-- dimensions &amp;quot;InstanceId=i-abc123&amp;quot; --statistic Average --metric-name CPUUtilization
+--comparison-operator LessThanThreshold --threshold 10 --period 86400
+--evaluation-periods 4 -- alarm-actions arn:aws:autoscaling::429942273585:scalingPolicy:
+12ad560b-58b2-4051-a6d3-80e53b674de4:autoScalingGroupName/testgroup01:
+policyName/testgroup01-pol01
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Test an Alarm</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_alarm/monitor_alarm_test/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_alarm/monitor_alarm_test/</guid><description>
+&lt;p>You can test the CloudWatch alarms by temporarily changing the state of your alarm to &amp;ldquo;ALARM&amp;rdquo; using the command: euwatch-set-alarm-state .&lt;/p>
+&lt;pre>&lt;code>euwatch-set-alarm-state --alarm-name TestAlarm --state ALARM
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Delete an Alarm</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_alarm/monitoring_alarms_delete/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_alarm/monitoring_alarms_delete/</guid><description>
+&lt;p>To delete an alarm, perform the following step.&lt;/p>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euwatch-delete-alarms [alarm_name]
+&lt;/code>&lt;/pre>
+&lt;p>For example, to delete an alarm named &lt;code>TestAlarm&lt;/code> enter:&lt;/p>
+&lt;pre>&lt;code>euwatch-delete-alarms TestAlarm
+&lt;/code>&lt;/pre></description></item></channel></rss>

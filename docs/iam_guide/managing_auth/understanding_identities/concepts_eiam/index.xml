@@ -1,0 +1,179 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Access Concepts</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/concepts_eiam/</link><description>Recent content in Access Concepts on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/concepts_eiam/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: User Identities</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/concepts_eiam/access_identities/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/concepts_eiam/access_identities/</guid><description>
+&lt;p>In Eucalyptus, user identities are organized into accounts. An account is the unit of resource usage accounting, and also a separate namespace for many resources (security groups, key pairs, users, etc.).Accounts are identified by either a unique ID (UUID) or a unique name. The account name is like IAM’s account alias. It is used to manipulate accounts. However, for AWS compatibility, the EC2 commands often use account ID to display resource ownership.&lt;/p>
+&lt;p>There are command line tools to discover the correspondence of account ID and account name. For example, euare-accountlist lists all the accounts with both their IDs and names.&lt;/p>
+&lt;p>An account can have multiple users, but a user can only be in one account. Within an account, users can be associated with Groups. Group is used to attach access permissions to multiple users. A user can be associated with multiple groups. Because an account is a separate name space, user names and group names have to be unique only within an account. Therefore, user X in account A and user X in account B are two different identities.&lt;/p>
+&lt;p>Both users and groups are identified by their names, which are unique within an account (they also have UUIDs, but are rarely used).&lt;/p></description></item><item><title>Docs: Special Identities</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/concepts_eiam/access_special_ids/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/concepts_eiam/access_special_ids/</guid><description>
+&lt;p>Eucalyptus has two special identities for the convenience of administration and use of the system.&lt;/p>
+&lt;ul>
+&lt;li>The account: Each user in the eucalyptus account has unrestricted access to all of the cloud&amp;rsquo;s resources, similar to the superuser on a typical Linux system. These users are often referred to as system administrators or cloud administrators. This account is automatically created when the system starts for the first time. You cannot remove the eucalyptus account from the system.&lt;/li>
+&lt;li>The user of an account: Each account, including the eucalyptus account, has a user named admin. This user is created automatically by the system when an account is created. The admin of an account has full access to the resources owned by the account. You can not remove the admin user from an account. The admin can delegate resource access to other users in the account by using policies.&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Credentials</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/concepts_eiam/access_credentials/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/concepts_eiam/access_credentials/</guid><description>
+&lt;p>This topic describes the different types of credentials used by Eucalyptus.Each user has a unique set of credentials. These credentials are used to authenticate access to resources. There are three types of credentials:&lt;/p>
+&lt;ul>
+&lt;li>An is used to authenticate requests to the SOAP API service.&lt;/li>
+&lt;li>A is used to authenticate requests to the REST API service.
+You can manage credentials using the command line tools (the &lt;code>euare-&lt;/code> commands).&lt;/li>
+&lt;/ul>
+&lt;p>In IAM, each account has its own credentials. In Eucalyptus, the equivalent of account credentials are the credentials of admin user of the account.&lt;/p></description></item><item><title>Docs: Account Creation</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/concepts_eiam/access_create_acct/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/concepts_eiam/access_create_acct/</guid><description>
+&lt;p>This topic describes the process for creating an account using the command line tool.You must be a cloud administrator to use this command. Accounts created are available for immediate access.&lt;/p>
+&lt;p>To create an account, run the following command:&lt;/p>
+&lt;pre>&lt;code>euare-accountcreate -a account_name
+&lt;/code>&lt;/pre>
+&lt;p>When an account is created by &lt;code>euare-accountcreate&lt;/code> command, an &amp;ldquo;admin&amp;rdquo; user is created by default.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Note the following security considerations of the &amp;ldquo;admin&amp;rdquo; user when an account is initially created:
+&lt;/div>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Eucalyptus has discontinued account registration status retrieval, however, for compatibility with older versions of Eucalyptus, the ability to view and manipulate registration status is limited to the system administrator through Euca2ools. For more information about the command line tools, see the .
+&lt;/div></description></item><item><title>Docs: Special User Attributes</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/concepts_eiam/access_special/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/concepts_eiam/access_special/</guid><description>
+&lt;p>Eucalyptus extends the IAM model by providing the following extra attributes for a user.&lt;/p>
+&lt;ul>
+&lt;li>This is only meaningful for the account administrator (that is, the account level).&lt;/li>
+&lt;li>. Use this attribute to temporarily disable a user.&lt;/li>
+&lt;li>&lt;/li>
+&lt;li>Add any name-value pair to a user’s custom information attribute. This is useful for attaching pure text information, like an address, phone number, or department.
+You can retrieve and modify the registration status, enabled status, and password expiration date using the &lt;code>euare-usergetattributes&lt;/code> and &lt;code>euare-usermod&lt;/code> commands. You can retrieve and modify custom information using &lt;code>euare-usergetinfo&lt;/code> and &lt;code>euare-userupdateinfo&lt;/code> commands.&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Roles</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/concepts_eiam/access_roles/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/concepts_eiam/access_roles/</guid><description>
+&lt;p>A &lt;em>role&lt;/em> A role is a mechanism that enables the delegation of access to users or applications.&lt;/p>
+&lt;p>A role is associated with an account, and has a set of permissions associated with it that are defined in the form of an IAM &lt;em>policy&lt;/em> . A policy specifies a set of actions and resources within that account that the role is allowed to access.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For more information on policies, see Policy Overview.
+&lt;/div>
+&lt;/p>
+&lt;p>By assuming a role, a user or an applications gets a set of permissions associated with that role. When a role is assumed, the Eucalyptus STS service returns a set of temporary security credentials that can then be used to make programmatic requests to resources in your account. This eliminates the need to share or hardcode security credentials with applications that need access to resources in your cloud.&lt;/p>
+&lt;p>Eucalyptus roles are managed through the Eucalyptus Euare service, which is compatible with Amazon&amp;rsquo;s Identity and Access Management service. For more information on IAM and roles, please see the &lt;a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/WorkingWithRoles.html">Amazon IAM User Guide&lt;/a> .&lt;/p>
+&lt;h2 id="usage-scenarios-for-roles">Usage Scenarios for Roles&lt;/h2>
+&lt;p>There are several scenarios in which roles can be useful, including:&lt;/p>
+&lt;p>&lt;strong>Applications&lt;/strong>&lt;/p>
+&lt;p>Applications running on instances in your Eucalyptus cloud will often need access to other resources in your cloud. Instead of creating AWS credentials for each application, or distributing your own credentials,, you can use roles to enable you to delegate permission to the application to make API requests. For more information, see &lt;a href="https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/roles_tasks_create_role_application/">Launch an Instance with a Role&lt;/a> .&lt;/p>
+&lt;p>&lt;strong>Account Delegation&lt;/strong>&lt;/p>
+&lt;p>You can use roles to allow one account to access resources owned by another account. IAM Roles under the &amp;rsquo;eucalyptus&amp;rsquo; account can be assumed by users under &amp;rsquo;non-eucalyptus&amp;rsquo; account(s). For example, if you had an &amp;lsquo;infrastructure auditing&amp;rsquo; account, and an audit was needed to be performed on all the cloud resources used on the cloud, a user could assume the &amp;lsquo;Resource Administrator&amp;rsquo; role and audit all the resources used by all the accounts on the cloud. For more information on IAM account delegation, see &lt;a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/roles-toplevel.html">Using Roles to Delegate Permissions and Federate Identities&lt;/a> . Also, go to the walkthrough provided in the &lt;a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/roles-walkthrough-crossacct.html">AWS Identity and Access Management&lt;/a> section of the AWS documentation.&lt;/p>
+&lt;h2 id="pre-defined-roles">Pre-Defined Roles&lt;/h2>
+&lt;p>Eucalyptus offers a number of pre-defined privileged roles. These roles are associated with the &lt;code>eucalyptus&lt;/code> account, and have privileges to manage resources across the cloud and non-privileged accounts. Only the eucalyptus account can manage or modify these roles.&lt;/p>
+&lt;p>To see the pre-defined roles, use &lt;code>euare-rolelistbypath&lt;/code> with the credentials of a user that is part of the &lt;code>eucalyptus&lt;/code> account. For example:&lt;/p>
+&lt;pre>&lt;code># euare-rolelistbypath
+arn:aws:iam::944786667073:role/eucalyptus/AccountAdministrator
+arn:aws:iam::944786667073:role/eucalyptus/InfrastructureAdministrator
+arn:aws:iam::944786667073:role/eucalyptus/ResourceAdministrator
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>Account Administrator&lt;/strong>&lt;/p>
+&lt;p>The Account Administrator (AA) can manage Eucalyptus accounts. To view the policy associated with the Account Administrator role, use &lt;code>euare-rolelistpolicies&lt;/code> with the credentials of a user that is part of the &lt;code>eucalyptus&lt;/code> account. For example:&lt;/p>
+&lt;pre>&lt;code># euare-rolelistpolicies --role-name AccountAdministrator --verbose
+AccountAdministrator
+{
+&amp;quot;Statement&amp;quot;:[ {
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Action&amp;quot;: [
+&amp;quot;iam:*&amp;quot;
+],
+&amp;quot;NotResource&amp;quot;: &amp;quot;arn:aws:iam::eucalyptus:*&amp;quot;,
+&amp;quot;Condition&amp;quot;: {
+&amp;quot;Bool&amp;quot;: { &amp;quot;iam:SystemAccount&amp;quot;: &amp;quot;false&amp;quot; }
+}
+} ]
+}
+IsTruncated: false
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>Resource Administrator&lt;/strong>&lt;/p>
+&lt;p>The Resource Administrator (RA) can manage AWS-defined resources (such as S3 objects, instances, users, etc) across accounts. To view the policy associated with the Resource Administrator role, use &lt;code>euare-rolelistpolicies&lt;/code> with the credentials of a user that is part of the &lt;code>eucalyptus&lt;/code> account. For example:&lt;/p>
+&lt;pre>&lt;code># euare-rolelistpolicies --role-name ResourceAdministrator --verbose
+ResourceAdministrator
+{
+&amp;quot;Statement&amp;quot;:[ {
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Action&amp;quot;: [
+&amp;quot;autoscaling:*&amp;quot;,
+&amp;quot;cloudwatch:*&amp;quot;,
+&amp;quot;ec2:DescribeInstanceAttribute&amp;quot;,
+&amp;quot;ec2:DescribeInstances&amp;quot;,
+&amp;quot;ec2:DescribeInstanceStatus&amp;quot;,
+&amp;quot;ec2:DescribeInstanceTypes&amp;quot;,
+&amp;quot;ec2:GetConsoleOutput&amp;quot;,
+&amp;quot;ec2:GetPasswordData&amp;quot;,
+&amp;quot;ec2:ImportInstance&amp;quot;,
+&amp;quot;ec2:ModifyInstanceAttribute&amp;quot;,
+&amp;quot;ec2:MonitorInstances&amp;quot;,
+&amp;quot;ec2:RebootInstances&amp;quot;,
+&amp;quot;ec2:ReportInstanceStatus&amp;quot;,
+&amp;quot;ec2:ResetInstanceAttribute&amp;quot;,
+&amp;quot;ec2:RunInstances&amp;quot;,
+&amp;quot;ec2:StartInstances&amp;quot;,
+&amp;quot;ec2:StopInstances&amp;quot;,
+&amp;quot;ec2:TerminateInstances&amp;quot;,
+&amp;quot;ec2:UnmonitorInstances&amp;quot;,
+&amp;quot;ec2:*AccountAttributes*&amp;quot;,
+&amp;quot;ec2:*Address*&amp;quot;,
+&amp;quot;ec2:*AvailabilityZones*&amp;quot;,
+&amp;quot;ec2:*Bundle*&amp;quot;,
+&amp;quot;ec2:*ConversionTask*&amp;quot;,
+&amp;quot;ec2:*CustomerGateway*&amp;quot;,
+&amp;quot;ec2:*DhcpOptions*&amp;quot;,
+&amp;quot;ec2:*ExportTask*&amp;quot;,
+&amp;quot;ec2:*Image*&amp;quot;,
+&amp;quot;ec2:*InternetGateway*&amp;quot;,
+&amp;quot;ec2:*KeyPair*&amp;quot;,
+&amp;quot;ec2:*NetworkAcl*&amp;quot;,
+&amp;quot;ec2:*NetworkInterface*&amp;quot;,
+&amp;quot;ec2:*PlacementGroup*&amp;quot;,
+&amp;quot;ec2:*ProductInstance*&amp;quot;,
+&amp;quot;ec2:*Region*&amp;quot;,
+&amp;quot;ec2:*ReservedInstance*&amp;quot;,
+&amp;quot;ec2:*Route*&amp;quot;,
+&amp;quot;ec2:*SecurityGroup*&amp;quot;,
+&amp;quot;ec2:*Snapshot*&amp;quot;,
+&amp;quot;ec2:*SpotDatafeedSubscription*&amp;quot;,
+&amp;quot;ec2:*SpotInstance*&amp;quot;,
+&amp;quot;ec2:*SpotPrice*&amp;quot;,
+&amp;quot;ec2:*Subnet*&amp;quot;,
+&amp;quot;ec2:*Tag*&amp;quot;,
+&amp;quot;ec2:*Volume*&amp;quot;,
+&amp;quot;ec2:*Vpc*&amp;quot;,
+&amp;quot;ec2:*Vpn*&amp;quot;,
+&amp;quot;ec2:*VpnGateway*&amp;quot;,
+&amp;quot;elasticloadbalancing:*&amp;quot;,
+&amp;quot;s3:*&amp;quot;
+],
+&amp;quot;Resource&amp;quot;: &amp;quot;*&amp;quot;
+}, {
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Action&amp;quot;: [
+&amp;quot;iam:Get*&amp;quot;,
+&amp;quot;iam:List*&amp;quot;
+],
+&amp;quot;NotResource&amp;quot;: &amp;quot;arn:aws:iam::eucalyptus:*&amp;quot;
+} ]
+}
+IsTruncated: false
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>Infrastructure Administrator&lt;/strong>&lt;/p>
+&lt;p>The Infrastructre Administrator (IA) can perform operations related to cloud setup and management. Typical responibilities include:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>Installation and configuration (prepare environment, install Eucalyptus, configure Eucalyptus)&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Monitoring and maintenance (infrastructure supporting the cloud, cloud management layer, upgrades, security patches, diagnostics and troubleshooting)&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Backup and restoration
+To view the policy associated with the Infrastructure Administrator role, use &lt;code>euare-rolelistpolicies&lt;/code> with the credentials of a user that is part of the &lt;code>eucalyptus&lt;/code> account. For example:&lt;/p>
+&lt;h1 id="euare-rolelistpolicies---role-name-infrastructureadministrator---verbose">euare-rolelistpolicies &amp;ndash;role-name InfrastructureAdministrator &amp;ndash;verbose&lt;/h1>
+&lt;p>InfrastructureAdministrator
+{
+&amp;ldquo;Statement&amp;rdquo;:[ {
+&amp;ldquo;Effect&amp;rdquo;: &amp;ldquo;Allow&amp;rdquo;,
+&amp;ldquo;Action&amp;rdquo;: [
+&amp;ldquo;euprop:&lt;em>&amp;rdquo;,
+&amp;ldquo;euserv:&lt;/em>&amp;rdquo;,
+&amp;ldquo;euconfig:&lt;em>&amp;rdquo;,
+&amp;ldquo;ec2:MigrateInstances&amp;rdquo;
+],
+&amp;ldquo;Resource&amp;rdquo;: &amp;ldquo;&lt;/em>&amp;rdquo;
+} ]
+}
+IsTruncated: false&lt;/p>
+&lt;/li>
+&lt;/ul></description></item></channel></rss>

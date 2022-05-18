@@ -1,0 +1,1486 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Eucalyptus Commands</title><link>https://www.eucastack.io/docs/admin_guide/commands_oview/</link><description>Recent content in Eucalyptus Commands on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/admin_guide/commands_oview/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Eucalyptus Administration Commands</title><link>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/</guid><description>
+&lt;h1 id="eucalyptus-administration-commands">Eucalyptus Administration Commands&lt;/h1>
+&lt;p>Eucalyptus offers commands for common administration tasks and inquiries. This section provides a reference for these commands.&lt;/p></description></item><item><title>Docs: Eucalyptus Configuration Variables</title><link>https://www.eucastack.io/docs/admin_guide/commands_oview/euca_properties/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/commands_oview/euca_properties/</guid><description>
+&lt;p>Eucalyptus exposes a number of variables that can be configured using the command. This topic explains what types of variables Eucalyptus uses, and lists the most common configurable variables.&lt;/p>
+&lt;h2 id="eucalyptus-variable-types">Eucalyptus Variable Types&lt;/h2>
+&lt;p>Eucalyptus uses two types of variables: ones that can be changed (as configuration options), and ones that cannot be changed (they are displayed as variables, but configured by modifying the &lt;code>eucalyptus.conf&lt;/code> file on the CC).&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Once a cloud is in use and has started operating based on these variables, it is not safe to change them at runtime.
+&lt;/div>
+&lt;h2 id="eucalyptus-variables">Eucalyptus Variables&lt;/h2>
+&lt;p>The following table contains a list of common Eucalyptus cloud variables.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Variable&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">authentication.access_keys_limit&lt;/td>
+&lt;td style="text-align:left">Limit for access keys per user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">authentication.authorization_cache&lt;/td>
+&lt;td style="text-align:left">Authorization cache configuration, for credentials and authorization metadata&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">authentication.authorization_expiry&lt;/td>
+&lt;td style="text-align:left">Default expiry for cached authorization metadata&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">authentication.authorization_reuse_expiry&lt;/td>
+&lt;td style="text-align:left">Default expiry for re-use of cached authorization metadata on failure&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">authentication.credential_download_generate_certificate&lt;/td>
+&lt;td style="text-align:left">Strategy for generation of certificates on credential download (Never&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">authentication.credential_download_host_match&lt;/td>
+&lt;td style="text-align:left">CIDR to match against for host address selection&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">authentication.credential_download_port&lt;/td>
+&lt;td style="text-align:left">Port to use in service URLs when &amp;lsquo;bootstrap.webservices.port&amp;rsquo; is not appropriate.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">authentication.default_password_expiry&lt;/td>
+&lt;td style="text-align:left">Default password expiry time&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">authentication.max_policy_attachments&lt;/td>
+&lt;td style="text-align:left">Maximum number of attached managed policies&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">authentication.max_policy_size&lt;/td>
+&lt;td style="text-align:left">Maximum size for an IAM policy (bytes)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">authentication.signing_certificates_limit&lt;/td>
+&lt;td style="text-align:left">Limit for signing certificates per user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">authentication.system_account_quota_enabled&lt;/td>
+&lt;td style="text-align:left">Process quotas for system accounts&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">autoscaling.activityexpiry&lt;/td>
+&lt;td style="text-align:left">Expiry age for scaling activities. Older activities are deleted.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">autoscaling.activityinitialbackoff&lt;/td>
+&lt;td style="text-align:left">Initial back-off period for failing activities.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">autoscaling.activitymaxbackoff&lt;/td>
+&lt;td style="text-align:left">Maximum back-off period for failing activities.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">autoscaling.activitytimeout&lt;/td>
+&lt;td style="text-align:left">Timeout for a scaling activity.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">autoscaling.maxlaunchincrement&lt;/td>
+&lt;td style="text-align:left">Maximum instances to launch at one time.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">autoscaling.maxregistrationretries&lt;/td>
+&lt;td style="text-align:left">Number of times to attempt load balancer registration for each instance.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">autoscaling.maxtags&lt;/td>
+&lt;td style="text-align:left">Maximum number of user defined tags for a group&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">autoscaling.pendinginstancetimeout&lt;/td>
+&lt;td style="text-align:left">Timeout for a pending instance.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">autoscaling.suspendedprocesses&lt;/td>
+&lt;td style="text-align:left">Globally suspend scaling processes; a comma-delimited list of processes (Launch,Terminate,HealthCheck, ReplaceUnhealthy,AZRebalance, AlarmNotification,ScheduledActions, AddToLoadBalancer). Default is empty, meaning the processes are not suspended.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">autoscaling.suspendedtasks&lt;/td>
+&lt;td style="text-align:left">Suspended scaling tasks.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">autoscaling.suspensionlaunchattemptsthreshold&lt;/td>
+&lt;td style="text-align:left">Minimum launch attempts for administrative suspension of scaling activities for a group.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">autoscaling.suspensiontimeout&lt;/td>
+&lt;td style="text-align:left">Timeout for administrative suspension of scaling activities for a group.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">autoscaling.untrackedinstancetimeout&lt;/td>
+&lt;td style="text-align:left">Timeout for termination of untracked auto scaling instances.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">autoscaling.zonefailurethreshold&lt;/td>
+&lt;td style="text-align:left">Time after which an unavailable zone should be treated as failed&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.async.future_listener_debug_limit_secs&lt;/td>
+&lt;td style="text-align:left">Number of seconds a future listener can execute before a debug message is logged.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.async.future_listener_error_limit_secs&lt;/td>
+&lt;td style="text-align:left">Number of seconds a future listener can execute before an error message is logged.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.async.future_listener_get_retries&lt;/td>
+&lt;td style="text-align:left">Total number of seconds a future listener&amp;rsquo;s executor waits to get().&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.async.future_listener_get_timeout&lt;/td>
+&lt;td style="text-align:left">Number of seconds a future listener&amp;rsquo;s executor waits to get() per call.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.async.future_listener_info_limit_secs&lt;/td>
+&lt;td style="text-align:left">Number of seconds a future listener can execute before an info message is logged.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.hosts.state_initialize_timeout&lt;/td>
+&lt;td style="text-align:left">Timeout for state initialization (in msec).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.hosts.state_transfer_timeout&lt;/td>
+&lt;td style="text-align:left">Timeout for state transfers (in msec).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.notifications.batch_delay_seconds&lt;/td>
+&lt;td style="text-align:left">Interval (in seconds) during which a notification will be delayed to allow for batching events for delivery.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.notifications.digest&lt;/td>
+&lt;td style="text-align:left">Send a system state digest periodically.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.notifications.digest_frequency_hours&lt;/td>
+&lt;td style="text-align:left">Period (in hours) with which a system state digest will be delivered.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.notifications.digest_only_on_errors&lt;/td>
+&lt;td style="text-align:left">If sending system state digests is set to true, then only send the digest when the system has failures to report.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.notifications.digest_frequency_hours&lt;/td>
+&lt;td style="text-align:left">Period (in hours) with which a system state digest will be delivered.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.notifications.digest_only_on_errors&lt;/td>
+&lt;td style="text-align:left">If sending system state digests is set to true, then only send the digest when the system has failures to report.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.notifications.email_from&lt;/td>
+&lt;td style="text-align:left">From email address used for notification delivery.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.notifications.email_from_name&lt;/td>
+&lt;td style="text-align:left">From email name used for notification delivery.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.notifications.email_from_name&lt;/td>
+&lt;td style="text-align:left">From email name used for notification delivery.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.notifications.email_subject_prefix&lt;/td>
+&lt;td style="text-align:left">Email subject used for notification delivery.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.notifications.email_to&lt;/td>
+&lt;td style="text-align:left">Email address where notifications are to be delivered.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.notifications.include_fault_stack&lt;/td>
+&lt;td style="text-align:left">Period (in hours) with which a system state digest will be delivered.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.notifications.email.email_smtp_host&lt;/td>
+&lt;td style="text-align:left">SMTP host to use when sending email. If unset, the following values are tried: 1) the value of the &amp;lsquo;mail.smtp.host&amp;rsquo; system variable, 2) localhost, 3) mailhost.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.notifications.email.email_smtp_port&lt;/td>
+&lt;td style="text-align:left">SMTP port to use when sending email. Defaults to 25&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.servicebus.common_thread_pool_size&lt;/td>
+&lt;td style="text-align:left">Default thread pool for component message processing. When the size of the common thread pool is zero or less, Eucalyptus uses separate thread pools for each component and a pool for dispatching. Default size = 256 threads.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.servicebus.component_thread_pool_size&lt;/td>
+&lt;td style="text-align:left">Used when the size of the common thread pool is zero or less. Default size = 64 threads.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.servicebus.context_message_log_whitelist&lt;/td>
+&lt;td style="text-align:left">Message patterns to match for logging. Allows selective message logging at INFO level. A list of wildcards that allows selective logging for development or troubleshooting (e.g., on request/response, on a package, on a component). Logging can impact security; do not use as a general purpose logging feature.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.servicebus.context_timeout&lt;/td>
+&lt;td style="text-align:left">Message context timeout in seconds. Default = 60 seconds.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.servicebus.dispatch_thread_pool_size&lt;/td>
+&lt;td style="text-align:left">Used when the size of the common thread pool is zero or less. Default size = 256 threads.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.servicebus.hup&lt;/td>
+&lt;td style="text-align:left">Do a soft reset. Default = 0 (false).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.timer.rate&lt;/td>
+&lt;td style="text-align:left">Amount of time (in milliseconds) before a previously running instance which is not reported will be marked as terminated.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.topology.coordinator_check_backoff_secs&lt;/td>
+&lt;td style="text-align:left">Backoff between service state checks (in seconds).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.topology.local_check_backoff_secs&lt;/td>
+&lt;td style="text-align:left">Backoff between service state checks (in seconds).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.tx.concurrent_update_retries&lt;/td>
+&lt;td style="text-align:left">Maximum number of times a transaction may be retried before giving up.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.async_internal_operations&lt;/td>
+&lt;td style="text-align:left">Execute internal service operations from a separate thread pool (with respect to I/O).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.async_operations&lt;/td>
+&lt;td style="text-align:left">Execute service operations from a separate thread pool (with respect to I/O).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.async_pipeline&lt;/td>
+&lt;td style="text-align:left">Execute service specific pipeline handlers from a separate thread pool (with respect to I/O).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.channel_connect_timeout&lt;/td>
+&lt;td style="text-align:left">Channel connect timeout (ms).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.channel_keep_alive&lt;/td>
+&lt;td style="text-align:left">Socket keep alive.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.channel_nodelay&lt;/td>
+&lt;td style="text-align:left">Server socket TCP_NODELAY.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.channel_reuse_address&lt;/td>
+&lt;td style="text-align:left">Socket reuse address.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.client_http_chunk_buffer_max&lt;/td>
+&lt;td style="text-align:left">Server http chunk max.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.client_http_pool_acquire_timeout&lt;/td>
+&lt;td style="text-align:left">Client http pool acquire timeout&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.client_internal_connect_timeout_millis&lt;/td>
+&lt;td style="text-align:left">Client connection timeout (ms)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.client_internal_hmac_signature_enabled&lt;/td>
+&lt;td style="text-align:left">Client HMAC signature version 4 enabled&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.client_internal_timeout_secs&lt;/td>
+&lt;td style="text-align:left">Client idle timeout (secs).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.client_message_log_whitelist&lt;/td>
+&lt;td style="text-align:left">Client message patterns to match for logging&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.client_pool_max_threads&lt;/td>
+&lt;td style="text-align:left">Server worker thread pool max.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.clock_skew_sec&lt;/td>
+&lt;td style="text-align:left">A max clock skew value (in seconds) between client and server accepted when validating timestamps in Query/REST protocol.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.cluster_connect_timeout_millis&lt;/td>
+&lt;td style="text-align:left">Cluster connect timeout (ms).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.default_aws_sns_uri_scheme&lt;/td>
+&lt;td style="text-align:left">Default scheme for AWS_SNS_URL.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.default_ec2_uri_scheme&lt;/td>
+&lt;td style="text-align:left">Default scheme for EC2_URL.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.default_euare_uri_scheme&lt;/td>
+&lt;td style="text-align:left">Default scheme for EUARE_URL.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.default_https_enabled&lt;/td>
+&lt;td style="text-align:left">Default scheme prefix.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.default_s3_uri_scheme&lt;/td>
+&lt;td style="text-align:left">Default scheme for S3_URL.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.disabled_soap_api_components&lt;/td>
+&lt;td style="text-align:left">List of services with disabled SOAP APIs.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.http_max_chunk_bytes&lt;/td>
+&lt;td style="text-align:left">Maximum HTTP chunk size (bytes).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.http_max_header_bytes&lt;/td>
+&lt;td style="text-align:left">Maximum HTTP headers size (bytes).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.http_max_initial_line_bytes&lt;/td>
+&lt;td style="text-align:left">Maximum HTTP initial line size (bytes).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.http_max_requests_per_connection&lt;/td>
+&lt;td style="text-align:left">Maximum HTTP requests per persistent connection&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.http_server_header&lt;/td>
+&lt;td style="text-align:left">HTTP server header returned for responses. If set to &amp;ldquo;default&amp;rdquo;, the standard version header is returned, e.g. Eucalyptus/4.3.1. If set to another value, that value is returned in the header, except for an empty value, which results in no server header being returned.Default: default&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.listener_address_match&lt;/td>
+&lt;td style="text-align:left">CIDRs matching addresses to bind on Default interface is always bound regardless.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.log_requests&lt;/td>
+&lt;td style="text-align:left">Enable request logging.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.oob_internal_operations&lt;/td>
+&lt;td style="text-align:left">Execute internal service operations out of band from the normal service bus.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.pipeline_enable_query_decompress&lt;/td>
+&lt;td style="text-align:left">Enable Query Pipeline http request decompression&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.pipeline_idle_timeout_seconds&lt;/td>
+&lt;td style="text-align:left">Server socket idle time-out.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.pipeline_max_query_request_size&lt;/td>
+&lt;td style="text-align:left">Maximum Query Pipeline http chunk size (bytes).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.port&lt;/td>
+&lt;td style="text-align:left">Port to bind Port 8773 is always bound regardless.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.replay_skew_window_sec&lt;/td>
+&lt;td style="text-align:left">Time interval duration (in seconds) during which duplicate signatures will be accepted to accommodate collisions.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.server_boss_pool_max_mem_per_conn&lt;/td>
+&lt;td style="text-align:left">Server max selector memory per connection.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.server_boss_pool_max_threads&lt;/td>
+&lt;td style="text-align:left">Server selector thread pool max.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.server_boss_pool_timeout_millis&lt;/td>
+&lt;td style="text-align:left">Service socket select timeout (ms).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.server_boss_pool_total_mem&lt;/td>
+&lt;td style="text-align:left">Server worker thread pool max.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.server_channel_nodelay&lt;/td>
+&lt;td style="text-align:left">Server socket TCP_NODELAY.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.server_channel_reuse_address&lt;/td>
+&lt;td style="text-align:left">Server socket reuse address.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.server_pool_max_mem_per_conn&lt;/td>
+&lt;td style="text-align:left">Server max worker memory per connection.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.server_pool_max_threads&lt;/td>
+&lt;td style="text-align:left">Server worker thread pool max.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.server_pool_timeout_millis&lt;/td>
+&lt;td style="text-align:left">Service socket select timeout (ms).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.server_pool_total_mem&lt;/td>
+&lt;td style="text-align:left">Server max worker memory total.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.statistics&lt;/td>
+&lt;td style="text-align:left">Record and report service times.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.unknown_parameter_handling&lt;/td>
+&lt;td style="text-align:left">Request unknown parameter handling (default&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.use_dns_delegation&lt;/td>
+&lt;td style="text-align:left">Use DNS delegation.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.use_instance_dns&lt;/td>
+&lt;td style="text-align:left">Use DNS names for instances.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.ssl.client_https_enabled&lt;/td>
+&lt;td style="text-align:left">Client HTTPS enabled&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.ssl.client_https_server_cert_verify&lt;/td>
+&lt;td style="text-align:left">Client HTTPS verify server certificate enabled&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.ssl.client_ssl_ciphers&lt;/td>
+&lt;td style="text-align:left">Client HTTPS ciphers for internal use&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.ssl.client_ssl_protocols&lt;/td>
+&lt;td style="text-align:left">Client HTTPS protocols for internal use&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.ssl.server_alias&lt;/td>
+&lt;td style="text-align:left">Alias of the certificate entry in euca.p12 to use for SSL for webservices.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.ssl.server_password&lt;/td>
+&lt;td style="text-align:left">Password of the private key corresponding to the specified certificate for SSL for web services.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.ssl.server_ssl_ciphers&lt;/td>
+&lt;td style="text-align:left">SSL ciphers for web services.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.ssl.server_ssl_protocols&lt;/td>
+&lt;td style="text-align:left">SSL protocols for web services.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.ssl.user_ssl_ciphers&lt;/td>
+&lt;td style="text-align:left">SSL ciphers for external use.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.ssl.user_ssl_default_cas&lt;/td>
+&lt;td style="text-align:left">Use default CAs with SSL for external use.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.ssl.user_ssl_enable_hostname_verification&lt;/td>
+&lt;td style="text-align:left">SSL hostname validation for external use.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">bootstrap.webservices.ssl.user_ssl_protocols&lt;/td>
+&lt;td style="text-align:left">SSL protocols for external use.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.db_check_poll_time&lt;/td>
+&lt;td style="text-align:left">Poll time (ms) for db connection check&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.db_check_threshold&lt;/td>
+&lt;td style="text-align:left">Threshold (number of connections or %) for db connection check&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.euca_log_level&lt;/td>
+&lt;td style="text-align:left">Log level for dynamic override.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.identifier_canonicalizer&lt;/td>
+&lt;td style="text-align:left">Name of the canonicalizer for resource identifiers.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.log_file_disk_check_poll_time&lt;/td>
+&lt;td style="text-align:left">Poll time (ms) for log file disk check&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.log_file_disk_check_threshold&lt;/td>
+&lt;td style="text-align:left">Threshold (bytes or %) for log file disk check&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.memory_check_poll_time&lt;/td>
+&lt;td style="text-align:left">Poll time (ms) for memory check&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.memory_check_ratio&lt;/td>
+&lt;td style="text-align:left">Ratio (of post-garbage collected old-gen memory) for memory check&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.trigger_fault&lt;/td>
+&lt;td style="text-align:left">Fault id last used to trigger test&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.cluster.disabledinterval&lt;/td>
+&lt;td style="text-align:left">The time period between service state checks for a Cluster Controller which is DISABLED.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.cluster.enabledinterval&lt;/td>
+&lt;td style="text-align:left">The time period between service state checks for a Cluster Controller which is ENABLED.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.cluster.notreadyinterval&lt;/td>
+&lt;td style="text-align:left">The time period between service state checks for a Cluster Controller which is NOTREADY.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.cluster.pendinginterval&lt;/td>
+&lt;td style="text-align:left">The time period between service state checks for a Cluster Controller which is PENDING.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.cluster.requestworkers&lt;/td>
+&lt;td style="text-align:left">The number of concurrent requests which will be sent to a single Cluster Controller.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.cluster.startupsyncretries&lt;/td>
+&lt;td style="text-align:left">The number of times a request will be retried while bootstrapping a Cluster Controller.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.images.cleanupperiod&lt;/td>
+&lt;td style="text-align:left">The period between runs for clean up of deregistered images.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.images.defaultvisibility&lt;/td>
+&lt;td style="text-align:left">The default value used to determine whether or not images are marked &amp;lsquo;public&amp;rsquo; when first registered.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.images.maximagesizegb&lt;/td>
+&lt;td style="text-align:left">The maximum registerable image size in GB&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.images.maxmanifestsizebytes&lt;/td>
+&lt;td style="text-align:left">The maximum allowed image manifest size in bytes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.long_identifier_prefixes&lt;/td>
+&lt;td style="text-align:left">List of resource identifier prefixes for long identifiers or * for all&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.monitor.default_poll_interval_mins&lt;/td>
+&lt;td style="text-align:left">How often the CLC requests data from the CC. Default value is 5 minutes.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.monitor.history_size&lt;/td>
+&lt;td style="text-align:left">How many data value samples are sent from the CC to the CLC. The default value is 5.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.network.address_pending_timeout&lt;/td>
+&lt;td style="text-align:left">Minutes before a pending system public address allocation times out and is released. Default: 35 minutes.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.network.ec2_classic_additional_protocols_allowed&lt;/td>
+&lt;td style="text-align:left">Comma delimited list of protocol numbers supported in EDGE mode for security group rules beyond the EC2-Classic defaults (TCP,UDP,ICMP). Only valid IANA protocol numbers are accepted. Default: None&lt;a href="">&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.network.max_broadcast_apply&lt;/td>
+&lt;td style="text-align:left">Maximum time to apply network information. Default: 120 seconds.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.network.min_broadcast_interval&lt;/td>
+&lt;td style="text-align:left">Minimum interval between broadcasts of network information. Default: 5 seconds.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.network.network_index_pending_timeout&lt;/td>
+&lt;td style="text-align:left">Minutes before a pending index allocation times out and is released. Default: 35 minutes.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.short_identifier_prefixes&lt;/td>
+&lt;td style="text-align:left">List of resource identifier prefixes for short identifiers or * for all&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.buried_time&lt;/td>
+&lt;td style="text-align:left">Amount of time (in minutes) to retain unreported terminated instance data.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.ebs_root_device_name&lt;/td>
+&lt;td style="text-align:left">Name for root block device mapping&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.ebs_volume_creation_timeout&lt;/td>
+&lt;td style="text-align:left">Amount of time (in minutes) before a EBS volume backing the instance is created&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.instance_private_prefix&lt;/td>
+&lt;td style="text-align:left">Private name prefix for instance DNS&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.instance_public_prefix&lt;/td>
+&lt;td style="text-align:left">Public name prefix for instance DNS&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.instance_reachability_timeout&lt;/td>
+&lt;td style="text-align:left">Amount of time (in minutes) before a VM which is not reported by a cluster will fail a reachability test.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.instance_subdomain&lt;/td>
+&lt;td style="text-align:left">Subdomain to use for instance DNS.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.instance_timeout&lt;/td>
+&lt;td style="text-align:left">Amount of time (default unit minutes) before a previously running instance which is not reported will be marked as terminated.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.instance_touch_interval&lt;/td>
+&lt;td style="text-align:left">Amount of time (in minutes) between updates for a running instance.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.mac_prefix&lt;/td>
+&lt;td style="text-align:left">Default prefix to use for instance / network interface MAC addresses.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.max_state_threads&lt;/td>
+&lt;td style="text-align:left">Maximum number of threads the system will use to service blocking state changes.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.migration_refresh_time&lt;/td>
+&lt;td style="text-align:left">Maximum amount of time (in seconds) that migration state will take to propagate state changes (e.g., to tags).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.pending_time&lt;/td>
+&lt;td style="text-align:left">Amount of time (in minutes) before a pending instance will be terminated.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.shut_down_time&lt;/td>
+&lt;td style="text-align:left">Amount of time (in minutes) before a VM which is not reported by a cluster will be marked as terminated.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.stopping_time&lt;/td>
+&lt;td style="text-align:left">Amount of time (in minutes) before a stopping VM which is not reported by a cluster will be marked as terminated.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.terminated_time&lt;/td>
+&lt;td style="text-align:left">Amount of time (in minutes) that a terminated VM will continue to be reported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.tx_retries&lt;/td>
+&lt;td style="text-align:left">Number of times to retry transactions in the face of potential concurrent update conflicts.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.unknown_instance_handlers&lt;/td>
+&lt;td style="text-align:left">Comma separated list of handlers to use for unknown instances (&amp;lsquo;restore&amp;rsquo;, &amp;lsquo;restore-failed&amp;rsquo;, &amp;rsquo;terminate&amp;rsquo;, &amp;rsquo;terminate-done&amp;rsquo;)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.user_data_max_size_kb&lt;/td>
+&lt;td style="text-align:left">Max length (in KB) that the user data file can be for an instance (after base 64 decoding)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.vm_initial_report_timeout&lt;/td>
+&lt;td style="text-align:left">Amount of time (in seconds) since completion of the creating run instance operation that the new instance is treated as unreported if not&amp;hellip; reported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.vm_metadata_generated_cache&lt;/td>
+&lt;td style="text-align:left">Instance metadata generated data cache configuration. The cache is used for IAM metadata (../latest/meta-data/iam/) and instance identity (../latest/dynamic/instance-identity/).Default: maximumSize=1000, expireAfterWrite=5m&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.vm_metadata_instance_cache&lt;/td>
+&lt;td style="text-align:left">Instance metadata cache configuration.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.vm_metadata_request_cache&lt;/td>
+&lt;td style="text-align:left">Instance metadata instance resolution cache configuration.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.vm_metadata_user_data_cache&lt;/td>
+&lt;td style="text-align:left">Instance metadata user data cache configuration.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.vm_state_settle_time&lt;/td>
+&lt;td style="text-align:left">Amount of time (in seconds) to let instance state settle after a transition to either stopping or shutting-down.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.volatile_state_interval_sec&lt;/td>
+&lt;td style="text-align:left">Period (in seconds) between state updates for actively changing state.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmstate.volatile_state_timeout_sec&lt;/td>
+&lt;td style="text-align:left">Timeout (in seconds) before a requested instance terminate will be repeated.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmtypes.default_type_name&lt;/td>
+&lt;td style="text-align:left">Default type used when no instance type is specified for run instances.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmtypes.format_ephemeral_storage&lt;/td>
+&lt;td style="text-align:left">Format first ephemeral disk by defaut with ext3&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vmtypes.merge_ephemeral_storage&lt;/td>
+&lt;td style="text-align:left">Merge non-root ephemeral disks&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.volumes.deleted_time&lt;/td>
+&lt;td style="text-align:left">Amount of time (in minutes) that a deleted volume will continue to be reported&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vpc.defaultvpc&lt;/td>
+&lt;td style="text-align:left">Enable default VPC.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vpc.defaultvpccidr&lt;/td>
+&lt;td style="text-align:left">CIDR to use when creating default VPCs&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vpc.networkaclspervpc&lt;/td>
+&lt;td style="text-align:left">Maximum number of network ACLs for each VPC.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vpc.reservedcidrs&lt;/td>
+&lt;td style="text-align:left">Comma separated list of reserved CIDRs&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vpc.routespertable&lt;/td>
+&lt;td style="text-align:left">Maximum number of routes for each route table.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vpc.routetablespervpc&lt;/td>
+&lt;td style="text-align:left">Maximum number of route tables for each VPC.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vpc.rulespernetworkacl&lt;/td>
+&lt;td style="text-align:left">Maximum number of rules per direction for each network ACL.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vpc.rulespersecuritygroup&lt;/td>
+&lt;td style="text-align:left">Maximum number of associated security groups for each network interface .&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vpc.securitygroupspernetworkinterface&lt;/td>
+&lt;td style="text-align:left">Maximum number of associated security groups for each network interface .&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vpc.securitygroupspervpc&lt;/td>
+&lt;td style="text-align:left">Maximum number of security groups for each VPC.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.vpc.subnetspervpc&lt;/td>
+&lt;td style="text-align:left">Maximum number of subnets for each VPC.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.autoscaling_group_deleted_max_delete_retry_secs&lt;/td>
+&lt;td style="text-align:left">The amount of time (in seconds) to wait for an autoscaling group to be deleted after deletion)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.autoscaling_group_zero_instances_max_delete_retry_secs&lt;/td>
+&lt;td style="text-align:left">The amount of time (in seconds) to wait for an autoscaling group to have zero instances during delete&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.cfn_instance_auth_cache&lt;/td>
+&lt;td style="text-align:left">CloudFormation instance credential authentication cache&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.instance_attach_volume_max_create_retry_secs&lt;/td>
+&lt;td style="text-align:left">The amount of time (in seconds) to wait for an instance to have volumes attached after creation)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.instance_running_max_create_retry_secs&lt;/td>
+&lt;td style="text-align:left">The amount of time (in seconds) to wait for an instance to be running after creation)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.instance_terminated_max_delete_retry_secs&lt;/td>
+&lt;td style="text-align:left">The amount of time (in seconds) to wait for an instance to be terminated after deletion)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.max_attributes_per_mapping&lt;/td>
+&lt;td style="text-align:left">The maximum number of attributes allowed in a mapping in a template&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.max_mappings_per_template&lt;/td>
+&lt;td style="text-align:left">The maximum number of mappings allowed in a template&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.max_outputs_per_template&lt;/td>
+&lt;td style="text-align:left">The maximum number of outputs allowed in a template&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.max_parameters_per_template&lt;/td>
+&lt;td style="text-align:left">The maximum number of outputs allowed in a template&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.max_resources_per_template&lt;/td>
+&lt;td style="text-align:left">The maximum number of resources allowed in a template&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.nat_gateway_available_max_create_retry_secs&lt;/td>
+&lt;td style="text-align:left">The amount of time (in seconds) to wait for a nat gateway to be available after create)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.network_interface_attachment_max_create_or_update_retry_secs&lt;/td>
+&lt;td style="text-align:left">The amount of time (in seconds) to wait for a network interface to be attached during create or update)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.network_interface_available_max_create_retry_secs&lt;/td>
+&lt;td style="text-align:left">The amount of time (in seconds) to wait for a network interface to be available after create)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.network_interface_deleted_max_delete_retry_secs&lt;/td>
+&lt;td style="text-align:left">The amount of time (in seconds) to wait for a network interface to be deleted)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.network_interface_detachment_max_delete_or_update_retry_secs&lt;/td>
+&lt;td style="text-align:left">The amount of time (in seconds) to wait for a network interface to detach during delete or update)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.pseudo_param_partition&lt;/td>
+&lt;td style="text-align:left">CloudFormation AWS::Partition (default: eucalyptus)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.pseudo_param_urlsuffix&lt;/td>
+&lt;td style="text-align:left">CloudFormation AWS::URLSuffix (default: dns domain)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.region&lt;/td>
+&lt;td style="text-align:left">The value of AWS::Region and value in CloudFormation ARNs for Region&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.request_template_body_max_length_bytes&lt;/td>
+&lt;td style="text-align:left">The maximum number of bytes in a request-embedded template&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.request_template_url_max_content_length_bytes&lt;/td>
+&lt;td style="text-align:left">The maximum number of bytes in a template referenced via a URL&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.security_group_max_delete_retry_secs&lt;/td>
+&lt;td style="text-align:left">The amount of time (in seconds) to retry security group deletes (may fail if instances from autoscaling group)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.subnet_max_delete_retry_secs&lt;/td>
+&lt;td style="text-align:left">The amount of time (in seconds) to retry subnet deletes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.swf_activity_worker_config&lt;/td>
+&lt;td style="text-align:left">JSON configuration for the cloudformation simple workflow activity worker&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.swf_domain&lt;/td>
+&lt;td style="text-align:left">The simple workflow service domain for cloudformation&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.swf_tasklist&lt;/td>
+&lt;td style="text-align:left">The simple workflow service task list for cloudformation&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.url_domain_whitelist&lt;/td>
+&lt;td style="text-align:left">A comma separated white list of domains (other than Eucalyptus S3 URLs) allowed by CloudFormation URL parameters&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.volume_attachment_max_create_retry_secs&lt;/td>
+&lt;td style="text-align:left">The amount of time (in seconds) to wait for a volume to be attached during create)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.volume_available_max_create_retry_secs&lt;/td>
+&lt;td style="text-align:left">The amount of time (in seconds) to wait for a volume to be available after create)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.volume_deleted_max_delete_retry_secs&lt;/td>
+&lt;td style="text-align:left">The amount of time (in seconds) to wait for a volume to be deleted)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.volume_detachment_max_delete_retry_secs&lt;/td>
+&lt;td style="text-align:left">The amount of time (in seconds) to wait for a volume to detach during delete)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.volume_snapshot_complete_max_delete_retry_secs&lt;/td>
+&lt;td style="text-align:left">The amount of time (in seconds) to wait for a snapshot to be complete (if specified as the deletion policy) before a volume is deleted)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation.wait_condition_bucket_prefix&lt;/td>
+&lt;td style="text-align:left">The prefix of the bucket used for wait condition handles&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudwatch.disable_cloudwatch_service&lt;/td>
+&lt;td style="text-align:left">Set this to true to stop cloud watch alarm evaluation and new alarm/metric data entry&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.dns_listener_address_match&lt;/td>
+&lt;td style="text-align:left">Additional address patterns to listen on for DNS requests.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.enabled&lt;/td>
+&lt;td style="text-align:left">Enable pluggable DNS resolvers. This must be &amp;rsquo;true&amp;rsquo; for any pluggable resolver to work. Also, each resolver may need to be separately enabled.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.search&lt;/td>
+&lt;td style="text-align:left">Comma separated list of domains to search, OS settings used if none specified (a change requires restart).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.server&lt;/td>
+&lt;td style="text-align:left">Comma separated list of name servers; OS settings used if none specified (change requires restart)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.server_pool_max_threads&lt;/td>
+&lt;td style="text-align:left">Server worker thread pool max.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.server_pool_max_threads&lt;/td>
+&lt;td style="text-align:left">Server worker thread pool max.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.instancedata.enabled&lt;/td>
+&lt;td style="text-align:left">Enable the instance-data resolver. dns.enabled must also be &amp;rsquo;true&amp;rsquo;.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.negative_ttl&lt;/td>
+&lt;td style="text-align:left">Time-to-live for negative caching on authoritative records. Since version 5.1.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.ns.enabled&lt;/td>
+&lt;td style="text-align:left">Enable the NS resolver. dns.enabled must also be &amp;rsquo;true&amp;rsquo;.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.recursive.enabled&lt;/td>
+&lt;td style="text-align:left">Enable the recursive DNS resolver. dns.enabled must also be &amp;rsquo;true&amp;rsquo;.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.services.enabled&lt;/td>
+&lt;td style="text-align:left">Enable the service topology resolver. dns.enabled must also be &amp;rsquo;true&amp;rsquo;.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.split_horizon.enabled&lt;/td>
+&lt;td style="text-align:left">Enable the split-horizon DNS resolution for internal instance public DNS name queries. dns.enabled must also be &amp;rsquo;true'.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.spoof_regions.enabled&lt;/td>
+&lt;td style="text-align:left">Enable the spoofing resolver which allows for AWS DNS name emulation for instances.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.spoof_regions.region_name&lt;/td>
+&lt;td style="text-align:left">Internal region name. If set, the region name to expect as the second label in the DNS name. For example, to treat your Eucalyptus install like a region named &amp;rsquo;eucalyptus&amp;rsquo;, set this value to eucalyptus. Then, e.g., autoscaling.eucalyptus.amazonaws.com will resolve to the service address when using this DNS server. The specified name creates a pseudo-region with DNS names like ec2.pseudo-region.amazonaws.com will resolve to Eucalyptus endpoints from inside of instances. Here ec2 is any service name supported by Eucalyptus. Those that are not supported will continue to resolve through AWS&amp;rsquo;s DNS.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.spoof_regions.spoof_aws_default_regions&lt;/td>
+&lt;td style="text-align:left">Enable spoofing of the default AWS DNS names, e.g., ec2.amazonaws.com would resolve to the ENABLED Cloud Controller. Here ec2 is any service name supported by Eucalyptus. Those that are not supported will continue to resolve through AWS&amp;rsquo;s DNS.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.spoof_regions.spoof_aws_regions&lt;/td>
+&lt;td style="text-align:left">Enable spoofing for the normal AWS regions, e.g., ec2.us-east-1.amazonaws.com would resolve to the ENABLED Cloud Controller. Here ec2 is any service name supported by Eucalyptus. Those that are not supported will continue to resolve through AWS&amp;rsquo;s DNS.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.tcp.timeout_seconds&lt;/td>
+&lt;td style="text-align:left">Variable controlling tcp handler timeout in seconds.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.ttl&lt;/td>
+&lt;td style="text-align:left">Default time-to-live for authoritative records. Since version 5.1.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">dns.dns_listener_port&lt;/td>
+&lt;td style="text-align:left">Port number to listen on for DNS requests&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.bucket_creation_wait_interval_seconds&lt;/td>
+&lt;td style="text-align:left">Interval, in seconds, during which buckets in creating-state are valid. After this interval, the operation is assumed failed.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.bucket_naming_restrictions&lt;/td>
+&lt;td style="text-align:left">The S3 bucket naming restrictions to enforce. Values are &amp;lsquo;dns-compliant&amp;rsquo; or &amp;rsquo;extended&amp;rsquo;. Default is &amp;rsquo;extended&amp;rsquo;. dns_compliant is non-US region S3 names, extended is for US-Standard Region naming. See  &lt;a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html.%5B%5D()">http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html.[]()&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.bucket_reserved_cnames&lt;/td>
+&lt;td style="text-align:left">List of host names that may not be used as bucket cnames&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.cleanup_task_interval_seconds&lt;/td>
+&lt;td style="text-align:left">Interval, in seconds, at which cleanup tasks are initiated for removing old/stale objects.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.dogetputoncopyfail&lt;/td>
+&lt;td style="text-align:left">Should provider client attempt a GET / PUT when backend does not support Copy operation&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.failed_put_timeout_hrs&lt;/td>
+&lt;td style="text-align:left">Number of hours to wait for object PUT operations to be allowed to complete before cleanup.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.max_buckets_per_account&lt;/td>
+&lt;td style="text-align:left">Maximum number of buckets per account&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.max_tags&lt;/td>
+&lt;td style="text-align:left">Maximum number of user defined tags for a bucket&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.max_total_reporting_capacity_gb&lt;/td>
+&lt;td style="text-align:left">Total ObjectStorage storage capacity for Objects solely for reporting usage percentage. Not a size restriction. No enforcement of this value&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.providerclient&lt;/td>
+&lt;td style="text-align:left">Object Storage Provider client to use for backend&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.queue_size&lt;/td>
+&lt;td style="text-align:left">Channel buffer queue size for uploads&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.queue_timeout&lt;/td>
+&lt;td style="text-align:left">Channel buffer queue timeout (in seconds)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.s3client.buffer_size&lt;/td>
+&lt;td style="text-align:left">Internal S3 client buffer size&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.s3client.connection_timeout_ms&lt;/td>
+&lt;td style="text-align:left">Internal S3 client connection timeout in ms&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.s3client.max_connections&lt;/td>
+&lt;td style="text-align:left">Internal S3 client maximum connections&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.s3client.max_error_retries&lt;/td>
+&lt;td style="text-align:left">Internal S3 client maximum retries on error&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.s3client.socket_read_timeout_ms&lt;/td>
+&lt;td style="text-align:left">Internal S3 client socket read timeout in ms&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.s3provider.s3accesskey&lt;/td>
+&lt;td style="text-align:left">Local Store S3 Access Key.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.s3provider.s3endpoint&lt;/td>
+&lt;td style="text-align:left">External S3 endpoint.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.s3provider.s3secretkey&lt;/td>
+&lt;td style="text-align:left">Local Store S3 Secret Key.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.s3provider.s3usebackenddns&lt;/td>
+&lt;td style="text-align:left">Use DNS virtual-hosted-style bucket names for communication to service backend.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">objectstorage.s3provider.s3usehttps&lt;/td>
+&lt;td style="text-align:left">Use HTTPS for communication to service backend.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">region.region_enable_ssl&lt;/td>
+&lt;td style="text-align:left">Enable SSL (HTTPS) for regions.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">region.region_name&lt;/td>
+&lt;td style="text-align:left">Region name.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">region.region_ssl_ciphers&lt;/td>
+&lt;td style="text-align:left">Ciphers to use for region SSL&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">region.region_ssl_default_cas&lt;/td>
+&lt;td style="text-align:left">Use default CAs for region SSL connections.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">region.region_ssl_protocols&lt;/td>
+&lt;td style="text-align:left">Protocols to use for region SSL&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">region.region_ssl_verify_hostnames&lt;/td>
+&lt;td style="text-align:left">Verify hostnames for region SSL connections.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.imaging.import_task_expiration_hours&lt;/td>
+&lt;td style="text-align:left">expiration hours of import volume/instance tasks&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.imaging.import_task_timeout_minutes&lt;/td>
+&lt;td style="text-align:left">expiration time in minutes of import tasks&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.imaging.worker.availability_zones&lt;/td>
+&lt;td style="text-align:left">availability zones for imaging worker&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.imaging.worker.configured&lt;/td>
+&lt;td style="text-align:left">Prepare imaging service so a worker can be launched. If something goes south with the service there is a big chance that setting it to false and back to true would solve issues.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.imaging.worker.expiration_days&lt;/td>
+&lt;td style="text-align:left">the days after which imaging work VMs expire&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.imaging.worker.healthcheck&lt;/td>
+&lt;td style="text-align:left">enabling imaging worker health check&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.imaging.worker.image&lt;/td>
+&lt;td style="text-align:left">EMI containing imaging worker&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.imaging.worker.init_script&lt;/td>
+&lt;td style="text-align:left">bash script that will be executed before service configuration and start up&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.imaging.worker.instance_type&lt;/td>
+&lt;td style="text-align:left">instance type for imaging worker&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.imaging.worker.keyname&lt;/td>
+&lt;td style="text-align:left">keyname to use when debugging imaging worker&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.imaging.worker.log_server&lt;/td>
+&lt;td style="text-align:left">address/ip of the server that collects logs from imaging wokrers&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.imaging.worker.log_server_port&lt;/td>
+&lt;td style="text-align:left">UDP port that log server is listening to&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.imaging.worker.log_server_port&lt;/td>
+&lt;td style="text-align:left">UDP port that log server is listening to&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.imaging.worker.ntp_server&lt;/td>
+&lt;td style="text-align:left">address of the NTP server used by imaging worker&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.loadbalancing.dns_resolver_enabled&lt;/td>
+&lt;td style="text-align:left">Enable the load balancing DNS resolver. dns.enabled must also be &amp;rsquo;true&amp;rsquo;.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.loadbalancing.dns_subdomain&lt;/td>
+&lt;td style="text-align:left">loadbalancer dns subdomain&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.loadbalancing.dns_ttl&lt;/td>
+&lt;td style="text-align:left">loadbalancer dns ttl value&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.loadbalancing.max_tags&lt;/td>
+&lt;td style="text-align:left">Maximum number of user defined tags for a load balancer&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.loadbalancing.restricted_ports&lt;/td>
+&lt;td style="text-align:left">The ports restricted for use as a loadbalancer port. Format should be port(, port) or port-port&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.loadbalancing.vm_per_zone&lt;/td>
+&lt;td style="text-align:left">number of VMs per loadbalancer zone&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.loadbalancing.vpc_cidrs&lt;/td>
+&lt;td style="text-align:left">Comma separated list of CIDRs for use with ELB VPCs&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.loadbalancing.worker.app_cookie_duration&lt;/td>
+&lt;td style="text-align:left">duration of app-controlled cookie to be kept in-memory (hours)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.loadbalancing.worker.expiration_days&lt;/td>
+&lt;td style="text-align:left">the days after which the loadbalancer VMs expire&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.loadbalancing.worker.image&lt;/td>
+&lt;td style="text-align:left">EMI containing haproxy and the controller&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.loadbalancing.worker.init_script&lt;/td>
+&lt;td style="text-align:left">bash script that will be executed before service configuration and start up&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.loadbalancing.worker.instance_type&lt;/td>
+&lt;td style="text-align:left">instance type for loadbalancer instances&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.loadbalancing.worker.keyname&lt;/td>
+&lt;td style="text-align:left">keyname to use when debugging loadbalancer VMs&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.loadbalancing.worker.ntp_server&lt;/td>
+&lt;td style="text-align:left">the address of the NTP server used by loadbalancer VMs&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.simpleworkflow.activitytypesperdomain&lt;/td>
+&lt;td style="text-align:left">Maximum number of activity types for each domain.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.simpleworkflow.deprecatedactivitytyperetentionduration&lt;/td>
+&lt;td style="text-align:left">Deprecated activity type retention time.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.simpleworkflow.deprecateddomainretentionduration&lt;/td>
+&lt;td style="text-align:left">Deprecated domain minimum retention time.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.simpleworkflow.deprecatedworkflowtyperetentionduration&lt;/td>
+&lt;td style="text-align:left">Deprecated workflow type minimum retention time.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.simpleworkflow.openactivitytasksperworkflowexecution&lt;/td>
+&lt;td style="text-align:left">Maximum number of open activity tasks for each workflow execution.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.simpleworkflow.opentimersperworkflowexecution&lt;/td>
+&lt;td style="text-align:left">Maximum number of open timers for each workflow execution.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.simpleworkflow.openworkflowexecutionsperdomain&lt;/td>
+&lt;td style="text-align:left">Maximum number of open workflow executions for each domain.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.simpleworkflow.systemonly&lt;/td>
+&lt;td style="text-align:left">Service available for internal/administrator use only.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.simpleworkflow.workflowexecutionduration&lt;/td>
+&lt;td style="text-align:left">Maximum workflow execution time.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.simpleworkflow.workflowexecutionhistorysize&lt;/td>
+&lt;td style="text-align:left">Maximum number of events per workflow execution.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.simpleworkflow.workflowexecutionretentionduration&lt;/td>
+&lt;td style="text-align:left">Maximum workflow execution history retention time.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">services.simpleworkflow.workflowtypesperdomain&lt;/td>
+&lt;td style="text-align:left">Maximum number of workflow types for each domain.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">stats.config_update_check_interval_seconds&lt;/td>
+&lt;td style="text-align:left">Interval, in seconds, at which the sensor configuration is checked for changes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">stats.enable_stats&lt;/td>
+&lt;td style="text-align:left">Enable Eucalyptus internal monitoring stats&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">stats.event_emitter&lt;/td>
+&lt;td style="text-align:left">Internal stats emitter FQ classname used to send metrics to monitoring system&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">stats.file_system_emitter.stats_data_permissions&lt;/td>
+&lt;td style="text-align:left">group permissions to place on stats data files in string form. eg. rwxr-x&amp;ndash;x&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">stats.file_system_emitter.stats_group_name&lt;/td>
+&lt;td style="text-align:left">group name that owns stats data files&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">storage.global_total_snapshot_size_limit_gb&lt;/td>
+&lt;td style="text-align:left">Maximum total snapshot capacity (GB)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">system.dns.dnsdomain&lt;/td>
+&lt;td style="text-align:left">Domain name to use for DNS.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">system.dns.nameserver&lt;/td>
+&lt;td style="text-align:left">Nameserver hostname.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">system.dns.nameserveraddress&lt;/td>
+&lt;td style="text-align:left">Nameserver IP address.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">system.dns.nameserveraddress&lt;/td>
+&lt;td style="text-align:left">Nameserver IP address.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">system.dns.registrationid&lt;/td>
+&lt;td style="text-align:left">Unique ID of this cloud installation.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">system.exec.io_chunk_size&lt;/td>
+&lt;td style="text-align:left">Size of IO chunks for streaming IO&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">system.exec.max_restricted_concurrent_ops&lt;/td>
+&lt;td style="text-align:left">Maximum number of concurrent processes which match any of the patterns in system.exec.restricted_concurrent_ops.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">system.exec.restricted_concurrent_ops&lt;/td>
+&lt;td style="text-align:left">Comma-separated list of commands which are restricted by system.exec.max_restricted_concurrent_ops.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">tagging.max_tags_per_resource&lt;/td>
+&lt;td style="text-align:left">The maximum number of tags per resource for each account&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">tokens.disabledactions&lt;/td>
+&lt;td style="text-align:left">Actions to disable&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">tokens.enabledactions&lt;/td>
+&lt;td style="text-align:left">Actions to enable (ignored if empty)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">tokens.rolearnaliaswhitelist&lt;/td>
+&lt;td style="text-align:left">Permitted account aliases for role Amazon Resource Names (ARNs). Value is a list, for example: eucalyptus,aws,dev*,prod* in the case where multiple aliases are permitted. Default: eucalyptus&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">tokens.webidentityoidcdiscoverycache&lt;/td>
+&lt;td style="text-align:left">Cache settings for discovered OpenID Connect metadata: provider configuration and keys. Works with tokens.webidentityoidcdiscoveryrefresh. Default: maximumSize=20, expireAfterWrite=15m&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">tokens.webidentityoidcdiscoveryrefresh&lt;/td>
+&lt;td style="text-align:left">OpenID Connect discovery cache refresh expiry. Controls the time in seconds between checks for updated OIDC metadata. Works with tokens.webidentityoidcdiscoverycache. Default: 60&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">tokens.webidentitysignaturealgorithmwhitelist&lt;/td>
+&lt;td style="text-align:left">List of JSON Web Signature algorithms to allow in web identity tokens. The algorithm whitelist can be used to permit use of these signature algorithms: RS256, RS384, RS512, PS256, PS384, PS512. Default: RS512&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">tokens.webidentitytokenskew&lt;/td>
+&lt;td style="text-align:left">A clock skew value in seconds. The Web identity token expiry / not before validation is allowed within the configured skew. Default: 60&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">walrusbackend.storagedir&lt;/td>
+&lt;td style="text-align:left">Path to buckets storage&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.blockstoragemanager&lt;/td>
+&lt;td style="text-align:left">EBS Block Storage Manager to use for backend&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.cephconfigfile&lt;/td>
+&lt;td style="text-align:left">Absolute path to Ceph configuration (ceph.conf) file. Default value is &amp;lsquo;/etc/ceph/ceph.conf&amp;rsquo;&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.cephkeyringfile&lt;/td>
+&lt;td style="text-align:left">Absolute path to Ceph keyring (ceph.client.eucalyptus.keyring) file. Default value is &amp;lsquo;/etc/ceph/ceph.client.eucalyptus.keyring&amp;rsquo;&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.cephsnapshotpools&lt;/td>
+&lt;td style="text-align:left">Ceph storage pool(s) made available to Eucalyptus for EBS snapshots. Use a comma separated list for configuring multiple pools. Default value is &amp;lsquo;rbd&amp;rsquo;&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.cephuser&lt;/td>
+&lt;td style="text-align:left">Ceph username employed by Eucalyptus operations. Default value is &amp;rsquo;eucalyptus'&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.cephvolumepools&lt;/td>
+&lt;td style="text-align:left">Ceph storage pool(s) made available to Eucalyptus for EBS volumes. Use a comma separated list for configuring multiple pools. Default value is &amp;lsquo;rbd&amp;rsquo;&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.chapuser&lt;/td>
+&lt;td style="text-align:left">User ID for CHAP authentication&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.dasdevice&lt;/td>
+&lt;td style="text-align:left">Direct attached storage device location&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.maxconcurrentsnapshots&lt;/td>
+&lt;td style="text-align:left">Maximum number of snapshots processed on the block storage backend at a given time&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.maxconcurrentsnapshottransfers&lt;/td>
+&lt;td style="text-align:left">Maximum number of snapshots that can be uploaded to or downloaded from objectstorage gateway at a given time&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.maxconcurrentvolumes&lt;/td>
+&lt;td style="text-align:left">Maximum number of volumes processed on the block storage backend at a given time&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.maxsnapshotdeltas&lt;/td>
+&lt;td style="text-align:left">A non-zero integer value enables upload of incremental snapshots when possible. The configured value indicates the SC to create/upload that many snapshot deltas for a given EBS volume before triggering a full upload of the snapshot contents. Between any two consecutive full snapshot uploads for a given EBS volume, there will be at most maxsnapshotdeltas number of incremental snapshot uploads. A value of 0 indicates that a newly created snapshot will always be uploaded in its entirety (that is, no deltas). Snapshot deltas are only used when your backend is Ceph-RBD. ZONE.storage.shouldtransfersnapshots must be set to true to enable snapshot deltas.Default: 0&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.maxsnapshotpartsqueuesize&lt;/td>
+&lt;td style="text-align:left">Maximum number of snapshot parts per snapshot that can be spooled on the disk&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.maxtotalvolumesizeingb&lt;/td>
+&lt;td style="text-align:left">Total disk space reserved for volumes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.maxvolumesizeingb&lt;/td>
+&lt;td style="text-align:left">Max volume size&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.ncpaths&lt;/td>
+&lt;td style="text-align:left">iSCSI Paths for NC. Default value is &amp;rsquo;nopath'&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.readbuffersizeinmb&lt;/td>
+&lt;td style="text-align:left">Buffer size in MB for reading data from snapshot when uploading snapshot to objectstorage gateway&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.resourceprefix&lt;/td>
+&lt;td style="text-align:left">Prefix for resource name on SAN&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.resourcesuffix&lt;/td>
+&lt;td style="text-align:left">Suffix for resource name on SAN&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.sanhost&lt;/td>
+&lt;td style="text-align:left">Hostname for SAN device.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.sanpassword&lt;/td>
+&lt;td style="text-align:left">Password for SAN device.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.sanuser&lt;/td>
+&lt;td style="text-align:left">Username for SAN device.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.scpaths&lt;/td>
+&lt;td style="text-align:left">iSCSI Paths for SC. Default value is &amp;rsquo;nopath'&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.shouldtransfersnapshots&lt;/td>
+&lt;td style="text-align:left">Enable snapshot transfer to the OSG. Setting it to false will disable storing snapshots (full or delta) in object storage. While a false setting will reduce object storage requirements, it also prevents the ability to use a snapshot from one availability zone to create a volume in another zone. You can still take/use snapshots even when the setting is false, but you can only use a snapshot to create a volume in the same zone. Must be set to true to use snapshot deltas, which are managed by the ZONE.storage.maxsnapshotdeltas property.Default: true&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.snapexpiration&lt;/td>
+&lt;td style="text-align:left">Time interval in minutes after which Storage Controller metadata for snapshots that have been physically removed from the block storage backend will be deleted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.snapshotpartsizeinmb&lt;/td>
+&lt;td style="text-align:left">Snapshot part size in MB for snapshot transfers using multipart upload. Minimum part size is 5MB&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.snapshottransfertimeoutinhours&lt;/td>
+&lt;td style="text-align:left">Snapshot upload wait time in hours after which the upload will be cancelled&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.storeprefix&lt;/td>
+&lt;td style="text-align:left">Prefix for ISCSI device&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.tid&lt;/td>
+&lt;td style="text-align:left">Next Target ID for ISCSI device&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.timeoutinmillis&lt;/td>
+&lt;td style="text-align:left">Timeout value in milli seconds for storage operations&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.volexpiration&lt;/td>
+&lt;td style="text-align:left">Time interval in minutes after which Storage Controller metadata for volumes that have been physically removed from the block storage backend will be deleted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.volumesdir&lt;/td>
+&lt;td style="text-align:left">Storage volumes directory.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.writebuffersizeinmb&lt;/td>
+&lt;td style="text-align:left">Buffer size in MB for writing data to snapshot when downloading snapshot from object storage gateway&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ZONE.storage.zerofillvolumes&lt;/td>
+&lt;td style="text-align:left">Should volumes be zero filled.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item></channel></rss>

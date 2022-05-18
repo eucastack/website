@@ -1,268 +1,273 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Goldydocs – New Releases</title><link>https://www.eucastack.io/blog/releases/</link><description>Recent content in New Releases on Goldydocs</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/blog/releases/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Another Great Release</title><link>https://www.eucastack.io/blog/2018/01/04/another-great-release/</link><pubDate>Thu, 04 Jan 2018 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2018/01/04/another-great-release/</guid><description>
-&lt;p>Text can be &lt;strong>bold&lt;/strong>, &lt;em>italic&lt;/em>, or &lt;del>strikethrough&lt;/del>. &lt;a href="https://github.com">Links&lt;/a> should be blue with no underlines (unless hovered over).&lt;/p>
-&lt;p>There should be whitespace between paragraphs. There should be whitespace between paragraphs. There should be whitespace between paragraphs. There should be whitespace between paragraphs.&lt;/p>
-&lt;p>There should be whitespace between paragraphs. There should be whitespace between paragraphs. There should be whitespace between paragraphs. There should be whitespace between paragraphs.&lt;/p>
-&lt;blockquote>
-&lt;p>There should be no margin above this first sentence.&lt;/p>
-&lt;p>Blockquotes should be a lighter gray with a border along the left side in the secondary color.&lt;/p>
-&lt;p>There should be no margin below this final sentence.&lt;/p>
-&lt;/blockquote>
-&lt;h2 id="first-header">First Header&lt;/h2>
-&lt;p>This is a normal paragraph following a header. Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong. Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong. Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong.&lt;/p>
-&lt;p>Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong.&lt;/p>
-&lt;p>On big screens, paragraphs and headings should not take up the full container width, but we want tables, code blocks and similar to take the full width.&lt;/p>
-&lt;p>Lorem markdownum tuta hospes stabat; idem saxum facit quaterque repetito
-occumbere, oves novem gestit haerebat frena; qui. Respicit recurvam erat:
-pignora hinc reppulit nos &lt;strong>aut&lt;/strong>, aptos, ipsa.&lt;/p>
-&lt;p>Meae optatos &lt;em>passa est&lt;/em> Epiros utiliter &lt;em>Talibus niveis&lt;/em>, hoc lata, edidit.
-Dixi ad aestum.&lt;/p>
-&lt;h2 id="header-2">Header 2&lt;/h2>
-&lt;blockquote>
-&lt;p>This is a blockquote following a header. Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong.&lt;/p>
-&lt;/blockquote>
-&lt;h3 id="header-3">Header 3&lt;/h3>
-&lt;pre tabindex="0">&lt;code>This is a code block following a header.
-&lt;/code>&lt;/pre>&lt;h4 id="header-4">Header 4&lt;/h4>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – New Releases</title><link>https://www.eucastack.io/blog/releases/</link><description>Recent content in New Releases on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/blog/releases/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Eucalyptus 5.1 Released</title><link>https://www.eucastack.io/blog/2021/05/10/eucalyptus-5.1-released/</link><pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2021/05/10/eucalyptus-5.1-released/</guid><description>
+&lt;p>Eucalyptus Cloud 5.1 has been released with important compatibility and functionality fixes and is recommended for all 5.x deployments.&lt;/p>
+&lt;p>Fixes of note in this release are:&lt;/p>
 &lt;ul>
-&lt;li>This is an unordered list following a header.&lt;/li>
-&lt;li>This is an unordered list following a header.&lt;/li>
-&lt;li>This is an unordered list following a header.&lt;/li>
+&lt;li>CloudFormation AWS::IAM::InstanceProfile add InstanceProfileName property&lt;/li>
+&lt;li>ELB cannot connect to https listener&lt;/li>
+&lt;li>S3 support for multipart copy&lt;/li>
+&lt;li>Web services HTTPS (TLS) should use larger ephemeral Diffie-Hellman key size&lt;/li>
 &lt;/ul>
-&lt;h5 id="header-5">Header 5&lt;/h5>
-&lt;ol>
-&lt;li>This is an ordered list following a header.&lt;/li>
-&lt;li>This is an ordered list following a header.&lt;/li>
-&lt;li>This is an ordered list following a header.&lt;/li>
-&lt;/ol>
-&lt;h6 id="header-6">Header 6&lt;/h6>
+&lt;p>You can find the full list of
+&lt;a href="https://github.com/Corymbia/eucalyptus/releases/tag/v5.1.0">resolved issues&lt;/a>
+in the release notes / milestones.&lt;/p></description></item><item><title>Blog: Eucalyptus 5 Released</title><link>https://www.eucastack.io/blog/2020/12/21/eucalyptus-5-released/</link><pubDate>Mon, 21 Dec 2020 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2020/12/21/eucalyptus-5-released/</guid><description>
+&lt;p>Eucalyptus Cloud 5 is now available, this major release includes a new Ansible based installer and
+technical previews for Route53 and SQS (Simple Queue Service)&lt;/p>
+&lt;p>In addition to the headline features, there are many smaller changes to improve the AWS compatibility
+and performance of Eucalyptus Cloud.&lt;/p>
+&lt;h2 id="new-in-eucalyptus-5">New in Eucalyptus 5&lt;/h2>
+&lt;p>Some new features in Eucalyptus 5 are:&lt;/p>
+&lt;ul>
+&lt;li>Ansible &lt;a href="https://docs.eucalyptus.cloud/eucalyptus/5/install_guide/automated_install/">installer&lt;/a>&lt;/li>
+&lt;li>Auto Scaling instance protection&lt;/li>
+&lt;li>CloudFormation support for YAML templates&lt;/li>
+&lt;li>EC2 iam instance profile association&lt;/li>
+&lt;li>EC2 long resource identifiers&lt;/li>
+&lt;li>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/5/user_guide/route53_intro/">Route53 service&lt;/a> technical preview&lt;/li>
+&lt;li>S3 bucket policy support&lt;/li>
+&lt;li>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/5/user_guide/sqs_intro/">SQS service&lt;/a> technical preview&lt;/li>
+&lt;/ul>
+&lt;p>Other notable changes in Eucalyptus 5 are:&lt;/p>
+&lt;ul>
+&lt;li>Cluster controller now part of main cloud service&lt;/li>
+&lt;li>Java runtime updated to version 11&lt;/li>
+&lt;li>Reporting service removed&lt;/li>
+&lt;/ul>
+&lt;p>Full details of changes in Eucalyptus 5 are available in the
+&lt;a href="https://github.com/orgs/Corymbia/projects/3">Corymbia github project&lt;/a> and
+&lt;a href="https://github.com/Corymbia/eucalyptus/milestone/3?closed=1">milestone&lt;/a>&lt;/p>
+&lt;h2 id="try-eucalyptus-5">Try Eucalyptus 5&lt;/h2>
+&lt;p>You can try Eucalyptus 5 with a FastStart install by running:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; bash &amp;lt;&lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>curl -Ls https://get.eucalyptus.cloud&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>as root, on a CentOS/RHEL 7.9 minimal install with a few IP addresses to spare.&lt;/p>
+&lt;h2 id="miss-eucalyptus-44x">Miss Eucalyptus 4.4.x?&lt;/h2>
+&lt;p>Eucalyptus 5 look a little different from 4.4.x due to changes with instance types and long
+identifiers. If you want to try Eucalyptus 5 but with a 4.4.x feel, you can make changes as
+follows.&lt;/p>
+&lt;p>To disable EC2 long identifiers, run the following as an administrator:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; euctl cloud.short_identifier_prefixes&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#4e9a06">&amp;#39;*&amp;#39;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>changing this setting will cause any new resources to be created with short identifiers (where
+supported). You can have a mix of short and long identifiers depending on settings when those
+resources were created.&lt;/p>
+&lt;p>To change instance types to be the same as 4.4.x, run the following as an administrator:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; euform-create-stack &lt;span style="color:#4e9a06">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#4e9a06">&lt;/span> --template-file /usr/share/eucalyptus/doc/ec2-instance-types-eucalyptus-4.yaml &lt;span style="color:#4e9a06">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#4e9a06">&lt;/span> eucalyptus-4-instance-types
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl cloud.vmtypes.default_type_name&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl services.imaging.worker.instance_type&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl services.loadbalancing.worker.instance_type&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>this will enable 4.4.x instance types and disable the default Eucalyptus 5 instance types. The
+default instance type and the types used for services are updated accordingly.&lt;/p>
+&lt;h2 id="moving-to-eucalyptus-5">Moving to Eucalyptus 5?&lt;/h2>
+&lt;p>Upgrading from previous releases to Eucalyptus 5 is not supported. If moving to Eucalyptus 5
+data such as S3 objects and EBS volumes can be copied from existing deployments before they
+are retired.&lt;/p>
+&lt;h1 id="thanks">Thanks!&lt;/h1>
+&lt;p>Thanks for giving Eucalyptus 5 a try and please use &lt;a href="https://github.com/Corymbia/eucalyptus/issues">github issues&lt;/a>
+to report any problems you encounter to help improve Eucalyptus.&lt;/p></description></item><item><title>Blog: Eucalyptus 4.4.6 Released</title><link>https://www.eucastack.io/blog/2020/12/01/eucalyptus-4.4.6-released/</link><pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2020/12/01/eucalyptus-4.4.6-released/</guid><description>
+&lt;p>Eucalyptus Cloud 4.4.6 has been released, updating our OS support to allow use of CentOS and RHEL 7.9 in addition to
+the existing support for 7.x.&lt;/p>
+&lt;p>This release has some important compatibility and functionality fixes and is recommended for all 4.4.x deployments.&lt;/p>
+&lt;p>As with version 4.4.5, this release was tested using 2.9.0 qemu packages which should be installed when upgrading from
+earlier versions.&lt;/p>
+&lt;p>Some fixes of note in this release are:&lt;/p>
+&lt;ul>
+&lt;li>EC2 instance metadata v2 support&lt;/li>
+&lt;li>EC2 node controller crash when running windows instance&lt;/li>
+&lt;/ul>
+&lt;p>You can find the full list of
+&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.4.6/index.html#release-notes/4.4.6/4.4.6_rn_resolved.html">resolved issues&lt;/a>
+in the release notes.&lt;/p>
+&lt;p>If upgrading from 4.4.2 or earlier, note that the RPM repository location has changed, updated Eucalyptus and Euca2ools
+release RPMs should be installed as detailed in the
+&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.4.6/install-guide/installing_euca_release.html">install guide&lt;/a>
+so that the new downloads.eucalyptus.cloud location is used.&lt;/p></description></item><item><title>Blog: Eucalyptus 5 beta 1 Released</title><link>https://www.eucastack.io/blog/2019/04/01/eucalyptus-5-beta-1-released/</link><pubDate>Mon, 01 Apr 2019 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2019/04/01/eucalyptus-5-beta-1-released/</guid><description>
+&lt;p>Eucalyptus Cloud 5 beta 1 has been released, this release provides early access for trying out new
+functionality on non-production deployments.&lt;/p>
+&lt;p>We are exited to make 5.0 available as a preview to a wider audience to get feedback on new features
+in advance of the final release of Eucalyptus Cloud 5.&lt;/p>
+&lt;h2 id="new-in-eucalyptus-5">New in Eucalyptus 5&lt;/h2>
+&lt;p>Some new features in Eucalyptus 5 are:&lt;/p>
+&lt;ul>
+&lt;li>Auto Scaling instance protection&lt;/li>
+&lt;li>CloudFormation support for YAML templates&lt;/li>
+&lt;li>EC2 iam instance profile association&lt;/li>
+&lt;li>EC2 long resource identifiers&lt;/li>
+&lt;li>S3 bucket policy support&lt;/li>
+&lt;li>SQS service technical preview&lt;/li>
+&lt;/ul>
+&lt;p>Other notable changes in Eucalyptus 5 are:&lt;/p>
+&lt;ul>
+&lt;li>Cluster controller now part of main cloud service&lt;/li>
+&lt;li>Java runtime updated to version 11&lt;/li>
+&lt;li>Reporting service removed&lt;/li>
+&lt;/ul>
+&lt;p>Full details of changes in Eucalyptus 5 are available in the
+&lt;a href="https://github.com/orgs/Corymbia/projects/3">Corymbia github project&lt;/a>&lt;/p>
+&lt;h2 id="try-eucalyptus-5">Try Eucalyptus 5&lt;/h2>
+&lt;p>You can try Eucalyptus 5 with a FastStart install by running:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; bash &amp;lt;&lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>curl -Ls https://eucalyptus.cloud/install5ea&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>as root, on a CentOS 7.6 minimal install with a few IP addresses to spare.&lt;/p>
+&lt;h2 id="miss-eucalyptus-44x">Miss Eucalyptus 4.4.x?&lt;/h2>
+&lt;p>Eucalyptus 5 look a little different from 4.4.x due to changes with instance types and long
+identifiers. If you want to try Eucalyptus 5 but with a 4.4.x feel, you can make changes as
+follows.&lt;/p>
+&lt;p>To disable EC2 long identifiers, run the following as an administrator:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; euctl cloud.short_identifier_prefixes&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#4e9a06">&amp;#39;*&amp;#39;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>changing this setting will cause any new resources to be created with short identifiers (where
+supported). You can have a mix of short and long identifiers depending on settings when those
+resources were created.&lt;/p>
+&lt;p>To change instance types to be the same as 4.4.x, run the following as an administrator:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; euform-create-stack &lt;span style="color:#4e9a06">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#4e9a06">&lt;/span> --template-file /usr/share/eucalyptus/doc/ec2-instance-types-eucalyptus-4.yaml &lt;span style="color:#4e9a06">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#4e9a06">&lt;/span> eucalyptus-4-instance-types
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl cloud.vmtypes.default_type_name&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl services.imaging.worker.instance_type&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl services.loadbalancing.worker.instance_type&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>this will enable 4.4.x instance types and disable the default Eucalyptus 5 instance types. The
+default instance type and the types used for services are updated accordingly.&lt;/p>
+&lt;h1 id="thanks">Thanks!&lt;/h1>
+&lt;p>Thanks for giving Eucalyptus 5 a try and please use &lt;a href="https://github.com/Corymbia/eucalyptus/issues">github issues&lt;/a>
+to report any problems you encounter to help improve the final release of Eucalyptus 5.&lt;/p></description></item><item><title>Blog: Eucalyptus 4.4.5 Released</title><link>https://www.eucastack.io/blog/2018/12/31/eucalyptus-4.4.5-released/</link><pubDate>Mon, 31 Dec 2018 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2018/12/31/eucalyptus-4.4.5-released/</guid><description>
+&lt;p>Eucalyptus Cloud 4.4.5 has been released, updating our OS support to allow use of CentOS and RHEL 7.6 in addition to
+the existing support for 7.3, 7.4, and 7.5.&lt;/p>
+&lt;p>This release has some important compatibility and functionality fixes and is recommended for all 4.4.x deployments.&lt;/p>
+&lt;p>As with version 4.4.4, this release was tested using 2.9.0 qemu packages which should be installed when upgrading from
+earlier versions.&lt;/p>
+&lt;p>Some fixes of note in this release are:&lt;/p>
+&lt;ul>
+&lt;li>The object storage gateway now supports version two object listing&lt;/li>
+&lt;li>EC2 instances for some images could hang when starting&lt;/li>
+&lt;/ul>
+&lt;p>You can find the full list of
+&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.4.5/index.html#release-notes/4.4.5/4.4.5_rn_resolved.html">resolved issues&lt;/a>
+in the release notes.&lt;/p>
+&lt;p>If upgrading from 4.4.2 or earlier, note that the RPM repository location has changed, updated Eucalyptus and Euca2ools
+release RPMs should be installed as detailed in the
+&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.4.5/install-guide/installing_euca_release.html">install guide&lt;/a>
+so that the new downloads.eucalyptus.cloud location is used.&lt;/p></description></item><item><title>Blog: Eucalyptus 4.4.4 Released</title><link>https://www.eucastack.io/blog/2018/07/06/eucalyptus-4.4.4-released/</link><pubDate>Fri, 06 Jul 2018 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2018/07/06/eucalyptus-4.4.4-released/</guid><description>
+&lt;p>Eucalyptus Cloud 4.4.4 has been released, updating our OS support to allow use of CentOS and RHEL 7.5 in addition to
+the existing support for 7.3 and 7.4.&lt;/p>
+&lt;p>This release was tested using updated qemu packages which should be installed when upgrading. This updates qemu to 2.9.0
+from the 2.6.0 version previously distributed.&lt;/p>
+&lt;p>Some fixes of note in this release are:&lt;/p>
+&lt;ul>
+&lt;li>The object storage gateway is updated to use less resources for background maintenance when there are buckets with many objects&lt;/li>
+&lt;li>The node controller would sometimes leave artifacts behind for terminated instances causing unnecessary disk use&lt;/li>
+&lt;/ul>
+&lt;p>You can find the full list of
+&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.4.4/index.html#release-notes/4.4.4/4.4.4_rn_resolved.html">resolved issues&lt;/a>
+in the release notes.&lt;/p>
+&lt;p>If upgrading from 4.4.2 or earlier, note that the RPM repository location has changed, updated Eucalyptus and Euca2ools
+release RPMs should be installed as detailed in the
+&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.4.4/install-guide/installing_euca_release.html">install guide&lt;/a>
+so that the new downloads.eucalyptus.cloud location is used.&lt;/p></description></item><item><title>Blog: Eucalyptus 4.4.3 Released</title><link>https://www.eucastack.io/blog/2018/04/20/eucalyptus-4.4.3-released/</link><pubDate>Fri, 20 Apr 2018 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2018/04/20/eucalyptus-4.4.3-released/</guid><description>
+&lt;p>We are excited to announce the Eucalyptus Cloud 4.4.3 release!&lt;/p>
+&lt;p>There are a couple of changes included that go beyond those in a typical
+maintenance release.&lt;/p>
+&lt;p>The release uses a 2-Clause/Simplified BSD license, which replaces the GPL
+license used by previous releases. Euca2ools and the management console were
+already BSD licensed, so with this release the licensing is consistent across
+the major components.&lt;/p>
+&lt;p>The RPM repository location has changed, updated Eucalyptus and Euca2ools
+release RPMs should be installed as detailed in the
+&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.4.3/install-guide/installing_euca_release.html">install guide&lt;/a>
+so that the new downloads.eucalyptus.cloud location is used.&lt;/p>
+&lt;p>You can find the full list of
+&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.4.3/index.html#release-notes/4.4.3/4.4.3_rn_resolved.html">resolved issues&lt;/a>
+in the release notes.&lt;/p></description></item><item><title>Blog: Eucalyptus Previous Releases</title><link>https://www.eucastack.io/blog/2018/01/01/eucalyptus-previous-releases/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2018/01/01/eucalyptus-previous-releases/</guid><description>
+&lt;p>We know how much you love Eucalyptus 4.4, but we also recognize that
+sometimes a cloud is working well on an older version and upgrading can
+wait.&lt;/p>
+&lt;p>In this post we take a look at how you can use the new
+&lt;code>downloads.eucalyptus.cloud&lt;/code> RPM repositories with older releases, and
+where you can find the related documentation.&lt;/p>
+&lt;h2 id="documentation-for-previous-releases">Documentation for previous releases&lt;/h2>
+&lt;p>The &lt;a href="https://docs.eucalyptus.cloud/">current documentation&lt;/a> has release
+notes that cover previous versions. Other documentation is available for
+previous releases as follows:&lt;/p>
 &lt;table>
 &lt;thead>
 &lt;tr>
-&lt;th>What&lt;/th>
-&lt;th>Follows&lt;/th>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
 &lt;/tr>
 &lt;/thead>
 &lt;tbody>
 &lt;tr>
-&lt;td>A table&lt;/td>
-&lt;td>A header&lt;/td>
+&lt;td>Eucalyptus 4.0&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.0.2/admin-guide-4.0.2.pdf">Admin Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.0.2/console-guide-4.0.2.pdf">Console Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.0.2/image-guide-4.0.2.pdf">Image Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.0.2/install-guide-4.0.2.pdf">Install Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.0.2/user-guide-4.0.2.pdf">User Guide&lt;/a>&lt;/td>
 &lt;/tr>
 &lt;tr>
-&lt;td>A table&lt;/td>
-&lt;td>A header&lt;/td>
+&lt;td>Eucalyptus 4.1&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.1.2/admin-guide-4.1.2.pdf">Admin Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.1.2/console-guide-4.1.2.pdf">Console Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.1.2/image-guide-4.1.2.pdf">Image Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.1.2/install-guide-4.1.2.pdf">Install Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.1.2/user-guide-4.1.2.pdf">User Guide&lt;/a>&lt;/td>
 &lt;/tr>
 &lt;tr>
-&lt;td>A table&lt;/td>
-&lt;td>A header&lt;/td>
+&lt;td>Eucalyptus 4.2&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.2.2/admin-guide-4.2.2.pdf">Admin Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.2.2/console-guide-4.2.2.pdf">Console Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.2.2/image-guide-4.2.2.pdf">Image Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.2.2/install-guide-4.2.2.pdf">Install Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.2.2/user-guide-4.2.2.pdf">User Guide&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Eucalyptus 4.3&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.3.1/admin-guide-4.3.1.pdf">Admin Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.3.1/console-guide-4.3.1.pdf">Console Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.3.1/image-guide-4.3.1.pdf">Image Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.3.1/install-guide-4.3.1.pdf">Install Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.3.1/user-guide-4.3.1.pdf">User Guide&lt;/a>&lt;/td>
 &lt;/tr>
 &lt;/tbody>
 &lt;/table>
-&lt;hr>
-&lt;p>There&amp;rsquo;s a horizontal rule above and below this.&lt;/p>
-&lt;hr>
-&lt;p>Here is an unordered list:&lt;/p>
-&lt;ul>
-&lt;li>Salt-n-Pepa&lt;/li>
-&lt;li>Bel Biv DeVoe&lt;/li>
-&lt;li>Kid &amp;lsquo;N Play&lt;/li>
-&lt;/ul>
-&lt;p>And an ordered list:&lt;/p>
-&lt;ol>
-&lt;li>Michael Jackson&lt;/li>
-&lt;li>Michael Bolton&lt;/li>
-&lt;li>Michael Bublé&lt;/li>
-&lt;/ol>
-&lt;p>And an unordered task list:&lt;/p>
-&lt;ul>
-&lt;li>&lt;input checked="" disabled="" type="checkbox"> Create a sample markdown document&lt;/li>
-&lt;li>&lt;input checked="" disabled="" type="checkbox"> Add task lists to it&lt;/li>
-&lt;li>&lt;input disabled="" type="checkbox"> Take a vacation&lt;/li>
-&lt;/ul>
-&lt;p>And a &amp;ldquo;mixed&amp;rdquo; task list:&lt;/p>
-&lt;ul>
-&lt;li>&lt;input disabled="" type="checkbox"> Steal underpants&lt;/li>
-&lt;li>?&lt;/li>
-&lt;li>&lt;input disabled="" type="checkbox"> Profit!&lt;/li>
-&lt;/ul>
-&lt;p>And a nested list:&lt;/p>
-&lt;ul>
-&lt;li>Jackson 5
-&lt;ul>
-&lt;li>Michael&lt;/li>
-&lt;li>Tito&lt;/li>
-&lt;li>Jackie&lt;/li>
-&lt;li>Marlon&lt;/li>
-&lt;li>Jermaine&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>TMNT
-&lt;ul>
-&lt;li>Leonardo&lt;/li>
-&lt;li>Michelangelo&lt;/li>
-&lt;li>Donatello&lt;/li>
-&lt;li>Raphael&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;p>Definition lists can be used with Markdown syntax. Definition terms are bold.&lt;/p>
-&lt;dl>
-&lt;dt>Name&lt;/dt>
-&lt;dd>Godzilla&lt;/dd>
-&lt;dt>Born&lt;/dt>
-&lt;dd>1952&lt;/dd>
-&lt;dt>Birthplace&lt;/dt>
-&lt;dd>Japan&lt;/dd>
-&lt;dt>Color&lt;/dt>
-&lt;dd>Green&lt;/dd>
-&lt;/dl>
-&lt;hr>
-&lt;p>Tables should have bold headings and alternating shaded rows.&lt;/p>
-&lt;table>
-&lt;thead>
-&lt;tr>
-&lt;th>Artist&lt;/th>
-&lt;th>Album&lt;/th>
-&lt;th>Year&lt;/th>
-&lt;/tr>
-&lt;/thead>
-&lt;tbody>
-&lt;tr>
-&lt;td>Michael Jackson&lt;/td>
-&lt;td>Thriller&lt;/td>
-&lt;td>1982&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Prince&lt;/td>
-&lt;td>Purple Rain&lt;/td>
-&lt;td>1984&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Beastie Boys&lt;/td>
-&lt;td>License to Ill&lt;/td>
-&lt;td>1986&lt;/td>
-&lt;/tr>
-&lt;/tbody>
-&lt;/table>
-&lt;p>If a table is too wide, it should scroll horizontally.&lt;/p>
-&lt;table>
-&lt;thead>
-&lt;tr>
-&lt;th>Artist&lt;/th>
-&lt;th>Album&lt;/th>
-&lt;th>Year&lt;/th>
-&lt;th>Label&lt;/th>
-&lt;th>Awards&lt;/th>
-&lt;th>Songs&lt;/th>
-&lt;/tr>
-&lt;/thead>
-&lt;tbody>
-&lt;tr>
-&lt;td>Michael Jackson&lt;/td>
-&lt;td>Thriller&lt;/td>
-&lt;td>1982&lt;/td>
-&lt;td>Epic Records&lt;/td>
-&lt;td>Grammy Award for Album of the Year, American Music Award for Favorite Pop/Rock Album, American Music Award for Favorite Soul/R&amp;amp;B Album, Brit Award for Best Selling Album, Grammy Award for Best Engineered Album, Non-Classical&lt;/td>
-&lt;td>Wanna Be Startin&amp;rsquo; Somethin&amp;rsquo;, Baby Be Mine, The Girl Is Mine, Thriller, Beat It, Billie Jean, Human Nature, P.Y.T. (Pretty Young Thing), The Lady in My Life&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Prince&lt;/td>
-&lt;td>Purple Rain&lt;/td>
-&lt;td>1984&lt;/td>
-&lt;td>Warner Brothers Records&lt;/td>
-&lt;td>Grammy Award for Best Score Soundtrack for Visual Media, American Music Award for Favorite Pop/Rock Album, American Music Award for Favorite Soul/R&amp;amp;B Album, Brit Award for Best Soundtrack/Cast Recording, Grammy Award for Best Rock Performance by a Duo or Group with Vocal&lt;/td>
-&lt;td>Let&amp;rsquo;s Go Crazy, Take Me With U, The Beautiful Ones, Computer Blue, Darling Nikki, When Doves Cry, I Would Die 4 U, Baby I&amp;rsquo;m a Star, Purple Rain&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Beastie Boys&lt;/td>
-&lt;td>License to Ill&lt;/td>
-&lt;td>1986&lt;/td>
-&lt;td>Mercury Records&lt;/td>
-&lt;td>noawardsbutthistablecelliswide&lt;/td>
-&lt;td>Rhymin &amp;amp; Stealin, The New Style, She&amp;rsquo;s Crafty, Posse in Effect, Slow Ride, Girls, (You Gotta) Fight for Your Right, No Sleep Till Brooklyn, Paul Revere, Hold It Now, Hit It, Brass Monkey, Slow and Low, Time to Get Ill&lt;/td>
-&lt;/tr>
-&lt;/tbody>
-&lt;/table>
-&lt;hr>
-&lt;p>Code snippets like &lt;code>var foo = &amp;quot;bar&amp;quot;;&lt;/code> can be shown inline.&lt;/p>
-&lt;p>Also, &lt;code>this should vertically align&lt;/code> &lt;del>&lt;code>with this&lt;/code>&lt;/del> &lt;del>and this&lt;/del>.&lt;/p>
-&lt;p>Code can also be shown in a block element.&lt;/p>
-&lt;pre tabindex="0">&lt;code>foo := &amp;#34;bar&amp;#34;;
-bar := &amp;#34;foo&amp;#34;;
-&lt;/code>&lt;/pre>&lt;p>Code can also use syntax highlighting.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87;font-weight:bold">func&lt;/span> &lt;span style="color:#000">main&lt;/span>&lt;span style="color:#000;font-weight:bold">()&lt;/span> &lt;span style="color:#000;font-weight:bold">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000">input&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">:=&lt;/span> &lt;span style="color:#4e9a06">`var foo = &amp;#34;bar&amp;#34;;`&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000">lexer&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">:=&lt;/span> &lt;span style="color:#000">lexers&lt;/span>&lt;span style="color:#000;font-weight:bold">.&lt;/span>&lt;span style="color:#000">Get&lt;/span>&lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#4e9a06">&amp;#34;javascript&amp;#34;&lt;/span>&lt;span style="color:#000;font-weight:bold">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000">iterator&lt;/span>&lt;span style="color:#000;font-weight:bold">,&lt;/span> &lt;span style="color:#000">_&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">:=&lt;/span> &lt;span style="color:#000">lexer&lt;/span>&lt;span style="color:#000;font-weight:bold">.&lt;/span>&lt;span style="color:#000">Tokenise&lt;/span>&lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#204a87;font-weight:bold">nil&lt;/span>&lt;span style="color:#000;font-weight:bold">,&lt;/span> &lt;span style="color:#000">input&lt;/span>&lt;span style="color:#000;font-weight:bold">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000">style&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">:=&lt;/span> &lt;span style="color:#000">styles&lt;/span>&lt;span style="color:#000;font-weight:bold">.&lt;/span>&lt;span style="color:#000">Get&lt;/span>&lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#4e9a06">&amp;#34;github&amp;#34;&lt;/span>&lt;span style="color:#000;font-weight:bold">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000">formatter&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">:=&lt;/span> &lt;span style="color:#000">html&lt;/span>&lt;span style="color:#000;font-weight:bold">.&lt;/span>&lt;span style="color:#000">New&lt;/span>&lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#000">html&lt;/span>&lt;span style="color:#000;font-weight:bold">.&lt;/span>&lt;span style="color:#000">WithLineNumbers&lt;/span>&lt;span style="color:#000;font-weight:bold">())&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#204a87;font-weight:bold">var&lt;/span> &lt;span style="color:#000">buff&lt;/span> &lt;span style="color:#000">bytes&lt;/span>&lt;span style="color:#000;font-weight:bold">.&lt;/span>&lt;span style="color:#000">Buffer&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000">formatter&lt;/span>&lt;span style="color:#000;font-weight:bold">.&lt;/span>&lt;span style="color:#000">Format&lt;/span>&lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&lt;/span>&lt;span style="color:#000">buff&lt;/span>&lt;span style="color:#000;font-weight:bold">,&lt;/span> &lt;span style="color:#000">style&lt;/span>&lt;span style="color:#000;font-weight:bold">,&lt;/span> &lt;span style="color:#000">iterator&lt;/span>&lt;span style="color:#000;font-weight:bold">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000">fmt&lt;/span>&lt;span style="color:#000;font-weight:bold">.&lt;/span>&lt;span style="color:#000">Println&lt;/span>&lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#000">buff&lt;/span>&lt;span style="color:#000;font-weight:bold">.&lt;/span>&lt;span style="color:#000">String&lt;/span>&lt;span style="color:#000;font-weight:bold">())&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;pre tabindex="0">&lt;code>Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
-&lt;/code>&lt;/pre>&lt;p>Inline code inside table cells should still be distinguishable.&lt;/p>
-&lt;table>
-&lt;thead>
-&lt;tr>
-&lt;th>Language&lt;/th>
-&lt;th>Code&lt;/th>
-&lt;/tr>
-&lt;/thead>
-&lt;tbody>
-&lt;tr>
-&lt;td>Javascript&lt;/td>
-&lt;td>&lt;code>var foo = &amp;quot;bar&amp;quot;;&lt;/code>&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Ruby&lt;/td>
-&lt;td>&lt;code>foo = &amp;quot;bar&amp;quot;{&lt;/code>&lt;/td>
-&lt;/tr>
-&lt;/tbody>
-&lt;/table>
-&lt;hr>
-&lt;p>Small images should be shown at their actual size.&lt;/p>
-&lt;p>&lt;img src="https://placekitten.com/g/300/200/" alt="">&lt;/p>
-&lt;p>Large images should always scale down and fit in the content container.&lt;/p>
-&lt;p>&lt;img src="https://placekitten.com/g/1200/800/" alt="">&lt;/p>
-&lt;h2 id="components">Components&lt;/h2>
-&lt;h3 id="alerts">Alerts&lt;/h3>
-&lt;p>
-&lt;div class="alert alert-primary" role="alert">
-This is an alert.
-&lt;/div>
-&lt;div class="alert alert-primary" role="alert">
-&lt;h4 class="alert-heading">Note:&lt;/h4>
-This is an alert with a title.
-&lt;/div>
-&lt;div class="alert alert-primary" role="alert">
-This is a successful alert.
-&lt;/div>
-&lt;div class="alert alert-primary" role="alert">
-This is a warning!
-&lt;/div>
-&lt;div class="alert alert-primary" role="alert">
-&lt;h4 class="alert-heading">Warning!&lt;/h4>
-This is a warning with a title!
-&lt;/div>
-&lt;/p>
-&lt;h2 id="sizing">Sizing&lt;/h2>
-&lt;p>Add some sections here to see how the ToC looks like. Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong.&lt;/p>
-&lt;h3 id="parameters-available">Parameters available&lt;/h3>
-&lt;p>Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong.&lt;/p>
-&lt;h3 id="using-pixels">Using pixels&lt;/h3>
-&lt;p>Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong.&lt;/p>
-&lt;h3 id="using-rem">Using rem&lt;/h3>
-&lt;p>Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong.&lt;/p>
-&lt;h2 id="memory">Memory&lt;/h2>
-&lt;p>Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong.&lt;/p>
-&lt;h3 id="ram-to-use">RAM to use&lt;/h3>
-&lt;p>Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong.&lt;/p>
-&lt;h3 id="more-is-better">More is better&lt;/h3>
-&lt;p>Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong.&lt;/p>
-&lt;h3 id="used-ram">Used RAM&lt;/h3>
-&lt;p>Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong.&lt;/p>
-&lt;pre tabindex="0">&lt;code>This is the final element on the page and there should be no margin below this.
-&lt;/code>&lt;/pre></description></item></channel></rss>
+&lt;p>The above guides are available in PDF format only.&lt;/p>
+&lt;h2 id="repositories-for-previous-releases">Repositories for previous releases&lt;/h2>
+&lt;p>If using a release earlier than 4.4, please keep in mind that these
+previous releases are no longer supported or maintained. RPMs are
+available for previous releases at these locations:&lt;/p>
+&lt;p>Eucalyptus 4.0:
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>http://downloads.eucalyptus.cloud/software/eucalyptus/4.0/rhel/6/x86_64/&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>Eucalyptus 4.1:
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>http://downloads.eucalyptus.cloud/software/eucalyptus/4.1/rhel/6/x86_64/&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>Eucalyptus 4.2:
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>http://downloads.eucalyptus.cloud/software/eucalyptus/4.2/rhel/6/x86_64/&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>Eucalyptus 4.3:
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>http://downloads.eucalyptus.cloud/software/eucalyptus/4.3/rhel/6/x86_64/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>http://downloads.eucalyptus.cloud/software/eucalyptus/4.3/rhel/7/x86_64/&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>The 4.3 release can be installed on CentOS/RHEL 6 or 7, so pick the
+location appropriate for the distribution you are using.&lt;/p>
+&lt;h3 id="repository-configuration">Repository Configuration&lt;/h3>
+&lt;p>You would configure YUM to use the above locations. Here&amp;rsquo;s an example of
+a 4.1 Eucalyptus YUM configuration, you&amp;rsquo;d put this in a
+&lt;code>/etc/yum.repos.d/eucalyptus.repo&lt;/code> file:
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>eucalyptus&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">name&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>Eucalyptus 4.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">baseurl&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>http://downloads.eucalyptus.cloud/software/eucalyptus/4.1/rhel/6/x86_64/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">gpgkey&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>https://downloads.eucalyptus.cloud/software/gpg/eucalyptus-release-key.pub
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">gpgcheck&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#0000cf;font-weight:bold">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">enabled&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#0000cf;font-weight:bold">1&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>The &lt;code>baseurl&lt;/code> would be one of the locations listed above.&lt;/p>
+&lt;p>On the first use after configuration, you may be prompted to confirm the
+GPG key, which would look something like this:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>warning: rpmts_HdrFromFdno: Header V3 RSA/SHA1 Signature, key ID c1240596: NOKEY
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Retrieving key from https://downloads.eucalyptus.cloud/software/gpg/eucalyptus-release-key.pub
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Importing GPG key 0xC1240596:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Userid: &lt;span style="color:#4e9a06">&amp;#34;Eucalyptus Systems, Inc. (release key) &amp;lt;security@eucalyptus.com&amp;gt;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> From : https://downloads.eucalyptus.cloud/software/gpg/eucalyptus-release-key.pub
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Is this ok &lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>y/N&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>: y&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Accept the key and you&amp;rsquo;re good to go!&lt;/p>
+&lt;h2 id="conclusion">Conclusion&lt;/h2>
+&lt;p>We hope this helps keep your Eucalyptus clouds running, but please
+consider using the latest software and documentation from
+&lt;a href="https://eucalyptus.cloud/">https://eucalyptus.cloud/&lt;/a>&lt;/p></description></item></channel></rss>

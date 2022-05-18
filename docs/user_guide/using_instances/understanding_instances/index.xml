@@ -1,0 +1,22 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Instance Overview</title><link>https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/</link><description>Recent content in Instance Overview on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Instance Concepts</title><link>https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_concepts/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_concepts/</guid><description>
+&lt;p>This section describes conceptual information to help you understand instances.&lt;/p>
+&lt;h2 id="eucalyptus-machine-image-emi">Eucalyptus Machine Image (EMI)&lt;/h2>
+&lt;p>A Eucalyptus machine image (EMI) is a copy of a virtual machine bootable file system stored in the Walrus storage. An EMI is a template from you can use to deploy multiple identical instances—or copies of the virtual machine.&lt;/p>
+&lt;p>EMIs are analogous to Amazon Machine Images (AMIs) in AWS. In fact, you can download and deploy any of the 10,000+ AMIs as EMIs in a Eucalyptus cloud without significant modification. While it is possible to build your own EMI, it is might be just as simple to find a thoroughly vetted, freely available image in AWS, download it to your Eucalyptus cloud, and use that instead.&lt;/p>
+&lt;p>When registered in a Eucalyptus cloud, each distinct EMI is given a unique ID for identification. The ID is in the format emi-&lt;nnnnnnnn>.&lt;/p>
+&lt;p>&lt;img src="https://www.eucastack.io/images/Eucalyptus-Machine-Images.png" alt="image">&lt;/p>
+&lt;h2 id="instance">Instance&lt;/h2>
+&lt;p>A instance is a virtual machine deployed from an EMI. An instance then, is simply a running copy of an EMI, which means it always starts from a known baseline. There are two types of instances; instance store-backed and EBS-backed. This section describes store-backed instances. For information about EBS-backed instances, see &lt;a href="https://www.eucastack.io/docs/user_guide/using_block_storage/">Using EBS&lt;/a> .&lt;/p>
+&lt;p>&lt;img src="https://www.eucastack.io/images/Instances-illustration.png" alt="image">&lt;/p>
+&lt;p>Every instance receives a unique ID in the format i-&lt;nnnnnnnn>.&lt;/p>
+&lt;p>You can deploy multiple instances using a single command. In this case all the instances will have unique instance IDs but will share a common reservation ID. This reservation ID can be seen, for example, from the euca2ools &lt;code>euca-describe-instances&lt;/code> command that lists running instances. Reservations IDs appear in the format r-&lt;nnnnnnnn>.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+A &lt;em>reservation&lt;/em> is an EC2 term used to describe the resources reserved for one or more instances launched in the cloud.
+&lt;/div>
+&lt;h2 id="persistence">Persistence&lt;/h2>
+&lt;p>Applications running in ephemeral instances that generate data that must be saved should write that data to some place other than the instance itself. There are two Eucalyptus options available. First, the data can be written to a volume that is attached to the instance. Volumes provided by the Storage Controller and attached to instances are persistent. Second, the data could be written to the Walrus using HTTP put/get operations. Walrus storage is also persistent.&lt;/p>
+&lt;p>&lt;img src="https://www.eucastack.io/images/Persistence-in-Ephemeral-Instances.png" alt="image">&lt;/p>
+&lt;p>If the application cannot be rewritten to send data to a volume or the Walrus, then the application should be deployed inside an EBS-backed instance. EBS-backed instances are persistent and operate in a manner more similar to a physical machine.&lt;/p></description></item><item><title>Docs: Instance Basics</title><link>https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_types/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_types/</guid><description>
+&lt;h1 id="instance-basics">Instance Basics&lt;/h1>
+&lt;p>This section describes information to help you decide which type of instance you need.&lt;/p></description></item></channel></rss>

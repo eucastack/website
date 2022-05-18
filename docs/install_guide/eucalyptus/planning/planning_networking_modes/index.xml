@@ -1,0 +1,260 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Plan Networking Modes</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/planning/planning_networking_modes/</link><description>Recent content in Plan Networking Modes on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/install_guide/eucalyptus/planning/planning_networking_modes/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: About Eucanetd</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/planning/planning_networking_modes/eucanetd_about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/planning/planning_networking_modes/eucanetd_about/</guid><description>
+&lt;p>The eucanetd service implements artifacts to manage and define Eucalyptus cloud networking. Eucanetd runs alongside the CLC or NC services, depending on the configured networking mode. Eucanetd manages network functionality. For example:&lt;/p>
+&lt;ul>
+&lt;li>Installs network artifacts (iptables, ipsets, ebtables, dhcpd)&lt;/li>
+&lt;li>Performs state management for the installed network artifacts&lt;/li>
+&lt;li>Updates network artifact configuration as needed&lt;/li>
+&lt;li>In VPCMIDO mode:
+&lt;ul>
+&lt;li>Interacts with MidoNet via the MidoNet API&lt;/li>
+&lt;li>Defines network artifacts in MidoNet&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="where-to-deploy-eucanetd">Where to deploy eucanetd&lt;/h2>
+&lt;p>Deploy &lt;em>eucanetd&lt;/em> depending on the selected network mode:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Host Machine&lt;/th>
+&lt;th style="text-align:left">EDGE mode&lt;/th>
+&lt;th style="text-align:left">VPCMIDO mode&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">CLC&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;td style="text-align:left">Yes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">NC&lt;/td>
+&lt;td style="text-align:left">Yes&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>When required for a mode &lt;em>eucanetd&lt;/em> should be deployed on all hosts for that service.&lt;/p></description></item><item><title>Docs: Understanding Eucalyptus EDGE Mode</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/planning/planning_networking_modes/planning_edge/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/planning/planning_networking_modes/planning_edge/</guid><description>
+&lt;p>In EDGE networking mode, the components responsible for implementing Eucalyptus VM networking artifacts are running at the edge of a Eucalyptus deployment: the Linux host machines acting as Node Controllers (NCs). On each NC host machine, a Eucalyptus stand-alone service, eucanetd, runs side-by-side with the NC service. The eucanetd service receives dynamically changing Eucalyptus networking views and is responsible for configuring the Linux networking subsystem to reflect the latest view.&lt;/p>
+&lt;p>EDGE networking mode integrates with your existing network infrastructure, allowing you to inform Eucalyptus , through configuration parameters for EDGE mode, about the existing network, which Eucalyptus then will consume when implementing the networking view.&lt;/p>
+&lt;p>EDGE networking mode integrates with two basic types of pre-existing network setups:&lt;/p>
+&lt;ul>
+&lt;li>One flat IP network used to service component systems, VM public IPs (elastic IPs), and VM private IPs.&lt;/li>
+&lt;li>Two networks, one for components and VM public IPs, and the other for VM private IPs.&lt;/li>
+&lt;/ul>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+EDGE networking mode integrates with networks that already exist. If the network, netmask, and router don&amp;rsquo;t already exist, you must create them outside before configuring EDGE mode.
+&lt;/div>
+&lt;h2 id="edge-mode-requirements">EDGE Mode Requirements&lt;/h2>
+&lt;ul>
+&lt;li>Each NC host machine must have an interface configured with an IP on a VM public and a VM private network (which can be the same network).&lt;/li>
+&lt;li>There must be IP connectivity from each NC host machine (where eucanetd runs) and the CLC host machine, so that network path from instances to the metadata server (running on the CLC host machine) can be established.&lt;/li>
+&lt;li>There must be a functioning router in place for the private network. This router will be the default gateway for VM instances.&lt;/li>
+&lt;li>The private and public networks can be the same network, but they can also be separate networks.&lt;/li>
+&lt;li>The NC host machines need a bridge configured on the private network, with the bridge interface itself having been assigned an IP from the network.&lt;/li>
+&lt;li>If you&amp;rsquo;re using a public network, the NC host machines need an interface on the public network as well (if the public and private networks are the same network, then the bridge needs an IP assigned on the network).&lt;/li>
+&lt;li>If you run multiple zones, each zone can use the same network as its private network, or they can use separate networks as private networks. If you use separate networks, you need to have a router in place that is configured to route traffic between the networks.&lt;/li>
+&lt;li>If you use private addressing only, the CLC host machine must have a route back to the VM private network.&lt;/li>
+&lt;/ul>
+&lt;h2 id="edge-mode-limitations">EDGE Mode Limitations&lt;/h2>
+&lt;ul>
+&lt;li>Global network updates (such as security group rule updates, security group VM membership updates, and elastic IP updates) are applied through an &amp;ldquo;eventually consistent&amp;rdquo; mechanism, as opposed to an &amp;ldquo;atomic&amp;rdquo; mechanism. That is, there may be a brief period of time where one NC has the new state implemented but another NC has the previous state implemented.&lt;/li>
+&lt;li>Mappings between VM MAC addresses and private IPs are strictly enforced. This means that instances cannot communicate using addresses the cloud has not assigned to them.&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Understanding VPCMIDO and MidoNet</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/planning/planning_networking_modes/preparing_vpc_midonet/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/planning/planning_networking_modes/preparing_vpc_midonet/</guid><description>
+&lt;p>This topic describes MidoNet components and their Eucalyptus deployment options, which provide support for VPC on Eucalyptus. Eucalyptus VPCMIDO mode resembles the Amazon Virtual Private Cloud (VPC) product wherein the network is fully configurable by users. In Eucalyptus, it is implemented with a Software-Defined Networking (SDN) technology called MidoNet. MidoNet is a network virtualization platform for Infrastructure-as-a-Service (IaaS) clouds that implements and exposes virtual network components as software abstractions, enabling programmatic provisioning of virtual networks.&lt;/p>
+&lt;p>This network mode requires configuration of MidoNet in order to make cloud networking functional. It offers the most advanced networking capabilities and therefore it is recommended to be used on all new Eucalyptus installations.&lt;/p>
+&lt;h2 id="midonet-components">MidoNet Components&lt;/h2>
+&lt;p>A MidoNet deployment consists of four types of nodes (according to their logical functions or services offered), connected via four IP networks as depicted in Figure 1. MidoNet does not require any specific hardware, and can be deployed in commodity x86_64 servers. Interactions with MidoNet are accomplished through Application Programming Interface (API) calls, which are translated into (virtual) network topology changes. Network state information is stored in a logically centralized data store, called the Network State Database (NSDB), which is implemented on top of two open-source distributed coordination and data store technologies: ZooKeeper and Cassandra. Implementation of (virtual) network topology is realized via cooperation and coordination among MidoNet agents, which are deployed in nodes that participate in MidoNet.&lt;/p>
+&lt;p>&lt;img src="https://www.eucastack.io/images/euca_mido_1v2.png" alt="image">
+&lt;em>Figure 1: Logical view of a MidoNet deployment. Four components are connected via four networks.&lt;/em>&lt;/p>
+&lt;p>Node types:&lt;/p>
+&lt;ul>
+&lt;li>MidoNet Network State Database (NSDB): consists of a cluster of ZooKeeper and Cassandra. All MidoNet nodes must have IP connectivity with NSDB.&lt;/li>
+&lt;li>MidoNet API: consists of MidoNet web app. Exposes MidoNet REST APIs.&lt;/li>
+&lt;li>Hypervisor: MidoNet agent (Midolman) are required in all Hypervisors to enable VMs to be connected via MidoNet overlay networks/SDN.&lt;/li>
+&lt;li>Gateway: Gateway nodes are connected to the public network, and enable the network flow from MidoNet overlays to the public network.&lt;/li>
+&lt;/ul>
+&lt;p>Physical Networks:&lt;/p>
+&lt;ul>
+&lt;li>NSDB: IP network that connects all nodes that participate in MidoNet. While NSDB and Tunnel Zone networks can be the same, it is recommended to have an isolated (physical or VLAN) segment.&lt;/li>
+&lt;li>API: in deployments only eucanetd/CLC needs access to the API network. Only &amp;ldquo;special hosts/processes&amp;rdquo; should have access to this network. The use of &amp;ldquo;localhost&amp;rdquo; network on the node running CLC/eucanetd is sufficient and recommended in deployments.&lt;/li>
+&lt;li>Tunnel Zone: IP network that transports the MidoNet overlay traffic ( VM traffic), which is not &amp;ldquo;visible&amp;rdquo; on the physical network.&lt;/li>
+&lt;li>Public network: network with access to the Internet (or corporate/enterprise) network.&lt;/li>
+&lt;/ul>
+&lt;h2 id="midonet-deployment-scale">MidoNet Deployment Scale&lt;/h2>
+&lt;p>Three reference architectures are presented in this document, ordered by complexity and size:&lt;/p>
+&lt;ul>
+&lt;li>Proof-of-Concept (PoC)&lt;/li>
+&lt;li>Production: Small&lt;/li>
+&lt;li>Production: Large&lt;/li>
+&lt;/ul>
+&lt;p>Production: Large reference architecture represents the most complete and recommended deployment model of MidoNet for Eucalyptus. Whenever possible (such as when resources are available), deployments should closely match with the Production: Large reference architecture (even on small scale clouds).&lt;/p>
+&lt;p>All MidoNet components are designed and implemented to horizontally scale. Therefore, it is possible to start small and add resources as they become available.&lt;/p>
+&lt;h2 id="eucalyptus-with-midonet">Eucalyptus with MidoNet&lt;/h2>
+&lt;p>A Eucalyptus with MidoNet deployment consists of the following components:&lt;/p>
+&lt;p>&lt;img src="https://www.eucastack.io/images/euca_mido_2.png" alt="image">
+&lt;em>Figure 2: Logical view of a Eucalyptus with MidoNet deployment. VM private network is created/virtualized by MidoNet, and &amp;lsquo;software-defined&amp;rsquo; by eucanetd. Ideally, each component and network should have its own set of independent resources. In practice, components are grouped and consolidated into a set of servers, as detailed in different reference architectures.&lt;/em>&lt;/p>
+&lt;p>MidoNet components, Eucalyptus components, and three extra networks are present.&lt;/p>
+&lt;h2 id="proof-of-concept-poc">Proof of Concept (PoC)&lt;/h2>
+&lt;p>The PoC reference architecture is designed for very small and transient workloads, typical in development and testing environments. Quick deployment with minimal external network requirements are the key points of PoC reference architecture.&lt;/p>
+&lt;p>&lt;strong>Requirements&lt;/strong>&lt;/p>
+&lt;p>Servers:&lt;/p>
+&lt;ul>
+&lt;li>Four (4) or more modern Intel cores or AMD modules - exclude logical cores that share CPU resources from the count (Hyperthreads and AMD cores within a module)&lt;/li>
+&lt;li>2GB of RAM reserved for MidoNet Agent (when applicable)&lt;/li>
+&lt;li>4GB of RAM reserved for MidoNet NSDB (when applicable)&lt;/li>
+&lt;li>4GB of RAM reserved for MidoNet API (when applicable)&lt;/li>
+&lt;li>30GB of free disk space for NSDB (when applicable)&lt;/li>
+&lt;/ul>
+&lt;p>Physical Network:&lt;/p>
+&lt;ul>
+&lt;li>One (1) 1Gbps IP Network&lt;/li>
+&lt;li>A range or list of public IP addresses (Euca_public_IPs)&lt;/li>
+&lt;li>Internet Gateway&lt;/li>
+&lt;/ul>
+&lt;p>Limits:&lt;/p>
+&lt;ul>
+&lt;li>Ten (10) MidoNet agents (i.e., 1 Gateway node, 1 CLC, and 8 NCs)&lt;/li>
+&lt;li>One (1) MidoNet Gateway&lt;/li>
+&lt;li>No fail over, fault tolerance, and/or network load balancing/sharing&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Deployment Topology&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Single server with all MidoNet components (NSDB, API, and Midolman), and with CLC/eucanetd&lt;/li>
+&lt;li>A server acting as MidoNet Gateway - when BGP terminated links are used, this node must not be co-located with CLC/eucanetd (in a proxy_arp setup described below, it is possible to consolidate CLC/eucanetd with MidoNet Gateway). This is due to incompatibilities in CentOS/RHEL7 netns (used by eucanetd), and bgpd (started by Midolman when BGP links are configured).&lt;/li>
+&lt;li>Hypervisors with Midolman&lt;/li>
+&lt;li>One IP network handling NSDB, Tunnel Zone, and Public Network traffic&lt;/li>
+&lt;li>API communication via loopback/localhost network&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://www.eucastack.io/images/euca_mido_3v2.png" alt="image">
+&lt;em>Figure 3: PoC deployment topology. A single IP network carries NSDB, Tunnel Zone, and Public Network traffic. A single server handles MidoNet NSDB, API (and possibly Gateway) functionality.&lt;/em>&lt;/p>
+&lt;p>&lt;strong>MidoNet Gateway Bindings&lt;/strong>&lt;/p>
+&lt;p>Three ways to realize MidoNet Gateway bindings are discussed below, starting with the most recommended setup.&lt;/p>
+&lt;p>Public CIDR block(s) allocated for Eucalyptus (Euca_Public_IPs) needs to be routed to MidoNet Gateway by the customer network - this is an environment requirement, outside of control of both MidoNet and Eucalyptus systems. One way to accomplish this is to have a BGP terminated link available. MidoNet Gateway will establish a BGP session with the customer router to: (1) advertise Euca_Public_IPs to the customer router; and (2) get the default route from the customer router.&lt;/p>
+&lt;p>If a BGP terminated link is not available, but the routing of Euca_Public_IPs is delegated to MidoNet Gateway (configuration of customer routing infrastructure), similar setup can be used. In such scenario, static routes are configured on the customer router (to route Euca_Public_IPs to MidoNet Gateway), and on MidoNet (to use the customer router as the default route).&lt;/p>
+&lt;p>&lt;img src="https://www.eucastack.io/images/euca_mido_4.png" alt="image">
+&lt;em>Figure 4: How servers are bound to MidoNet in a PoC deployment with BGP. A BGP terminated link is required: the gateway node eth device is bound to MidoNet virtual router (when BGP is involved, the MidoNet Gateway and Eucalyptus CLC cannot be co-located). Virtual machine tap devices are bound to MidoNet virtual bridges.&lt;/em>&lt;/p>
+&lt;p>If routed Euca_Public_IPs are not available, static routes on all involved nodes (L2 connectivity is required among nodes) can be used as illustrated below.&lt;/p>
+&lt;p>&lt;img src="https://www.eucastack.io/images/euca_mido_5.png" alt="image">
+&lt;em>Figure 5: How servers are bound to MidoNet in a PoC deployment without routed Euca_Public_IPs. Clients that need communication with Euca_Public_IPs configure static routes using MidoNet Gateway as the router. MidoNet Gateway configures a static default route to customer router.&lt;/em>&lt;/p>
+&lt;p>In the case nodes outside the public network broadcast domain (L2) needs to access Euca_Public_IPs, a setup using proxy_arp, as illustrated below, can be used.&lt;/p>
+&lt;p>&lt;img src="https://www.eucastack.io/images/euca_mido_6.png" alt="image">
+&lt;em>Figure 6: How servers are bound to MidoNet in a PoC deployment with proxy_arp. When routed Euca_Public_IPs are not available, the gateway node should proxy arp for public IP addresses allocated for Eucalyptus , and forward to a veth device that is bound to a MidoNet virtual router. Virtual machine tap devices are bound to MidoNet virtual bridges.&lt;/em>&lt;/p>
+&lt;h2 id="production-small">Production: Small&lt;/h2>
+&lt;p>The Production: Small reference architecture is designed for small scale production quality deployments. It supports MidoNet NSDB fault tolerance (partial failures), and limited MidoNet Gateway failover and load balancing/sharing.&lt;/p>
+&lt;p>Border Gateway Protocol (BGP) terminated uplinks are recommended for production quality deployments.&lt;/p>
+&lt;p>&lt;strong>Requirements&lt;/strong>&lt;/p>
+&lt;p>Servers:&lt;/p>
+&lt;ul>
+&lt;li>Four (4) or more modern Intel cores or AMD modules - exclude logical cores that share CPU resources from the count (Hyperthreads and AMD cores within a module) - for gateway nodes, 4 or more cores should be dedicated to MidoNet agent (Midolman)&lt;/li>
+&lt;li>4GB of RAM reserved for MidoNet Agent (when applicable), 8GB for Gateway nodes&lt;/li>
+&lt;li>4GB of free RAM reserved for MidoNet NSDB (when applicable)&lt;/li>
+&lt;li>4GB of free RAM reserved for MidoNet API (when applicable)&lt;/li>
+&lt;li>30GB of free disk space for NSDB (when applicable)&lt;/li>
+&lt;li>Two (2) 10Gbps NICs per server&lt;/li>
+&lt;li>Three (3) servers dedicated to MidoNet NSDB&lt;/li>
+&lt;li>Two (2) servers as MidoNet Gateways&lt;/li>
+&lt;/ul>
+&lt;p>Physical Network:&lt;/p>
+&lt;ul>
+&lt;li>One (1) 10Gbps IP Network for public network (if upstream links are 1Gbps, this could be 1Gbps)&lt;/li>
+&lt;li>One (1) 10Gbps IP Network for Tunnel Zone and NSDB&lt;/li>
+&lt;li>Public Classless Inter-Domain Routing (CIDR) block (Euca_public_IPs)&lt;/li>
+&lt;li>Two (2) BGP terminated uplinks&lt;/li>
+&lt;/ul>
+&lt;p>Limits:&lt;/p>
+&lt;ul>
+&lt;li>Thirty two (32) MidoNet agents (i.e., 2 Gateway nodes and 30 Hypervisors)&lt;/li>
+&lt;li>Two (2) MidoNet Gateways&lt;/li>
+&lt;li>Tolerate 1 NSDB server failure&lt;/li>
+&lt;li>Tolerate 1 MidoNet Gateway/uplink failure&lt;/li>
+&lt;li>Limited uplinks load sharing/balancing&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Deployment Topology&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>A 3-node cluster for NSDB (co-located ZooKeeper and Cassandra)&lt;/li>
+&lt;li>eucanetd co-located with MidoNet API Server&lt;/li>
+&lt;li>Two (2) MidoNet Gateway Nodes&lt;/li>
+&lt;li>Hypervisors with Midolman&lt;/li>
+&lt;li>One 10Gbps IP network handling NSDB and Tunnel Zone traffic&lt;/li>
+&lt;li>One 10Gbps IP Network handling Public Network traffic&lt;/li>
+&lt;li>API communication via loopback/localhost network&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://www.eucastack.io/images/euca_mido_7v2.png" alt="image">
+&lt;em>Figure 7: Production:Small deployment topology. A 10Gbps IP network carries NSDB and Tunnel Zone traffic. Another 10Gbps IP network carries Public Network traffic. A 3-node cluster for NSDB tolerates 1 server failure, and 2 gateways enable network failover and limited load balancing/sharing.&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://www.eucastack.io/images/euca_mido_8.png" alt="image">
+&lt;em>Figure 8: How servers are bound to MidoNet in a Production:Small deployment. Gateway Nodes have physical devices bound to a MidoNet virtual router. These devices should have L2 and L3 connectivity to the Customer&amp;rsquo;s Router, and with BGP terminated links. Virtual machine tap devices are bound to MidoNet virtual bridges.&lt;/em>&lt;/p>
+&lt;p>&lt;strong>NSDB Data Replication&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>NSDB is deployed in a cluster of 3 nodes&lt;/li>
+&lt;li>ZooKeeper and Cassandra both have built-in data replication&lt;/li>
+&lt;li>One server failure is tolerated&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>MidoNet Gateway Failover&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Two paths are available to and from MidoNet, and failover is handled by BGP&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>MidoNet Gateway Load Balancing and Sharing&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Load Balancing from MidoNet is implemented by MidoNet agents (Midolman): ports in a stateful port group with default routes out are used in a round-robin fashion.&lt;/li>
+&lt;li>Partial load sharing from the Customer&amp;rsquo;s router to MidoNet can be accomplished by:&lt;/li>
+&lt;/ul>
+&lt;h2 id="production-large">Production: Large&lt;/h2>
+&lt;p>The Production:Large reference architecture is designed for large scale (500 to 600 MidoNet agents) production quality deployments. It supports MidoNet NSDB fault tolerance (partial failures), and MidoNet Gateway failover and load balancing/sharing.&lt;/p>
+&lt;p>Border Gateway Protocol (BGP) terminated uplinks are required. Each uplink should come from an independent router.&lt;/p>
+&lt;p>&lt;strong>Requirements:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Eight (8) or more modern Intel cores or AMD modules - exclude logical cores that share CPU resources from the count (Hyperthreads and AMD cores within a module) - for gateway nodes, 8 or more cores should be dedicated to MidoNet agent (Midolman)&lt;/li>
+&lt;li>4GB of RAM reserved for MidoNet Agent (when applicable), 16GB for Gateway nodes&lt;/li>
+&lt;li>4GB of free RAM reserved for MidoNet NSDB (when applicable)&lt;/li>
+&lt;li>4GB of free RAM reserved for MidoNet API (when applicable)&lt;/li>
+&lt;li>30GB of free disk space for NSDB (when applicable)&lt;/li>
+&lt;li>One 1Gbps and 2 10Gbps NICs per server&lt;/li>
+&lt;li>Five (5) servers dedicated to MidoNet NSDB&lt;/li>
+&lt;li>Three (3) servers as MidoNet Gateways&lt;/li>
+&lt;/ul>
+&lt;p>Physical Network:&lt;/p>
+&lt;ul>
+&lt;li>One 1Gbps IP Network for NSDB&lt;/li>
+&lt;li>One 10Gbps IP Network for public network (if upstream links are 1Gbps, this could be 1Gbps)&lt;/li>
+&lt;li>One 10Gbps IP Network for Tunnel Zone&lt;/li>
+&lt;li>Public Classless Inter-Domain Routing (CIDR) block (Euca_public_IPs)&lt;/li>
+&lt;li>Three (3) BGP terminated uplinks, each of which coming from an independent router&lt;/li>
+&lt;li>ZooKeeper performance recommendations:&lt;/li>
+&lt;/ul>
+&lt;p>Limits:&lt;/p>
+&lt;ul>
+&lt;li>500 to 600 MidoNet agents&lt;/li>
+&lt;li>Three (3) MidoNet Gateways&lt;/li>
+&lt;li>Tolerate 1 to 2 NSDB server failures&lt;/li>
+&lt;li>Tolerate 1 to 2 MidoNet Gateway/uplink failures&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Deployment Topology&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>A 5-node cluster for NSDB (co-located ZooKeeper and Cassandra)&lt;/li>
+&lt;li>eucanetd co-located with MidoNet API Server&lt;/li>
+&lt;li>Three (3) MidoNet Gateway Nodes&lt;/li>
+&lt;li>Hypervisors with Midolman&lt;/li>
+&lt;li>One 1Gbps IP network handling NSDB traffic&lt;/li>
+&lt;li>One 10Gbps IP network handling Tunnel Zone traffic&lt;/li>
+&lt;li>One 10Gbps IP network handling Public Network traffic&lt;/li>
+&lt;li>API communication via loopback/localhost network&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://www.eucastack.io/images/euca_mido_9v2.png" alt="image">
+&lt;em>Figure 9: Production:Large deployment topology. A 1Gbps IP network carries NSDB; a 10Gbps IP network carries Tunnel Zone traffic; and another 10Gbps IP network carries Public Network traffic. A 5-node cluster for NSDB tolerates 2 server failures, and 3 gateways enable network failover and load balancing/sharing. Servers are bound to MidoNet in a way similar to Production:Small.&lt;/em>&lt;/p>
+&lt;p>&lt;strong>NSDB Data Replication&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>NSDB is deployed in a cluster of 5 nodes&lt;/li>
+&lt;li>ZooKeeper and Cassandra both have built-in data replication&lt;/li>
+&lt;li>Up to 2 server failures tolerated&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>MidoNet Gateway Failover&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Three paths are available to and from MidoNet, and failover is handled by BGP&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>MidoNet Gateway Load Balancing/Sharing&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Load Balancing from MidoNet is implemented by MidoNet agents (Midolman): ports in a stateful port group with default routes out are used in a round-robin fashion.&lt;/li>
+&lt;li>The customer AS should handle multi path routing in order to support load sharing/balancing to MidoNet; for example, Equal Cost Multi Path (ECMP).&lt;/li>
+&lt;/ul></description></item></channel></rss>

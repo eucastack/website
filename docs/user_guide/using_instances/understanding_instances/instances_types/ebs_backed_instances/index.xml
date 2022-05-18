@@ -1,0 +1,46 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – EBS-Backed Instances</title><link>https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_types/ebs_backed_instances/</link><description>Recent content in EBS-Backed Instances on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_types/ebs_backed_instances/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Comparing Instance Types</title><link>https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_types/ebs_backed_instances/comparing_instance_types/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_types/ebs_backed_instances/comparing_instance_types/</guid><description>
+&lt;p>The graphic below illustrates the differences between an instance store-backed instance and an EBS-backed instance.   Both types of instances still boot from an EMI; the difference is what is behind the EMI.   For an instance store-backed instance the EMI is backed by a bundled image.  For an EBS-backed instance the EMI is backed by a snapshot of a volume that contains bootable software, similar to a physical host&amp;rsquo;s boot disk.&lt;/p>
+&lt;p>&lt;img src="https://www.eucastack.io/images/Comparing-Types.png" alt="image">&lt;/p>
+&lt;p>Note that for the instance store-backed instance, the EMI, EKI, and ERI (assuming Linux) are copied from the Walrus directly to Node Controller.  Both disk and memory on the Node Controller are used as cache so an instance store-backed instance can be considered a cache-based instance and is not persistent.  Once the instance is terminated both the RAM and the disk cache are cleared and any modifications to the instance are lost.&lt;/p>
+&lt;p>When an EBS-backed instance is launched, the snapshot on which the EMI is based is automatically copied to a new volume which is then attached to the instance. The instance then boots from the attached volume. Changes to the EBS-backed instance are persistent because the volume used to boot the EBS-backed instance is persistent.  As a result, EBS-backed instances can be suspended and resumed and not just terminated like an instance store-backed instance.&lt;/p></description></item><item><title>Docs: Using EBS-Backed Instances</title><link>https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_types/ebs_backed_instances/using_ebs_instances/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_types/ebs_backed_instances/using_ebs_instances/</guid><description>
+&lt;p>An EBS-backed instance is very much like a physical machine in the way it boots and persists data.  Because an EBS-backed instance functions in a manner similar to physical machine, it makes it a good choice to run legacy applications that cannot be re-architected for the cloud. &lt;/p>
+&lt;p>&lt;img src="https://www.eucastack.io/images/Using-EBS-Instances.png" alt="image">&lt;/p>
+&lt;p>An EBS-backed boot volume can still be protected by taking a snapshot of it.  In fact, other non-boot volumes can be attached to the EBS-backed instance and they can be protected using snapshots too.&lt;/p></description></item><item><title>Docs: Suspending and Resuming EBS-Backed Instances</title><link>https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_types/ebs_backed_instances/suspend_resume_instances/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_types/ebs_backed_instances/suspend_resume_instances/</guid><description>
+&lt;p>An EBS-backed instance can be suspended and resumed, similar to the operating system and applications on a laptop.   The current state of the EBS-backed instance is saved in a suspend operation and restored in a resume operation.  Like instance store-backed instances, an EBS-backed instance can also be rebooted and terminated.&lt;/p>
+&lt;p>To suspend a running EBS-backed instance:&lt;/p>
+&lt;pre>&lt;code>euca-stop-instances i-&amp;lt;nnnnnnnn&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>To resume a suspended EBS-backed instance:&lt;/p>
+&lt;pre>&lt;code>euca-start-instances i-&amp;lt;nnnnnnnn&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>To reboot an EBS-backed instance:&lt;/p>
+&lt;pre>&lt;code>euca-reboot-instances i-&amp;lt;nnnnnnnn&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>To terminate an EBS-backed instance:&lt;/p>
+&lt;pre>&lt;code>euca-terminate-instances i-&amp;lt;nnnnnnnn&amp;gt;
+&lt;/code>&lt;/pre></description></item><item><title>Docs: EBS EMI Creation Overview</title><link>https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_types/ebs_backed_instances/create_an_emi/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/instances_types/ebs_backed_instances/create_an_emi/</guid><description>
+&lt;h1 id="ebs-emi-creation-overview">EBS EMI Creation Overview&lt;/h1>
+&lt;p>You can create an EBS EMI from an existing &lt;em>.img&lt;/em> file or create your own &lt;em>.img&lt;/em> file.  One way to create your own EBS &lt;em>.img&lt;/em> file is to use &lt;code>virt-install&lt;/code> as described below.&lt;/p>
+&lt;p>Use &lt;code>virt-install&lt;/code> on a system with the same operating system version and hypervisor as your Node Controller. When using &lt;code>virt-install&lt;/code> , select &lt;em>scsi&lt;/em> as the disk type for KVM if the VIRTIO paravirtualized devices are not enabled. If you have KVM with VIRTIO enabled (the default), select &lt;em>virtio&lt;/em> as the disk type of the virtual machine. If you create, successfully boot, and connect the virtual machine to the network in this environment, it should boot as an EBS-backed instance in the Eucalyptus cloud.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For CentOS or RHEL images, you will typically need to edit the file and remove the line. This is because an instance&amp;rsquo;s network interface will always be assigned a different hardware address at instantiation.
+&lt;/div>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+: If you use an image created by under a different distribution or hypervisor combination, it is likely that it will not install the correct drivers into the ramdisk and the image will not boot on your Node Controller.
+&lt;/div>
+&lt;p>To create an EMI for EBS-backed instances will require initial assistance from a &lt;em>helper&lt;/em> instance.  The helper instance can be either an instance store-backed or EBS-backed instance and can be deleted when finished.  It only exists to help create the initial volume that will be the source of the snapshot behind the EMI used to boot other EBS-backed instances.&lt;/p>
+&lt;p>First you will need to create a volume large enough to contain the boot image file that was created by &lt;code>virt-install&lt;/code> .  Once this volume has been created attach it to the helper instance. Then transfer the boot image file to the helper instance.  The helper instance must have enough free disk space to temporarily hold the boot image file. Once there, transfer the boot image file, using the &lt;code>dd&lt;/code> command, to the attached volume.&lt;/p>
+&lt;p>At this point the volume can be detached from the helper instance, a snapshot taken, and the snapshot registered as a new EMI.&lt;/p>
+&lt;p>The process to create a new EMI is summarized as follows:&lt;/p>
+&lt;ol>
+&lt;li>Create the file using (the file is the virtual machine&amp;rsquo;s disk file).&lt;/li>
+&lt;li>Create the helper instance.&lt;/li>
+&lt;li>Create and attach the volume to the helper instance.&lt;/li>
+&lt;li>Copy the file to the helper instance and from there to the attached volume.&lt;/li>
+&lt;li>Detach the volume and take a snapshot of it.&lt;/li>
+&lt;li>Register the snapshot as a new EMI.&lt;/li>
+&lt;/ol>
+&lt;p>This process is illustrated below.&lt;/p>
+&lt;p>&lt;img src="https://www.eucastack.io/images/Creating-an-EBS-EMI.png" alt="image">&lt;/p></description></item></channel></rss>

@@ -1,0 +1,103 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Tagging and Filtering Tasks</title><link>https://www.eucastack.io/docs/user_guide/resource_and_tags/working_tagging/</link><description>Recent content in Tagging and Filtering Tasks on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/resource_and_tags/working_tagging/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Add a Tag</title><link>https://www.eucastack.io/docs/user_guide/resource_and_tags/working_tagging/create_tag/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/resource_and_tags/working_tagging/create_tag/</guid><description>
+&lt;p>Use the euca-create-tags command to add a tag to a resource.&lt;/p>
+&lt;p>Enter the following command and parameters:&lt;/p>
+&lt;pre>&lt;code>euca-create-tags [resource_id] --tag [tag_key]=[tag_value]
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus returns a the resource identifier and its tag key and value. The following example shows how to add a tag to an EMI. This tag key is &lt;code>dataserver&lt;/code> and has no value.&lt;/p>
+&lt;pre>&lt;code>euca-create-tags emi-1A2B3C4D --tag dataserver
+TAG emi-1a2b3c4d image dataserver
+&lt;/code>&lt;/pre>
+&lt;p>The following example shows how to add the same two tags to both an EMI and an instance. One tag key is dataserver, which has no value, an empty string. The other tag key is stack, which has a value of &lt;code>Production&lt;/code> .&lt;/p>
+&lt;pre>&lt;code>euca-create-tags emi-1A2B3C4D i-6F5D4E3A --tag dataserver --tag stack=Production
+TAG emi-1A2B3C4D image dataserver
+TAG emi-1A2B3C4D image stack Production
+TAG i-6F5D4E3A image dataserver
+TAG i-6F5D4E3A image stack Production
+&lt;/code>&lt;/pre></description></item><item><title>Docs: List Tags</title><link>https://www.eucastack.io/docs/user_guide/resource_and_tags/working_tagging/describe_tag/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/resource_and_tags/working_tagging/describe_tag/</guid><description>
+&lt;p>Use the euca-describe-tags command to list your tags and filter the results different ways.&lt;/p>
+&lt;p>Enter the following command and parameters:&lt;/p>
+&lt;pre>&lt;code>euca-describe-tags --filter resource-type=[resource_type]&amp;quot; --filter
+&amp;quot;key=[key_name]&amp;quot; --filter &amp;quot;value=[key_value]&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>The following example describes all the tags belonging to your account.&lt;/p>
+&lt;pre>&lt;code>euca-describe-tags
+TAG emi-1A2B3C4D image database_server
+TAG emi-1A2B3C4D image stack Production
+TAG i-5F4E3D2A instance database_server
+TAG i-5F4E3D2A instance stack Production
+TAG i-12345678 instance webserver
+TAG i-12345678 instance stack Test
+&lt;/code>&lt;/pre>
+&lt;p>The following example describes the tags for the resource with ID emi-1A2B3C4D.&lt;/p>
+&lt;pre>&lt;code>ec2-describe-tags --filter &amp;quot;resource-id=emi-1A2B3C4D&amp;quot;
+TAG emi-1A2B3C4D image database_server
+TAG emi-1A2B3C4D image stack Production
+&lt;/code>&lt;/pre>
+&lt;p>The following example describes the tags for all your instances.&lt;/p>
+&lt;pre>&lt;code>ec2-describe-tags --filter &amp;quot;resource-type=instance&amp;quot;
+TAG i-5F4E3D2A instance database_server
+TAG i-5F4E3D2A instance stack Production
+TAG i-12345678 instance webserver
+TAG i-12345678 instance stack Test
+&lt;/code>&lt;/pre>
+&lt;p>The following example describes the tags for all your instances that have a tag with the key webserver.&lt;/p>
+&lt;pre>&lt;code>ec2-describe-tags --filter &amp;quot;resource-type=instance&amp;quot; --filter &amp;quot;key=database_server&amp;quot;
+TAG i-5F4E3D2A instance database_server
+&lt;/code>&lt;/pre>
+&lt;p>The following example describes the tags for all your instances that have a tag with the key stack that has a value of either Test or Production.&lt;/p>
+&lt;pre>&lt;code>ec2-describe-tags --filter &amp;quot;resource-type=instance&amp;quot; --filter &amp;quot;key=stack&amp;quot;
+--filter &amp;quot;value=Test&amp;quot; --filter &amp;quot;value=Production&amp;quot;
+TAG i-5F4E3D2A instance stack Production
+TAG i-12345678 instance stack Test
+&lt;/code>&lt;/pre>
+&lt;p>The following example describes the tags for all your instances that have a tag with the key Purpose that has no value.&lt;/p>
+&lt;pre>&lt;code>ec2-describe-tags --filter &amp;quot;resource-type=instance&amp;quot; --filter &amp;quot;key=Purpose&amp;quot; --filter &amp;quot;value=&amp;quot;
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Change a Tag's Value</title><link>https://www.eucastack.io/docs/user_guide/resource_and_tags/working_tagging/change_tag/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/resource_and_tags/working_tagging/change_tag/</guid><description>
+&lt;p>To change a tag&amp;rsquo;s value:&lt;/p>
+&lt;p>Enter the following command and parameters:&lt;/p>
+&lt;pre>&lt;code>euca-create-tags [resource] --tag [key=value]
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus returns a the resource identifier and its tag key and value. The following example changes the value of the stack tag for one of your EMIs from prod to test:&lt;/p>
+&lt;pre>&lt;code>euca-create-tags emi-1a2b3c4d --tag stack=dev
+TAG emi-1a2b3c4d image stack dev
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Delete a Tag</title><link>https://www.eucastack.io/docs/user_guide/resource_and_tags/working_tagging/delete_tag/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/resource_and_tags/working_tagging/delete_tag/</guid><description>
+&lt;p>To delete a tag:&lt;/p>
+&lt;p>Enter the following command and parameters:&lt;/p>
+&lt;pre>&lt;code>euca-delete-tags resource_id [resource_id]&amp;quot; --tag
+&amp;quot;key=[key_value]&amp;quot; --tag &amp;quot;value=[key_value]&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+If you specify a value, the tag is deleted only if its value matches the one you specified. If you specify an empty string as the value, the tag is deleted only if the tag&amp;rsquo;s value is an empty string.
+&lt;/div>
+&lt;p>Eucalyptus does not return a message. The following example deletes two tags assigned to an EMI and an instance:&lt;/p>
+&lt;pre>&lt;code>euca-delete-tags emi-1A2B3C4D i-6F5D4E3A --tag appserver --tag stack
+&lt;/code>&lt;/pre>
+&lt;p>The following example deletes a tag only if the value is an empty string:&lt;/p>
+&lt;pre>&lt;code>euca-delete-tags snap-1A2B3C4D --tag Owner=
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Filter by Tag</title><link>https://www.eucastack.io/docs/user_guide/resource_and_tags/working_tagging/filter_by_tag/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/resource_and_tags/working_tagging/filter_by_tag/</guid><description>
+&lt;p>You can describe your resources and filter the results based on the tags. To filter by tag:&lt;/p>
+&lt;p>Enter the following command and parameter:&lt;/p>
+&lt;pre>&lt;code>euca-describe-tags --filter resource-type=[resource_type]
+&lt;/code>&lt;/pre>
+&lt;p>The following example describes all your tags.&lt;/p>
+&lt;pre>&lt;code>euca-describe-tags
+TAG emi-1A2B3C4D image appserver
+TAG emi-1A2B3C4D image stack dev
+TAG i-5F4E3D2A instance appserver
+TAG i-5F4E3D2A instance stack dev
+TAG i-12345678 instance database_server
+TAG i-12345678 instance stack test
+&lt;/code>&lt;/pre>
+&lt;p>The following example describes the tags for a resource with ID emi-1A2B3C4D.&lt;/p>
+&lt;pre>&lt;code>euca-describe-tags --filter &amp;quot;resource-id=emi-1A2B3C4D&amp;quot;
+TAG emi-1A2B3C4D image appserver
+TAG emi-1A2B3C4D image stack dev
+&lt;/code>&lt;/pre>
+&lt;p>The following example describes the tags for all your instances.&lt;/p>
+&lt;pre>&lt;code>euca-describe-tags --filter &amp;quot;resource-type=instance&amp;quot;
+TAG i-5F4E3D2A instance appserver
+TAG i-5F4E3D2A instance stack dev
+TAG i-12345678 instance database_server
+TAG i-12345678 instance stack test
+&lt;/code>&lt;/pre></description></item></channel></rss>

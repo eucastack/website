@@ -1,0 +1,12 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Using Virtual Private Cloud</title><link>https://www.eucastack.io/docs/user_guide/vpc_intro/</link><description>Recent content in Using Virtual Private Cloud on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/vpc_intro/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: How VPC Works</title><link>https://www.eucastack.io/docs/user_guide/vpc_intro/vpc_overview/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/vpc_intro/vpc_overview/</guid><description>
+&lt;h1 id="how-vpc-works">How VPC Works&lt;/h1>
+&lt;p>Eucalyptus Virtual Private Cloud (VPC) is an implementation of Amazon VPC that allows you to run instances inside an isolated virtual network that you define. Eucalyptus VPC enables you to have control over subnets, internet gateways, and IP address ranges and allocations inside of this virtual network, as well as the ability to define and use multiple layers of security with security groups.&lt;/p></description></item><item><title>Docs: Understanding VPC Networking Concepts</title><link>https://www.eucastack.io/docs/user_guide/vpc_intro/vpc_networking_concepts_intro/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/vpc_intro/vpc_networking_concepts_intro/</guid><description>
+&lt;h1 id="understanding-vpc-networking-concepts">Understanding VPC Networking Concepts&lt;/h1>
+&lt;p>This section discusses VPC networking concepts and terminology.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+This documentation assumes that you have some knowledge of IP addressing, CIDR, route tables, and subnets. See the links included throughout the documentation for more information on these topics.
+&lt;/div>
+&lt;/p></description></item><item><title>Docs: VPC Security Concepts</title><link>https://www.eucastack.io/docs/user_guide/vpc_intro/vpc_security_concepts_intro/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/vpc_intro/vpc_security_concepts_intro/</guid><description>
+&lt;h1 id="vpc-security-concepts">VPC Security Concepts&lt;/h1>
+&lt;p>This section discusses VPC security concepts and terminology.&lt;/p></description></item></channel></rss>

@@ -1,0 +1,102 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Instance Tasks</title><link>https://www.eucastack.io/docs/user_guide/using_instances/working_instance/</link><description>Recent content in Instance Tasks on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/using_instances/working_instance/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Authorize Security Groups</title><link>https://www.eucastack.io/docs/user_guide/using_instances/working_instance/authorize_sg/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_instances/working_instance/authorize_sg/</guid><description>
+&lt;p>Before you can log in to an instance, you must authorize access to that instance. This done by configuring a security group for that instance.&lt;/p>
+&lt;p>A security group is a set of networking rules applied to instances associated with a group. When you first create an instance, it is assigned to a default security group that denies incoming network traffic from all sources. To allow login and usage of a new instance, you must authorize network access to the default security group with the euca-authorize command.&lt;/p>
+&lt;p>To authorize a security group, use euca-authorize with the name of the security group, and the options of the network rules you want to apply.&lt;/p>
+&lt;pre>&lt;code>euca-authorize &amp;lt;security_group&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Use the following command to grant unlimited network access using SSH (TCP, port 22) and VNC (TCP, ports 5900 to 5910) to the security group &lt;code>default&lt;/code> :&lt;/p>
+&lt;pre>&lt;code>euca-authorize -P tcp -p 22 -s 0.0.0.0/0 default
+euca-authorize -P tcp -p 5900-5910 -s 0.0.0.0/0 default
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Create Key Pairs</title><link>https://www.eucastack.io/docs/user_guide/using_instances/working_instance/create_keypairs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_instances/working_instance/create_keypairs/</guid><description>
+&lt;p>Eucalyptus uses cryptographic key pairs to verify access to instances. Key pairs are used if you want to connect to your instance using SSH. Creating a key pair generates two keys: a public key (saved within Eucalyptus) and a corresponding private key (output to the user as a character string). To enable this private key you must save it to a file and set appropriate access permissions (using the chmod command), as shown in the example below.&lt;/p>
+&lt;h2 id="create-key-pairs-with-the-console">Create Key Pairs with the Console&lt;/h2>
+&lt;p>From the main dashboard screen, click the Key Pairs icon. The Key Pairs page opens. Click the Create Key Pair button. The Create new key pair window opens. Type a name for the new key pair into the Name text box. The name may contain up to 255 alphanumeric and special characters. Click the Create and Download button. The private half of the key pair (.pem file) is saved to the default download location for your browser.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Keep your private key file in a safe place. If you lose it, you will be unable to access instances created with the key pair.
+&lt;/div>
+Change file permissions to enable access to the private key file in the local directory. For example, on a Linux or Mac OS X system:&lt;/p>
+&lt;pre>&lt;code>chmod 0600 &amp;lt;keypair_name&amp;gt;.private
+&lt;/code>&lt;/pre>
+&lt;h2 id="create-key-pairs-with-the-command-line">Create Key Pairs with the Command Line&lt;/h2>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-create-keypair &amp;lt;keypair_name&amp;gt; -f &amp;lt;keypair_name&amp;gt;.private
+&lt;/code>&lt;/pre>
+&lt;p>where &lt;code>&amp;lt;keypair_name&amp;gt;&lt;/code> is a unique name for your keypair. For example:&lt;/p>
+&lt;pre>&lt;code>euca-create-keypair alice-keypair -f alice-keypair.private
+&lt;/code>&lt;/pre>
+&lt;p>The private key is saved to a file in your local directory. Query the system to view the public key:&lt;/p>
+&lt;pre>&lt;code>euca-describe-keypairs
+&lt;/code>&lt;/pre>
+&lt;p>The command returns output similar to the following:&lt;/p>
+&lt;pre>&lt;code>KEYPAIR alice-keypair ad:0d:fc:6a:00:a7:e7:b2:bc:67:8e:31:12:22:c1:8a:77:8c:f9:c4
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Find an Image</title><link>https://www.eucastack.io/docs/user_guide/using_instances/working_instance/find_image/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_instances/working_instance/find_image/</guid><description>
+&lt;p>To find an image:&lt;/p>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-describe-images
+&lt;/code>&lt;/pre>
+&lt;p>The output displays all available images.&lt;/p>
+&lt;pre>&lt;code>IMAGE emi-EC1410C1 centos-32/centos.5-3.x86.img.manifest.xml ↵
+admin available public x86_64 machine
+IMAGE eki-822C1344 kernel-i386/vmlinuz-2.6.28-11-server.manifest.xml ↵
+admin available public x86_64 kernel
+IMAGE eri-A98C13E4 initrd-64/initrd.img-2.6.28-11-generic.manifest.xml ↵
+admin available public x86_64 ramdisk
+&lt;/code>&lt;/pre>
+&lt;p>Look for the image ID in the second column and write it down. The image ID starts with &lt;code>emi-&lt;/code> . Once you find a suitable image to use, make sure you have a keypair to use.&lt;/p></description></item><item><title>Docs: Launch an Instance</title><link>https://www.eucastack.io/docs/user_guide/using_instances/working_instance/run_instance/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_instances/working_instance/run_instance/</guid><description>
+&lt;p>To launch an instance:&lt;/p>
+&lt;p>Use the euca-run-instances command and provide an image ID and the user data file, in the format &lt;code>euca-run-instances &amp;lt;image_id&amp;gt;&lt;/code> . For example:&lt;/p>
+&lt;pre>&lt;code>euca-run-instances emi-EC1410C1
+&lt;/code>&lt;/pre>
+&lt;p>For additional details and options that can be used with the &lt;em>euca-run-instances&lt;/em> command. Enter the following command to get the launch status of the instance:&lt;/p>
+&lt;pre>&lt;code>euca-describe-instances &amp;lt;instance_id&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Need response from Eucalyptus then uncomment the para below.&lt;/p></description></item><item><title>Docs: Log in to an Instance</title><link>https://www.eucastack.io/docs/user_guide/using_instances/working_instance/login_instance/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_instances/working_instance/login_instance/</guid><description>
+&lt;h2 id="for-a-linux-instance">For a Linux Instance&lt;/h2>
+&lt;p>When you create an instance, Eucalyptus assigns the instance two IP addresses: a public IP address and a private IP address. The public IP address provides access to the instance from external network sources; the private IP address provides access to the instance from within the Eucalyptus cloud environment. Note that the two IP addresses may be the same depending on the current networking mode set by the administrator. For more information on Eucalyptus networking modes, see the Eucalyptus Administrator’s Guide.&lt;/p>
+&lt;p>To use an instance you must log into it via ssh using one of the IP addresses assigned to it. You can obtain the instance’s IP addresses using the euca-describe-instances query as shown in the following example.&lt;/p>
+&lt;p>To log into a VM instance:&lt;/p>
+&lt;p>Enter the following command to view the IP addresses of your instance:&lt;/p>
+&lt;pre>&lt;code>euca-describe-instances
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus returns output similar to the following:&lt;/p>
+&lt;pre>&lt;code>RESERVATION r-338206B5 alice default
+INSTANCE i-4DCF092C emi-EC1410C1 192.168.7.24 10.17.0.130 ↵ running alice-keypair 0 m1.small 2010-03-15T21:57:45.134Z
+&lt;/code>&lt;/pre>
+&lt;p>Note that the public IP address appears after the image name, with the private address immediately following.&lt;/p>
+&lt;p>Look for the instance ID in the second field and write it down. Use this ID to manipulate and terminate this instance.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Be sure that the security group for the instance allows SSH access. For more information, see
+&lt;/div>
+Use SSH to log into the instance, using your private key and the external IP address. For example:&lt;/p>
+&lt;pre>&lt;code>ssh -i alice-keypair.private root@192.168.7.24
+&lt;/code>&lt;/pre>
+&lt;p>You are now logged in to your Linux instance.&lt;/p>
+&lt;h2 id="using-ssh-to-connect-via-putty">Using SSH to Connect via PuTTY&lt;/h2>
+&lt;p>If you are a Windows user and want to securely connect to instances via PuTTY, you must first have a key pair.If you don&amp;rsquo;t have a key pair, you can create one through the Management Console or the command line. For the key pair to be used with PuTTY, convert your .pem file to a .ppk file by performing the last step in the &lt;a href="http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-access-ssh.html">Creating SSH Credentials for the Master Node: Modify Your PEM File&lt;/a> procedure.&lt;/p></description></item><item><title>Docs: Reboot an Instance</title><link>https://www.eucastack.io/docs/user_guide/using_instances/working_instance/reboot_instance/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_instances/working_instance/reboot_instance/</guid><description>
+&lt;p>Rebooting preserves the root filesystem of an instance across restarts. To reboot an instance:&lt;/p>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-reboot-instances &amp;lt;instance_id&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>To reboot the instance &lt;code>i-34523332&lt;/code> , enter:&lt;/p>
+&lt;pre>&lt;code>euca-reboot-instances i-34523332
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Terminate an Instance</title><link>https://www.eucastack.io/docs/user_guide/using_instances/working_instance/terminate_instance/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_instances/working_instance/terminate_instance/</guid><description>
+&lt;p>The &lt;code>euca-terminate-instances&lt;/code> command lets you cancel running VM instances. When you terminate instances, you must specify the ID string of the instance(s) you wish to terminate. You can obtain the ID strings of your instances using the euca-describe-instances command.&lt;/p>
+&lt;p>
+&lt;div class="alert alert-warning" role="alert">
+&lt;h4 class="alert-heading">Warning&lt;/h4>
+Terminating an instance can cause the instance and all items associated with the instance (data, packages installed, etc.) to be lost. Be sure to save any important work or data to Walrus or EBS before terminating an instance.
+&lt;/div>
+To terminate VM instances:&lt;/p>
+&lt;p>Enter &lt;code>euca-describe&lt;/code> instances to obtain the ID of the instances you wish to terminate. Note that an instance ID strings begin with the prefix &lt;code>i-&lt;/code> followed by an 8-character string:&lt;/p>
+&lt;pre>&lt;code>euca-describe-instances
+RESERVATION r-338206B5 alice default
+INSTANCE i-4DCF092C emi-EC1410C1 192.168.7.24 10.17.0.130 ↵
+running mykey 0 m1.small 2010-03-15T21:57:45.134Z ↵
+wind eki-822C1344 eri-BFA91429
+&lt;/code>&lt;/pre>
+&lt;p>Enter &lt;code>euca-terminate-instances&lt;/code> and the ID string(s) of the instance(s) you wish to terminate:&lt;/p>
+&lt;pre>&lt;code>euca-terminate-instances i-4DCF092C
+INSTANCE i-3ED007C8
+&lt;/code>&lt;/pre></description></item></channel></rss>

@@ -1,0 +1,38 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – EBS Tasks</title><link>https://www.eucastack.io/docs/user_guide/using_block_storage/working_storage/</link><description>Recent content in EBS Tasks on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/using_block_storage/working_storage/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Create and Attach an EBS Volume</title><link>https://www.eucastack.io/docs/user_guide/using_block_storage/working_storage/create_ebs_volume/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_block_storage/working_storage/create_ebs_volume/</guid><description>
+&lt;p>The following example shows how to create a 10 gigabyte EBS volume and attach it to a running instance called &lt;code>i-00000000&lt;/code> running in availability zone &lt;code>zone1&lt;/code> .&lt;/p>
+&lt;p>Create a new EBS volume in the same availability zone as the running instance.&lt;/p>
+&lt;pre>&lt;code>euca-create-volume --availability-zone zone1 --size 10
+&lt;/code>&lt;/pre>
+&lt;p>The command displays the ID of the newly-created volume. Attach the newly-created volume to the instance, specifying the local device name &lt;code>/dev/sdf&lt;/code> .&lt;/p>
+&lt;pre>&lt;code>euca-attach-volume vol-00000000 -i i-00000000 -d /dev/sdf
+&lt;/code>&lt;/pre>
+&lt;p>You&amp;rsquo;ve created a new EBS volume and attached it to a running instance. You can now access the EBS volume from your running instance.&lt;/p></description></item><item><title>Docs: List Available EBS Volumes</title><link>https://www.eucastack.io/docs/user_guide/using_block_storage/working_storage/ebs_describe_volumes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_block_storage/working_storage/ebs_describe_volumes/</guid><description>
+&lt;p>You can use the Eucalyptus command line tools to list all available volumes and retrieve information about a specific volume.&lt;/p>
+&lt;p>To get a list of all available volumes in your Eucalyptus cloud, enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-describe-volumes
+&lt;/code>&lt;/pre>
+&lt;p>To get information about one specific volume, use the &lt;code>euca-describe-volumes&lt;/code> command and specify the volume ID.&lt;/p>
+&lt;pre>&lt;code>euca-describe-volumes vol-00000000
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Detach an EBS Volume</title><link>https://www.eucastack.io/docs/user_guide/using_block_storage/working_storage/detach_vol/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_block_storage/working_storage/detach_vol/</guid><description>
+&lt;p>To detach a block volume from an instance:&lt;/p>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-detach-volume &amp;lt;volume_id&amp;gt;
+euca-detach-volume vol-00000000
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Create a Snapshot</title><link>https://www.eucastack.io/docs/user_guide/using_block_storage/working_storage/ebs_create_snapshot/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_block_storage/working_storage/ebs_create_snapshot/</guid><description>
+&lt;p>The following example shows how to create a snapshot.&lt;/p>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-create-snapshot &amp;lt;volume_id&amp;gt;
+euca-create-snapshot vol-00000000
+&lt;/code>&lt;/pre></description></item><item><title>Docs: List Available Snapshots</title><link>https://www.eucastack.io/docs/user_guide/using_block_storage/working_storage/ebs_describe_snapshots/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_block_storage/working_storage/ebs_describe_snapshots/</guid><description>
+&lt;p>You can use the Eucalyptus command line tools to list available snapshots and retrieve information about a specific snapshot.&lt;/p>
+&lt;p>To get a list of all available snapshots in your Eucalyptus cloud, enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-describe-snapshots
+&lt;/code>&lt;/pre>
+&lt;p>To get information about one specific snapshot, use the &lt;code>euca-describe-snapshots&lt;/code> command and specify the snapshot ID.&lt;/p>
+&lt;pre>&lt;code>euca-describe-snapshots snap-00000000
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Delete a Snapshot</title><link>https://www.eucastack.io/docs/user_guide/using_block_storage/working_storage/ebs_delete_snapshot/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_block_storage/working_storage/ebs_delete_snapshot/</guid><description>
+&lt;p>The following example shows how to delete a snapshot.&lt;/p>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-delete-snapshot &amp;lt;snapshot_id&amp;gt;
+euca-delete-snapshot mytestsnaphot
+&lt;/code>&lt;/pre></description></item></channel></rss>

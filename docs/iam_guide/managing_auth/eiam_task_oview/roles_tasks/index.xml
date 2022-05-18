@@ -1,0 +1,380 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Roles</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/</link><description>Recent content in Roles on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Launch an Instance with a Role</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/roles_tasks_create_role_application/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/roles_tasks_create_role_application/</guid><description>
+&lt;p>To create a role for a Eucalyptus instance, you must first create a trust policy that you can use for it.&lt;/p>
+&lt;h2 id="create-trust-policy">Create Trust Policy&lt;/h2>
+&lt;p>You can create trust policies in two ways:&lt;/p>
+&lt;ul>
+&lt;li>a file method&lt;/li>
+&lt;li>a command line method&lt;/li>
+&lt;/ul>
+&lt;h2 id="create-trust-policy-using-a-file">Create trust policy using a file&lt;/h2>
+&lt;p>Create a trust policy file with the contents below and save it in a text file called &lt;code>role-trust-policy.json&lt;/code> :&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Version&amp;quot;: &amp;quot;2012-10-17&amp;quot;,
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Principal&amp;quot;: { &amp;quot;Service&amp;quot;: &amp;quot;ec2.amazonaws.com&amp;quot;},
+&amp;quot;Action&amp;quot;: &amp;quot;sts:AssumeRole&amp;quot;
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;p>Create the role using the &lt;code>euare-rolecreate&lt;/code> command, specifying the trust policy file that was previously created:&lt;/p>
+&lt;pre>&lt;code># euare-rolecreate --role-name describe-instances -f role-trust-policy.json
+# euare-rolelistbypath
+arn:aws:iam::408396244283:role/describe-instances
+&lt;/code>&lt;/pre>
+&lt;p>Proceed with applying an access policy to a role.&lt;/p>
+&lt;h2 id="create-trust-policy-using-the-command-line">Create trust policy using the command line&lt;/h2>
+&lt;p>The other way to create the role is to use the command line options to specify the trust policy:Issue the following string on the command line:&lt;/p>
+&lt;pre>&lt;code># euare-rolecreate --role-name describe-instances --service http://compute.acme.eucalyptus-systems.com:8773/
+# euare-rolelistbypath
+arn:aws:iam::408396244283:role/describe-instances
+&lt;/code>&lt;/pre>
+&lt;p>Proceed with applying an access policy to a role.&lt;/p>
+&lt;h2 id="create-and-apply-an-access-policy-to-a-role">Create and apply an access policy to a role&lt;/h2>
+&lt;p>Create a policy and save it in a text file with a &lt;code>.json&lt;/code> extension. The following example shows a policy that allows listing the contents of an S3 bucket called &amp;ldquo;mybucket&amp;rdquo;:&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Action&amp;quot;: [
+&amp;quot;s3:ListBucket&amp;quot;
+],
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;arn:aws:s3:::mybucket&amp;quot;
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For more information on policies, see .
+&lt;/div>
+Apply the access policy to the role using the &lt;code>euare-roleuploadpolicy&lt;/code> command, passing in the filename of the policy you created in the previous step: &lt;code>euare-roleuploadpolicy --role-name mytestrole --policy-name s3-list-bucket --policy-document my-test-policy.json&lt;/code>&lt;/p></description></item><item><title>Docs: Use a Role with an Instance Application</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/roles_tasks_java_sdk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/roles_tasks_java_sdk/</guid><description>
+&lt;p>You can use the AWS Java SDK to programmatically perform IAM role-related operations in your Eucalyptus cloud. This example shows how to use the AWS SDK to retrieve the credentials for the IAM role associated with the Eucalyptus instance.The following program lists the contents of the bucket &amp;ldquo;my-test-bucket&amp;rdquo; using the credentials stored in the Java system properties:&lt;/p>
+&lt;pre>&lt;code>import com.amazonaws.auth.*;
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
+import com.amazonaws.services.ec2.AmazonEC2;
+import com.amazonaws.services.ec2.AmazonEC2Client;
+import com.amazonaws.services.s3.*;
+import com.amazonaws.services.s3.model.*;
+public class MyTestApp {
+static AmazonEC2 ec2;
+static AmazonS3 s3;
+private static void init() throws Exception {
+AWSCredentialsProvider credentials = new ClasspathPropertiesFileCredentialsProvider();
+s3 = new AmazonS3Client(credentials);
+s3.setEndpoint(&amp;quot;http://128.0.0.1:8773/services/Walrus&amp;quot;);
+}
+public static void main(String[] args) throws Exception {
+init();
+try {
+String bucketName = &amp;quot;my-test-bucket&amp;quot;;
+System.out.println(&amp;quot;Listing bucket &amp;quot; + bucketName + &amp;quot;:&amp;quot;);
+ListObjectsRequest listObjectsRequest = new ListObjectsRequest(bucketName, &amp;quot;&amp;quot;, &amp;quot;&amp;quot;, &amp;quot;&amp;quot;, 200);
+ObjectListing bucketList;
+do {
+bucketList = s3.listObjects(listObjectsRequest);
+for (S3ObjectSummary objectInfo :
+bucketList.getObjectSummaries()) {
+System.out.println(&amp;quot; - &amp;quot; + objectInfo.getKey() + &amp;quot; &amp;quot; +
+&amp;quot;(size = &amp;quot; + objectInfo.getSize() +
+&amp;quot;)&amp;quot;);
+}
+listObjectsRequest.setMarker(bucketList.getNextMarker());
+} while (bucketList.isTruncated());
+} catch (AmazonServiceException eucaServiceException ) {
+System.out.println(&amp;quot;Exception: &amp;quot; + eucaServiceException.getMessage());
+System.out.println(&amp;quot;Status Code: &amp;quot; + eucaServiceException.getStatusCode());
+System.out.println(&amp;quot;Error Code: &amp;quot; + eucaServiceException.getErrorCode());
+System.out.println(&amp;quot;Request ID: &amp;quot; + eucaServiceException.getRequestId());
+} catch (AmazonClientException eucaClientException) {
+System.out.println(&amp;quot;Error Message: &amp;quot; + eucaClientException.getMessage());
+}
+System.out.println(&amp;quot;===== FINISHED =====&amp;quot;);
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>This application produces output similar to the following:&lt;/p>
+&lt;pre>&lt;code>Listing bucket my-test-bucket:
+- precise-server-cloudimg-amd64-vmlinuz-virtual.manifest.xml (size = 3553)
+- precise-server-cloudimg-amd64-vmlinuz-virtual.part.0 (size = 4904032)
+- precise-server-cloudimg-amd64.img.manifest.xml (size = 7014)
+- precise-server-cloudimg-amd64.img.part.0 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.1 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.10 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.11 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.12 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.13 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.14 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.15 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.16 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.17 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.18 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.19 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.2 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.20 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.21 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.22 (size = 2570400)
+- precise-server-cloudimg-amd64.img.part.3 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.4 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.5 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.6 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.7 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.8 (size = 10485760)
+- precise-server-cloudimg-amd64.img.part.9 (size = 10485760)
+===== FINISHED =====
+&lt;/code>&lt;/pre>
+&lt;p>The problem with this approach is that the credentials are hardcoded into the application - this makes them less secure, and makes the application more difficult to maintain. Using IAM roles is a more secure and easier way to manage credentials for applications that run on Eucalyptus cloud instances.&lt;/p>
+&lt;p>Create a role with a policy that allows an instance to list the contents of a specific bucket, and then launch an instance with that role (for an example, see &lt;a href="https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/roles_tasks_create_role_application/">Launch an Instance with a Role&lt;/a> . An example policy that allows listing of a specific bucket will look similar to the following:&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Action&amp;quot;: [
+&amp;quot;s3:ListBucket&amp;quot;
+],
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;arn:aws:s3:::my-test-bucket&amp;quot;
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;p>The following line of code retrieves the credentials that are stored in the application&amp;rsquo;s credentials profile: &lt;code>AWSCredentialsProvider credentials = new ClasspathPropertiesFileCredentialsProvider();&lt;/code> To use the role-based credentials associated with the instance, replace that line of code with the following: &lt;code>AWSCredentialsProvider credentials = new InstanceProfileCredentialsProvider();&lt;/code> The program now looks like this:&lt;/p>
+&lt;pre>&lt;code>import com.amazonaws.auth.*;
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
+import com.amazonaws.services.ec2.AmazonEC2;
+import com.amazonaws.services.ec2.AmazonEC2Client;
+import com.amazonaws.services.s3.*;
+import com.amazonaws.services.s3.model.*;
+public class MyTestApp {
+static AmazonEC2 ec2;
+static AmazonS3 s3;
+private static void init() throws Exception {
+AWSCredentialsProvider credentials = new InstanceProfileCredentialsProvider();
+s3 = new AmazonS3Client(credentials);
+s3.setEndpoint(&amp;quot;http://128.0.0.1:8773/services/Walrus&amp;quot;);
+}
+public static void main(String[] args) throws Exception {
+init();
+try {
+String bucketName = &amp;quot;my-test-bucket&amp;quot;;
+System.out.println(&amp;quot;Listing bucket &amp;quot; + bucketName + &amp;quot;:&amp;quot;);
+ListObjectsRequest listObjectsRequest = new ListObjectsRequest(bucketName, &amp;quot;&amp;quot;, &amp;quot;&amp;quot;, &amp;quot;&amp;quot;, 200);
+ObjectListing bucketList;
+do {
+bucketList = s3.listObjects(listObjectsRequest);
+for (S3ObjectSummary objectInfo :
+bucketList.getObjectSummaries()) {
+System.out.println(&amp;quot; - &amp;quot; + objectInfo.getKey() + &amp;quot; &amp;quot; +
+&amp;quot;(size = &amp;quot; + objectInfo.getSize() +
+&amp;quot;)&amp;quot;);
+}
+listObjectsRequest.setMarker(bucketList.getNextMarker());
+} while (bucketList.isTruncated());
+} catch (AmazonServiceException eucaServiceException ) {
+System.out.println(&amp;quot;Exception: &amp;quot; + eucaServiceException.getMessage());
+System.out.println(&amp;quot;Status Code: &amp;quot; + eucaServiceException.getStatusCode());
+System.out.println(&amp;quot;Error Code: &amp;quot; + eucaServiceException.getErrorCode());
+System.out.println(&amp;quot;Request ID: &amp;quot; + eucaServiceException.getRequestId());
+} catch (AmazonClientException eucaClientException) {
+System.out.println(&amp;quot;Error Message: &amp;quot; + eucaClientException.getMessage());
+}
+System.out.println(&amp;quot;===== FINISHED =====&amp;quot;);
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>NOTE: Running this code outside of an instance will result in the following error message:&lt;/p>
+&lt;pre>&lt;code>Listing bucket my-test-bucket:
+Error Message: Unable to load credentials from Amazon EC2 metadata service
+&lt;/code>&lt;/pre>
+&lt;p>When the application is running on an instance that was launched with the role you created, the credentials for the role assigned to the instance will be retrieved from the Instance Metadata Service.&lt;/p></description></item><item><title>Docs: Assume a Role</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/roles_tasks_assume_role_application/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/roles_tasks_assume_role_application/</guid><description>
+&lt;p>A role is assigned a specific set of tasks and permissions. Users may assume a different role than the one they have in order to perform a different set of tasks. For example, the primary administrator is unavailable and the backup administrator is asked to assume the role of the primary administrator during his or her absence. A few points to consider before assuming a role:&lt;/p>
+&lt;ul>
+&lt;li>A role must first be set up by an administrator.&lt;/li>
+&lt;li>You must log in as an IAM user, not as an account root user.&lt;/li>
+&lt;li>Once you assume another role, you temporarily give up your existing user permissions and assume the permissions of your new role.&lt;/li>
+&lt;li>When you are no longer assuming another role, your usual user permissions are automatically restored.&lt;/li>
+&lt;/ul>
+&lt;h2 id="create-role">Create Role&lt;/h2>
+&lt;p>The scenario described in this section outlines the procedure for creating a role in order to delegate permissions to an IAM user.Create a role that allows users of an account to manage keypairs. Management of keypairs include the following EC2 actions:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>CreateKeyPair&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>DeleteKeyPair&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>DescribeKeyPairs&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>ImportKeyPair
+Create a role for managing keypairs for the account. In this example, the admin user of &amp;lsquo;devops&amp;rsquo; account (001827830003) is creating the role:&lt;/p>
+&lt;h1 id="cat-devops-role-trustpolicyjson">cat devops-role-trustpolicy.json&lt;/h1>
+&lt;p>{
+&amp;ldquo;Version&amp;rdquo;: &amp;ldquo;2012-10-17&amp;rdquo;,
+&amp;ldquo;Statement&amp;rdquo;: [{
+&amp;ldquo;Effect&amp;rdquo;: &amp;ldquo;Allow&amp;rdquo;,
+&amp;ldquo;Principal&amp;rdquo;: {&amp;ldquo;AWS&amp;rdquo;: &amp;ldquo;arn:aws:iam::001827830003:root&amp;rdquo;},
+&amp;ldquo;Action&amp;rdquo;: &amp;ldquo;sts:AssumeRole&amp;rdquo;
+}]
+}&lt;/p>
+&lt;h1 id="euare-rolecreate--f-devops-role-trustpolicyjson-devops-ec2-keypair-mgmt-role---region-devops-adminfuture">euare-rolecreate -f devops-role-trustpolicy.json devops-ec2-keypair-mgmt-role &amp;ndash;region devops-admin@future&lt;/h1>
+&lt;/li>
+&lt;/ul>
+&lt;p>Add IAM access policy for keypair management to the role:&lt;/p>
+&lt;pre>&lt;code># cat keypair-mgmt-policy.json
+{
+&amp;quot;Version&amp;quot;: &amp;quot;2012-10-17&amp;quot;,
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Sid&amp;quot;: &amp;quot;Stmt1445362739663&amp;quot;,
+&amp;quot;Action&amp;quot;: [
+&amp;quot;ec2:CreateKeyPair&amp;quot;,
+&amp;quot;ec2:DeleteKeyPair&amp;quot;,
+&amp;quot;ec2:DescribeKeyPairs&amp;quot;,
+&amp;quot;ec2:ImportKeyPair&amp;quot;
+],
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;*&amp;quot;
+}
+]
+}
+# euare-roleuploadpolicy --policy-name ec2-keypair-actions --policy-document keypair-mgmt-policy.json devops-ec2-keypair-mgmt-role --region devops-admin@future
+&lt;/code>&lt;/pre>
+&lt;p>Now that the role has been created, follow the &lt;a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html#use-groups-for-permissions">AWS IAM best practice of using groups to assign permission to IAM users&lt;/a> and attach an IAM access policy to the group to allow any members (example shows &amp;lsquo;user01&amp;rsquo; user) to assume the &amp;lsquo;devops-ec2-keypair-mgmt-role&amp;rsquo; role:&lt;/p>
+&lt;pre>&lt;code># euare-groupcreate -g Key-Managers --region devops-admin@future
+# euare-groupadduser -u user01 -g Key-Managers --region devops-admin@future
+# cat devops-keypair-mgmt-assume-role-policy.json
+{
+&amp;quot;Version&amp;quot;: &amp;quot;2012-10-17&amp;quot;,
+&amp;quot;Statement&amp;quot;: [{
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Action&amp;quot;: &amp;quot;sts:AssumeRole&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;arn:aws:iam::001827830003:role/devops-ec2-keypair-mgmt-role&amp;quot;
+}]
+}
+# euare-groupuploadpolicy -p keypair-mgmt-role-perm -f devops-keypair-mgmt-assume-role-policy.json Key-Managers --region devops-admin@future
+&lt;/code>&lt;/pre>
+&lt;p>Now that members can assume the &amp;lsquo;devops-ec2-keypair-mgmt-role&amp;rsquo; role, run the following command to list all keypairs under the account:&lt;/p>
+&lt;pre>&lt;code># eval `/usr/bin/euare-assumerole devops-ec2-keypair-mgmt-role --region devops-user01@future`
+# euca-describe-keypairs --region @future
+KEYPAIR devops-admin 9e:1a:bc:ac:98:b1:97:7c:65:b0:b3:7c:96:f5:d5:7b:a1:3e:36:a6
+&lt;/code>&lt;/pre>
+&lt;p>When done assuming the role, the role must be released using &lt;code>euare-releaserole&lt;/code> :&lt;/p>
+&lt;pre>&lt;code># eval `/usr/bin/euare-releaserole --region devops-user01@future`
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Delegate Access Across Your Accounts Using Roles</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/roles_tasks_cross_acct_api_access/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/roles_tasks_cross_acct_api_access/</guid><description>
+&lt;p>A role can be used to delegate access to resources that are in different accounts that you own.Using roles to access resources across different accounts allows users to assume a role that can access all the resources in in different acccounts, rather than having users log into different accounts to achieve the same result.&lt;/p>
+&lt;h2 id="using-roles-to-access-resources-in-another-account">Using Roles to Access Resources in Another Account&lt;/h2>
+&lt;p>The scenario described in this section outlines the procedure for a user in Account B to create a role that provides access to a particular OSGObject Storage Gateway (OSG) bucket owned by Account B, which can be assumed by user in Account A.Using &lt;a href="https://github.com/s3tools/s3cmd">s3cmd&lt;/a> , list bucket that will be shared through role:&lt;/p>
+&lt;pre>&lt;code># ./s3cmd/s3cmd --config=.s3cfg-acctB-user11 ls s3://mongodb-snapshots
+2014-12-01 22:34 188563920 s3://mongodb-snapshots/mongodb-backup-monday.img.xz
+2014-12-02 13:34 188564068 s3://mongodb-snapshots/mongodb-backup-tuesday.img.xz
+&lt;/code>&lt;/pre>
+&lt;p>Create Role in Account B with Trust Policy for User from Account A:&lt;/p>
+&lt;pre>&lt;code># cat acctB-role-trust-acctA-policy.json
+{
+&amp;quot;Version&amp;quot;: &amp;quot;2012-10-17&amp;quot;,
+&amp;quot;Statement&amp;quot;: [{
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Principal&amp;quot;: {&amp;quot;AWS&amp;quot;: &amp;quot;arn:aws:iam::290122656840:user/user01&amp;quot;},
+&amp;quot;Action&amp;quot;: &amp;quot;sts:AssumeRole&amp;quot;
+}]
+}
+# euare-rolecreate --role-name cross-bucket-access-mongodb-logs --policy-document acctB-role-trust-acctA-policy.json
+&lt;/code>&lt;/pre>
+&lt;p>Upload IAM Access Policy for Role in Account B:&lt;/p>
+&lt;pre>&lt;code># cat acctB-mongodb-snapshots-bucket-access-policy.json
+{
+&amp;quot;Version&amp;quot;: &amp;quot;2012-10-17&amp;quot;,
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Action&amp;quot;: &amp;quot;s3:ListBucket&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;arn:aws:s3:::mongodb-snapshots&amp;quot;
+},
+{
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Action&amp;quot;: [
+&amp;quot;s3:GetObject&amp;quot;,
+&amp;quot;s3:PutObject&amp;quot;,
+&amp;quot;s3:DeleteObject&amp;quot;
+],
+&amp;quot;Resource&amp;quot;: &amp;quot;arn:aws:s3:::mongodb-snapshots/*&amp;quot;
+}
+]
+}
+# euare-roleuploadpolicy --role-name cross-bucket-access-mongodb-logs --policy-document acctB-mongodb-snapshots-bucket-access-policy.json --policy-name mongodb-logs-bucket-access
+&lt;/code>&lt;/pre>
+&lt;p>Upload IAM access policy to Group (e.g. Testers) associated with user in Account A to allow for Role in Account B to be assumed. For more information, go to &lt;a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html#use-groups-for-permissions">Amazon Web Services IAM Best Practices&lt;/a> .&lt;/p>
+&lt;pre>&lt;code># cat acctA-assume-role-acctB-policy.json
+{
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Sid&amp;quot;: &amp;quot;Stmt1417531456446&amp;quot;,
+&amp;quot;Action&amp;quot;: [
+&amp;quot;sts:AssumeRole&amp;quot;
+],
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;arn:aws:iam::325271821652:role/cross-bucket-access-mongodb-logs&amp;quot;
+}
+]
+}
+# euare-groupuploadpolicy --policy-name mongodb-bucket-access-role --group-name Testers --policy-document acctA-assume-role-acctB-policy.json
+&lt;/code>&lt;/pre>
+&lt;p>The example below demonstrates how to use a python script leveraging the &lt;a href="http://boto.readthedocs.org/en/latest/index.html">boto&lt;/a> library. Another way to assume this role is to run the Euca2ools command, &lt;code>euare-assumerole&lt;/code> , using the AccountA/user01 credentials. For more information regarding assuming a role, see an example from the &lt;a href="https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/roles_tasks/roles_tasks_assume_role_application/">Assume a Role&lt;/a> section. The script below performs the following actions:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>Accesses STS to get temporary access key, secret key and token&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>List contents of bucket &amp;ldquo;mongodb-snapshots&amp;rdquo;&lt;/p>
+&lt;p>=======================
+#!/bin/env python&lt;/p>
+&lt;p>import boto
+from boto.sts import STSConnection
+from boto.s3.connection import S3Connection
+from boto.s3.connection import OrdinaryCallingFormat&lt;/p>
+&lt;p>if &lt;strong>name&lt;/strong> == &amp;ldquo;&lt;strong>main&lt;/strong>&amp;rdquo;:
+&amp;quot;&amp;quot;&amp;quot;
+Assuming &amp;lsquo;cross-bucket-access-mongodb-logs&amp;rsquo; role by AccountA, User01 user
+&amp;quot;&amp;quot;&amp;quot;
+STSConnection.DefaultRegionEndpoint = &amp;ldquo;tokens.future.euca-hasp.cs.prc.eucalyptus-systems.com&amp;rdquo;
+sts_connection = STSConnection(aws_access_key_id=&amp;quot;&lt;AccountA User01 Access Key ID>&amp;quot;,
+aws_secret_access_key=&amp;quot;&lt;AccountA User01 Secret Key>&amp;quot;,
+is_secure=False, port=&amp;ldquo;8773&amp;rdquo;)
+assumedRoleObject = sts_connection.assume_role(
+role_arn=&amp;ldquo;arn:aws:iam::325271821652:role/cross-bucket-access-mongodb-logs&amp;rdquo;,
+role_session_name=&amp;ldquo;AcctAUser01MongoDBBucketAccess&amp;rdquo;)&lt;/p>
+&lt;pre>&lt;code> s3 = S3Connection(aws_access_key_id=assumedRoleObject.credentials.access_key,
+aws_secret_access_key=assumedRoleObject.credentials.secret_key,
+security_token=assumedRoleObject.credentials.session_token,
+host=&amp;quot;objectstorage.future.euca-hasp.cs.prc.eucalyptus-systems.com&amp;quot;,
+is_secure=False, port=8773, calling_format=OrdinaryCallingFormat())
+bucket_name = &amp;quot;mongodb-snapshots&amp;quot;
+bucket = s3.lookup(bucket_name)
+if bucket:
+print &amp;quot;Bucket Information [%s]:&amp;quot; % bucket_name
+print &amp;quot;------------------------------------------------------------&amp;quot;
+for key in bucket:
+print &amp;quot;\t&amp;quot; + key.name
+else:
+print &amp;quot;Bucket is not available: &amp;quot; + bucket_name + &amp;quot;\n&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>==================&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>Run the script:&lt;/p>
+&lt;pre>&lt;code># ./describe-bucket-script.py
+Bucket Information [mongodb-snapshots]:
+------------------------------------------------------------
+mongodb-backup-monday.img.xz
+mongodb-backup-tuesday.img.xz
+&lt;/code>&lt;/pre></description></item></channel></rss>

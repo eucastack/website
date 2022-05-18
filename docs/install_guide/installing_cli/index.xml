@@ -1,0 +1,36 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Client Installation</title><link>https://www.eucastack.io/docs/install_guide/installing_cli/</link><description>Recent content in Client Installation on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/install_guide/installing_cli/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: AWS CLI Installation</title><link>https://www.eucastack.io/docs/install_guide/installing_cli/installing_awscli/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/installing_cli/installing_awscli/</guid><description>
+&lt;p>The AWS CLI is the official client for AWS. The CentOS and RHEL 7 official repositories provide a packaged AWS CLI version 1 that works well with Eucalyptus.&lt;/p>
+&lt;p>To allow easy use of the AWS CLI with Eucalyptus a plug-in is provided that understands how to access Eucalyptus services.&lt;/p>
+&lt;h2 id="install">Install&lt;/h2>
+&lt;p>To install the Eucalyptus plug-in a Eucalyptus YUM repository must first be enabled, either the release repository:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>yum install https://downloads.eucalyptus.cloud/software/eucalyptus/5/rhel/7/x86_64/eucalyptus-release-5-1.11.as.el7.noarch.rpm
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>or the master repository for the latest nightly build:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>yum install https://downloads.eucalyptus.cloud/software/eucalyptus/master/rhel/7/x86_64/eucalyptus-release-5-1.15.as.el7.noarch.rpm
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Once a repository is configured, install the plugin and client:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>yum install eucalyptus-awscli-plugin
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Which will install the plug-in and version 1 of the AWS CLI.&lt;/p>
+&lt;h2 id="configuration">Configuration&lt;/h2>
+&lt;p>AWS provides general instructions on &lt;a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html">Configuring the AWS CLI&lt;/a> which includes configuration for credentials. This section covers Eucalyptus plugin specific configuration.&lt;/p>
+&lt;p>An example configuration for the AWS CLI is:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># cat .aws/config &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>plugins&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">eucalyptus&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> awscli_plugin_eucalyptus
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>default&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">ufshost&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> mycloud.example.com
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">ufsport&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> &lt;span style="color:#0000cf;font-weight:bold">8773&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">verify_ssl&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> yes
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">output&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> text
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">region&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> eucalyptus
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The configuration enables the plugin and sets the &lt;em>ufshost&lt;/em> and &lt;em>ufsport&lt;/em> to enable Eucalyptus service endpoints to be derived.&lt;/p>
+&lt;p>If your cloud does not have a valid HTTPS certificate then you will need to change &lt;em>verify_ssl&lt;/em> to &lt;code>no&lt;/code>, but note that this is less secure.&lt;/p></description></item><item><title>Docs: Euca2ools Standalone Installation</title><link>https://www.eucastack.io/docs/install_guide/installing_cli/installing_euca2ools_standalone/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/installing_cli/installing_euca2ools_standalone/</guid><description>
+&lt;p>Euca2ools is the Eucalyptus command line interface for interacting with Eucalyptus. This topic discusses how to perform a standalone installation of Euca2ools. If you&amp;rsquo;re running recent versions of Fedora, Debian, or Ubuntu, you can install Euca2ools using &lt;em>yum&lt;/em> or &lt;em>apt&lt;/em>.&lt;/p>
+&lt;p>If you&amp;rsquo;re running RHEL/CentOS, you can use the following instructions to install Euca2ools.&lt;/p>
+&lt;p>To perform a standalone installation of Euca2ools on RHEL/CentOS:&lt;/p>
+&lt;p>Configure the EPEL package repository:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>yum install epel-release
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Configure the Euca2ools package repository:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>yum install http://downloads.eucalyptus.cloud/software/euca2ools/3.4/rhel/7/x86_64/euca2ools-release-3.4-2.2.as.el7.noarch.rpm
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Install Euca2ools:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>yum install euca2ools
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You&amp;rsquo;ve now performed a standalone installation of Euca2ools.&lt;/p></description></item></channel></rss>

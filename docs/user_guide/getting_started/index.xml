@@ -1,0 +1,160 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Getting Started</title><link>https://www.eucastack.io/docs/user_guide/getting_started/</link><description>Recent content in Getting Started on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/getting_started/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Getting Started with the Eucalyptus Management Console</title><link>https://www.eucastack.io/docs/user_guide/getting_started/getting_started_console/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/getting_started/getting_started_console/</guid><description>
+&lt;h1 id="getting-started-with-the-eucalyptus-management-console">Getting Started with the Eucalyptus Management Console&lt;/h1>
+&lt;p>This section helps you get started using your Eucalyptus cloud with the Eucalyptus Management Console.To access Eucalyptus with the Management Console, you&amp;rsquo;ll need a password for the Management Console. Talk to your cloud administrator to get your keys and passwords.&lt;/p></description></item><item><title>Docs: Getting Started with the AWS CLI</title><link>https://www.eucastack.io/docs/user_guide/getting_started/getting_started_awscli/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/getting_started/getting_started_awscli/</guid><description>
+&lt;p>This section helps you get started using your Eucalyptus cloud, and covers setting up your user credentials, installing and configuring the AWS CLI, and working with images and instances. As a cloud user, you can access the Eucalyptus cloud using a command line interface such as the AWS CLI, or using a web-based interface such as the Eucalyptus Management Console.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+This section primarily deals with using the AWS CLI. For complete documentation on using web-based the Eucalyptus Console, see &lt;a href="https://www.eucastack.io/docs/user_guide/getting_started/getting_started_console/console_login/">Console Login&lt;/a>.
+&lt;/div>
+&lt;p>The install guide covers &lt;a href="https://www.eucastack.io/docs/install_guide/installing_cli/installing_awscli/">&amp;ldquo;AWS CLI Installation&amp;rdquo;&lt;/a>&lt;/p>
+&lt;h2 id="find-image">Find Image&lt;/h2>
+&lt;p>Enter the following command:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># aws ec2 describe-images&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>IMAGES x86_64 2020-10-17T05:29:09.161Z emi-0ba907069cb1845bc ubuntu-focal/focal-server-cloudimg-amd64.raw.manifest.xml machine ubuntu-focal 000575948401 True /dev/sda instance-store available hvm
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>IMAGES x86_64 2020-10-17T05:24:08.857Z emi-371ada125a928669e centos-7/CentOS-7-x86_64-GenericCloud-2003.raw.manifest.xml machine centos-7 000575948401 True /dev/sda instance-store available hvm
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Look for the image ID and write it down. The image ID starts with &lt;code>emi-&lt;/code> . Once you find a suitable image to use, make sure you have a keypair to use.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Examples use the AWS CLI &lt;em>text&lt;/em> output format. You can request this output for a command by adding an &amp;ldquo;&amp;ndash;output text&amp;rdquo; argument to any command.
+&lt;/div>
+&lt;h2 id="create-keypairs">Create KeyPairs&lt;/h2>
+&lt;p>Enter the following command:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>aws ec2 create-key-pair --key-name &amp;lt;keypair_name&amp;gt; &amp;gt; &amp;lt;keypair_name&amp;gt;.private
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>where &lt;code>&amp;lt;keypair_name&amp;gt;&lt;/code> is a unique name for your keypair. For example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>aws ec2 create-key-pair --key-name &lt;span style="color:#4e9a06">&amp;#34;alice-keypair&amp;#34;&lt;/span> &amp;gt; &lt;span style="color:#4e9a06">&amp;#34;alice-keypair.private&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The private key is saved to a file in your local directory. Query the system to view the public key:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># aws ec2 describe-key-pairs&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KEYPAIRS 92:40:28:cb:08:54:80:95:8d:69:d9:ab:9a:ff:28:30:40:12:6a:66 alice-keypair
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="authorize-security-groups">Authorize Security Groups&lt;/h2>
+&lt;p>Before you can log in to an instance, you must authorize access to that instance. This done by configuring a security group for that instance.&lt;/p>
+&lt;p>A security group is a set of networking rules applied to instances associated with that group. When you first create an instance, it is assigned to a default security group that denies incoming network traffic from all sources. To allow login and usage of a new instance, you must authorize network access to the default security group with the authorize-security-group-ingress command.&lt;/p>
+&lt;p>To authorize a security group, use authorize-security-group-ingress with the name of the security group, and the options of the network rule permissions you want to apply.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>aws ec2 authorize-security-group-ingress &lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>--group-id &amp;lt;value&amp;gt;&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>--group-name &amp;lt;value&amp;gt;&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>--ip-permissions &amp;lt;value&amp;gt;&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Use the following command to grant unlimited network access using SSH (TCP, port 22) and VNC (TCP, ports 5900 to 5910) to the security group &lt;code>default&lt;/code> :&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># aws ec2 authorize-security-group-ingress --ip-permissions &amp;#34;IpProtocol=tcp,FromPort=22,ToPort=22,IpRanges={CidrIp=0.0.0.0/0}&amp;#34; --group-name default &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># aws ec2 authorize-security-group-ingress --ip-permissions &amp;#34;IpProtocol=tcp,FromPort=5900,ToPort=5910,IpRanges={CidrIp=0.0.0.0/0}&amp;#34; --group-name default &lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="launch-an-instance">Launch an Instance&lt;/h2>
+&lt;p>Use the run-instances command and provide an image ID. For example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>aws ec2 run-instances --image-id emi-371ada125a928669e
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For additional details and options that can be used with the run-instances command. Enter the following command to get the launch status of the instance:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>aws ec2 describe-instances --instance-ids &amp;lt;instance_id&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="log-in-to-an-instance">Log in to an Instance&lt;/h2>
+&lt;p>When you create an instance, Eucalyptus assigns the instance two IP addresses: a public IP address and a private IP address. The public IP address provides access to the instance from external network sources; the private IP address provides access to the instance from within the Eucalyptus cloud environment. For more information on Eucalyptus networking modes, see the &lt;a href="https://www.eucastack.io/docs/admin_guide/">Eucalyptus Administrator’s Guide&lt;/a>.&lt;/p>
+&lt;p>To use an instance you must log into it via ssh using one of the IP addresses assigned to it. You can obtain the instance’s IP addresses using the describe-instances query as shown in the following example.&lt;/p>
+&lt;p>To log into a VM instance:&lt;/p>
+&lt;p>Enter the following command to view the IP addresses of your instance:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># aws ec2 describe-instances&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>RESERVATIONS 000332850814 r-825a2c9c04e97ee62
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>GROUPS sg-84741faf0bd87ea73 default
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>INSTANCES 0 x86_64 emi-371ada125a928669e i-131e5853a71c87f16 t2.micro 2020-10-19T16:35:36.120Z euca-172-31-15-2.eucalyptus.internal 172.31.15.2 euca-192-168-134-74.eucalyptus.mycloud.example.com 192.168.134.74 /dev/sda1 instance-store True NORMAL: -- &lt;span style="color:#ce5c00;font-weight:bold">[]&lt;/span> subnet-1343e38b5566c8e90 hvm vpc-bded94e5dd0a07bc3
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>MONITORING disabled
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>NETWORKINTERFACES Primary network interface d0:0d:c1:ba:7d:64 eni-c1ba7d641cb70a7ee 000332850814 euca-172-31-15-2.eucalyptus.internal 172.31.15.2 True in-usesubnet-1343e38b5566c8e90 vpc-bded94e5dd0a07bc3
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ASSOCIATION euca-192-168-134-74.eucalyptus.mycloud.example.com 192.168.134.74
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ATTACHMENT 2020-10-19T16:35:36.125Z eni-attach-d597b44874e84bbb2 True 0 attached
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>GROUPS sg-84741faf0bd87ea73 default
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PRIVATEIPADDRESSES True euca-172-31-15-2.eucalyptus.internal 172.31.15.2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ASSOCIATION euca-192-168-134-74.eucalyptus.mycloud.example.com 192.168.134.74
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PLACEMENT cloud-1a
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>SECURITYGROUPS sg-84741faf0bd87ea73 default
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>STATE 16 running
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Note that the public IP address is on the &lt;em>INSTANCES&lt;/em> line after &amp;ldquo;mycloud.example.com&amp;rdquo;, the private address is after &amp;ldquo;eucalyptus.internal&amp;rdquo;.&lt;/p>
+&lt;p>Look for the instance ID on the &lt;em>INSTANCE&lt;/em> line and write it down. Use this ID to manipulate and terminate this instance.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Be sure that the security group for the instance allows SSH access.
+&lt;/div>
+&lt;p>Use SSH to log into the instance, using your private key and the public IP address. For example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>ssh -i alice-keypair.private root@192.168.134.74
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You are now logged in to your Linux instance.&lt;/p>
+&lt;h2 id="terminate-an-instance">Terminate an Instance&lt;/h2>
+&lt;p>The terminate-instances command lets you cancel running VM instances. When you terminate instances, you must specify the ID string of the instance(s) you wish to terminate. You can obtain the ID strings of your instances using the describe-instances or describe-instance-status commands.&lt;/p>
+&lt;div class="alert alert-warning" role="alert">
+&lt;h4 class="alert-heading">Warning&lt;/h4>
+Terminating an instance can cause the instance and all items associated with the instance (data, packages installed, etc.) to be lost. Be sure to save any important work or data to Object Storage or EBS before terminating an instance.
+&lt;/div>
+&lt;p>To terminate VM instances:&lt;/p>
+&lt;p>Enter describe-instance-status to obtain the ID of the instances you wish to terminate. Note that an instance ID strings begin with the prefix &lt;code>i-&lt;/code> followed by an 8-character string:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># aws ec2 describe-instance-status &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>INSTANCESTATUSES cloud-1a i-131e5853a71c87f16
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>INSTANCESTATE 16 running
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>INSTANCESTATUS ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>DETAILS reachability passed
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>SYSTEMSTATUS ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>DETAILS reachability passed
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Enter terminate-instances and the ID string(s) of the instance(s) you wish to terminate:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># aws ec2 terminate-instances --instance-ids i-131e5853a71c87f16&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TERMINATINGINSTANCES i-131e5853a71c87f16
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>CURRENTSTATE 32 shutting-down
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PREVIOUSSTATE 16 running
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Docs: Getting Started with Euca2ools</title><link>https://www.eucastack.io/docs/user_guide/getting_started/getting_started_euca2ools/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/getting_started/getting_started_euca2ools/</guid><description>
+&lt;p>This section helps you get started using your Eucalyptus cloud, and covers setting up your user credentials, installing and configuring the command line tools, and working with images and instances.As a cloud user, you can access the Eucalyptus cloud using a command line interface such as Euca2ools, or using a web-based interface such as the Eucalyptus Management Console.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+This section primarily deals with using the Eucalyptus command line. For complete documentation on using web-based the Eucalyptus Console, see &lt;a href="https://www.eucastack.io/docs/user_guide/getting_started/getting_started_console/console_login/">Console Login&lt;/a>.
+&lt;/div>
+&lt;p>To access Eucalyptus via the command line tools, you need keys for Euca2ools. To access Eucalyptus with the Management Console, you&amp;rsquo;ll need a password for the Management Console. Talk to your cloud administrator to get your keys and passwords.&lt;/p>
+&lt;h2 id="find-image">Find Image&lt;/h2>
+&lt;p>Enter the following command:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># euca-describe-images -a&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>IMAGE emi-0ba907069cb1845bc ubuntu-focal/focal-server-cloudimg-amd64.raw.manifest.xml 000575948401 available public x86_64 machine instance-storehvm
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>IMAGE emi-371ada125a928669e centos-7/CentOS-7-x86_64-GenericCloud-2003.raw.manifest.xml 000575948401 available public x86_64 machine instance-storehvm
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Look for the image ID in the second column and write it down. The image ID starts with &lt;code>emi-&lt;/code> . Once you find a suitable image to use, make sure you have a keypair to use.&lt;/p>
+&lt;h2 id="create-keypairs">Create KeyPairs&lt;/h2>
+&lt;p>Enter the following command:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euca-create-keypair -f &amp;lt;keypair_name&amp;gt;.private &amp;lt;keypair_name&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>where &lt;code>&amp;lt;keypair_name&amp;gt;&lt;/code> is a unique name for your keypair. For example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euca-create-keypair -f &lt;span style="color:#4e9a06">&amp;#34;alice-keypair.private&amp;#34;&lt;/span> &lt;span style="color:#4e9a06">&amp;#34;alice-keypair&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The private key is saved to a file in your local directory. Query the system to view the public key:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># euca-describe-keypairs&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KEYPAIR alice-keypair 92:40:28:cb:08:54:80:95:8d:69:d9:ab:9a:ff:28:30:40:12:6a:66
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="authorize-security-groups">Authorize Security Groups&lt;/h2>
+&lt;p>Before you can log in to an instance, you must authorize access to that instance. This done by configuring a security group for that instance.&lt;/p>
+&lt;p>A security group is a set of networking rules applied to instances associated with that group. When you first create an instance, it is assigned to a default security group that denies incoming network traffic from all sources. To allow login and usage of a new instance, you must authorize network access to the default security group with the euca-authorize command.&lt;/p>
+&lt;p>To authorize a security group, use euca-authorize with the name of the security group, and the options of the network rules you want to apply.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euca-authorize &amp;lt;security_group&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Use the following command to grant unlimited network access using SSH (TCP, port 22) and VNC (TCP, ports 5900 to 5910) to the security group &lt;code>default&lt;/code> :&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># euca-authorize -P tcp -p 22 -s 0.0.0.0/0 default&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># euca-authorize -P tcp -p 5900-5910 -s 0.0.0.0/0 default&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="launch-an-instance">Launch an Instance&lt;/h2>
+&lt;p>Use the euca-run-instances command and provide an image ID and the user data file, in the format &lt;code>euca-run-instances &amp;lt;image_id&amp;gt;&lt;/code> . For example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euca-run-instances emi-371ada125a928669e
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For additional details and options that can be used with the &lt;em>euca-run-instances&lt;/em> command. Enter the following command to get the launch status of the instance:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euca-describe-instances &amp;lt;instance_id&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="log-in-to-an-instance">Log in to an Instance&lt;/h2>
+&lt;p>When you create an instance, Eucalyptus assigns the instance two IP addresses: a public IP address and a private IP address. The public IP address provides access to the instance from external network sources; the private IP address provides access to the instance from within the Eucalyptus cloud environment. For more information on Eucalyptus networking modes, see the &lt;a href="https://www.eucastack.io/docs/admin_guide/">Eucalyptus Administrator’s Guide&lt;/a>.&lt;/p>
+&lt;p>To use an instance you must log into it via ssh using one of the IP addresses assigned to it. You can obtain the instance’s IP addresses using the euca-describe-instances query as shown in the following example.&lt;/p>
+&lt;p>To log into a VM instance:&lt;/p>
+&lt;p>Enter the following command to view the IP addresses of your instance:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># euca-describe-instances&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>RESERVATION r-825a2c9c04e97ee62 000332850814 default
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>INSTANCE i-131e5853a71c87f16 emi-371ada125a928669e euca-192-168-134-74.eucalyptus.mycloud.example.com euca-172-31-15-2.eucalyptus.internal running 0 t2.micro 2020-10-19T16:35:36.120Z cloud-1a monitoring-disabled 192.168.134.74 172.31.15.2 vpc-bded94e5dd0a07bc3 subnet-1343e38b5566c8e90 instance-store hvm sg-84741faf0bd87ea73 x86_64
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>NETWORKINTERFACE eni-c1ba7d641cb70a7ee subnet-1343e38b5566c8e90 vpc-bded94e5dd0a07bc3 000332850814 in-use 172.31.15.2 euca-172-31-15-2.eucalyptus.internal &lt;span style="color:#204a87">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ATTACHMENT eni-attach-d597b44874e84bbb2 0 attached 2020-10-19T16:35:36.125Z &lt;span style="color:#204a87">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ASSOCIATION 192.168.134.74 172.31.15.2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>GROUP sg-84741faf0bd87ea73 default
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PRIVATEIPADDRESS 172.31.15.2 euca-172-31-15-2.eucalyptus.internal primary
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Note that the public IP address appears after the &lt;em>monitoring-disabled&lt;/em> text, with the private address immediately following.&lt;/p>
+&lt;p>Look for the instance ID in the second field of the &lt;em>INSTANCE&lt;/em> line and write it down. Use this ID to manipulate and terminate this instance.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Be sure that the security group for the instance allows SSH access.
+&lt;/div>
+&lt;p>Use SSH to log into the instance, using your private key and the public IP address. For example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>ssh -i alice-keypair.private root@192.168.134.74
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You are now logged in to your Linux instance.&lt;/p>
+&lt;h2 id="terminate-an-instance">Terminate an Instance&lt;/h2>
+&lt;p>The &lt;em>euca-terminate-instances&lt;/em> command lets you cancel running VM instances. When you terminate instances, you must specify the ID string of the instance(s) you wish to terminate. You can obtain the ID strings of your instances using the &lt;em>euca-describe-instances&lt;/em> or &lt;em>euca-describe-instance-status&lt;/em> commands.&lt;/p>
+&lt;div class="alert alert-warning" role="alert">
+&lt;h4 class="alert-heading">Warning&lt;/h4>
+Terminating an instance can cause the instance and all items associated with the instance (data, packages installed, etc.) to be lost. Be sure to save any important work or data to Object Storage or EBS before terminating an instance.
+&lt;/div>
+&lt;p>To terminate VM instances:&lt;/p>
+&lt;p>Enter &lt;em>euca-describe-instance-status&lt;/em> to obtain the ID of the instances you wish to terminate. Note that an instance ID strings begin with the prefix &lt;code>i-&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># euca-describe-instance-status&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>INSTANCE i-131e5853a71c87f16 cloud-1a running 16 ok ok active
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>SYSTEMSTATUS reachability passed
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>INSTANCESTATUS reachability passed
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Enter &lt;em>euca-terminate-instances&lt;/em> and the ID string(s) of the instance(s) you wish to terminate:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># euca-terminate-instances i-131e5853a71c87f16&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>INSTANCE i-131e5853a71c87f16 running shutting-down
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>

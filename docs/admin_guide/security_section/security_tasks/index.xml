@@ -1,0 +1,227 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Security Tasks</title><link>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/</link><description>Recent content in Security Tasks on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Configure SSL</title><link>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/configuring_ssl/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/configuring_ssl/</guid><description>
+&lt;h1 id="configure-ssl">Configure SSL&lt;/h1>
+&lt;p>In order to connect to Eucalyptus using SSL, you must have a valid certificate for the User-Facing Services (UFS).&lt;/p></description></item><item><title>Docs: Change Multicast Address</title><link>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/multicast_modify/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/multicast_modify/</guid><description>
+&lt;p>This topic describes how to change your multicast address for group membership.By default, Eucalyptus uses the multicast address 239.193.7.3 for group membership. Most data centers limit multicast address communication for security measures. We recommend that you use addresses in the administratively-scoped multicast address range.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+As of Eucalyptus 4.3, the default multicast address changed from 228.7.7.3 to 239.193.7.3.
+&lt;/div>
+&lt;/p>
+&lt;p>&lt;strong>To change the multicast address for group membership&lt;/strong> Stop all services, starting from the CC, SC, Walrus, then CLC. For example:&lt;/p>
+&lt;pre>&lt;code>systemctl stop eucalyptus-cluster.service
+systemctl stop eucalyptus-cloud.service
+&lt;/code>&lt;/pre>
+&lt;p>Change the &lt;em>eucalyptus.conf&lt;/em> on the CC, modifying the &lt;code>CLOUD_OPTS&lt;/code> parameter to the new IP address:&lt;/p>
+&lt;pre>&lt;code>CLOUD_OPTS=&amp;quot;--mcast-addr=228.7.7.3&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The above shows how to set the multicast address to a value compatible with releases prior to Eucalyptus 4.3.
+&lt;/div>
+Restart all services, starting from the CLC, Walrus, SC, CC. For example:&lt;/p>
+&lt;pre>&lt;code>systemctl start eucalyptus-cloud.service
+systemctl start eucalyptus-cluster.service
+&lt;/code>&lt;/pre>
+&lt;p>Verify that the configured multicast address is being used via netstat:&lt;/p>
+&lt;pre>&lt;code>netstat -nulp
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>Postrequisites&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Check the firewall after changing the multicast address. See for more information.&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Configure Replay Protection</title><link>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/security_task_replays/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/security_task_replays/</guid><description>
+&lt;p>You can configure replay detection in Java components (which includes the CLC, UFS, OSG, Walrus, and SC) to allow replays of the same message for a set time period.&lt;/p>
+&lt;p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+To protect against replay attacks, the Java components cache messages only for 15 minutes. So it’s important that any client tools used to interact with the components have the Expires element set to a value less than 15 minutes from the current time. This is usually not an issue with standard tools, such as euca2ools and Amazon EC2 API Tools.
+&lt;/div>
+The Java components&amp;rsquo; replay detection algorithm rejects messages with the same signatures received within 15 minutes. The time within which messages with the same signatures are accepted is controlled by the &lt;code>bootstrap.webservices.replay_skew_window_sec&lt;/code> property. The default value of this property is 3 seconds. To change this value, enter the following command:&lt;/p>
+&lt;pre>&lt;code>euctl bootstrap.webservices.replay_skew_window_sec=[new_value_in_seconds]
+&lt;/code>&lt;/pre>
+&lt;p>If you set this property to &lt;code>0&lt;/code> , Eucalyptus will not allow any message replays. This setting provides the best protection against message replay attacks.&lt;/p>
+&lt;p>If you set this property to any value greater than 15 minutes plus the values of ws.clock_skew_sec (that is, to a value &amp;gt;= 920 sec in the default installation), Eucalyptus disables replay detection completely.&lt;/p>
+&lt;p>When checking message timestamps for expiration, Eucalyptus allows up to 20 seconds of clock drift between the machines. This is a default setting. You can change this value for the Java components at runtime by setting the &lt;code>bootstrap.webservices.clock_skew_sec&lt;/code> property as follows:&lt;/p>
+&lt;pre>&lt;code>euctl bootstrap.webservices.clock_skew_sec=[new_value_in_seconds]
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Configure Session Timeouts</title><link>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/console_config_session_timeouts/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/console_config_session_timeouts/</guid><description>
+&lt;p>To set the session timeouts in the Management Console:&lt;/p>
+&lt;p>Modify the &lt;code>session.timeout&lt;/code> and &lt;code>session.cookie_expires&lt;/code> entries in the &lt;code>[app:main]&lt;/code> section of the configuration file. The &lt;code>session.timeout&lt;/code> value defines the number of seconds before an idle session is timed out. The &lt;code>session.cookie_expires&lt;/code> is the maximum length that any session can be active before being timed out. All values are in seconds:&lt;/p>
+&lt;pre>&lt;code>session.timeout=1800
+session.cookie_expires=43200
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Configure STS Actions</title><link>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/config_sts/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/config_sts/</guid><description>
+&lt;p>The Security Token Service (STS) allows you to enable or disable specific token actions.By default, the enabled actions list is empty. However, this means that all actions are enabled. To disable actions, list each action in the &lt;code>disabledactions&lt;/code> property. To enable specific actions, list them in the &lt;code>enabledactions&lt;/code> property.&lt;/p>
+&lt;pre>&lt;code># euctl tokens
+PROPERTY tokens.disabledactions {}
+PROPERTY tokens.enabledactions {}
+&lt;/code>&lt;/pre>
+&lt;p>The values for each property are case-insensitive, space or comma-separated lists of token service actions. If an action is in the disable list it will not be permitted. Eucalyptus returns an HTTP status 503 and the code &lt;code>ServiceUnavailable&lt;/code> .&lt;/p>
+&lt;p>If the enable list is not empty, Eucalyptus only permits the actions specifically listed.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Action&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">AssumeRole&lt;/td>
+&lt;td style="text-align:left">Roles as per AWS/STS and Eucalyptus-specific personas admin functionality&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">GetAccessToken&lt;/td>
+&lt;td style="text-align:left">Eucalyptus extension for password logins (for example, the Management Console)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">GetImpersonationToken&lt;/td>
+&lt;td style="text-align:left">Eucalyptus extension that allows cloud administrators to act as specific users&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">GetSessionToken&lt;/td>
+&lt;td style="text-align:left">Session tokens in the sameas per AWS/STS&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>For more information about STS, go to &lt;a href="http://docs.aws.amazon.com/cli/latest/reference/sts/index.html">STS section of the AWS CLI Reference&lt;/a> .&lt;/p></description></item><item><title>Docs: Configure the Firewall</title><link>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/configuring_iptables/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/configuring_iptables/</guid><description>
+&lt;h2 id="restricting-network-access">Restricting Network Access&lt;/h2>
+&lt;p>This section provides basic guidance on setting up a firewall around your Eucalyptus components. It is not intended to be exhaustive.&lt;/p>
+&lt;p>On the Cloud Controller (CLC), Walrus, and Storage Controller (SC), allow for the following jGroups traffic:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>TCP connections between CLC, user-facing services (UFS), object storage gateway (OSG), Walrus, and SC on port 8779 (or the first available port in range 8779-8849)&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>UDP connections between CLC, UFS, OSG, Walrus, and SC on port 7500&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Multicast connections between CLC and UFS, OSG, Walrus, and SC to IP 239.193.7.3 on UDP port 8773
+On the UFS, allow the following connections:&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>TCP connections from end-users and instances on ports 8773&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>End-user and instance connections to DNS ports
+On the CLC, allow the following connections:&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>TCP connections from UFS, CC and Eucalyptus instances (public IPs) on port 8773 (for metadata service)&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>TCP connections from UFS, OSG, Walrus, and SC on port 8777
+On the CC, make sure that all firewall rules are compatible with the dynamic changes performed by Eucalyptus, described in the section below. Also allow the following connections:&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>TCP connections from CLC on port 8774
+On OSG, allow the following connections:&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>TCP connections from end-users and instances on port 8773&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>TCP connections from SC and NC on port 8773
+On Walrus, allow the following connections:&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>TCP connections from OSG on port 8773
+On the SC, allow the following connections:&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>TCP connections from CLC and NC on TCP port 8773&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>TCP connections from NC on TCP port 3260, if tgt (iSCSI open source target) is used for EBS in DAS or Overlay modes
+On the NC, allow the following connections:&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>TCP connections from CC on port 8775&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>TCP connections from other NCs on port 16514&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>DHCP traffic forwarding to VMs&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Traffic forwarding to and from instances&amp;rsquo; private IP addresses&lt;/p>
+&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Reserve Ports</title><link>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/preparing_firewalls/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/preparing_firewalls/</guid><description>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Port&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">TCP 5005&lt;/td>
+&lt;td style="text-align:left">DEBUG ONLY: This port is used for debugging (using the &amp;ndash;debug flag).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP 8772&lt;/td>
+&lt;td style="text-align:left">DEBUG ONLY: JMX port. This is disabled by default, and can be enabled with the &amp;ndash;debug or &amp;ndash;jmx options for CLOUD_OPTS.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP 8773&lt;/td>
+&lt;td style="text-align:left">Web services port for the CLC, user-facing services (UFS), object storage gateway (OSG), Walrus SC; also used for external and internal communications by the CLC and Walrus. Configurable with euctl.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP 8774&lt;/td>
+&lt;td style="text-align:left">Web services port on the CC. Configured in the eucalyptus.conf configuration file&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP 8775&lt;/td>
+&lt;td style="text-align:left">Web services port on the NC. Configured in the eucalyptus.conf configuration file.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP 8777&lt;/td>
+&lt;td style="text-align:left">Database port on the CLC&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP 8779 (or next available port, up to TCP 8849)&lt;/td>
+&lt;td style="text-align:left">jGroups failure detection port on CLC, UFS, OSG, Walrus SC. If port 8779 is available, it will be used, otherwise, the next port in the range will be attempted until an unused port is found.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP 8888&lt;/td>
+&lt;td style="text-align:left">The default port for the Management Console. Configured in the /etc/eucalyptus-console/console.ini file.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP 16514&lt;/td>
+&lt;td style="text-align:left">TLS port on Node Controller, required for instance migrations&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">UDP 7500&lt;/td>
+&lt;td style="text-align:left">Port for diagnostic probing on CLC, UFS, OSG, Walrus SC&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">UDP 8773&lt;/td>
+&lt;td style="text-align:left">Membership port for any UFS, OSG, Walrus, and SC&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">UDP 8778&lt;/td>
+&lt;td style="text-align:left">The bind port used to establish multicast communication&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP/UDP 53&lt;/td>
+&lt;td style="text-align:left">DNS port on UFS&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">UDP 63822&lt;/td>
+&lt;td style="text-align:left">eucanetd binds to localhost port 63822 and uses it to detect and avoid running multiple instances (of eucanetd)&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For information about ports used by MidoNet, see the (Category OpenStack can be ignored).
+&lt;/div></description></item><item><title>Docs: Synchronize Components</title><link>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/security_task_ntp/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/security_task_ntp/</guid><description>
+&lt;p>To synchronize your Eucalyptus component machines with an NTP server, perform the following tasks.&lt;/p>
+&lt;p>Enter the following command on a machine hosting a Eucalyptus component:&lt;/p>
+&lt;pre>&lt;code># ntpdate pool.ntp.org
+# systemctl start ntpd.service
+# systemctl enable ntpd.service
+# ps ax | grep ntp
+# hwclock --systohc
+&lt;/code>&lt;/pre>
+&lt;p>Repeat for each machine hosting a Eucalyptus component.&lt;/p></description></item></channel></rss>

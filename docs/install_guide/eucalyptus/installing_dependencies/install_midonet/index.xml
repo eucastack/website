@@ -1,0 +1,159 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Install MidoNet</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/install_midonet/</link><description>Recent content in Install MidoNet on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/install_midonet/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Prerequisites</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/install_midonet/install_midonet_prereqs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/install_midonet/install_midonet_prereqs/</guid><description>
+&lt;p>This topic discusses the prerequisites for installing MidoNet 5.2.&lt;/p>
+&lt;p>You need to configure software repositories and install Network State Database (NSDB) services: ZooKeeper and Cassandra.&lt;/p>
+&lt;h2 id="repository-access">Repository Access&lt;/h2>
+&lt;p>In order to use MidoNet with Eucalyptus you need to configure the MidoNet repositories.&lt;/p>
+&lt;p>Create &lt;code>/etc/yum.repos.d/midonet.repo&lt;/code> and &lt;code>/etc/yum.repos.d/midonet-misc.repo&lt;/code> on all host machines that will run MidoNet components including ZooKeeper and Cassandra. For example:&lt;/p>
+&lt;pre>&lt;code>[midonet]
+name=MidoNet
+baseurl=http://builds.midonet.org/midonet-5.2/stable/el7/
+enabled=1
+gpgcheck=1
+gpgkey=https://builds.midonet.org/midorepo.key
+&lt;/code>&lt;/pre>
+&lt;p>and:&lt;/p>
+&lt;pre>&lt;code>[midonet-misc]
+name=MidoNet 3rd Party Tools and Libraries
+baseurl=http://builds.midonet.org/misc/stable/el7/
+enabled=1
+gpgcheck=1
+gpgkey=https://builds.midonet.org/midorepo.key
+&lt;/code>&lt;/pre>
+&lt;p>See &lt;a href="https://docs.midonet.org/docs/latest-en/quick-start-guide/rhel-7_newton-rdo/content/_repository_configuration.html">MidoNet Repository Configuration&lt;/a>.&lt;/p>
+&lt;h2 id="zookeeper">ZooKeeper&lt;/h2>
+&lt;p>MidoNet uses Apache ZooKeeper to store critical path data about the virtual and physical network topology.&lt;/p>
+&lt;p>For a simple single-server installation, install ZooKeeper on any server that is IP accessible from all Midolman agents (for example: on the CLC host machine itself). You can also cluster ZooKeeper for fault tolerance. See &lt;a href="https://docs.midonet.org/docs/latest-en/quick-start-guide/rhel-7_newton-rdo/content/_zookeeper_installation.html">MidoNet NSDB ZooKeeper Installation&lt;/a>.&lt;/p>
+&lt;p>Enable and start the ZooKeeper service before installing the other MidoNet services.&lt;/p>
+&lt;h2 id="cassandra">Cassandra&lt;/h2>
+&lt;p>MidoNet uses Apache Cassandra to store flow state information.&lt;/p>
+&lt;p>For a simple single-server installation, install Cassandra on any server that is IP accessible from all Midolman agents (for example: on the CLC host machine itself). You can also cluster Cassandra for fault tolerance. See &lt;a href="https://docs.midonet.org/docs/latest-en/quick-start-guide/rhel-7_newton-rdo/content/_cassandra_installation.html">MidoNet NSDB Cassandra Installation&lt;/a>.&lt;/p>
+&lt;p>Enable and start the Cassandra service before installing the other MidoNet services.&lt;/p></description></item><item><title>Docs: MidoNet Component Topology</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/install_midonet/install_midonet_component_topology/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/install_midonet/install_midonet_component_topology/</guid><description>
+&lt;p>This topic lists topology recommendations for installing MidoNet.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+See [Understanding VPCMIDO and MidoNet]https://www.eucastack.io/docs/install_guide/eucalyptus/planning/planning_networking_modes/preparing_vpc_midonet/ for more information on MidoNet.
+&lt;/div>
+&lt;ul>
+&lt;li>The midonet-api must run co-located with the Cloud Controller (CLC).&lt;/li>
+&lt;li>Each Node Controller (NC) must run a Midolman agent.&lt;/li>
+&lt;li>The Cloud Controller (CLC) must run a Midolman agent.&lt;/li>
+&lt;li>It is recommended that your User Facing Services (UFS) host be used as the MidoNet Gateway (i.e., running a Midolman agent) when configuring .&lt;/li>
+&lt;li>The network interface(s) specified as * (in the configuration file) should be dedicated for /MidoNet (for configuration/operation/use).&lt;/li>
+&lt;li>/MidoNet expects exclusive use of the network interface specified in .&lt;/li>
+&lt;li>If the main network interface of a server is specified in , most likely the connectivity to that server will be lost once is deployed.&lt;/li>
+&lt;/ul>
+&lt;h2 id="network-yaml-example">Network YAML Example&lt;/h2>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The older (JSON) network configuration format is still accepted, however the YAML format is recommended.
+&lt;/div>
+&lt;p>The following Eucalyptus network YAML file shows a sample VPCMIDO mode configuration:&lt;/p>
+&lt;pre>&lt;code>Mode: VPCMIDO
+InstanceDnsServers:
+- &amp;quot;10.10.10.1&amp;quot;
+PublicIps:
+- &amp;quot;1.A.B.1-1.A.B.255&amp;quot;
+Mido:
+Gateways:
+- ExternalCidr: &amp;quot;172.19.0.0/30&amp;quot;
+ExternalDevice: &amp;quot;veth1&amp;quot;
+ExternalIp: &amp;quot;172.19.0.2&amp;quot;
+ExternalRouterIp: &amp;quot;172.19.0.1&amp;quot;
+Ip: &amp;quot;10.10.10.1&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>Where &lt;code>1.A.B.1-1.A.B.255&lt;/code> represents the public IP address range for your cloud.&lt;/p></description></item><item><title>Docs: Install MidoNet for Eucalyptus</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/install_midonet/install_midonet_installation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/install_midonet/install_midonet_installation/</guid><description>
+&lt;p>This topic shows how to install MidoNet for use in your Eucalyptus cloud.&lt;/p>
+&lt;h2 id="install-the-midonet-cluster-on-the-cloud-controller-clc">Install the MidoNet Cluster on the Cloud Controller (CLC)&lt;/h2>
+&lt;p>This topic describes how to install the MidoNet Cluster. MidoNet Cluster services provide a means to manage MidoNet functions that MidoNet agents (Midolman) are unable to perform on their own. MidoNet Cluster services include state synchronization of VxLAN gateways and the MidoNet REST API. A MidoNet v5 deployment requires at least one MidoNet cluster node, and it must be co-located on the CLC host machine in Eucalyptus deployments. For security reasons, the MidoNet REST API is accessed only on the CLC (localhost interface).&lt;/p>
+&lt;p>&lt;strong>To install the MidoNet Cluster on the CLC&lt;/strong>&lt;/p>
+&lt;p>Add the MidoNet repo file as described in &lt;a href="https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/install_midonet/install_midonet_prereqs/">Prerequisites&lt;/a> . Install MidoNet Cluster packages.&lt;/p>
+&lt;pre>&lt;code>yum install midonet-cluster python-midonetclient
+&lt;/code>&lt;/pre>
+&lt;p>Edit the &lt;em>/etc/midonet/midonet.conf&lt;/em> file to set the ZooKeeper host IP(s). Replace ZOOKEEPER_HOST_IP in the following example:&lt;/p>
+&lt;pre>&lt;code>[zookeeper]
+zookeeper_hosts = ZOOKEEPER_HOST_IP:2181
+&lt;/code>&lt;/pre>
+&lt;p>Configure cloud-wide access to the NSDB services:&lt;/p>
+&lt;pre>&lt;code>cat &amp;lt;&amp;lt; EOF | mn-conf set -t default
+zookeeper {
+zookeeper_hosts = “ZOOKEEPER_HOST:2181&amp;quot;
+}
+cassandra {
+servers = “CASSANDRA_HOST&amp;quot;
+}
+EOF
+&lt;/code>&lt;/pre>
+&lt;p>Enable and start the MidoNet Cluster:&lt;/p>
+&lt;pre>&lt;code>systemctl enable midonet-cluster.service
+systemctl start midonet-cluster.service
+&lt;/code>&lt;/pre>
+&lt;p>Set the midonet-api end point:&lt;/p>
+&lt;pre>&lt;code>mn-conf set cluster.rest_api.http_port=8080
+mn-conf set cluster.rest_api.http_host=&amp;quot;127.0.0.1&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>Restart the Midonet Cluster so the rest_api parameters take effect:&lt;/p>
+&lt;pre>&lt;code>systemctl restart midonet-cluster.service
+&lt;/code>&lt;/pre>
+&lt;h2 id="install-midolman-on-components">Install Midolman on components&lt;/h2>
+&lt;p>This topic describes how to install the Midolman agent. Midolman is the MidoNet Agent, which is a daemon that runs on all hosts where traffic enters and leaves MidoNet. The Midolman agent is required on the Cloud Controller (CLC), Node Controllers (NCs), and any host that is a MidoNet Gateway node (e.g., UFS).&lt;/p>
+&lt;p>&lt;strong>To install Midolman agent&lt;/strong>&lt;/p>
+&lt;p>Edit the &lt;code>/etc/midolman/midolman.conf&lt;/code> file to set the ZooKeeper host IP(s). Replace ZOOKEEPER_HOST_IP in the following example:&lt;/p>
+&lt;pre>&lt;code>[zookeeper]
+zookeeper_hosts = ZOOKEEPER_HOST_IP:2181
+&lt;/code>&lt;/pre>
+&lt;p>Enable and start Midolman:&lt;/p>
+&lt;pre>&lt;code>systemctl enable midolman.service
+systemctl start midolman.service
+&lt;/code>&lt;/pre>
+&lt;p>Configure a Midolman resource usage template. For large Eucalyptus clouds, use the agent-compute-large template. For standard (small or medium) Eucalyptus clouds, use the default template. For gateway nodes, use the agent-gateway templates.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For production environments, large templates are recommended.
+&lt;/div>
+&lt;p>See the &lt;a href="https://docs.midonet.org/docs/v5.2/en/quick-start-guide/rhel-7_mitaka-rdo/content/_midolman_installation.html">Midolman Installation documentation&lt;/a> for more information.&lt;/p>
+&lt;p>Choose the Midolman resource usage template name, based on the size and type of installation:&lt;/p>
+&lt;pre>&lt;code>agent-compute-large
+agent-compute-medium
+agent-gateway-large
+agent-gateway-medium
+default
+&lt;/code>&lt;/pre>
+&lt;p>Run this command, replacing &lt;code>TEMPLATE_NAME&lt;/code> with your chosen template:&lt;/p>
+&lt;pre>&lt;code>mn-conf template-set -h local -t TEMPLATE_NAME
+&lt;/code>&lt;/pre>
+&lt;h2 id="create-a-tunnel-zone-in-midonet-and-add-hosts">Create a tunnel zone in MidoNet and add hosts&lt;/h2>
+&lt;p>This topic describes how to create a MidoNet tunnel zone. In MidoNet, a tunnel zone is an isolation zone for hosts. Physical hosts that are members of a given tunnel zone communicate directly with one another and establish network tunnels as needed, and on demand. These network tunnels are used to transport overlay traffic (e.g., inter-VM communication) and isolate the underlay physical network communication (i.e., inter-physical hosts communication). On a Eucalyptus deployment, one MidoNet tunnel zone is expected with the IP address on the physical network designated to carry VM traffic being used when configuring its members. Eucalyptus accepts the following tunnel zone names:&lt;/p>
+&lt;ul>
+&lt;li>eucatz&lt;/li>
+&lt;li>euca-tz&lt;/li>
+&lt;li>midotz&lt;/li>
+&lt;li>mido-tz&lt;/li>
+&lt;/ul>
+&lt;p>For more information, see &lt;a href="https://docs.midonet.org/docs/v5.2/en/operations-guide/content/tunnel_zones.html">What are Tunnel Zones?&lt;/a>&lt;/p>
+&lt;p>&lt;strong>To create a tunnel zone in MidoNet&lt;/strong>&lt;/p>
+&lt;p>Log into the MidoNet shell. For example:&lt;/p>
+&lt;pre>&lt;code>midonet-cli -A --midonet-url=http://127.0.0.1:8080/midonet-api
+&lt;/code>&lt;/pre>
+&lt;p>Create a GRE tunnel zone:&lt;/p>
+&lt;pre>&lt;code>[root@clcfrontend mido-docs]# midonet-cli -A --midonet-url=http://127.0.0.1:8080/midonet-api
+midonet&amp;gt; tunnel-zone add name eucatz type gre
+midonet&amp;gt; tunnel-zone list
+tzone tzone0 name eucatz type gre
+midonet&amp;gt; host list
+host host0 name node1 alive true
+host host1 name clcfrontend alive true
+host host2 name node2 alive true
+&lt;/code>&lt;/pre>
+&lt;p>You should see a host listed for each of your Node Controllers and for your User Facing Service host; if not, check the &lt;code>/var/log/midolman/midolman.log&lt;/code> log file on the missing hosts to ensure there are no error messages.&lt;/p>
+&lt;p>After verifying all your hosts are listed, add each host to your tunnel zone as follows. Replace HOST_N_IP with the IP of your Node Controller or User Facing Service host that you used to register the component with Eucalyptus :&lt;/p>
+&lt;pre>&lt;code>midonet&amp;gt; tunnel-zone tzone0 add member host host0 address HOST_0_IP
+midonet&amp;gt; tunnel-zone tzone0 add member host host1 address HOST_1_IP
+midonet&amp;gt; tunnel-zone tzone0 add member host host2 address HOST_2_IP
+&lt;/code>&lt;/pre>
+&lt;p>You are now ready to install and configure Eucalyptus to use this MidoNet installation.&lt;/p>
+&lt;h2 id="additional-zookeeper-configuration">Additional ZooKeeper Configuration&lt;/h2>
+&lt;p>Ongoing data directory cleanup is required for ZooKeeper. The following parameters should be added in &lt;em>/etc/zookeeper/zoo.cfg&lt;/em> for automatic purging of the snapshots and corresponding transaction logs:&lt;/p>
+&lt;pre>&lt;code>autopurge.snapRetainCount=3 # The number of snapshots to retain in dataDir
+autopurge.purgeInterval=1 # Purge task interval in hours
+&lt;/code>&lt;/pre>
+&lt;p>For more information, see &lt;a href="http://zookeeper.apache.org/doc/r3.4.8/zookeeperAdmin.html#Ongoing+Data+Directory+Cleanup">ZooKeeper Admin Guide, Ongoing Data Directory Cleanup&lt;/a>.&lt;/p></description></item></channel></rss>

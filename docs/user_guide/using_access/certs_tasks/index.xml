@@ -1,0 +1,16 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Credentials</title><link>https://www.eucastack.io/docs/user_guide/using_access/certs_tasks/</link><description>Recent content in Credentials on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/using_access/certs_tasks/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Create Credentials</title><link>https://www.eucastack.io/docs/user_guide/using_access/certs_tasks/creds_create/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_access/certs_tasks/creds_create/</guid><description>
+&lt;p>The first time you get credentials using the Eucalyptus Administrator Console, a new secret access key is generated. On each subsequent request to get credentials, an existing active secret Key is returned. You can also generate new keys using the command.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Each request to get a user&amp;rsquo;s credentials generates a new pair of a private key and X.509 certificate.
+&lt;/div>
+To generate a new key for a user by an account administrator, enter the following&lt;/p>
+&lt;pre>&lt;code>euare-useraddkey USERNAME
+&lt;/code>&lt;/pre>
+&lt;p>To generate a private key and an X.509 certificate pair, enter the following:&lt;/p>
+&lt;pre>&lt;code>euare-usercreatecert USERNAME
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Upload a Certificate</title><link>https://www.eucastack.io/docs/user_guide/using_access/certs_tasks/certs_upload/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_access/certs_tasks/certs_upload/</guid><description>
+&lt;p>To upload a certificate provided by a user:&lt;/p>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-useraddcert -u &amp;lt;user_name&amp;gt; -f &amp;lt;cert_file&amp;gt;
+&lt;/code>&lt;/pre></description></item></channel></rss>

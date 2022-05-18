@@ -1,0 +1,122 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Start Eucalyptus</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/</link><description>Recent content in Start Eucalyptus on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Start the CLC</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/starting_euca_clc/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/starting_euca_clc/</guid><description>
+&lt;p>&lt;strong>Prerequisites&lt;/strong> You should have installed and configured Eucalyptus before starting the CLC.&lt;/p>
+&lt;p>&lt;strong>To initialize and start the CLC&lt;/strong>&lt;/p>
+&lt;p>Log in to the Cloud Controller (CLC) host machine. Enter the following command to initialize the CLC:
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+If you are upgrading and you just restored your cloud data, do not initialize the CLC; skip this step.
+&lt;/div>
+&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Make sure that the process is running before executing this command.
+&lt;/div>
+&lt;pre>&lt;code>clcadmin-initialize-cloud
+&lt;/code>&lt;/pre>
+&lt;p>This command might take a minute or more to finish. If it fails, check &lt;em>/var/log/eucalyptus/cloud-output.log&lt;/em> . If you want the CLC service to start at each boot-time, run this command:&lt;/p>
+&lt;pre>&lt;code>systemctl enable eucalyptus-cloud.service
+&lt;/code>&lt;/pre>
+&lt;p>Enter the following command to start the CLC:&lt;/p>
+&lt;pre>&lt;code>systemctl start eucalyptus-cloud.service
+&lt;/code>&lt;/pre>
+&lt;p>If you are running in VPCMIDO networking mode: If you want the eucanetd service to start at each boot-time, run this command:&lt;/p>
+&lt;pre>&lt;code>systemctl enable eucanetd.service
+&lt;/code>&lt;/pre>
+&lt;p>Start the eucanetd service:&lt;/p>
+&lt;pre>&lt;code>systemctl start eucanetd.service
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Start the UFS</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/starting_euca_ufs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/starting_euca_ufs/</guid><description>
+&lt;p>&lt;strong>Prerequisites&lt;/strong> You should have installed and configured Eucalyptus before starting the UFS.&lt;/p>
+&lt;p>&lt;strong>To start the UFS&lt;/strong>&lt;/p>
+&lt;p>Log in to the User-Facing Services (UFS) host machine. If you want the UFS service to start at each boot-time, run this command:&lt;/p>
+&lt;pre>&lt;code>systemctl enable eucalyptus-cloud.service
+&lt;/code>&lt;/pre>
+&lt;p>Enter the following command to start the UFS:&lt;/p>
+&lt;pre>&lt;code>systemctl start eucalyptus-cloud.service
+&lt;/code>&lt;/pre>
+&lt;p>Repeat for each UFS host machine.&lt;/p></description></item><item><title>Docs: Start Walrus</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/starting_euca_walrus/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/starting_euca_walrus/</guid><description>
+&lt;p>&lt;strong>Prerequisites&lt;/strong>&lt;/p>
+&lt;p>You should have installed and configured Eucalyptus before starting the Walrus Backend.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+If you not using Walrus as your object storage backend, or if you installed Walrus on the same host as the CLC, you can skip this.
+&lt;/div>
+&lt;p>&lt;strong>To start the Walrus&lt;/strong>&lt;/p>
+&lt;p>If you want the Walrus Backend service to start at each boot-time, run this command:&lt;/p>
+&lt;pre>&lt;code>systemctl enable eucalyptus-cloud.service
+&lt;/code>&lt;/pre>
+&lt;p>Log in to the Walrus Backend host machine and enter the following command:&lt;/p>
+&lt;pre>&lt;code>systemctl start eucalyptus-cloud.service
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Start the CC</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/starting_euca_cc/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/starting_euca_cc/</guid><description>
+&lt;p>&lt;strong>Prerequisites&lt;/strong>&lt;/p>
+&lt;p>You should have installed and configured Eucalyptus before starting the CC.&lt;/p>
+&lt;p>&lt;strong>To start the CC&lt;/strong>&lt;/p>
+&lt;p>Log in to the Cluster Controller (CC) host machine. If you want the CC service to start at each boot-time, run this command:&lt;/p>
+&lt;pre>&lt;code>systemctl enable eucalyptus-cluster.service
+&lt;/code>&lt;/pre>
+&lt;p>Enter the following command to start the CC:&lt;/p>
+&lt;pre>&lt;code>systemctl start eucalyptus-cluster.service
+&lt;/code>&lt;/pre>
+&lt;p>If you have a multi-zone setup, repeat this step on the CC in each zone.&lt;/p></description></item><item><title>Docs: Start the SC</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/starting_euca_sc/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/starting_euca_sc/</guid><description>
+&lt;p>&lt;strong>Prerequisites&lt;/strong>&lt;/p>
+&lt;p>You should have installed and configured Eucalyptus before starting the SC.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+If you are re-installing the SC, restart the tgt (iSCSI open source target) daemon.
+&lt;/div>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+If you installed SC on the same host as the CLC, you can skip this.
+&lt;/div>
+&lt;p>&lt;strong>To start the SC&lt;/strong>&lt;/p>
+&lt;p>Log in to the Storage Controller (SC) host machine. If you want the SC service to start at each boot-time, run this command:&lt;/p>
+&lt;pre>&lt;code>systemctl enable eucalyptus-cloud.service
+&lt;/code>&lt;/pre>
+&lt;p>If you want the tgtd service to start at each boot-time, run this command:&lt;/p>
+&lt;pre>&lt;code>systemctl enable tgtd.service
+&lt;/code>&lt;/pre>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+depends on tgtd to create and manage block storage volumes when the storage provider is either DAS or Overlay.
+&lt;/div>
+&lt;p>Enter the following commands to start the SC:&lt;/p>
+&lt;pre>&lt;code>systemctl start tgtd.service
+systemctl start eucalyptus-cloud.service
+&lt;/code>&lt;/pre>
+&lt;p>If you have a multi-zone setup, repeat this step on the SC in each zone.&lt;/p></description></item><item><title>Docs: Start the NC</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/starting_euca_nc/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/starting_euca_nc/</guid><description>
+&lt;p>&lt;strong>Prerequisites&lt;/strong> You should have installed and configured Eucalyptus before starting the NC.&lt;/p>
+&lt;p>&lt;strong>To start the NC&lt;/strong>&lt;/p>
+&lt;p>Log in to the Node Controller (NC) host machine. If you want the NC service to start at each boot-time, run this command:&lt;/p>
+&lt;pre>&lt;code>systemctl enable eucalyptus-node.service
+&lt;/code>&lt;/pre>
+&lt;p>Enter the following command to start the NC:&lt;/p>
+&lt;pre>&lt;code>systemctl start eucalyptus-node.service
+&lt;/code>&lt;/pre>
+&lt;p>If you are running in EDGE networking mode: If you want the eucanetd service to start at each boot-time, run this command:&lt;/p>
+&lt;pre>&lt;code>systemctl enable eucanetd.service
+&lt;/code>&lt;/pre>
+&lt;p>Start the eucanetd service:&lt;/p>
+&lt;pre>&lt;code>systemctl start eucanetd.service
+&lt;/code>&lt;/pre>
+&lt;p>Repeat for each NC host machine.&lt;/p></description></item><item><title>Docs: Start the Management Console</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/starting_euca_console/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/starting_euca_console/</guid><description>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+If you plan on running multiple Management Console host machines, we recommend turning off the default memcached in your console.ini file.
+&lt;/div>
+&lt;p>Log in to the Management Console host machine. If you want the console service to start at each boot-time, run this command:&lt;/p>
+&lt;pre>&lt;code>systemctl enable eucaconsole.service
+&lt;/code>&lt;/pre>
+&lt;p>Enter the following command to start the console:&lt;/p>
+&lt;pre>&lt;code>systemctl start eucaconsole.service
+&lt;/code>&lt;/pre>
+&lt;p>Repeat for each Management Console host machine.&lt;/p></description></item><item><title>Docs: Verify the Startup</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/verifying_startup/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/verifying_startup/</guid><description>
+&lt;p>At this point, all Eucalyptus services are enabled and starting up. Some of these services perform intensive initialization at start-up, particularly the first time they are started. You might have to wait a few minutes until they are fully operational.&lt;/p>
+&lt;p>One quick way to determine if the components are running is to run netstat on the various hosts and look to see when the service ports are allocated to a process. Specifically, the CLC, Walrus, and the SC allocate ports 8773. The CC listens to port 8774, and the NC uses port 8775.&lt;/p>
+&lt;p>Verify that everything has started without error. Expected outcomes include:&lt;/p>
+&lt;ul>
+&lt;li>The CLC is listening on port 8773&lt;/li>
+&lt;li>Walrus is listening on port 8773&lt;/li>
+&lt;li>The SC is listening on port 8773&lt;/li>
+&lt;li>The CC is listening on port 8774&lt;/li>
+&lt;li>The NCs are listening on port 8775&lt;/li>
+&lt;li>Log files are being written to&lt;/li>
+&lt;/ul></description></item></channel></rss>

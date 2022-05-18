@@ -1,0 +1,61 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Using VM Networking and Security</title><link>https://www.eucastack.io/docs/user_guide/networking_security/</link><description>Recent content in Using VM Networking and Security on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/networking_security/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Associate an IP Address with an Instance</title><link>https://www.eucastack.io/docs/user_guide/networking_security/allocate_ips/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/networking_security/allocate_ips/</guid><description>
+&lt;p>To associate an IP address with an instance:&lt;/p>
+&lt;p>Allocate an IP address:&lt;/p>
+&lt;pre>&lt;code>euca-allocate-address ADDRESS &amp;lt;IP_address&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Associate the allocated IP address with an instance ID:&lt;/p>
+&lt;pre>&lt;code>euca-associate-address -i &amp;lt;instance_ID&amp;gt; &amp;lt;IP_address&amp;gt;
+euca-associate-address -i i-56785678 192.168.17.103
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Release an IP Address</title><link>https://www.eucastack.io/docs/user_guide/networking_security/release_ips/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/networking_security/release_ips/</guid><description>
+&lt;p>Use euca-disassociate-address and euca-release-address to disassociate an IP address from an instance and to release the IP address to the global pool, respectively.&lt;/p>
+&lt;p>To release an IP address:&lt;/p>
+&lt;p>Enter the following command to disassociate an IP address from an instance:&lt;/p>
+&lt;pre>&lt;code>euca-disassociate-address &amp;lt;IP_address&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Enter the following command to release an IP address:&lt;/p>
+&lt;pre>&lt;code>euca-disassociate-address &amp;lt;IP_address&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>The following example releases the IP address, &lt;code>192.168.17.103&lt;/code>&lt;/p>
+&lt;pre>&lt;code>euca-release-address 192.168.17.103
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Create a Security Group</title><link>https://www.eucastack.io/docs/user_guide/networking_security/create_security_group/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/networking_security/create_security_group/</guid><description>
+&lt;p>Security groups let you control network access to instances by applying network rules to instances associated with a group.&lt;/p>
+&lt;p>To create a security group:&lt;/p>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-add-group -d &amp;lt;description&amp;gt; &amp;lt;group_name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+You can also create a security group you run an instance. Use the command with the option. Security group rules only apply to incoming traffic thus all outbound traffic is permitted.
+&lt;/div>
+&lt;p>The following example creates a new security group named &lt;code>mygroup&lt;/code> and described as &lt;code>newgroup&lt;/code> .&lt;/p>
+&lt;pre>&lt;code>euca-add-group -d &amp;quot;newgroup&amp;quot; mygroup
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Delete a Security Group</title><link>https://www.eucastack.io/docs/user_guide/networking_security/delete_security_group/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/networking_security/delete_security_group/</guid><description>
+&lt;p>The euca-delete-group command lets you delete security groups. To delete a security group:&lt;/p>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-delete-group &amp;lt;group_name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>The following example deletes the security group, &lt;code>mygroup&lt;/code> .&lt;/p>
+&lt;pre>&lt;code>euca-delete-group mygroup
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Authorize Security Group Rules</title><link>https://www.eucastack.io/docs/user_guide/networking_security/authorize_security_rules/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/networking_security/authorize_security_rules/</guid><description>
+&lt;p>By default, a security group prevents incoming network traffic from all sources. You can modify network rules and allow incoming traffic to security groups from specified sources using the euca-authorize command.&lt;/p>
+&lt;p>To authorize security group rules:&lt;/p>
+&lt;p>Use &lt;code>euca-authorize&lt;/code> to authorize port 22 access to your default group. Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-authorize -P &amp;lt;protocol&amp;gt; -p &amp;lt;port_number&amp;gt; \
+-s &amp;lt;CIDR_source_network&amp;gt; &amp;lt;group_name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>The following example allows all incoming SSH traffic on port 22 to access to the security group &lt;code>mygroup&lt;/code> . The CIDR source network, &lt;code>0.0.0.0/0&lt;/code> , refers to any source.&lt;/p>
+&lt;pre>&lt;code>euca-authorize -P tcp -p 22 -s 0.0.0.0/0 mygroup
+GROUP mygroup ↵
+PERMISSION mygroup ALLOWS tcp 22 22 FROM CIDR
+&lt;/code>&lt;/pre>
+&lt;p>Instead of specifying a CIDR source, you can specify another security group. The following example allows access to the security group &lt;code>mygroup&lt;/code> from the &lt;code>someothergroup&lt;/code> security group using SSH on port 22.&lt;/p>
+&lt;pre>&lt;code>euca-authorize --source-group someothergroup \
+--source-group-user someotheruser -P tcp -p 22 mygroup
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Revoke Security Group Rules</title><link>https://www.eucastack.io/docs/user_guide/networking_security/revoke_security_rules/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/networking_security/revoke_security_rules/</guid><description>
+&lt;p>To revoke security group rules:&lt;/p>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-revoke -P &amp;lt;protocol&amp;gt; -p &amp;lt;port_number&amp;gt; -s &amp;lt;CIDR_source_network&amp;gt; &amp;lt;group_name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>The following example revokes the network rules authorized for the security group &lt;code>mygroup&lt;/code> .&lt;/p>
+&lt;pre>&lt;code>euca-revoke -P tcp -p 22 -s 0.0.0.0/0 mygroup
+&lt;/code>&lt;/pre></description></item></channel></rss>

@@ -1,0 +1,57 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Install a paravirtual image</title><link>https://www.eucastack.io/docs/image_guide/img_task_intro/img_add_existing/</link><description>Recent content in Install a paravirtual image on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/image_guide/img_task_intro/img_add_existing/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Add a Kernel</title><link>https://www.eucastack.io/docs/image_guide/img_task_intro/img_add_existing/add_kernel/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/image_guide/img_task_intro/img_add_existing/add_kernel/</guid><description>
+&lt;p>When you add a kernel to Walrus, you bundle the kernel file, upload the file to a bucket in Walrus that you name, and then register the kernel with Eucalyptus.&lt;/p>
+&lt;p>To add a kernel to Walrus:&lt;/p>
+&lt;p>Use the following three commands:&lt;/p>
+&lt;pre>&lt;code>euca-bundle-image -i &amp;lt;kernel_file&amp;gt; --kernel true --arch &amp;lt;architecture&amp;gt;
+euca-upload-bundle -b &amp;lt;kernel_bucket&amp;gt; -m /tmp/&amp;lt;kernel_file&amp;gt;.manifest.xml
+euca-register &amp;lt;kernel_bucket&amp;gt;/&amp;lt;kernel_file&amp;gt;.manifest.xml -a x86_64 -n mynewkernel
+&lt;/code>&lt;/pre>
+&lt;p>For example:&lt;/p>
+&lt;pre>&lt;code>euca-bundle-image -i euca-fedora-10-x86_64/xen-kernel/vmlinuz-2.6.27.21-0.1-xen --kernel true --arch x86_64
+...
+Generating manifest /tmp/vmlinuz-2.6.27.21-0.1-xen.manifest.xml
+euca-upload-bundle -b example_kernel_bucket -m /tmp/vmlinuz-2.6.27.21-0.1-xen.manifest.xml
+...
+Uploaded image as example_kernel_bucket/vmlinuz-2.6.27.21-0.1-xen.manifest.xml
+euca-register example_kernel_bucket/vmlinuz-2.6.27.21-0.1-xen.manifest.xml -a x86_64 -n mynewkernel
+IMAGE eki-XXXXXXXX
+&lt;/code>&lt;/pre>
+&lt;p>Where the returned value &lt;code>eki-XXXXXXXX&lt;/code> is the unique ID of the registered kernel image.&lt;/p></description></item><item><title>Docs: Add a Ramdisk</title><link>https://www.eucastack.io/docs/image_guide/img_task_intro/img_add_existing/add_ramdisk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/image_guide/img_task_intro/img_add_existing/add_ramdisk/</guid><description>
+&lt;p>When you add a ramdisk to Walrus, you bundle the ramdisk file, upload the file to a bucket in Walrus that you name, and then register the ramdisk with Eucalyptus.&lt;/p>
+&lt;p>To add a ramdisk to Walrus:&lt;/p>
+&lt;p>Use the following three commands:&lt;/p>
+&lt;pre>&lt;code>euca-bundle-image -i &amp;lt;ramdisk_file&amp;gt; --ramdisk true -r x86_64
+euca-upload-bundle -b &amp;lt;ramdisk_bucket&amp;gt; -m /tmp/&amp;lt;ramdisk_file&amp;gt;.manifest.xml
+euca-register &amp;lt;ramdisk_bucket&amp;gt;/&amp;lt;ramdisk_file&amp;gt;.manifest.xml -n &amp;lt;name_of_ramdisk&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>For example:&lt;/p>
+&lt;pre>&lt;code>euca-bundle-image -i euca-fedora-10-x86_64/xen-kernel/initrd-2.6.27.21-0.1-xen
+--ramdisk true -r x86_64
+...
+Generating manifest /tmp/initrd-2.6.27.21-0.1-xen.manifest.xml
+euca-upload-bundle -b example_rd_bucket -m /tmp/initrd-2.6.27.21-0.1-xen.manifest.xml
+...
+Uploaded image as example_rd_bucket/initrd-2.6.27.21-0.1-xen.manifest.xm
+euca-register example_rd_bucket/initrd-2.6.27.21-0.1-xen.manifest.xml -n mynewramdisk
+IMAGE eri-XXXXXXXX
+&lt;/code>&lt;/pre>
+&lt;p>Where the returned value &lt;code>eri-XXXXXXXX&lt;/code> is the unique ID of the registered ramdisk image.&lt;/p></description></item><item><title>Docs: Add a Root Filesystem</title><link>https://www.eucastack.io/docs/image_guide/img_task_intro/img_add_existing/add_rootfs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/image_guide/img_task_intro/img_add_existing/add_rootfs/</guid><description>
+&lt;p>When you add a root filesystem to Walrus, you bundle the root filesystem file, upload the file to a bucket in Walrus that you name, and then register the root filesystem with Eucalyptus. The bundle operation can include a registered ramdisk (ERI ID) and a registered kernel (EKI ID). The resulting image will associate the three images.&lt;/p>
+&lt;p>You can also bundle the root file system independently and associate the ramdisk and kernel with the resulting EMI at run time.&lt;/p>
+&lt;p>To add a root filesystem to Walrus:&lt;/p>
+&lt;p>Use the following three commands:&lt;/p>
+&lt;pre>&lt;code>euca-bundle-image -i &amp;lt;root_filesystem_file&amp;gt; -r &amp;lt;architecture&amp;gt;
+euca-upload-bundle -b &amp;lt;root_filesystem_file_bucket&amp;gt; -m /tmp/&amp;lt;root_filesystem_file&amp;gt;.manifest.xml
+euca-register &amp;lt;root_filesystem_file_bucket&amp;gt;/&amp;lt;root_filesystem_file&amp;gt;.manifest.xml -n &amp;lt;rootfs_name&amp;gt; -a &amp;lt;architecture&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>For example:&lt;/p>
+&lt;pre>&lt;code>euca-bundle-image -i euca-fedora-10-x86_64/fedora.10.x86-64.img --ramdisk eri-722B3CBA --kernel eki-5B3D3859 -r x86_64
+...
+Generating manifest /tmp/fedora.10.x86-64.img.manifest.xml
+euca-upload-bundle -b example_rf_bucket -m /tmp/fedora.10.x86-64.img.manifest.xml
+...
+Generating manifest /tmp/fedora.10.x86-64.img.manifest.xml
+euca-register example_rf_bucket/fedora.10.x86-64.img.manifest.xml -n example_rf -a x86_64
+IMAGE emi-XXXXXXXX
+&lt;/code>&lt;/pre>
+&lt;p>Where the returned value &lt;code>emi-XXXXXXXX&lt;/code> is the unique ID of the registered machine image.&lt;/p></description></item></channel></rss>

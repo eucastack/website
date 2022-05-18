@@ -1,0 +1,28 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Access Overview</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/</link><description>Recent content in Access Overview on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Access Concepts</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/concepts_eiam/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/concepts_eiam/</guid><description>
+&lt;h1 id="access-concepts">Access Concepts&lt;/h1>
+&lt;p>This section describes what Eucalyptus access is and what you need to know about it so that you can configure access to your cloud.&lt;/p></description></item><item><title>Docs: Policy Overview</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/access_policies/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/access_policies/</guid><description>
+&lt;h1 id="policy-overview">Policy Overview&lt;/h1>
+&lt;p>Eucalyptus uses the policy language to specify user level permissions as AWS IAM. Policies are written in JSON. Each policy file can contain multiple statements, each specifying a permission.A permission statement specifies whether to allow or deny a list of actions to be performed on a list of resources, under specific conditions.&lt;/p>
+&lt;p>A permission statement has the following components:&lt;/p>
+&lt;ul>
+&lt;li>Begins the decision that applies to all following components. Either: or&lt;/li>
+&lt;li>Indicates service-specific and case-sensitive commands. For example:&lt;/li>
+&lt;li>Indicates selected resources, each specified as an Amazon resource name (ARN). For example:&lt;/li>
+&lt;li>Indicates additional constraints of the permission. For example:&lt;/li>
+&lt;/ul>
+&lt;p>The following policy example contains a statement that gives a user with full permission. This is the same access as the account administrator:&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Version&amp;quot;:&amp;quot;2011-04-01&amp;quot;,
+&amp;quot;Statement&amp;quot;:[{
+&amp;quot;Sid&amp;quot;:&amp;quot;1&amp;quot;,
+&amp;quot;Effect&amp;quot;:&amp;quot;Allow&amp;quot;,
+&amp;quot;Action&amp;quot;:&amp;quot;*&amp;quot;,
+&amp;quot;Resource&amp;quot;:&amp;quot;*&amp;quot;
+}]
+}
+&lt;/code>&lt;/pre>
+&lt;p>For more information about policy language, go to the &lt;a href="http://docs.amazonwebservices.com/IAM/latest/UserGuide/PermissionsOverview.html">IAM User Guide&lt;/a> .&lt;/p>
+&lt;h2 id="policy-notes">Policy Notes&lt;/h2>
+&lt;p>You can combine IAM policies with account level permissions. For example, the admin of account A can give users in account B permission to launch one of account A’s images by changing the image attributes. Then the admin of account B can use IAM policy to designate the users who can actually use the shared images.&lt;/p>
+&lt;p>You can attach IAM policies to both users and groups. When attached to groups, a policy is equivalent to attaching the same policy to the users within that group. Therefore, a user might have multiple policies attached, both policies attached to the user, and policies attached to the group that the user belongs to.&lt;/p>
+&lt;p>Do not attach IAM policies (except quota policies, a Eucalyptus extension) to account admins. At this point, doing so won’t result in a failure but may have unexpected consequences.&lt;/p></description></item></channel></rss>

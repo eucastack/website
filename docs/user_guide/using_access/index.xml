@@ -1,0 +1,18 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Managing Access</title><link>https://www.eucastack.io/docs/user_guide/using_access/</link><description>Recent content in Managing Access on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/using_access/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Groups</title><link>https://www.eucastack.io/docs/user_guide/using_access/group_tasks/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_access/group_tasks/</guid><description>
+&lt;h1 id="groups">Groups&lt;/h1>
+&lt;p>Groups are used to share resource access authorizations among a set of users within an account. Users can belong to multiple groups.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+A group in the context of access is not the same as a security group.
+&lt;/div>
+This section details tasks that can be performed on groups.&lt;/p></description></item><item><title>Docs: Users</title><link>https://www.eucastack.io/docs/user_guide/using_access/user_tasks/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_access/user_tasks/</guid><description>
+&lt;h1 id="users">Users&lt;/h1>
+&lt;p>Users are subsets of accounts and are added to accounts by an appropriately credentialed administrator. While the term &lt;strong>user&lt;/strong> typically refers to a specific person, in Eucalyptus, a &lt;strong>user&lt;/strong> is defined by a specific set of credentials generated to enable access to a given account. Each set of user credentials is valid for accessing only the account for which they were created. Thus a user only has access to one account within a Eucalyptus system. If an individual person wishes to have access to more than one account within a Eucalyptus system, a separate set of credentials must be generated (in effect a new ‘user’) for each account (though the same username and password can be used for different accounts).&lt;/p>
+&lt;p>When you need to add a new user to your Eucalyptus cloud, you&amp;rsquo;ll go through the following process:&lt;/p>
+&lt;ol>
+&lt;li>Create a user&lt;/li>
+&lt;li>Add user to a group&lt;/li>
+&lt;li>Give user a login profile&lt;/li>
+&lt;/ol></description></item><item><title>Docs: Credentials</title><link>https://www.eucastack.io/docs/user_guide/using_access/certs_tasks/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_access/certs_tasks/</guid><description>
+&lt;h1 id="credentials">Credentials&lt;/h1>
+&lt;p>Eucalyptus uses different types of credentials for different purposes. This section details tasks needed to allow access to Eucalyptus services.&lt;/p></description></item></channel></rss>

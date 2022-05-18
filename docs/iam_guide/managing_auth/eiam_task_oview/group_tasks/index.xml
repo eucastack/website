@@ -1,0 +1,45 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Groups</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/group_tasks/</link><description>Recent content in Groups on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/group_tasks/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Create a Group</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/group_tasks/group_create/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/group_tasks/group_create/</guid><description>
+&lt;p>To create a group perform the steps listed in this topic.Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-groupcreate -g &amp;lt;group_name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus does not return anything.&lt;/p></description></item><item><title>Docs: Add a Group Policy</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/group_tasks/policy_add_group/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/group_tasks/policy_add_group/</guid><description>
+&lt;p>To add a group policy perform the steps listed in this topic.Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-groupaddpolicy -g &amp;lt;group_name&amp;gt; -p &amp;lt;policy_name&amp;gt; -e &amp;lt;effect&amp;gt; -a
+&amp;lt;actions&amp;gt; -o
+&lt;/code>&lt;/pre>
+&lt;p>The optional &lt;code>-o&lt;/code> parameter tells Eucalyptus to return the JSON policy, as in this example:&lt;/p>
+&lt;pre>&lt;code>{&amp;quot;Version&amp;quot;:&amp;quot;2008-10-17&amp;quot;,&amp;quot;Statement&amp;quot;:[{&amp;quot;Effect&amp;quot;:&amp;quot;Allow&amp;quot;, &amp;quot;Action&amp;quot;:[&amp;quot;ec2:RunInstances&amp;quot;], &amp;quot;Resource&amp;quot;:[&amp;quot;*&amp;quot;]}]}
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Modify a Group</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/group_tasks/group_rename/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/group_tasks/group_rename/</guid><description>
+&lt;p>To modify a group perform the steps listed in this topic.Modifying a group is similar to a &amp;ldquo;move&amp;rdquo; operation. Whoever wants to modify the group must have permission to do it on both sides of the move. That is, you need permission to remove the group from its current path or name, and put that group in the new path or name.&lt;/p>
+&lt;p>For example, if a group changes from one area in a company to another, you can change the group&amp;rsquo;s path from &lt;em>/area_abc/&lt;/em> to &lt;em>/area_efg/&lt;/em> . You need permission to remove the group from &lt;em>/area_abc/&lt;/em> . You also need permission to put the group into &lt;em>/area_efg/&lt;/em> . This means you need permission to call &lt;code>UpdateGroup&lt;/code> on both &lt;em>arn:aws:iam::123456789012:group/area_abc/&lt;/em>* and &lt;em>arn:aws:iam::123456789012:group/area_efg/&lt;/em>* .&lt;/p>
+&lt;p>Enter the following command to modify the group&amp;rsquo;s name:&lt;/p>
+&lt;pre>&lt;code>euare-groupmod -g &amp;lt;group_name&amp;gt; --new-group-name &amp;lt;new_name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus does not return a message. Enter the following command to modify a group&amp;rsquo;s path:&lt;/p>
+&lt;pre>&lt;code>euare-groupmod -g &amp;lt;group_name&amp;gt; -p &amp;lt;new_path&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus does not return a message.&lt;/p></description></item><item><title>Docs: Remove a User from a Group</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/group_tasks/group_rem_user/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/group_tasks/group_rem_user/</guid><description>
+&lt;p>To remove a user from a group perform the steps listed in this topic.Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-groupremoveuser -g &amp;lt;group_name&amp;gt; -u &amp;lt;user-name&amp;gt;
+&lt;/code>&lt;/pre></description></item><item><title>Docs: List Groups</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/group_tasks/group_list/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/group_tasks/group_list/</guid><description>
+&lt;p>To list groups perform the steps listed in this topic.Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-grouplistbypath
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus returns a list of paths followed by the ARNs for the groups in each path. For example:&lt;/p>
+&lt;pre>&lt;code>arn:aws:iam::eucalyptus:group/groupa
+&lt;/code>&lt;/pre></description></item><item><title>Docs: List Policies for a Group</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/group_tasks/group_list_pols/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/group_tasks/group_list_pols/</guid><description>
+&lt;p>To list policies for a group perform the steps listed in this topic.Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-grouplistpolicies -g &amp;lt;group_name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus returns a listing of all policies associated with the group.&lt;/p></description></item><item><title>Docs: Delete a Group</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/group_tasks/group_delete/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/group_tasks/group_delete/</guid><description>
+&lt;p>To delete a group perform the steps listed in this topic.When you delete a group, you have to remove users from the group and delete any policies from the group. You can do this with one command, using the &lt;code>euare-groupdel&lt;/code> command with the &lt;code>-r&lt;/code> option. Or you can follow the following steps to specify who and what you want to delete.&lt;/p>
+&lt;p>Individually remove all users from the group.&lt;/p>
+&lt;pre>&lt;code>euare-groupremoveuser -g &amp;lt;group_name&amp;gt; -u &amp;lt;user_name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Delete the policies attached to the group.&lt;/p>
+&lt;pre>&lt;code>euare-groupdelpolicy -g &amp;lt;group_name&amp;gt; -p &amp;lt;policy_name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Delete the group.&lt;/p>
+&lt;pre>&lt;code>euare-groupdel -g &amp;lt;group_name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>The group is now deleted.&lt;/p></description></item></channel></rss>

@@ -1,0 +1,308 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Namespaces, Metrics, and Dimensions</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_oview/monitoring_metric_ref/</link><description>Recent content in Namespaces, Metrics, and Dimensions on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_oview/monitoring_metric_ref/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Namespaces</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_oview/monitoring_metric_ref/monitoring_namespaces/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_oview/monitoring_metric_ref/monitoring_namespaces/</guid><description>
+&lt;p>All Eucalyptus services that provide CloudWatch data use a namespace string, beginning with &amp;ldquo;AWS/&amp;rdquo;. This section describes the service namespaces.The following table lists the namespaces for services that push metric data points to CloudWatch.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Service&lt;/th>
+&lt;th style="text-align:left">Namespace&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">Elastic Block Store&lt;/td>
+&lt;td style="text-align:left">AWS/EBS&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Elastic Compute Cloud&lt;/td>
+&lt;td style="text-align:left">AWS/EC2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Auto Scaling&lt;/td>
+&lt;td style="text-align:left">AWS/Autoscaling&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Elastic Load Balancing&lt;/td>
+&lt;td style="text-align:left">AWS/ELB&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>Docs: Instance Metrics and Dimensions</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_oview/monitoring_metric_ref/metrics_instances/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_oview/monitoring_metric_ref/metrics_instances/</guid><description>
+&lt;p>This section describes the instance metrics and dimensions available to CloudWatch.&lt;/p>
+&lt;h2 id="available-metrics-for-instances">Available Metrics for Instances&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Metric&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;th style="text-align:left">Unit&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">CPUUtilization&lt;/td>
+&lt;td style="text-align:left">The percentage of allocated EC2 compute units that are currently in use on the instance. This metric identifies the processing power required to run an application upon a selected instance.&lt;/td>
+&lt;td style="text-align:left">Percent&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">DiskReadOps&lt;/td>
+&lt;td style="text-align:left">Completed read operations from all ephemeral disks available to the instance (if your instance uses EBS, see EBS Metrics.) This metric identifies the rate at which an application reads a disk. This can be used to determine the speed in which an application reads data from a hard disk.&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">DiskWriteOps&lt;/td>
+&lt;td style="text-align:left">Completed write operations to all ephemeral disks available to the instance (if your instance uses Amazon EBS, see Amazon EBS Metrics.) This metric identifies the rate at which an application writes to a hard disk. This can be used to determine the speed in which an application saves data to a hard disk.&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">DiskReadBytes&lt;/td>
+&lt;td style="text-align:left">Bytes read from all ephemeral disks available to the instance (if your instance uses Amazon EBS, see Amazon EBS Metrics.) This metric is used to determine the volume of the data the application reads from the hard disk of the instance. This can be used to determine the speed of the application.&lt;/td>
+&lt;td style="text-align:left">Bytes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">DiskWriteBytes&lt;/td>
+&lt;td style="text-align:left">Bytes written to all ephemeral disks available to the instance (if your instance uses Amazon EBS, see Amazon EBS Metrics.) This metric is used to determine the volume of the data the application writes onto the hard disk of the instance. This can be used to determine the speed of the application.&lt;/td>
+&lt;td style="text-align:left">Bytes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">NetworkIn&lt;/td>
+&lt;td style="text-align:left">The number of bytes received on all network interfaces by the instance. This metric identifies the volume of incoming network traffic to an application on a single instance.&lt;/td>
+&lt;td style="text-align:left">Bytes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">NetworkOut&lt;/td>
+&lt;td style="text-align:left">The number of bytes sent out on all network interfaces by the instance. This metric identifies the volume of outgoing network traffic to an application on a single instance.&lt;/td>
+&lt;td style="text-align:left">Bytes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">StatusCheckFailed&lt;/td>
+&lt;td style="text-align:left">A combination of StatusCheckFailed_Instance and StatusCheckFailed_System that reports if either of the status checks has failed. Values for this metric are either 0 (zero) or 1 (one.) A zero indicates that the status check passed. A one indicates a status check failure.&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">StatusCheckFailed_Instance&lt;/td>
+&lt;td style="text-align:left">Reports whether the instance has passed the EC2 instance status check in the last 5 minutes. Values for this metric are either 0 (zero) or 1 (one.) A zero indicates that the status check passed. A one indicates a status check failure.&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">StatusCheckFailed_System&lt;/td>
+&lt;td style="text-align:left">Reports whether the instance has passed the EC2 system status check in the last 5 minutes. Values for this metric are either 0 (zero) or 1 (one.) A zero indicates that the status check passed. A one indicates a status check failure.&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="available-dimensions-for-instances">Available Dimensions for Instances&lt;/h2>
+&lt;p>You can filter the instance data using any of the dimensions in the following table.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Dimension&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">AutoScalingGroupName&lt;/td>
+&lt;td style="text-align:left">This dimension filters the data you request for all instances in a specified capacity group. An AutoScalingGroup is a collection of instances you define if you&amp;rsquo;re using the Auto Scaling service. This dimension is available only for instance metrics when the instances are in such an Auto Scaling group.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ImageId&lt;/td>
+&lt;td style="text-align:left">This dimension filters the data you request for all instances running this Eucalyptus Machine Image (EMI).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">InstanceId&lt;/td>
+&lt;td style="text-align:left">This dimension filters the data you request for the identified instance only. This helps you pinpoint an exact instance from which to monitor data.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">InstanceType&lt;/td>
+&lt;td style="text-align:left">This dimension filters the data you request for all instances running with this specified instance type. This helps you categorize your data by the type of instance running. For example, you might compare data from an m1.small instance and an m1.large instance to determine which has the better business value for your application.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>Docs: EBS Metrics and Dimensions</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_oview/monitoring_metric_ref/metrics_ebs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_oview/monitoring_metric_ref/metrics_ebs/</guid><description>
+&lt;p>This section describes the Elastic Block Store (EBS) metrics and dimensions available to CloudWatch.&lt;/p>
+&lt;h2 id="available-metrics-for-ebs">Available Metrics for EBS&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Metric&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;th style="text-align:left">Unit&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">VolumeReadBytes&lt;/td>
+&lt;td style="text-align:left">The total number of bytes transferred in the period.&lt;/td>
+&lt;td style="text-align:left">Bytes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">VolumeWriteBytes&lt;/td>
+&lt;td style="text-align:left">The total number of bytes transferred in the period.&lt;/td>
+&lt;td style="text-align:left">Bytes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">VolumeReadOps&lt;/td>
+&lt;td style="text-align:left">The total number of operations in the period.&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">VolumeWriteOps&lt;/td>
+&lt;td style="text-align:left">The total number of operations in the period.&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">VolumeTotalReadTime&lt;/td>
+&lt;td style="text-align:left">The total number of seconds spent by all operations that completed in the period. If multiple requests are submitted at the same time, this total could be greater than the length of the period. For example, say the period is 5 minutes (300 seconds); if 700 operations completed during that period, and each operation took 1 second, the value would be 700 seconds.&lt;/td>
+&lt;td style="text-align:left">Seconds&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">VolumeTotalWriteTime&lt;/td>
+&lt;td style="text-align:left">The total number of seconds spent by all operations that completed in the period. If multiple requests are submitted at the same time, this total could be greater than the length of the period. For example, say the period is 5 minutes (300 seconds); if 700 operations completed during that period, and each operation took 1 second, the value would be 700 seconds.&lt;/td>
+&lt;td style="text-align:left">Seconds&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">VolumeIdleTime&lt;/td>
+&lt;td style="text-align:left">The total number of seconds in the period when no read or write operations were submitted.&lt;/td>
+&lt;td style="text-align:left">Seconds&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">VolumeQueueLength&lt;/td>
+&lt;td style="text-align:left">The number of read and write operation requests waiting to be completed in the period.&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="available-dimensions-for-ebs">Available Dimensions for EBS&lt;/h2>
+&lt;p>The only dimension that EBS sends to CloudWatch is the Volume ID. This means that all available statistics are filtered by Volume ID.&lt;/p></description></item><item><title>Docs: Auto Scaling Metrics and Dimensions</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_oview/monitoring_metric_ref/metrics_as/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_oview/monitoring_metric_ref/metrics_as/</guid><description>
+&lt;p>This section discusses the Auto Scaling metrics and dimensions available to CloudWatch.&lt;/p>
+&lt;h2 id="available-metrics-for-auto-scaling">Available Metrics for Auto Scaling&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Metric&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;th style="text-align:left">Unit&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">GroupMinSize&lt;/td>
+&lt;td style="text-align:left">The minimum size of the Auto Scaling group.&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">GroupMaxSize&lt;/td>
+&lt;td style="text-align:left">The maximum size of the Auto Scaling group.&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">GroupDesiredCapacity&lt;/td>
+&lt;td style="text-align:left">The number of instances that the Auto Scaling group attempts to maintain.&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">GroupInServiceInstances&lt;/td>
+&lt;td style="text-align:left">The number of instances that are running as part of the Auto Scaling group. This metric does not include instances that are pending or terminating.&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">GroupPendingInstances&lt;/td>
+&lt;td style="text-align:left">The number of instances that are pending. A pending instance is not yet in service. This metric does not include instances that are in service or terminating.&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">GroupTerminatingInstances&lt;/td>
+&lt;td style="text-align:left">The number of instances that are in the process of terminating. This metric does not include instances that are in service or pending.&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">GroupTotalInstances&lt;/td>
+&lt;td style="text-align:left">The total number of instances in the Auto Scaling group. This metric identifies the number of instances that are in service, pending, and terminating.&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="available-dimensions-for-auto-scaling">Available Dimensions for Auto Scaling&lt;/h2>
+&lt;p>The only dimension that Auto Scaling sends to CloudWatch is the name of the Auto Scaling group. This means that all available statistics are filtered by Auto Scaling group name.&lt;/p></description></item><item><title>Docs: ELB Metrics and Dimensions</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_oview/monitoring_metric_ref/metrics_elb/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_oview/monitoring_metric_ref/metrics_elb/</guid><description>
+&lt;p>This section discusses the Elastic Load Balancing (ELB) metrics and dimensions available to CloudWatch.&lt;/p>
+&lt;h2 id="available-metrics-for-elb">Available Metrics for ELB&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Metric&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;th style="text-align:left">Unit&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">Latency&lt;/td>
+&lt;td style="text-align:left">Time elapsed after the request leaves the load balancer until it receives the corresponding response. Valid Statistics: Minimum&lt;/td>
+&lt;td style="text-align:left">Maximum&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">RequestCount&lt;/td>
+&lt;td style="text-align:left">The number of requests handled by the load balancer.&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">HealthyHostCount&lt;/td>
+&lt;td style="text-align:left">The number of healthy instances registered with the load balancer in a specified availability zone. Healthy instances are those that have not failed more health checks than the value of the unhealthy threshold. Constraints: You must provide both LoadBalancerName and AvailabilityZone dimensions for this metric.Valid Statistics: Minimum&lt;/td>
+&lt;td style="text-align:left">Maximum&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">UnHealthyHostCount&lt;/td>
+&lt;td style="text-align:left">The number of unhealthy instances registered with the load balancer. These are instances that have failed more health checks than the value of the unhealthy threshold. Constraints: You must provide both LoadBalancerName and AvailabilityZone dimensions for this metric.Valid Statistics: Minimum&lt;/td>
+&lt;td style="text-align:left">Maximum&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">HTTPCode_ELB_4XX&lt;/td>
+&lt;td style="text-align:left">Count of HTTP response codes generated by ELB that are in the 4xx (client error) series. Valid Statistics: Sum&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">HTTPCode_ELB_5XX&lt;/td>
+&lt;td style="text-align:left">Count of HTTP response codes generated by ELB that are in the 5xx (server error) series. ELB can generate 5xx errors if no back-end instances are registered, no healthy back-end instances, or the request rate exceeds ELB&amp;rsquo;s current available capacity. This response count does not include any responses that were generated by back-end instances. Valid Statistics: Sum&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">HTTPCode_Backend_2XX&lt;/td>
+&lt;td style="text-align:left">Count of HTTP response codes generated by back-end instances that are in the 2xx (success) series. Valid Statistics: Sum&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">HTTPCode_Backend_3XX&lt;/td>
+&lt;td style="text-align:left">Count of HTTP response codes generated by back-end instances that are in the 3xx (user action required) series. Valid Statistics: Sum&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">HTTPCode_Backend_4XX&lt;/td>
+&lt;td style="text-align:left">Count of HTTP response codes generated by back-end instances that are in the 4xx (client error) series. This response count does not include any responses that were generated by ELB. Valid Statistics: Sum&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">HTTPCode_Backend_5XX&lt;/td>
+&lt;td style="text-align:left">Count of HTTP response codes generated by back-end instances that are in the 5xx (server error) series. This response count does not include any responses that were generated by ELB. Valid Statistics: Sum&lt;/td>
+&lt;td style="text-align:left">Count&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="available-dimensions-for-elb">Available Dimensions for ELB&lt;/h2>
+&lt;p>You can use the currently available dimensions for ELB to refine the metrics returned by a query. For example, you could use &lt;code>HealthyHostCount&lt;/code> and dimensions &lt;code>LoadBalancerName&lt;/code> and &lt;code>AvailabilityZone&lt;/code> to get the average number of healthy instances behind the specified load balancer within the specified Availability Zone for a given period of time.&lt;/p>
+&lt;p>You can aggregate ELB data along any of the following dimensions shown in the following table.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Metric&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">LoadBalancerName&lt;/td>
+&lt;td style="text-align:left">Limits the metric data to instances that are connected to the specified load balancer.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AvailabilityZone&lt;/td>
+&lt;td style="text-align:left">Limits the metric data to load balancers in the specified availability zone.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item></channel></rss>

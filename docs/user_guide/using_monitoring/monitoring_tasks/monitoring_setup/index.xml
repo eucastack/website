@@ -1,0 +1,64 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Configuring Monitoring</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_setup/</link><description>Recent content in Configuring Monitoring on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_setup/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Enable Monitoring</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_setup/monitoring_enabling/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_setup/monitoring_enabling/</guid><description>
+&lt;p>This section describes steps for enabling monitoring on your cloud resources.To enable monitoring on your resources, following the steps for your resource.&lt;/p>
+&lt;h2 id="enable-monitoring-for-an-instance">Enable monitoring for an instance&lt;/h2>
+&lt;p>To enable monitoring for a running instance, enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-monitor-instances [instance_id]
+&lt;/code>&lt;/pre>
+&lt;p>To enable monitoring when you launch an instance, enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-run-instances [image_id] -k gsg-keypair --monitor
+&lt;/code>&lt;/pre>
+&lt;h2 id="enable-monitoring-for-a-scaling-group">Enable monitoring for a scaling group&lt;/h2>
+&lt;p>To enable monitoring for an existing Auto Scaling group: Create a launch configuration with &lt;code>--monitoring-enabled&lt;/code> option. Make a euscale-update-auto-scaling-group request to update your Auto Scaling group with the launch configuration you created in the previous step. Auto Scaling will enable monitoring for new instances that it creates. Choose one of the following actions to deal with all existing instances in the Auto Scaling group:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">To . . .&lt;/th>
+&lt;th style="text-align:left">Do this . . .&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">Preserve existing instances&lt;/td>
+&lt;td style="text-align:left">Make a euca-monitor-instances request for all existing instances to enable monitoring.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Terminate existing instances&lt;/td>
+&lt;td style="text-align:left">Make a euscale-terminate-instance-in-auto-scaling-group request for all existing instances. Auto Scaling will use the updated launch configuration to create replacement instances with monitoring enabled.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>To enable monitoring when you create a new Auto Scaling group: Create a launch configuration with &lt;code>--monitoring-enabled&lt;/code> option.&lt;/p>
+&lt;h2 id="enable-monitoring-for-a-load-balancer">Enable monitoring for a load balancer&lt;/h2>
+&lt;p>Elastic Load Balancing (ELB) sends metrics and dimensions for all load balancers to CloudWatch. By default, you do not need to specifically enable monitoring.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+ELB only sends CloudWatch metrics when requests are sent through the load balancer. If there are no requests or data for a given metric, ELB does not report to CloudWatch. If there are requests sent through the load balancer, ELB measures and sends metrics for that load balancer in 60-second intervals.
+&lt;/div></description></item><item><title>Docs: Disable Monitoring</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_setup/monitoring_disabling/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_setup/monitoring_disabling/</guid><description>
+&lt;p>This section describes steps for disabling monitoring on your cloud resources.To disable monitoring on your resources, following the steps for your resource.&lt;/p>
+&lt;h2 id="disable-monitoring-for-an-instance">Disable monitoring for an instance&lt;/h2>
+&lt;p>To disable monitoring for a running instance, enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-unmonitor-instances [instance_id]
+&lt;/code>&lt;/pre>
+&lt;h2 id="disable-monitoring-for-a-scaling-group">Disable monitoring for a scaling group&lt;/h2>
+&lt;p>To enable monitoring for an existing Auto Scaling group: Create a launch configuration with &lt;code>--monitoring-disabled&lt;/code> option. Make a euscale-update-auto-scaling-group request to update your Auto Scaling group with the launch configuration you created in the previous step. Auto Scaling will disable monitoring for new instances that it creates. Choose one of the following actions to deal with all existing instances in the Auto Scaling group:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">To . . .&lt;/th>
+&lt;th style="text-align:left">Do this . . .&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">Preserve existing instances&lt;/td>
+&lt;td style="text-align:left">Make a euca-unmonitor-instances request for all existing instances to disable monitoring.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Terminate existing instances&lt;/td>
+&lt;td style="text-align:left">Make a euscale-terminate-instance-in-auto-scaling-group request for all existing instances. Auto Scaling will use the updated launch configuration to create replacement instances with monitoring disabled.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>To enable monitoring when you create a new Auto Scaling group: Create a launch configuration with &lt;code>--monitoring-disabled&lt;/code> option.&lt;/p>
+&lt;h2 id="disable-monitoring-for-a-load-balancer">Disable monitoring for a load balancer&lt;/h2>
+&lt;p>There is no way to disable monitoring for a load balancer.&lt;/p></description></item></channel></rss>

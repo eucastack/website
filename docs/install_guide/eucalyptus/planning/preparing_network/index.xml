@@ -1,0 +1,78 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Prepare the Network</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/planning/preparing_network/</link><description>Recent content in Prepare the Network on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/install_guide/eucalyptus/planning/preparing_network/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Reserve Ports</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/planning/preparing_network/preparing_firewalls/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/planning/preparing_network/preparing_firewalls/</guid><description>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Port&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">TCP 5005&lt;/td>
+&lt;td style="text-align:left">DEBUG ONLY: This port is used for debugging (using the &amp;ndash;debug flag).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP 8772&lt;/td>
+&lt;td style="text-align:left">DEBUG ONLY: JMX port. This is disabled by default, and can be enabled with the &amp;ndash;debug or &amp;ndash;jmx options for CLOUD_OPTS.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP 8773&lt;/td>
+&lt;td style="text-align:left">Web services port for the CLC, user-facing services (UFS), object storage gateway (OSG), Walrus SC; also used for external and internal communications by the CLC and Walrus. Configurable with euctl.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP 8774&lt;/td>
+&lt;td style="text-align:left">Web services port on the CC. Configured in the eucalyptus.conf configuration file&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP 8775&lt;/td>
+&lt;td style="text-align:left">Web services port on the NC. Configured in the eucalyptus.conf configuration file.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP 8777&lt;/td>
+&lt;td style="text-align:left">Database port on the CLC&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP 8779 (or next available port, up to TCP 8849)&lt;/td>
+&lt;td style="text-align:left">jGroups failure detection port on CLC, UFS, OSG, Walrus SC. If port 8779 is available, it will be used, otherwise, the next port in the range will be attempted until an unused port is found.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP 8888&lt;/td>
+&lt;td style="text-align:left">The default port for the Management Console. Configured in the /etc/eucalyptus-console/console.ini file.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP 16514&lt;/td>
+&lt;td style="text-align:left">TLS port on Node Controller, required for instance migrations&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">UDP 7500&lt;/td>
+&lt;td style="text-align:left">Port for diagnostic probing on CLC, UFS, OSG, Walrus SC&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">UDP 8773&lt;/td>
+&lt;td style="text-align:left">Membership port for any UFS, OSG, Walrus, and SC&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">UDP 8778&lt;/td>
+&lt;td style="text-align:left">The bind port used to establish multicast communication&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">TCP/UDP 53&lt;/td>
+&lt;td style="text-align:left">DNS port on UFS&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">UDP 63822&lt;/td>
+&lt;td style="text-align:left">eucanetd binds to localhost port 63822 and uses it to detect and avoid running multiple instances (of eucanetd)&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For information about ports used by MidoNet, see the (Category OpenStack can be ignored).
+&lt;/div></description></item><item><title>Docs: Verify Connectivity</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/planning/preparing_network/preparing_connectivity/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/planning/preparing_network/preparing_connectivity/</guid><description>
+&lt;p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Any firewall running on the CC must be compatible with the dynamic changes performed by when working with security groups. will flush the &amp;lsquo;filter&amp;rsquo; and &amp;rsquo;nat&amp;rsquo; tables upon boot.
+&lt;/div>
+Verify component connectivity by performing the following checks on the machines that will be running the listed Eucalyptus components.&lt;/p>
+&lt;p>Verify connection from an end-user to the CLC on TCP port 8773 Verify connection from an end-user to Walrus on TCP port 8773 Verify connection from the CLC, SC, and NC to SC on TCP port 8773 Verify connection from the CLC, SC, and NC to Walrus on TCP port 8773 Verify connection from Walrus and SC to CLC on TCP port 8777 Verify connection from CLC to CC on TCP port 8774 Verify connection from CC to NC on TCP port 8775 Verify connection from NC to Walrus on TCP port 8773. Or, you can verify the connection from the CC to Walrus on port TCP 8773, and from an NC to the CC on TCP port 8776 Verify connection from public IP addresses of Eucalyptus instances (metadata) and CC to CLC on TCP port 8773 Verify TCP connectivity between CLC, Walrus, and SC on TCP port 8779 (or the first available port in range 8779-8849)  Verify connection between CLC, Walrus, and SC on UDP port 7500 Verify multicast connectivity for IP address 239.193.7.3 between CLC and UFS, OSG, Walrus, and SC on UDP port 8773 If DNS is enabled, verify connection from an end-user and instance IPs to DNS ports If you use tgt (iSCSI open source target) for EBS in DAS or Overlay modes, verify connection from NC to SC on TCP port 3260&lt;/p></description></item></channel></rss>

@@ -1,0 +1,160 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Register Eucalyptus Services</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/register_services/</link><description>Recent content in Register Eucalyptus Services on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/install_guide/eucalyptus/register_services/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Register User-Facing Services</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/register_services/registering_ufs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/register_services/registering_ufs/</guid><description>
+&lt;p>This topic describes how to register the User-Facing Services (UFS) with the Cloud Controller (CLC).&lt;/p>
+&lt;p>&lt;strong>Prerequisites&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>The Cloud Controller must be properly installed and started.&lt;/li>
+&lt;li>The User-Facing Services must be properly installed and started.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>To register the User-Facing Services with the Eucalyptus cloud&lt;/strong>&lt;/p>
+&lt;p>On the CLC host machine, obtain your temporary access keys for the Eucalyptus set up by running the following command:&lt;/p>
+&lt;pre>&lt;code>eval `clcadmin-assume-system-credentials`
+&lt;/code>&lt;/pre>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+You will create longer-lived and fully functional access keys later.
+&lt;/div>
+&lt;p>Also on the CLC host machine, run the following command:&lt;/p>
+&lt;pre>&lt;code>euserv-register-service -t user-api -h IP SVCINSTANCE
+&lt;/code>&lt;/pre>
+&lt;p>where:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>SVCINSTANCE&lt;/code> is the IP address of the UFS you are registering.&lt;/li>
+&lt;li>must be a unique name for the User-Facing service.&lt;/li>
+&lt;/ul>
+&lt;p>For example:&lt;/p>
+&lt;pre>&lt;code>euserv-register-service -t user-api -h 10.111.5.183 user-api-1
+&lt;/code>&lt;/pre>
+&lt;p>Repeat for each UFS host, replacing the UFS IP address and UFS name. Copy the security credentials from the CLC to each machine running User-Facing Services. Run this command on the CLC host machine:&lt;/p>
+&lt;pre>&lt;code>clcadmin-copy-keys HOST [HOST ...]
+&lt;/code>&lt;/pre>
+&lt;p>For example:&lt;/p>
+&lt;pre>&lt;code>clcadmin-copy-keys 10.111.5.183
+&lt;/code>&lt;/pre>
+&lt;p>Verify that the User-Facing service is registered with the following command for each instance of the UFS:&lt;/p>
+&lt;pre>&lt;code>euserv-describe-services SVCINSTANCE
+&lt;/code>&lt;/pre>
+&lt;p>The registered UFS instances are now ready for your cloud.&lt;/p></description></item><item><title>Docs: Register the Walrus Backend</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/register_services/registering_walruses/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/register_services/registering_walruses/</guid><description>
+&lt;p>This topic describes how to register the Walrus Backend service with the Cloud Controller (CLC).&lt;/p>
+&lt;p>&lt;strong>Prerequisites&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>You must be using the Walrus Backend service as your object storage provider.&lt;/li>
+&lt;li>The Cloud Controller must be properly installed and started.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>To register the Walrus Backend service with the Eucalyptus cloud&lt;/strong>&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+This task is not necessary if you are using Riak CS instead of Walrus.
+&lt;/div>
+&lt;p>On the CLC host machine, run the following command:&lt;/p>
+&lt;pre>&lt;code>euserv-register-service -t walrusbackend -h IP SVCINSTANCE
+&lt;/code>&lt;/pre>
+&lt;p>where:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>SVCINSTANCE&lt;/code> is the IP of the Walrus Backend you are registering with this CLC.&lt;/li>
+&lt;li>must be a unique name for the Walrus Backend service. We recommend that you use a short-hand name of the hostname or IP address of the machine.&lt;/li>
+&lt;/ul>
+&lt;p>For example:&lt;/p>
+&lt;pre>&lt;code>euserv-register-service -t walrusbackend -h 10.111.5.182 walrus-10.111.5.182
+&lt;/code>&lt;/pre>
+&lt;p>Copy the security credentials from the CLC to each machine running a Walrus Backend service. Run this command on the CLC host machine:&lt;/p>
+&lt;pre>&lt;code>clcadmin-copy-keys HOST [HOST ...]
+&lt;/code>&lt;/pre>
+&lt;p>For example:&lt;/p>
+&lt;pre>&lt;code>clcadmin-copy-keys 10.111.5.182
+&lt;/code>&lt;/pre>
+&lt;p>Verify that the Walrus Backend service is registered with the following command:&lt;/p>
+&lt;pre>&lt;code>euserv-describe-services SVCINSTANCE
+&lt;/code>&lt;/pre>
+&lt;p>The registered Walrus Backend service is now ready for your cloud.&lt;/p></description></item><item><title>Docs: Register the Cluster Controller</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/register_services/registering_ccs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/register_services/registering_ccs/</guid><description>
+&lt;p>This topic describes how to register a Cluster Controller (CC) with the Cloud Controller (CLC).&lt;/p>
+&lt;p>&lt;strong>Prerequisites&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>The Cloud Controller must be properly installed and started.&lt;/li>
+&lt;li>The Cluster Controller service must be properly installed and started.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>To register the Cluster Controller service with the Eucalyptus cloud&lt;/strong>&lt;/p>
+&lt;p>On the CLC host machine, run the following command:&lt;/p>
+&lt;pre>&lt;code>euserv-register-service -t cluster -h IP -z ZONE SVCINSTANCE
+&lt;/code>&lt;/pre>
+&lt;p>where:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>SVCINSTANCE&lt;/code> is the IP address of the CC you are registering with this CLC.&lt;/li>
+&lt;li>name should be a descriptive name for the zone controlled by the CC. For example: .&lt;/li>
+&lt;li>must be a unique name for the CC service. We recommend that you use the IP address of the machine&lt;/li>
+&lt;/ul>
+&lt;p>For example:&lt;/p>
+&lt;pre>&lt;code>euserv-register-service -t cluster -h 10.111.5.182 -z zone-1 cc-10.111.5.182
+&lt;/code>&lt;/pre>
+&lt;p>Copy the security credentials from the CLC to each machine running Cluster Controller services. Run this command on the CLC host machine:&lt;/p>
+&lt;pre>&lt;code>clcadmin-copy-keys -z ZONE HOST
+&lt;/code>&lt;/pre>
+&lt;p>For example:&lt;/p>
+&lt;pre>&lt;code>clcadmin-copy-keys -z zone-1 10.111.5.182
+&lt;/code>&lt;/pre>
+&lt;p>Repeat the above steps for each Cluster Controller in each zone. Verify that the Cluster Controller service is registered with the following command:&lt;/p>
+&lt;pre>&lt;code>euserv-describe-services SVCINSTANCE
+&lt;/code>&lt;/pre>
+&lt;p>The registered Cluster Controller service is now ready for your cloud.&lt;/p></description></item><item><title>Docs: Register the Storage Controller</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/register_services/registering_scs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/register_services/registering_scs/</guid><description>
+&lt;p>This topic describes how to register a Storage Controller (SC) with the Cloud Controller (CLC).&lt;/p>
+&lt;p>&lt;strong>Prerequisites&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>The Cloud Controller must be properly installed and started.&lt;/li>
+&lt;li>The Storage Controller service must be properly installed and started.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>To register the Storage Controller service with the Eucalyptus cloud&lt;/strong>&lt;/p>
+&lt;p>Copy the security credentials from the CLC to each machine running Storage Controller services. Run this command on the CLC host machine:&lt;/p>
+&lt;pre>&lt;code>clcadmin-copy-keys -z ZONE HOST
+&lt;/code>&lt;/pre>
+&lt;p>For example:&lt;/p>
+&lt;pre>&lt;code>clcadmin-copy-keys -z zone-1 10.111.5.182
+&lt;/code>&lt;/pre>
+&lt;p>On the CLC host machine, run the following command:&lt;/p>
+&lt;pre>&lt;code>euserv-register-service -t storage -h IP -z ZONE SVCINSTANCE
+&lt;/code>&lt;/pre>
+&lt;p>where:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>SVCINSTANCE&lt;/code> is the IP address of the SC you are registering with this CLC.&lt;/li>
+&lt;li>name should be a descriptive name for the zone controlled by the CC. For example: . An SC must have the same name as the CC in the same zone.&lt;/li>
+&lt;li>must be a unique name for the SC service. We recommend that you use a short-hand name of the IP address or hostname of the machine.&lt;/li>
+&lt;/ul>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+We recommend that you use IP addresses instead of DNS names when registering services.
+&lt;/div>
+&lt;p>For example:&lt;/p>
+&lt;pre>&lt;code>euserv-register-service -t storage -h 10.111.5.182 -z zone-1 sc-10.111.5.182
+&lt;/code>&lt;/pre>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The SC automatically goes to the state after being registered with the CLC; it will remain in that state until you explicitly configure the SC by configuring the backend storage provider (later). For more information, see .
+&lt;/div>
+&lt;p>Repeat the above steps for each Storage Controller in each zone. Verify that the Storage Controller service is registered with the following command:&lt;/p>
+&lt;pre>&lt;code>euserv-describe-services SVCINSTANCE
+&lt;/code>&lt;/pre>
+&lt;p>The registered Storage Controller service is now ready for your cloud.&lt;/p></description></item><item><title>Docs: Register the Node Controllers</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/register_services/registering_ncs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/register_services/registering_ncs/</guid><description>
+&lt;p>This topic describes how to register a Node Controller (NC) with a Cluster Controller (CC).&lt;/p>
+&lt;p>&lt;strong>Prerequisites&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>The Cluster Controller service must be properly installed and started.&lt;/li>
+&lt;li>The Node Controller service must be properly installed and started.&lt;/li>
+&lt;li>If you are upgrading, you should understand that:
+&lt;ul>
+&lt;li>If you&amp;rsquo;re upgrading an NC, just register that NC (on the CC that had it registered before).&lt;/li>
+&lt;li>If you&amp;rsquo;re upgrading the set of non-NC host machines, register all the NCs (on each CC that had NCs registered).&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>To register the Node Controller service with the Eucalyptus cloud&lt;/strong>&lt;/p>
+&lt;p>SSH to the Cluster Controller in the zone. On the CC, register all NCs using the following command with the IP address of each NC host machine:&lt;/p>
+&lt;pre>&lt;code>clusteradmin-register-nodes node0_IP_address ... [nodeN_IP_address]
+&lt;/code>&lt;/pre>
+&lt;p>For example:&lt;/p>
+&lt;pre>&lt;code>clusteradmin-register-nodes 10.111.5.160 10.111.5.161 10.111.5.162
+&lt;/code>&lt;/pre>
+&lt;p>Copy the CC&amp;rsquo;s security credentials using the following command:&lt;/p>
+&lt;pre>&lt;code>clusteradmin-copy-keys node0_IP_address ... [nodeN_IP_address]
+&lt;/code>&lt;/pre>
+&lt;p>For example:&lt;/p>
+&lt;pre>&lt;code>clusteradmin-copy-keys 10.111.5.160 10.111.5.161 10.111.5.162
+&lt;/code>&lt;/pre>
+&lt;p>Repeat the steps for each zone in your cloud. The registered Node Controller service is now ready for your cloud.&lt;/p></description></item></channel></rss>

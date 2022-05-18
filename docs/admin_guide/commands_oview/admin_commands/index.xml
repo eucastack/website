@@ -1,0 +1,599 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Eucalyptus Administration Commands</title><link>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/</link><description>Recent content in Eucalyptus Administration Commands on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: euctl</title><link>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euctl/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euctl/</guid><description>
+&lt;h2 id="syntax">Syntax&lt;/h2>
+&lt;pre>&lt;code>euctl [-Anr] [-d | -s] NAME ...
+euctl [-nq] NAME=VALUE ...
+euctl [-nq] NAME=@FILE ...
+euctl --dump [--format {raw,json,yaml}] NAME
+euctl --edit [--format {raw,json,yaml}] NAME
+&lt;/code>&lt;/pre>
+&lt;h2 id="positional-arguments">Positional Arguments&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Argument&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">NAME&lt;/td>
+&lt;td style="text-align:left">Output a variable&amp;rsquo;s value.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">NAME=VALUE&lt;/td>
+&lt;td style="text-align:left">Set a variable to the specified value and then output it.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">NAME=@FILE&lt;/td>
+&lt;td style="text-align:left">Set a variable to that of the specified file&amp;rsquo;s contents, then output it.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="options">Options&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Option&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;th style="text-align:left">Required&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">-A, &amp;ndash;all-types&lt;/td>
+&lt;td style="text-align:left">List all the known variable names, including structures. Those with string or integer values will be output as usual; for the structured values, the methods of retrieving them are given.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">-d&lt;/td>
+&lt;td style="text-align:left">Output variables&amp;rsquo; default values rather than their current values. Note that not all variables have default values.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">-s&lt;/td>
+&lt;td style="text-align:left">Show variables&amp;rsquo; descriptions instead of their current values.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">-n&lt;/td>
+&lt;td style="text-align:left">Suppress output of the variable name. This is useful for setting shell variables.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">-q&lt;/td>
+&lt;td style="text-align:left">Suppress all output when setting a variable. This option overrides the behavior of the -n parameter.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">-r, &amp;ndash;reset&lt;/td>
+&lt;td style="text-align:left">Reset the given variables to their default values.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&amp;ndash;dump&lt;/td>
+&lt;td style="text-align:left">Output the value of a structured variable in its entirety. The value will be formatted in the manner specified by the &amp;ndash;format option.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&amp;ndash;edit&lt;/td>
+&lt;td style="text-align:left">Edit the value of a structure variable interactively. The value will be formatted in the manner specified by the &amp;ndash;format option. Only one variable may be edited per invocation. When looking for an editor, the program will first try the environment variable VISUAL, then the environment variable EDITOR, and finally the default editor, vi.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&amp;ndash;format {raw,json,yaml}&lt;/td>
+&lt;td style="text-align:left">Use the specified format when displaying a structured variable.Valid values: raw&lt;/td>
+&lt;td style="text-align:left">json&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="examples">Examples&lt;/h2>
+&lt;p>When retrieving a variable, a subset of the MIB name may be specified to retrieve a list of variables in that subset. For example, to list all the dns variables:&lt;/p>
+&lt;pre>&lt;code>euctl dns
+&lt;/code>&lt;/pre>
+&lt;p>This replaces &lt;code>euca-describe-properties&lt;/code> .&lt;/p>
+&lt;p>When setting a variable, the MIB name should be followed by an equal sign and the new value:&lt;/p>
+&lt;pre>&lt;code>euctl dns.enabled=true
+&lt;/code>&lt;/pre>
+&lt;p>This replaces &lt;code>euca-modify-property -p&lt;/code> .&lt;/p>
+&lt;p>To write variables using the contents of the files as their new values rather than typing them into the command line, follow them with &lt;code>=@&lt;/code> and those file names:&lt;/p>
+&lt;pre>&lt;code>euctl cloud.network.network_configuration=@/etc/eucalyptus/network.yaml
+&lt;/code>&lt;/pre>
+&lt;p>This replaces &lt;code>euca-modify-property -f&lt;/code> .&lt;/p>
+&lt;p>Specify a filename to read the values from a file:&lt;/p>
+&lt;pre>&lt;code>myproperty=@myvaluefile
+&lt;/code>&lt;/pre>
+&lt;p>It is possible to read or write more than one variable in a single invocation of &lt;code>euctl&lt;/code> . Just separate them with spaces:&lt;/p>
+&lt;pre>&lt;code>euctl one=1 two=2 three four=@4.txt five
+&lt;/code>&lt;/pre>
+&lt;p>In all of these cases, &lt;code>euctl&lt;/code> will generally output each variable named on its command line, along with its current (and potentially just-changed) value. For example, the output of the command above could be:&lt;/p>
+&lt;pre>&lt;code>one = 1
+two = 2
+three = 3
+four = 4
+five = 5
+&lt;/code>&lt;/pre>
+&lt;p>To reset a variable to its default value, specify the -r option:&lt;/p>
+&lt;pre>&lt;code>euctl -r dns.enabled
+&lt;/code>&lt;/pre>
+&lt;p>The information available from euctl consists of integers, strings, and structures. The structured information can only be retrieved by specialized programs and, in some cases, this program&amp;rsquo;s &lt;code>--edit&lt;/code> and &lt;code>--dump&lt;/code> options.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Refer to this command&amp;rsquo;s manpage for a complete list of environment variables, options, and outputs.
+&lt;/div></description></item><item><title>Docs: euserv-deregister-service</title><link>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euserv_deregister_service/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euserv_deregister_service/</guid><description>
+&lt;h2 id="syntax">Syntax&lt;/h2>
+&lt;pre>&lt;code>euserv-deregister-service [-U URL] [--region USER@REGION] [-I KEY_ID]
+[-S KEY] [--security-token TOKEN] [--debug]
+[--debugger] [--version] [-h] SVCINSTANCE
+&lt;/code>&lt;/pre>
+&lt;h2 id="positional-arguments">Positional Arguments&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Argument&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">SVCINSTANCE&lt;/td>
+&lt;td style="text-align:left">Name of the service instance to de-register.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="output">Output&lt;/h2>
+&lt;p>Eucalyptus returns a message stating that service instance was successfully de-registered.&lt;/p>
+&lt;h2 id="example">Example&lt;/h2>
+&lt;p>To de-register the dns service named &amp;ldquo;API_10.111.1.44.dns&amp;rdquo;:&lt;/p>
+&lt;pre>&lt;code>euserv-deregister-service API_10.111.1.44.dns
+&lt;/code>&lt;/pre></description></item><item><title>Docs: euserv-describe-events</title><link>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euserv_describe_events/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euserv_describe_events/</guid><description>
+&lt;h2 id="syntax">Syntax&lt;/h2>
+&lt;pre>&lt;code>euserv-describe-events [-s] [-f FORMAT]
+&lt;/code>&lt;/pre>
+&lt;h2 id="description">Description&lt;/h2>
+&lt;p>Events come in the form of a list, where each event contains one or more of the following tags:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Tag&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">id&lt;/td>
+&lt;td style="text-align:left">A unique ID for the event.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">message&lt;/td>
+&lt;td style="text-align:left">A free-form text description of the event.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">severity&lt;/td>
+&lt;td style="text-align:left">The message&amp;rsquo;s severity (FATAL, URGENT, ERROR, WARNING, INFO, DEBUG, TRACE).&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">stack-trace&lt;/td>
+&lt;td style="text-align:left">The stack trace, if any, corresponding to the event. The -s option is required to make this appear.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">subject-arn&lt;/td>
+&lt;td style="text-align:left">The Eucalyptus ARN of the service affected by the event.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">subject-name&lt;/td>
+&lt;td style="text-align:left">The name of the service affected by the event.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">subject-type&lt;/td>
+&lt;td style="text-align:left">The type of service affected by the event.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">timestamp&lt;/td>
+&lt;td style="text-align:left">The date and time of the event&amp;rsquo;s creation.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="environment">Environment&lt;/h2>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The command requires access keys and knowledge of where to locate the web services it needs to contact. It can obtain these from several locations.
+&lt;/div>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Environment&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">AWS_ACCESS_KEY_ID&lt;/td>
+&lt;td style="text-align:left">The access key ID to use when authenticating web service requests. This takes precedence over and euca2ools.ini, but not -I.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS_SECRET_ACCESS_KEY&lt;/td>
+&lt;td style="text-align:left">The secret key to use when authenticating web service requests. This takes precedence over &amp;ndash;region and euca2ools.ini(5), but not -S.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">EUCA_BOOTSTRAP_URL&lt;/td>
+&lt;td style="text-align:left">The URL of the service to contact. This takes precedence over &amp;ndash;region and euca2ools.ini, but not -U.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="options">Options&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Option&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;th style="text-align:left">Required&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">-f, &amp;ndash;format format&lt;/td>
+&lt;td style="text-align:left">Print events in a given format, where format can be: yaml or oneline, and format:string. See for details about each format. When omitted, the format defaults to yaml.&lt;a href="">&lt;/a>&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">-s, &amp;ndash;show-stack-traces&lt;/td>
+&lt;td style="text-align:left">Include the stack-trace tag in events&amp;rsquo; data. This is omitted by default due to its length.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="output">Output&lt;/h2>
+&lt;p>There are several built-in formats, and you can define additional formats using a format: &lt;em>string&lt;/em> , as described below. Here are the details of the built-in formats:&lt;/p>
+&lt;p>yaml
+This outputs block-style YAML designed to be easily readable. Tags that are empty or not defined do not appear in this output at all.&lt;/p>
+&lt;pre>&lt;code>events:
+- timestamp: {timestamp}
+severity: {severity}
+id: {id}
+subject-type: {subject-type}
+subject-name: {subject-name}
+subject-host: {subject-host}
+subject-arn: {subject-arn}
+message: |-
+{message}
+stack-trace: |-
+{stack-trace}
+&lt;/code>&lt;/pre>
+&lt;p>oneline
+This output is designed to be as compact as possible.&lt;/p>
+&lt;pre>&lt;code>{timestamp} {severity} {subject-type} {subject-name} {message}
+&lt;/code>&lt;/pre>
+&lt;p>format:string
+The &lt;code>format:&lt;/code> &lt;em>string&lt;/em> format allows you to specify which information you want to show using placeholders enclosed in curly braces to indicate where to show the tags for each event. For example:&lt;/p>
+&lt;pre>&lt;code>euserv-describe-events -f &amp;quot;format:{timestamp} {subject-name} {message}&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;h2 id="example">Example&lt;/h2>
+&lt;p>To output a list of service-affecting events in the &lt;code>oneline&lt;/code> format:&lt;/p>
+&lt;pre>&lt;code>euserv-describe-events --format oneline
+2016-06-20 16:16:08 INFO node 10.111.1.15 the node is operating normally\nFound service status for 10.111.1.15: ENABLED
+2016-06-27 17:37:57 ERROR node 10.111.5.50 Error occurred in transport
+2016-06-28 07:00:17 ERROR node 10.111.5.50
+&lt;/code>&lt;/pre></description></item><item><title>Docs: euserv-describe-node-controllers</title><link>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euca_describe_nodes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euca_describe_nodes/</guid><description>
+&lt;h2 id="syntax">Syntax&lt;/h2>
+&lt;pre>&lt;code>euserv-describe-node-controllers [--ec2-url URL] [--show-headers]
+[--show-empty-fields] [-U URL]
+[--region USER@REGION] [-I KEY_ID] [-S KEY] [--security-token
+TOKEN] [--debug] [--debugger] [--version] [-h]
+&lt;/code>&lt;/pre>
+&lt;h2 id="options">Options&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Option&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;th style="text-align:left">Required&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">&amp;ndash;ec2-url url&lt;/td>
+&lt;td style="text-align:left">The compute service&amp;rsquo;s endpoint URL.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&amp;ndash;show-headers&lt;/td>
+&lt;td style="text-align:left">Show column headers.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="output">Output&lt;/h2>
+&lt;p>Eucalyptus returns information about the node controller and its instances, for example:&lt;/p>
+&lt;pre>&lt;code>NODE one 10.111.1.53 enabled
+INSTANCE i-162a8f09
+INSTANCE i-2b6cdd10
+NODE one 10.111.5.132 enabled
+INSTANCE i-ba9307d7
+&lt;/code>&lt;/pre>
+&lt;h2 id="example">Example&lt;/h2>
+&lt;pre>&lt;code>euserv-describe-node-controllers --region localhost
+&lt;/code>&lt;/pre></description></item><item><title>Docs: euserv-describe-service-types</title><link>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euserv_describe_service_types/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euserv_describe_service_types/</guid><description>
+&lt;h2 id="syntax">Syntax&lt;/h2>
+&lt;pre>&lt;code>euserv-describe-service-types [-a] [--show-headers]
+[--show-empty-fields] [-U URL]
+[--region USER@REGION] [-I KEY_ID] [-S KEY] [--security-token TOKEN]
+[--debug] [--debugger] [--version] [-h]
+&lt;/code>&lt;/pre>
+&lt;h2 id="options">Options&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Option&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;th style="text-align:left">Required&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">-a, &amp;ndash;all&lt;/td>
+&lt;td style="text-align:left">Show all service types regardless of their properties.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&amp;ndash;show-headers&lt;/td>
+&lt;td style="text-align:left">Show column headers.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="output">Output&lt;/h2>
+&lt;p>Eucalyptus returns a list of service types.&lt;/p>
+&lt;h2 id="example">Example&lt;/h2>
+&lt;pre>&lt;code>euserv-describe-service-types
+SVCTYPE arbitrator The Arbitrator service
+SVCTYPE autoscaling user-api Auto Scaling API service
+SVCTYPE cloudformation user-api Cloudformation API service
+SVCTYPE cloudwatch user-api CloudWatch API service
+SVCTYPE cluster The Cluster Controller service
+SVCTYPE compute user-api the Eucalyptus EC2 API service
+SVCTYPE dns user-api Eucalyptus DNS server
+SVCTYPE euare user-api IAM API service
+SVCTYPE eucalyptus eucalyptus service implementation
+SVCTYPE identity user-api Eucalyptus identity service
+SVCTYPE imaging user-api Eucalyptus imaging service
+SVCTYPE loadbalancing user-api ELB API service
+SVCTYPE objectstorage user-api S3 API service
+SVCTYPE simpleworkflow user-api Simple Workflow API service
+SVCTYPE storage The Storage Controller service
+SVCTYPE tokens user-api STS API service
+SVCTYPE user-api The service group of all user-facing API endpoint services
+SVCTYPE walrusbackend The legacy Walrus Backend service
+&lt;/code>&lt;/pre></description></item><item><title>Docs: euserv-describe-services</title><link>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euserv_describe_services/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euserv_describe_services/</guid><description>
+&lt;h2 id="syntax">Syntax&lt;/h2>
+&lt;pre>&lt;code>euserv-describe-services [-a]
+[--group-by-type | --group-by-zone | --group-by-host | --expert]
+[--show-headers] [--show-empty-fields] [-U URL] [--region
+USER@REGION] [-I KEY_ID] [-S KEY] [--security-token TOKEN]
+[--filter NAME=VALUE] [--debug] [--debugger] [--version] [-h]
+[SVCINSTANCE [SVCINSTANCE ...]]
+&lt;/code>&lt;/pre>
+&lt;h2 id="positional-arguments">Positional Arguments&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Argument&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">SVCINSTANCE&lt;/td>
+&lt;td style="text-align:left">Limit results to specific instances of services.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="options">Options&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Option&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;th style="text-align:left">Required&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">-a, &amp;ndash;all&lt;/td>
+&lt;td style="text-align:left">Show all services regardless of type.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&amp;ndash;group-by-type&lt;/td>
+&lt;td style="text-align:left">Collate services by service type (default).&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&amp;ndash;group-by-zone&lt;/td>
+&lt;td style="text-align:left">Collate services by availability zone.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&amp;ndash;group-by-host&lt;/td>
+&lt;td style="text-align:left">Collate services by host.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&amp;ndash;expert&lt;/td>
+&lt;td style="text-align:left">Show advanced information, including service accounts.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&amp;ndash;show-headers&lt;/td>
+&lt;td style="text-align:left">Show column headers.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&amp;ndash;filter name=value&lt;/td>
+&lt;td style="text-align:left">Restrict results to those that meet criteria. Allowed filter names: availability-zone. The service&amp;rsquo;s availability zone.host. The machine running the service.internal. Whether the service is used only internally (true or false).public. Whether the service is public (true or false).service-group. Whether the service is a member of a specific service group.service-group-member. Whether the service is a member of any service group (true or false).service-type. The type of service.state. The service&amp;rsquo;s state.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="output">Output&lt;/h2>
+&lt;p>Eucalyptus returns information about the services you specified.&lt;/p>
+&lt;h2 id="example">Example&lt;/h2>
+&lt;p>Verify that you are looking at the cloud controllers view of the service state by explicitly running against that host:&lt;/p>
+&lt;pre>&lt;code>euserv-describe-services --filter service-type=storage -U http://localhost:8773/services/Empyrean
+SERVICE storage one one-sc-1 enabled
+&lt;/code>&lt;/pre></description></item><item><title>Docs: euserv-migrate-instances</title><link>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euserv_migrate_instances/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euserv_migrate_instances/</guid><description>
+&lt;h2 id="syntax">Syntax&lt;/h2>
+&lt;pre>&lt;code>euserv-migrate-instances (-s HOST | -i INSTANCE)
+[--include-dest HOST | --exclude-dest HOST]
+[-U URL] [--region USER@REGION] [-I KEY_ID] [-S KEY] [--security-token
+TOKEN] [--debug] [--debugger] [--version] [-h]
+&lt;/code>&lt;/pre>
+&lt;h2 id="options">Options&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Option&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;th style="text-align:left">Required&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">-s, &amp;ndash;source host&lt;/td>
+&lt;td style="text-align:left">Remove all instances from a specific host.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">-i, &amp;ndash;instance instance&lt;/td>
+&lt;td style="text-align:left">Remove one instance from its current host.&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&amp;ndash;include-dest host&lt;/td>
+&lt;td style="text-align:left">Allow migration to only a specific host (may be used more than once).&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&amp;ndash;exclude-dest host&lt;/td>
+&lt;td style="text-align:left">Allow migration to any host except a specific one (may be used more than once).&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="output">Output&lt;/h2>
+&lt;p>Unless requested, no output is given. You can run the &lt;code>euserv-describe-*&lt;/code> command to verify that the migration activity completed successfully, as shown in the example following.&lt;/p>
+&lt;h2 id="example">Example&lt;/h2>
+&lt;p>To migrate an instance from its current host:&lt;/p>
+&lt;pre>&lt;code>euserv-migrate-instances -i i-8eacd211
+euserv-describe-node-controllers
+NODE zone-555 10.104.1.200 enabled
+NODE zone-555 10.104.1.201 enabled
+INSTANCE i-8eacd211
+&lt;/code>&lt;/pre></description></item><item><title>Docs: euserv-modify-service</title><link>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euserv_modify_service/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euserv_modify_service/</guid><description>
+&lt;h2 id="syntax">Syntax&lt;/h2>
+&lt;pre>&lt;code>euserv-modify-service -s STATE [-U URL] [--region USER@REGION]
+[-I KEY_ID] [-S KEY] [--security-token TOKEN]
+[--debug] [--debugger] [--version] [-h] SVCINSTANCE
+&lt;/code>&lt;/pre>
+&lt;h2 id="positional-arguments">Positional Arguments&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Argument&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">SVCINSTANCE&lt;/td>
+&lt;td style="text-align:left">The name of the service instance to modify.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="options">Options&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Option&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;th style="text-align:left">Required&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">-s, &amp;ndash;state state&lt;/td>
+&lt;td style="text-align:left">The state to change to.&lt;/td>
+&lt;td style="text-align:left">Yes&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="output">Output&lt;/h2>
+&lt;p>No output is given. You can run the &lt;code>euserv-describe-services&lt;/code> command to verify that the modification completed successfully, as shown in the example following.&lt;/p>
+&lt;h2 id="example">Example&lt;/h2>
+&lt;p>To modify the state of a storage controller service named &amp;ldquo;two-sc-1&amp;rdquo; to stopped:&lt;/p>
+&lt;pre>&lt;code>euserv-modify-service -s stopped two-sc-1
+euserv-describe-services two-sc-1
+SERVICE storage two two-sc-1 stopped
+&lt;/code>&lt;/pre></description></item><item><title>Docs: euserv-register-service</title><link>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euserv_register_service/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/commands_oview/admin_commands/euserv_register_service/</guid><description>
+&lt;h2 id="syntax">Syntax&lt;/h2>
+&lt;pre>&lt;code>euserv-register-service -t TYPE -h IP [--port PORT] [-z ZONE] [-U URL]
+[--region USER@REGION] [-I KEY_ID] [-S KEY]
+[--security-token TOKEN] [--debug] [--debugger] [--version]
+[--help] SVCINSTANCE
+&lt;/code>&lt;/pre>
+&lt;h2 id="positional-arguments">Positional Arguments&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Argument&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">SVCINSTANCE&lt;/td>
+&lt;td style="text-align:left">The name of the new service instance to register.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="options">Options&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Option&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;th style="text-align:left">Required&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">-t, &amp;ndash;type type&lt;/td>
+&lt;td style="text-align:left">The new service instance&amp;rsquo;s type.&lt;/td>
+&lt;td style="text-align:left">Yes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">-h, &amp;ndash;host IP&lt;/td>
+&lt;td style="text-align:left">The host on which the new instance of the service runs.&lt;/td>
+&lt;td style="text-align:left">Yes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&amp;ndash;port port&lt;/td>
+&lt;td style="text-align:left">The port on which the new instance of the service runs (default for cluster: 8774, otherwise: 8773).&lt;/td>
+&lt;td style="text-align:left">No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">-z, &amp;ndash;availability-zone zone&lt;/td>
+&lt;td style="text-align:left">The availability zone in which to register the new service instance. This is required only for services of certain types.&lt;/td>
+&lt;td style="text-align:left">Conditional&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="output">Output&lt;/h2>
+&lt;p>No output is given when it succeeds.&lt;/p>
+&lt;h2 id="example">Example&lt;/h2>
+&lt;p>To register the ufs service named &amp;ldquo;user-api-5&amp;rdquo;:&lt;/p>
+&lt;pre>&lt;code>euserv-register-service -t user-api -h 10.0.0.15 user-api-5
+&lt;/code>&lt;/pre>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+A prerequisite for this command is to have the credentials in the shell you are running the register command. For example:
+&lt;/div></description></item></channel></rss>

@@ -1,0 +1,97 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Viewing and Publishing Metrics</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_viewing/</link><description>Recent content in Viewing and Publishing Metrics on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_viewing/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: List Available Metrics</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_viewing/metrics_list/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_viewing/metrics_list/</guid><description>
+&lt;p>You can list available metrics via Euca2ools.&lt;strong>To list available metrics:&lt;/strong>&lt;/p>
+&lt;p>Enter the following command.&lt;/p>
+&lt;pre>&lt;code>euwatch-list-metrics
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus returns a listing of all metrics, as shown in the following partial example output:&lt;/p>
+&lt;pre>&lt;code>Metric Name Namespace Dimensions
+CPUUtilization AWS/EC2 {InstanceId=i-5431413d}
+CPUUtilization AWS/EC2 {InstanceType=m1.medium}
+DiskReadBytes AWS/EC2 {InstanceId=i-1d3d4d74}
+DiskReadBytes AWS/EC2 {InstanceType=m1.medium}
+DiskReadOps AWS/EC2 {InstanceId=i-d3c8baba}
+DiskReadOps AWS/EC2 {InstanceType=m1.medium}
+DiskWriteBytes AWS/EC2 {InstanceId=i-6732420e}
+DiskWriteBytes AWS/EC2 {InstanceType=m1.medium}
+DiskWriteOps AWS/EC2 {InstanceId=i-e03d4d89}
+DiskWriteOps AWS/EC2 {InstanceType=m1.medium}
+NetworkIn AWS/EC2 {InstanceId=i-e0304089}
+NetworkIn AWS/EC2 {InstanceType=m1.medium}
+NetworkOut AWS/EC2 {InstanceId=i-69334300}
+NetworkOut AWS/EC2 {InstanceType=m1.medium}
+StatusCheckFailed AWS/EC2 {InstanceId=i-6f8418e6}
+StatusCheckFailed AWS/EC2 {InstanceType=m1.medium}
+StatusCheckFailed_Instance AWS/EC2 {InstanceId=i-6f8418e6}
+StatusCheckFailed_Instance AWS/EC2 {InstanceType=m1.medium}
+StatusCheckFailed_System AWS/EC2 {InstanceId=i-6f8418e6}
+StatusCheckFailed_System AWS/EC2 {InstanceType=m1.medium}
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Get Statistics for a Metric</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_viewing/metric_get_stats/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_viewing/metric_get_stats/</guid><description>
+&lt;p>You can get statistics for metrics via Euca2ools.&lt;strong>To get statistics for a metric:&lt;/strong>&lt;/p>
+&lt;p>Enter the following command.&lt;/p>
+&lt;pre>&lt;code> euwatch-get-stats -n NAMESPACE -s STAT1,STAT2,...
+[--dimensions KEY1=VALUE1,KEY2=VALUE2,...]
+[--start-time YYYY-MM-DDThh:mm:ssZ]
+[--end-time YYYY-MM-DDThh:mm:ssZ] [--period SECONDS]
+[--unit UNIT] [--show-empty-fields] [-U URL]
+[--region USER@REGION] [-I KEY_ID] [-S KEY]
+[--security-token TOKEN] [--debug] [--debugger]
+[--version] [-h]
+METRIC
+&lt;/code>&lt;/pre>
+&lt;p>The following example returns the average CPU utilization for the i-c08804a9 instance at one hour resolution.&lt;/p>
+&lt;pre>&lt;code>euwatch-get-stats --namespace &amp;quot;AWS/EC2&amp;quot; --statistics &amp;quot;Average&amp;quot; \
+--dimensions &amp;quot;InstanceId=i-c08804a9&amp;quot; --start-time 2016-12-14T23:00:00.000Z \
+--end-time 2016-12-15T23:00:00.000Z --period 3600 CPUUtilization
+&lt;/code>&lt;/pre>
+&lt;p>The following example returns CPU utilization for all of your cloud&amp;rsquo;s instances.&lt;/p>
+&lt;pre>&lt;code>euwatch-get-stats --namespace &amp;quot;AWS/EC2&amp;quot; --statistics &amp;quot;Average,Minimum,Maximum&amp;quot; \
+--start-time 2016-02-14T23:00:00.000Z --end-time 2016-03-14T23:00:00.000Z \
+--period 3600 CPUUtilization
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Publish Custom Metrics</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_viewing/metrics_publish_custom/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_viewing/metrics_publish_custom/</guid><description>
+&lt;p>CloudWatch allows you to publish your own metrics, such as application performance, system health, or customer usage.&lt;/p>
+&lt;h2 id="publish-a-single-data-point">Publish a single data point&lt;/h2>
+&lt;p>To publish a single data point for a new or existing metric, call euwatch-put-data with one value and time stamp. For example, the following actions each publish one data point:&lt;/p>
+&lt;pre>&lt;code>euwatch-put-data --metric-name PageViewCount --namespace &amp;quot;TestService&amp;quot; --value 2 --timestamp 2011-03-14T12:00:00.000Z
+euwatch-put-data --metric-name PageViewCount --namespace &amp;quot;TestService&amp;quot; --value 4 --timestamp 2011-03-14T12:00:01.000Z
+euwatch-put-data --metric-name PageViewCount --namespace &amp;quot;TestService&amp;quot; --value 5 --timestamp 2011-03-14T12:00:02.000Z
+&lt;/code>&lt;/pre>
+&lt;p>You can publish data points with time stamps as granular as one-thousandth of a second. However, CloudWatch aggregates the data to a minimum granularity of 60 seconds. For example, the &lt;code>PageViewCount&lt;/code> metric from the previous examples contains three data points with time stamps just seconds apart. CloudWatch aggregates the three data points because they all have time stamps within a 60-second period.&lt;/p>
+&lt;p>CloudWatch uses 60-second boundaries when aggregating data points. For example, CloudWatch aggregates the data points from the previous example because all three data points fall within the 60-second period that begins at 2011-03-14T12:00:00.000Z and ends at 2011-03-14T12:00:59.999Z.&lt;/p>
+&lt;h2 id="publish-statistic-sets">Publish statistic sets&lt;/h2>
+&lt;p>You can also aggregate your data before you publish to CloudWatch. When you have multiple data points per minute, aggregating data minimizes the number of calls to euwatch-put-data . For example, instead of calling euwatch-put-data multiple times for three data points that are within three seconds of each other, you can aggregate the data into a statistic set that you publish with one call:&lt;/p>
+&lt;pre>&lt;code>euwatch-put-data --metric-name PageViewCount --namespace &amp;quot;TestService&amp;quot; -s &amp;quot;Sum=11,Minimum=2,Maximum=5,SampleCount=3&amp;quot; --timestamp 2011-03-14T12:00:00.000
+&lt;/code>&lt;/pre>
+&lt;h2 id="publish-the-value-zero">Publish the value zero&lt;/h2>
+&lt;p>When your data is more sporadic and you have periods that have no associated data, you can choose to publish the value zero (0) for that period or no value at all. You might want to publish zero instead of no value if you use periodic calls to PutMetricData to monitor the health of your application. For example, you can set an Amazon CloudWatch alarm to notify you if your application fails to publish metrics every five minutes. You want such an application to publish zeros for periods with no associated data.&lt;/p>
+&lt;p>You might also publish zeros if you want to track the total number of data points or if you want statistics such as minimum and average to include data points with the value 0.&lt;/p></description></item><item><title>Docs: Modify Metric Polling Timing</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_viewing/metrics_modify_defaults/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/monitoring_viewing/metrics_modify_defaults/</guid><description>
+&lt;p>You can modify metrics timing and reporting defaults.When using the default CloudWatch properties, metrics reporting can take around 15 minutes:&lt;/p>
+&lt;ol>
+&lt;li>5 minutes to receive a sensor data point for an instance.&lt;/li>
+&lt;li>5 more minutes to receive a second sensor data point for an instance.&lt;/li>
+&lt;li>1 more minute to calculate the difference between these two and send a single data point to CloudWatch.&lt;/li>
+&lt;li>1 more minute for CloudWatch to put the data in the database, making it available for a call.&lt;/li>
+&lt;li>5 more minutes for info to be available in the database.&lt;/li>
+&lt;/ol>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The above workflow is sequential and cumulative.
+&lt;/div>
+&lt;p>The sensor data point timing values can be shortened by changing variables in the CLC.&lt;/p>
+&lt;p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+These changes will increase network traffic as polling will be done more frequently.
+&lt;/div>
+&lt;strong>To modify metrics defaults:&lt;/strong>&lt;/p>
+&lt;p>Modify the default polling interval CLC variable to a number less than 5.&lt;/p>
+&lt;pre>&lt;code>cloud.monitor.default_poll_interval_mins
+&lt;/code>&lt;/pre>
+&lt;p>This is how often the CLC sends a request to the CC for sensor data. Default value is 5 minutes. Modify the history size CLC variable to a number less than 5.&lt;/p>
+&lt;pre>&lt;code>cloud.monitor.history_size
+&lt;/code>&lt;/pre>
+&lt;p>This is how many data value samples are sent in each sensor data request. The default value is 5. The frequency requests is either 1 minute (if the &lt;code>cloud.monitor.default_poll_interval_mins&lt;/code> is 1 minute) or half the value of &lt;code>cloud.monitor.default_poll_interval_mins&lt;/code> if that value is greater). So by default, with a &lt;code>cloud.monitor.default_poll_interval_mins&lt;/code> of 5 minutes and &lt;code>cloud.monitor.history_size&lt;/code> size of 5, every 5 minutes the CLC asks for the last 5 data points from the CC, which should be timed for every 2.5 minutes (e.g., 2.5 minutes ago, 5 minutes ago, 7.5 minutes ago, and 10 minutes ago).
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+These values may be skewed a bit based on the time the CC uses.
+&lt;/div>
+&lt;/p></description></item></channel></rss>

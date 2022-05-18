@@ -1,0 +1,170 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Auto Scaling Usage Examples</title><link>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_examples_intro/</link><description>Recent content in Auto Scaling Usage Examples on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_examples_intro/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Creating a Basic Auto Scaling Configuration</title><link>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_examples_intro/autoscaling_examples_basic_config/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_examples_intro/autoscaling_examples_basic_config/</guid><description>
+&lt;p>Auto scaling requires two basic elements to function properly: a launch configuration and an Auto Scaling group. The following examples show how to set up the basic elements of an Auto Scaling configuration.&lt;/p>
+&lt;h2 id="create-a-launch-configuration">Create a Launch Configuration&lt;/h2>
+&lt;p>The launch configuration specifies the parameters that Auto Scaling will use when launching new instances for your Auto Scaling group. In this example, we will create a launch configuration with the minimum required parameters - in this case, we set up a launch configuration that specifies that all instances launched in the Auto Scaling group will be of instance type and use the image.To create a launch configuration:&lt;/p>
+&lt;p>Enter the following command: &lt;code>euscale-create-launch-config MyLaunchConfig --image-id emi-00123456 --instance-type m1.small&lt;/code> To verify the launch configuration, enter the following command: &lt;code>euscale-describe-launch-configs MyLaunchConfig&lt;/code> You should see output similar to the following:&lt;/p>
+&lt;pre>&lt;code>LAUNCH-CONFIG MyLaunchConfig emi-00123456 m1.small
+&lt;/code>&lt;/pre>
+&lt;p>You&amp;rsquo;ve now created a launch configuration..&lt;/p>
+&lt;h2 id="create-an-auto-scaling-group">Create an Auto Scaling Group&lt;/h2>
+&lt;p>The Auto Scaling group contains settings like the minimum, maximum, and desired number of Eucalyptus instances. At minimum, you must specify the name of the Auto Scaling group, the name of an existing launch configuration, the availability zone, and the minimum and maximum number of instances that should be running. In the following example, we will create an Auto Scaling group called MyScalingGroup in availability zone PARTI00, with a minimum size of 2 and a maximum size of 5.To create an Auto Scaling group: Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euscale-create-auto-scaling-group MyScalingGroup --launch-configuration
+MyLaunchConfig --availability-zones PARTI00 --min-size 2 --max-size 5
+--desired-capacity 2
+&lt;/code>&lt;/pre>
+&lt;p>Enter the following command to verify the Auto Scaling group you just created:&lt;/p>
+&lt;pre>&lt;code>euscale-describe-auto-scaling-groups MyScalingGroup
+&lt;/code>&lt;/pre>
+&lt;p>This command will return output similar to the following:&lt;/p>
+&lt;pre>&lt;code>AUTO-SCALING-GROUP MyScalingGroup MyLaunchConfig PARTI00 2 5 2 Default
+INSTANCE i-1B853EC3 PARTI00 InService Healthy MyLaunchConfig
+INSTANCE i-ABC53ED7 PARTI00 InService Healthy MyLaunchConfig
+&lt;/code>&lt;/pre>
+&lt;p>Once you&amp;rsquo;ve created the Auto Scaling group, Auto Scaling will launch the appropriate number of instances.&lt;/p></description></item><item><title>Docs: Configuring a Demand-Based Scaling Policy</title><link>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_examples_intro/autoscaling_examples_scaling_plan_demand/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_examples_intro/autoscaling_examples_scaling_plan_demand/</guid><description>
+&lt;p>An Auto Scaling group needs a scaling policy to determine when to perform scaling activities. Auto scaling policies work with CloudWatch to identify metrics and set alarms, which are triggered when the metrics fall outside of a specified value range. To configure a scale-based policy, you need to create the policy, and then create CloudWatch alarms to associate with the policy.In the following example, we will create a demand-based scaling policy.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For more information on CloudWatch, go to .
+&lt;/div>
+&lt;/p>
+&lt;h2 id="create-auto-scaling-policies">Create Auto Scaling Policies&lt;/h2>
+&lt;p>To create the scaling policies:&lt;/p>
+&lt;p>Create a scale-out policy using the following command:&lt;/p>
+&lt;pre>&lt;code>euscale-put-scaling-policy MyScaleoutPolicy --auto-scaling-group MyScalingGroup --adjustment=30 --type PercentChangeInCapacity
+&lt;/code>&lt;/pre>
+&lt;p>This command will return a unique Amazon Resource Name (ARN) for the new policy.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+You will need this ARN to create the Cloudwatch alarms in subsequent steps.
+&lt;/div>
+&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The following example has been split into two lines for legibility.
+&lt;/div>
+&lt;pre>&lt;code>arn:aws:autoscaling::706221218191:scalingPolicy:5d02981b-f440-4c8f-98f2-8a620dc2b787:
+autoScalingGroupName/MyScalingGroup:policyName/MyScaleoutPolicy
+&lt;/code>&lt;/pre>
+&lt;p>Create a scale-in policy using the following command:&lt;/p>
+&lt;pre>&lt;code>euscale-put-scaling-policy MyScaleinPolicy -g MyScalingGroup --adjustment=-2 --type ChangeInCapacity
+&lt;/code>&lt;/pre>
+&lt;p>This command will return output containing a unique Amazon Resource Name (ARN) for the new policy, similar to the following:
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+You will need this ARN to create the Cloudwatch alarms in subsequent steps.
+&lt;/div>
+&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The following example has been split into two lines for legibility.
+&lt;/div>
+&lt;pre>&lt;code>arn:aws:autoscaling::706221218191:scalingPolicy:d28c6ffc-e9f1-4a48-a79c-8b431794c367:
+autoScalingGroupName/MyScalingGroup:policyName/MyScaleinPolicy
+&lt;/code>&lt;/pre>
+&lt;h2 id="create-cloudwatch-alarms">Create CloudWatch Alarms&lt;/h2>
+&lt;p>To create CloudWatch alarms:&lt;/p>
+&lt;p>Create a Cloudwatch alarm for scaling out when the average CPU usage exceeds 80 percent:
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The following example has been split into multiple lines for legibility.
+&lt;/div>
+&lt;/p>
+&lt;pre>&lt;code>euwatch-put-metric-alarm AddCapacity --metric-name CPUUtilization --unit Percent
+--namespace &amp;quot;AWS/EC2&amp;quot; --statistic Average --period 120 --threshold 80 --comparison-operator
+GreaterThanOrEqualToThreshold --dimensions &amp;quot;AutoScalingGroupName=MyScalingGroup&amp;quot;
+--evaluation-periods 2 --alarm-actions
+arn:aws:autoscaling::706221218191:scalingPolicy:5d02981b-f440-4c8f-98f2-8a620dc2b787:
+autoScalingGroupName/MyScalingGroup:policyName/MyScaleoutPolicy
+&lt;/code>&lt;/pre>
+&lt;p>Create a Cloudwatch alarm for scaling in when the average CPU usage falls below 40 percent:
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The following example has been split into multiple lines for legibility.
+&lt;/div>
+&lt;/p>
+&lt;pre>&lt;code>euwatch-put-metric-alarm RemoveCapacity --metric-name CPUUtilization --unit Percent
+--namespace &amp;quot;AWS/EC2&amp;quot; --statistic Average --period 120 --threshold 40 --comparison-operator
+LessThanOrEqualToThreshold --dimensions &amp;quot;AutoScalingGroupName=MyScalingGroup&amp;quot; --evaluation-periods 2
+--alarm-actions
+arn:aws:autoscaling::706221218191:scalingPolicy:d28c6ffc-e9f1-4a48-a79c-8b431794c367:
+autoScalingGroupName/MyScalingGroup:policyName/MyScaleinPolicy
+&lt;/code>&lt;/pre>
+&lt;h2 id="verify-your-alarms-and-policies">Verify Your Alarms and Policies&lt;/h2>
+&lt;p>Once you&amp;rsquo;ve created your Auto Scaling policies and CloudWatch alarms, you should verify them.To verify your alarms and policies:&lt;/p>
+&lt;p>Use the CloudWatch command &lt;code>euwatch-describe-alarms&lt;/code> to see a list of the alarms you&amp;rsquo;ve created:&lt;/p>
+&lt;pre>&lt;code>euwatch-describe-alarms
+&lt;/code>&lt;/pre>
+&lt;p>This will return output similar to the following:&lt;/p>
+&lt;pre>&lt;code>AddCapacity INSUFFICIENT_DATA arn:aws:autoscaling::706221218191:scalingPolicy:5d02981b-f440-4c8f-98f2-8a620dc2b787:
+autoScalingGroupName/MyScalingGroup:policyName/MyScaleoutPolicy
+AWS/EC2 CPUUtilization 120 Average 2 GreaterThanOrEqualToThreshold 80.0
+RemoveCapacity INSUFFICIENT_DATA arn:aws:autoscaling::706221218191:scalingPolicy:d28c6ffc-e9f1-4a48-a79c-8b431794c367:
+autoScalingGroupName/MyScalingGroup:policyName/MyScaleinPolicy
+AWS/EC2 CPUUtilization 120 Average 2 LessThanOrEqualToThreshold 40.0
+&lt;/code>&lt;/pre>
+&lt;p>Use the euscale-describe-policies command to see the scaling policies you&amp;rsquo;ve created:&lt;/p>
+&lt;pre>&lt;code>euscale-describe-policies --auto-scaling-group MyScalingGroup
+&lt;/code>&lt;/pre>
+&lt;p>This will return output similar to the following (note that this output has been split into multiple lines for legibility):&lt;/p>
+&lt;pre>&lt;code>SCALING-POLICY MyScalingGroup MyScaleinPolicy -2 ChangeInCapacity arn:aws:autoscaling::706221218191:
+scalingPolicy:d28c6ffc-e9f1-4a48-a79c-8b431794c367:
+autoScalingGroupName/MyScalingGroup:policyName/MyScaleinPolicy
+SCALING-POLICY MyScalingGroup MyScaleoutPolicy 30 PercentChangeInCapacity arn:aws:autoscaling::706221218191:
+scalingPolicy:5d02981b-f440-4c8f-98f2-8a620dc2b787:
+autoScalingGroupName/MyScalingGroup:policyName/MyScaleoutPolicy
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Configuring Health Checks</title><link>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_examples_intro/autoscaling_examples_health_checks/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_examples_intro/autoscaling_examples_health_checks/</guid><description>
+&lt;p>By default, Auto Scaling group determines the health state of each instance by periodically checking the results of instance status checks. You can specify using the ELB health check method in addition to using the instance health check method.To use load balancing health checks for an Auto Scaling group:&lt;/p>
+&lt;p>Use the following command to specify ELB health checks for an Auto Scaling group:&lt;/p>
+&lt;pre>&lt;code>euscale-update-auto-scaling-group MyScalingGroup –-health-check-type ELB –-grace-period 300
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Configuring an Instance Termination Policy</title><link>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_examples_intro/autoscaling_examples_instance_termination_policy/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_examples_intro/autoscaling_examples_instance_termination_policy/</guid><description>
+&lt;p>You can control how Auto Scaling determines which instances to terminate. You can specify a termination policy when you create an Auto Scaling group, and you can change the termination policy at any time using the command.You can override the default instance termination policy for your Auto Scaling group with one of the following options:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Option&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">OldestInstance&lt;/td>
+&lt;td style="text-align:left">The oldest instance in the Auto Scaling group should be terminated.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">NewestInstance&lt;/td>
+&lt;td style="text-align:left">The newest instance in the Auto Scaling group should be terminated.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">OldestLaunchConfiguration&lt;/td>
+&lt;td style="text-align:left">The first instance created using the oldest launch configuration should be terminated.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Default&lt;/td>
+&lt;td style="text-align:left">Use the default instance termination policy.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>To configure an instance termination policy:&lt;/p>
+&lt;p>Specify the &amp;ndash;termination-policies parameter when creating or updating the Auto Scaling group. For example:&lt;/p>
+&lt;pre>&lt;code>euscale-update-auto-scaling-group MyScalingGroup --termination-policies &amp;quot;NewestInstance&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>Verify that your Auto Scaling group has updated the termination policy by running the following command: &lt;code>euscale-describe-auto-scaling-groups MyScalingGroup&lt;/code> This command should return output similar to the following:&lt;/p>
+&lt;pre>&lt;code>AUTO-SCALING-GROUP MyScalingGroup MyLaunchConfig PARTI00 2 5 2 NewestInstance
+INSTANCE i-1B853EC3 PARTI00 InService Healthy MyLaunchConfig
+INSTANCE i-ABC53ED7 PARTI00 InService Healthy MyLaunchConfig
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Configuring Auto Scaling with Elastic Load Balancing</title><link>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_examples_intro/autoscaling_examples_elb/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_examples_intro/autoscaling_examples_elb/</guid><description>
+&lt;p>This example shows how to set up Auto Scaling with Elastic Load Balancing.To set up a load-balanced auto scaling configuration:&lt;/p>
+&lt;p>If you don&amp;rsquo;t already have a launch configuration, create one: &lt;code>euscale-create-launch-config MyLaunchConfig --image-id emi-50783D25 --instance-type m1.medium --group mysecuritygroup&lt;/code> Create a new auto scaling group associated with a load balancer: &lt;code>euscale-create-auto-scaling-group MyScalingGroup --launch-configuration MyLaunchConfig --load-balancers MyLoadBalancer --availability-zones AcmeAvailabilityZone --min-size 2 --max-size 4&lt;/code> Authorize the security group used by the load balancer for back-end port communication. For example:&lt;/p>
+&lt;pre>&lt;code>$ eulb-describe-lbs --show-long
+LOAD_BALANCER MyLoadBalancer MyLoadBalancer-408396244283.elb.acme.eucalyptus-systems.com
+{interval=200,target=HTTP:80/,timeout=3,healthy-threshold=2,unhealthy-threshold=4} AcmeAvailabilityZone
+{protocol=HTTP,lb-port=80,instance-protocol=HTTP,instance-port=80}
+{owner-alias=944786667073,group-name=euca-internal-408396244283-MyLoadBalancer}
+2014-05-28T18:13:17.902Z
+&lt;/code>&lt;/pre>
+&lt;p>&lt;code>euca-authorize mysecuritygroup -u 944786667073 -o euca-internal-408396244283-MyLoadBalancer -p -1&lt;/code> Verify that your Auto Scaling group has been created with a load balancer:&lt;/p>
+&lt;pre>&lt;code>$ euscale-describe-auto-scaling-groups
+AUTO-SCALING-GROUP MyScalingGroup MyLaunchConfig AcmeAvailabilityZone MyLoadBalancer 2 4 2 Default
+INSTANCE i-DFCD0CBC AcmeAvailabilityZone InService Healthy MyLaunchConfig
+INSTANCE i-B3431043 AcmeAvailabilityZone InService Healthy MyLaunchConfig
+&lt;/code>&lt;/pre></description></item></channel></rss>

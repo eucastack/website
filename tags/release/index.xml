@@ -1,0 +1,313 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – release</title><link>https://www.eucastack.io/tags/release/</link><description>Recent content in release on EucaStack</description><generator>Hugo -- gohugo.io</generator><lastBuildDate>Mon, 10 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.eucastack.io/tags/release/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Eucalyptus 5.1 Released</title><link>https://www.eucastack.io/blog/2021/05/10/eucalyptus-5.1-released/</link><pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2021/05/10/eucalyptus-5.1-released/</guid><description>
+&lt;p>Eucalyptus Cloud 5.1 has been released with important compatibility and functionality fixes and is recommended for all 5.x deployments.&lt;/p>
+&lt;p>Fixes of note in this release are:&lt;/p>
+&lt;ul>
+&lt;li>CloudFormation AWS::IAM::InstanceProfile add InstanceProfileName property&lt;/li>
+&lt;li>ELB cannot connect to https listener&lt;/li>
+&lt;li>S3 support for multipart copy&lt;/li>
+&lt;li>Web services HTTPS (TLS) should use larger ephemeral Diffie-Hellman key size&lt;/li>
+&lt;/ul>
+&lt;p>You can find the full list of
+&lt;a href="https://github.com/Corymbia/eucalyptus/releases/tag/v5.1.0">resolved issues&lt;/a>
+in the release notes / milestones.&lt;/p></description></item><item><title>Blog: Eucalyptus 5 Released</title><link>https://www.eucastack.io/blog/2020/12/21/eucalyptus-5-released/</link><pubDate>Mon, 21 Dec 2020 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2020/12/21/eucalyptus-5-released/</guid><description>
+&lt;p>Eucalyptus Cloud 5 is now available, this major release includes a new Ansible based installer and
+technical previews for Route53 and SQS (Simple Queue Service)&lt;/p>
+&lt;p>In addition to the headline features, there are many smaller changes to improve the AWS compatibility
+and performance of Eucalyptus Cloud.&lt;/p>
+&lt;h2 id="new-in-eucalyptus-5">New in Eucalyptus 5&lt;/h2>
+&lt;p>Some new features in Eucalyptus 5 are:&lt;/p>
+&lt;ul>
+&lt;li>Ansible &lt;a href="https://docs.eucalyptus.cloud/eucalyptus/5/install_guide/automated_install/">installer&lt;/a>&lt;/li>
+&lt;li>Auto Scaling instance protection&lt;/li>
+&lt;li>CloudFormation support for YAML templates&lt;/li>
+&lt;li>EC2 iam instance profile association&lt;/li>
+&lt;li>EC2 long resource identifiers&lt;/li>
+&lt;li>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/5/user_guide/route53_intro/">Route53 service&lt;/a> technical preview&lt;/li>
+&lt;li>S3 bucket policy support&lt;/li>
+&lt;li>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/5/user_guide/sqs_intro/">SQS service&lt;/a> technical preview&lt;/li>
+&lt;/ul>
+&lt;p>Other notable changes in Eucalyptus 5 are:&lt;/p>
+&lt;ul>
+&lt;li>Cluster controller now part of main cloud service&lt;/li>
+&lt;li>Java runtime updated to version 11&lt;/li>
+&lt;li>Reporting service removed&lt;/li>
+&lt;/ul>
+&lt;p>Full details of changes in Eucalyptus 5 are available in the
+&lt;a href="https://github.com/orgs/Corymbia/projects/3">Corymbia github project&lt;/a> and
+&lt;a href="https://github.com/Corymbia/eucalyptus/milestone/3?closed=1">milestone&lt;/a>&lt;/p>
+&lt;h2 id="try-eucalyptus-5">Try Eucalyptus 5&lt;/h2>
+&lt;p>You can try Eucalyptus 5 with a FastStart install by running:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; bash &amp;lt;&lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>curl -Ls https://get.eucalyptus.cloud&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>as root, on a CentOS/RHEL 7.9 minimal install with a few IP addresses to spare.&lt;/p>
+&lt;h2 id="miss-eucalyptus-44x">Miss Eucalyptus 4.4.x?&lt;/h2>
+&lt;p>Eucalyptus 5 look a little different from 4.4.x due to changes with instance types and long
+identifiers. If you want to try Eucalyptus 5 but with a 4.4.x feel, you can make changes as
+follows.&lt;/p>
+&lt;p>To disable EC2 long identifiers, run the following as an administrator:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; euctl cloud.short_identifier_prefixes&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#4e9a06">&amp;#39;*&amp;#39;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>changing this setting will cause any new resources to be created with short identifiers (where
+supported). You can have a mix of short and long identifiers depending on settings when those
+resources were created.&lt;/p>
+&lt;p>To change instance types to be the same as 4.4.x, run the following as an administrator:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; euform-create-stack &lt;span style="color:#4e9a06">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#4e9a06">&lt;/span> --template-file /usr/share/eucalyptus/doc/ec2-instance-types-eucalyptus-4.yaml &lt;span style="color:#4e9a06">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#4e9a06">&lt;/span> eucalyptus-4-instance-types
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl cloud.vmtypes.default_type_name&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl services.imaging.worker.instance_type&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl services.loadbalancing.worker.instance_type&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>this will enable 4.4.x instance types and disable the default Eucalyptus 5 instance types. The
+default instance type and the types used for services are updated accordingly.&lt;/p>
+&lt;h2 id="moving-to-eucalyptus-5">Moving to Eucalyptus 5?&lt;/h2>
+&lt;p>Upgrading from previous releases to Eucalyptus 5 is not supported. If moving to Eucalyptus 5
+data such as S3 objects and EBS volumes can be copied from existing deployments before they
+are retired.&lt;/p>
+&lt;h1 id="thanks">Thanks!&lt;/h1>
+&lt;p>Thanks for giving Eucalyptus 5 a try and please use &lt;a href="https://github.com/Corymbia/eucalyptus/issues">github issues&lt;/a>
+to report any problems you encounter to help improve Eucalyptus.&lt;/p></description></item><item><title>Blog: Eucalyptus 4.4.6 Released</title><link>https://www.eucastack.io/blog/2020/12/01/eucalyptus-4.4.6-released/</link><pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2020/12/01/eucalyptus-4.4.6-released/</guid><description>
+&lt;p>Eucalyptus Cloud 4.4.6 has been released, updating our OS support to allow use of CentOS and RHEL 7.9 in addition to
+the existing support for 7.x.&lt;/p>
+&lt;p>This release has some important compatibility and functionality fixes and is recommended for all 4.4.x deployments.&lt;/p>
+&lt;p>As with version 4.4.5, this release was tested using 2.9.0 qemu packages which should be installed when upgrading from
+earlier versions.&lt;/p>
+&lt;p>Some fixes of note in this release are:&lt;/p>
+&lt;ul>
+&lt;li>EC2 instance metadata v2 support&lt;/li>
+&lt;li>EC2 node controller crash when running windows instance&lt;/li>
+&lt;/ul>
+&lt;p>You can find the full list of
+&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.4.6/index.html#release-notes/4.4.6/4.4.6_rn_resolved.html">resolved issues&lt;/a>
+in the release notes.&lt;/p>
+&lt;p>If upgrading from 4.4.2 or earlier, note that the RPM repository location has changed, updated Eucalyptus and Euca2ools
+release RPMs should be installed as detailed in the
+&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.4.6/install-guide/installing_euca_release.html">install guide&lt;/a>
+so that the new downloads.eucalyptus.cloud location is used.&lt;/p></description></item><item><title>Blog: Announcing the AWS CLI plugin for Eucalyptus</title><link>https://www.eucastack.io/blog/2020/03/06/announcing-the-aws-cli-plugin-for-eucalyptus/</link><pubDate>Fri, 06 Mar 2020 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2020/03/06/announcing-the-aws-cli-plugin-for-eucalyptus/</guid><description>
+&lt;p>A new AWS CLI plugin with support for Eucalyptus Cloud deployments is now
+available.&lt;/p>
+&lt;p>The initial release of the plugin simplifies using the AWS CLI with your
+cloud deployment by removing the need to specify the endpoint with each
+command or using other plugins with more complex configuration.&lt;/p>
+&lt;h2 id="getting-started">Getting started&lt;/h2>
+&lt;p>To get started with the plugin, the first step is installation.&lt;/p>
+&lt;p>You can either install using the &lt;a href="https://pypi.org/project/awscli-plugin-eucalyptus/">pypi package&lt;/a>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; pip install awscli-plugin-eucalyptus&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>or if using a Eucalyptus 5 early access release then you can install the RPM package:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; yum install eucalyptus-awscli-plugin&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Either way, the plugin will be installed and ready to for the next step.&lt;/p>
+&lt;p>Configuration tells the AWS CLI to use the new plugin and also controls which
+profiles it is active for.&lt;/p>
+&lt;p>The simplest approach is to enable for the default profile:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; cat .aws/config
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>plugins&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">eucalyptus&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> awscli_plugin_eucalyptus
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>default&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">ufshost&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> euca-10-10-10-10.euca.me
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">ufsport&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> &lt;span style="color:#0000cf;font-weight:bold">8773&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">verify_ssl&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> yes
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">output&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> text
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">region&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> eucalyptus&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>The &lt;code>ufshost&lt;/code> identifies the domain for the cloud and is used along with
+other configuration settings to derive the service endpoints such as &lt;code>https://ec2.euca-10-10-10-10.euca.me:8773/&lt;/code>.&lt;/p>
+&lt;p>Change &lt;code>verify_ssl&lt;/code> to &lt;code>no&lt;/code> if your Eucalyptus deployment does not have a valid HTTPS certificate.&lt;/p>
+&lt;h2 id="using-the-cli">Using the CLI&lt;/h2>
+&lt;p>Once configured you can use the AWS CLI as you would against AWS:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; aws ec2 describe-availability-zones
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>AVAILABILITYZONES cloud-1 available cloud-1a&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;h2 id="next-steps">Next steps&lt;/h2>
+&lt;p>As covered in the earlier post on using the &lt;a href="https://www.eucastack.io/blog/2018/07/05/using-the-aws-cli-with-eucalyptus/">AWS CLI with Eucalyptus &lt;/a>
+you can set up command completion for the AWS CLI:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; &lt;span style="color:#204a87">complete&lt;/span> -C aws_completer aws&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>which makes it easier to discover commands and their options.&lt;/p>
+&lt;h2 id="thanks">Thanks!&lt;/h2>
+&lt;p>Thanks for giving the AWS CLI plugin for Eucalyptus a try and please use &lt;a href="https://github.com/corymbia/eucalyptus-awscli-plugin/issues">github issues&lt;/a>
+to report any problems you encounter to help improve the plugin.&lt;/p></description></item><item><title>Blog: Eucalyptus 5 beta 1 Released</title><link>https://www.eucastack.io/blog/2019/04/01/eucalyptus-5-beta-1-released/</link><pubDate>Mon, 01 Apr 2019 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2019/04/01/eucalyptus-5-beta-1-released/</guid><description>
+&lt;p>Eucalyptus Cloud 5 beta 1 has been released, this release provides early access for trying out new
+functionality on non-production deployments.&lt;/p>
+&lt;p>We are exited to make 5.0 available as a preview to a wider audience to get feedback on new features
+in advance of the final release of Eucalyptus Cloud 5.&lt;/p>
+&lt;h2 id="new-in-eucalyptus-5">New in Eucalyptus 5&lt;/h2>
+&lt;p>Some new features in Eucalyptus 5 are:&lt;/p>
+&lt;ul>
+&lt;li>Auto Scaling instance protection&lt;/li>
+&lt;li>CloudFormation support for YAML templates&lt;/li>
+&lt;li>EC2 iam instance profile association&lt;/li>
+&lt;li>EC2 long resource identifiers&lt;/li>
+&lt;li>S3 bucket policy support&lt;/li>
+&lt;li>SQS service technical preview&lt;/li>
+&lt;/ul>
+&lt;p>Other notable changes in Eucalyptus 5 are:&lt;/p>
+&lt;ul>
+&lt;li>Cluster controller now part of main cloud service&lt;/li>
+&lt;li>Java runtime updated to version 11&lt;/li>
+&lt;li>Reporting service removed&lt;/li>
+&lt;/ul>
+&lt;p>Full details of changes in Eucalyptus 5 are available in the
+&lt;a href="https://github.com/orgs/Corymbia/projects/3">Corymbia github project&lt;/a>&lt;/p>
+&lt;h2 id="try-eucalyptus-5">Try Eucalyptus 5&lt;/h2>
+&lt;p>You can try Eucalyptus 5 with a FastStart install by running:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; bash &amp;lt;&lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>curl -Ls https://eucalyptus.cloud/install5ea&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>as root, on a CentOS 7.6 minimal install with a few IP addresses to spare.&lt;/p>
+&lt;h2 id="miss-eucalyptus-44x">Miss Eucalyptus 4.4.x?&lt;/h2>
+&lt;p>Eucalyptus 5 look a little different from 4.4.x due to changes with instance types and long
+identifiers. If you want to try Eucalyptus 5 but with a 4.4.x feel, you can make changes as
+follows.&lt;/p>
+&lt;p>To disable EC2 long identifiers, run the following as an administrator:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; euctl cloud.short_identifier_prefixes&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#4e9a06">&amp;#39;*&amp;#39;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>changing this setting will cause any new resources to be created with short identifiers (where
+supported). You can have a mix of short and long identifiers depending on settings when those
+resources were created.&lt;/p>
+&lt;p>To change instance types to be the same as 4.4.x, run the following as an administrator:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; euform-create-stack &lt;span style="color:#4e9a06">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#4e9a06">&lt;/span> --template-file /usr/share/eucalyptus/doc/ec2-instance-types-eucalyptus-4.yaml &lt;span style="color:#4e9a06">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#4e9a06">&lt;/span> eucalyptus-4-instance-types
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl cloud.vmtypes.default_type_name&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl services.imaging.worker.instance_type&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl services.loadbalancing.worker.instance_type&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>this will enable 4.4.x instance types and disable the default Eucalyptus 5 instance types. The
+default instance type and the types used for services are updated accordingly.&lt;/p>
+&lt;h1 id="thanks">Thanks!&lt;/h1>
+&lt;p>Thanks for giving Eucalyptus 5 a try and please use &lt;a href="https://github.com/Corymbia/eucalyptus/issues">github issues&lt;/a>
+to report any problems you encounter to help improve the final release of Eucalyptus 5.&lt;/p></description></item><item><title>Blog: Eucalyptus 4.4.5 Released</title><link>https://www.eucastack.io/blog/2018/12/31/eucalyptus-4.4.5-released/</link><pubDate>Mon, 31 Dec 2018 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2018/12/31/eucalyptus-4.4.5-released/</guid><description>
+&lt;p>Eucalyptus Cloud 4.4.5 has been released, updating our OS support to allow use of CentOS and RHEL 7.6 in addition to
+the existing support for 7.3, 7.4, and 7.5.&lt;/p>
+&lt;p>This release has some important compatibility and functionality fixes and is recommended for all 4.4.x deployments.&lt;/p>
+&lt;p>As with version 4.4.4, this release was tested using 2.9.0 qemu packages which should be installed when upgrading from
+earlier versions.&lt;/p>
+&lt;p>Some fixes of note in this release are:&lt;/p>
+&lt;ul>
+&lt;li>The object storage gateway now supports version two object listing&lt;/li>
+&lt;li>EC2 instances for some images could hang when starting&lt;/li>
+&lt;/ul>
+&lt;p>You can find the full list of
+&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.4.5/index.html#release-notes/4.4.5/4.4.5_rn_resolved.html">resolved issues&lt;/a>
+in the release notes.&lt;/p>
+&lt;p>If upgrading from 4.4.2 or earlier, note that the RPM repository location has changed, updated Eucalyptus and Euca2ools
+release RPMs should be installed as detailed in the
+&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.4.5/install-guide/installing_euca_release.html">install guide&lt;/a>
+so that the new downloads.eucalyptus.cloud location is used.&lt;/p></description></item><item><title>Blog: Eucalyptus 4.4.4 Released</title><link>https://www.eucastack.io/blog/2018/07/06/eucalyptus-4.4.4-released/</link><pubDate>Fri, 06 Jul 2018 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2018/07/06/eucalyptus-4.4.4-released/</guid><description>
+&lt;p>Eucalyptus Cloud 4.4.4 has been released, updating our OS support to allow use of CentOS and RHEL 7.5 in addition to
+the existing support for 7.3 and 7.4.&lt;/p>
+&lt;p>This release was tested using updated qemu packages which should be installed when upgrading. This updates qemu to 2.9.0
+from the 2.6.0 version previously distributed.&lt;/p>
+&lt;p>Some fixes of note in this release are:&lt;/p>
+&lt;ul>
+&lt;li>The object storage gateway is updated to use less resources for background maintenance when there are buckets with many objects&lt;/li>
+&lt;li>The node controller would sometimes leave artifacts behind for terminated instances causing unnecessary disk use&lt;/li>
+&lt;/ul>
+&lt;p>You can find the full list of
+&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.4.4/index.html#release-notes/4.4.4/4.4.4_rn_resolved.html">resolved issues&lt;/a>
+in the release notes.&lt;/p>
+&lt;p>If upgrading from 4.4.2 or earlier, note that the RPM repository location has changed, updated Eucalyptus and Euca2ools
+release RPMs should be installed as detailed in the
+&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.4.4/install-guide/installing_euca_release.html">install guide&lt;/a>
+so that the new downloads.eucalyptus.cloud location is used.&lt;/p></description></item><item><title>Blog: Eucalyptus 4.4.3 Released</title><link>https://www.eucastack.io/blog/2018/04/20/eucalyptus-4.4.3-released/</link><pubDate>Fri, 20 Apr 2018 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2018/04/20/eucalyptus-4.4.3-released/</guid><description>
+&lt;p>We are excited to announce the Eucalyptus Cloud 4.4.3 release!&lt;/p>
+&lt;p>There are a couple of changes included that go beyond those in a typical
+maintenance release.&lt;/p>
+&lt;p>The release uses a 2-Clause/Simplified BSD license, which replaces the GPL
+license used by previous releases. Euca2ools and the management console were
+already BSD licensed, so with this release the licensing is consistent across
+the major components.&lt;/p>
+&lt;p>The RPM repository location has changed, updated Eucalyptus and Euca2ools
+release RPMs should be installed as detailed in the
+&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.4.3/install-guide/installing_euca_release.html">install guide&lt;/a>
+so that the new downloads.eucalyptus.cloud location is used.&lt;/p>
+&lt;p>You can find the full list of
+&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.4.3/index.html#release-notes/4.4.3/4.4.3_rn_resolved.html">resolved issues&lt;/a>
+in the release notes.&lt;/p></description></item><item><title>Blog: Eucalyptus Previous Releases</title><link>https://www.eucastack.io/blog/2018/01/01/eucalyptus-previous-releases/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2018/01/01/eucalyptus-previous-releases/</guid><description>
+&lt;p>We know how much you love Eucalyptus 4.4, but we also recognize that
+sometimes a cloud is working well on an older version and upgrading can
+wait.&lt;/p>
+&lt;p>In this post we take a look at how you can use the new
+&lt;code>downloads.eucalyptus.cloud&lt;/code> RPM repositories with older releases, and
+where you can find the related documentation.&lt;/p>
+&lt;h2 id="documentation-for-previous-releases">Documentation for previous releases&lt;/h2>
+&lt;p>The &lt;a href="https://docs.eucalyptus.cloud/">current documentation&lt;/a> has release
+notes that cover previous versions. Other documentation is available for
+previous releases as follows:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Eucalyptus 4.0&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.0.2/admin-guide-4.0.2.pdf">Admin Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.0.2/console-guide-4.0.2.pdf">Console Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.0.2/image-guide-4.0.2.pdf">Image Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.0.2/install-guide-4.0.2.pdf">Install Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.0.2/user-guide-4.0.2.pdf">User Guide&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Eucalyptus 4.1&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.1.2/admin-guide-4.1.2.pdf">Admin Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.1.2/console-guide-4.1.2.pdf">Console Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.1.2/image-guide-4.1.2.pdf">Image Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.1.2/install-guide-4.1.2.pdf">Install Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.1.2/user-guide-4.1.2.pdf">User Guide&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Eucalyptus 4.2&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.2.2/admin-guide-4.2.2.pdf">Admin Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.2.2/console-guide-4.2.2.pdf">Console Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.2.2/image-guide-4.2.2.pdf">Image Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.2.2/install-guide-4.2.2.pdf">Install Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.2.2/user-guide-4.2.2.pdf">User Guide&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Eucalyptus 4.3&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.3.1/admin-guide-4.3.1.pdf">Admin Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.3.1/console-guide-4.3.1.pdf">Console Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.3.1/image-guide-4.3.1.pdf">Image Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.3.1/install-guide-4.3.1.pdf">Install Guide&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/4.3.1/user-guide-4.3.1.pdf">User Guide&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>The above guides are available in PDF format only.&lt;/p>
+&lt;h2 id="repositories-for-previous-releases">Repositories for previous releases&lt;/h2>
+&lt;p>If using a release earlier than 4.4, please keep in mind that these
+previous releases are no longer supported or maintained. RPMs are
+available for previous releases at these locations:&lt;/p>
+&lt;p>Eucalyptus 4.0:
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>http://downloads.eucalyptus.cloud/software/eucalyptus/4.0/rhel/6/x86_64/&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>Eucalyptus 4.1:
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>http://downloads.eucalyptus.cloud/software/eucalyptus/4.1/rhel/6/x86_64/&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>Eucalyptus 4.2:
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>http://downloads.eucalyptus.cloud/software/eucalyptus/4.2/rhel/6/x86_64/&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>Eucalyptus 4.3:
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>http://downloads.eucalyptus.cloud/software/eucalyptus/4.3/rhel/6/x86_64/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>http://downloads.eucalyptus.cloud/software/eucalyptus/4.3/rhel/7/x86_64/&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>The 4.3 release can be installed on CentOS/RHEL 6 or 7, so pick the
+location appropriate for the distribution you are using.&lt;/p>
+&lt;h3 id="repository-configuration">Repository Configuration&lt;/h3>
+&lt;p>You would configure YUM to use the above locations. Here&amp;rsquo;s an example of
+a 4.1 Eucalyptus YUM configuration, you&amp;rsquo;d put this in a
+&lt;code>/etc/yum.repos.d/eucalyptus.repo&lt;/code> file:
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>eucalyptus&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">name&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>Eucalyptus 4.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">baseurl&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>http://downloads.eucalyptus.cloud/software/eucalyptus/4.1/rhel/6/x86_64/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">gpgkey&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>https://downloads.eucalyptus.cloud/software/gpg/eucalyptus-release-key.pub
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">gpgcheck&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#0000cf;font-weight:bold">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">enabled&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#0000cf;font-weight:bold">1&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>The &lt;code>baseurl&lt;/code> would be one of the locations listed above.&lt;/p>
+&lt;p>On the first use after configuration, you may be prompted to confirm the
+GPG key, which would look something like this:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>warning: rpmts_HdrFromFdno: Header V3 RSA/SHA1 Signature, key ID c1240596: NOKEY
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Retrieving key from https://downloads.eucalyptus.cloud/software/gpg/eucalyptus-release-key.pub
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Importing GPG key 0xC1240596:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Userid: &lt;span style="color:#4e9a06">&amp;#34;Eucalyptus Systems, Inc. (release key) &amp;lt;security@eucalyptus.com&amp;gt;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> From : https://downloads.eucalyptus.cloud/software/gpg/eucalyptus-release-key.pub
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Is this ok &lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>y/N&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>: y&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Accept the key and you&amp;rsquo;re good to go!&lt;/p>
+&lt;h2 id="conclusion">Conclusion&lt;/h2>
+&lt;p>We hope this helps keep your Eucalyptus clouds running, but please
+consider using the latest software and documentation from
+&lt;a href="https://eucalyptus.cloud/">https://eucalyptus.cloud/&lt;/a>&lt;/p></description></item></channel></rss>

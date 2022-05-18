@@ -1,0 +1,25 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Using Tags and Filters</title><link>https://www.eucastack.io/docs/user_guide/resource_and_tags/</link><description>Recent content in Using Tags and Filters on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/resource_and_tags/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Tagging and Filtering Overview</title><link>https://www.eucastack.io/docs/user_guide/resource_and_tags/understanding_tagging/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/resource_and_tags/understanding_tagging/</guid><description>
+&lt;h1 id="tagging-and-filtering-overview">Tagging and Filtering Overview&lt;/h1>
+&lt;p>This section describes what tagging is, its restrictions, and how tagging relates to filtering.&lt;/p></description></item><item><title>Docs: Tagging and Filtering Tasks</title><link>https://www.eucastack.io/docs/user_guide/resource_and_tags/working_tagging/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/resource_and_tags/working_tagging/</guid><description>
+&lt;h1 id="tagging-and-filtering-tasks">Tagging and Filtering Tasks&lt;/h1>
+&lt;p>This section details the tasks that you can with tagging and filtering. You can use the Management Console or the command line interface.&lt;/p>
+&lt;p>Eucalyptus supports three commands for tagging:&lt;/p>
+&lt;ul>
+&lt;li>euca-create-tags&lt;/li>
+&lt;li>euca-describe-tags&lt;/li>
+&lt;li>euca-delete-tags&lt;/li>
+&lt;/ul>
+&lt;p>Eucalyptus supports the following commands for filtering:&lt;/p>
+&lt;ul>
+&lt;li>euca-describe-addresses&lt;/li>
+&lt;li>euca-describe-availability-zones&lt;/li>
+&lt;li>euca-describe-bundle-tasks&lt;/li>
+&lt;li>euca-describe-groups&lt;/li>
+&lt;li>euca-describe-images&lt;/li>
+&lt;li>euca-describe-instances&lt;/li>
+&lt;li>euca-describe-keypairs&lt;/li>
+&lt;li>euca-describe-regions&lt;/li>
+&lt;li>euca-describe-snapshots&lt;/li>
+&lt;li>euca-describe-tags&lt;/li>
+&lt;li>euca-describe-volumes&lt;/li>
+&lt;/ul></description></item></channel></rss>

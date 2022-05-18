@@ -1,0 +1,126 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Operations</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/</link><description>Recent content in Operations on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/admin_guide/ops_oview/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Operations Overview</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/overview/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/overview/</guid><description>
+&lt;p>This section is for architects and cloud administrators who plan to deploy Eucalyptus in a production environment. It is not intended for end users or proof-of-concept installations.To run Eucalyptus in a production environment, you must be aware of your hardware and network resources. This guide is to help you make decisions about deploying Eucalyptus. It is also meant to help you keep Eucalyptus running smoothly.&lt;/p></description></item><item><title>Docs: Planning Your Deployment</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/plan_scope/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/plan_scope/</guid><description>
+&lt;p>To decide on your deployment&amp;rsquo;s scope, determine the use case for your cloud. For example, will this be a small dev-test environment, or a large and scalable web services environment?To help with scoping your deployment, see &lt;a href="https://www.eucastack.io/docs/install_guide/eucalyptus/planning/">Plan Your Installation&lt;/a> in the &lt;a href="https://www.eucastack.io/docs/install_guide/">Installation Guide&lt;/a> . There you will find solution examples and physical resource information.&lt;/p></description></item><item><title>Docs: Testing Your Deployment</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_testplan/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_testplan/</guid><description>
+&lt;p>This topic details what you should test when you want to make sure your deployment is working. The following suggested test plan contains tasks that ensure DNS, imaging, and storage are working.&lt;/p>
+&lt;h2 id="dns">DNS&lt;/h2>
+&lt;ul>
+&lt;li>Verify that instances can ping their:&lt;/li>
+&lt;li>Verify that instances are pingable on their public DNS names from:&lt;/li>
+&lt;/ul>
+&lt;h2 id="imaging">Imaging&lt;/h2>
+&lt;ul>
+&lt;li>Verify that an EBS-backed image boots successfully&lt;/li>
+&lt;li>Verify that you can create an image from a running EBS-backed instance&lt;/li>
+&lt;li>Verify that you can install a new Ubuntu image&lt;/li>
+&lt;li>Verify that you can deregister an image&lt;/li>
+&lt;li>Verify that you can import an instance&lt;/li>
+&lt;li>Verify that you can import a volume&lt;/li>
+&lt;/ul>
+&lt;h2 id="walrus">Walrus&lt;/h2>
+&lt;ul>
+&lt;li>Verify that you can make a basic s3cmd request&lt;/li>
+&lt;li>Verify that you can successfully perform a multi-part upload (use a 1G+ file)&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Customizing Your Deployment</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_post_install_customizations/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_post_install_customizations/</guid><description>
+&lt;p>This section describes the most commonly applied post-install customizations and the issues they pose:&lt;/p>
+&lt;ul>
+&lt;li>Over-subscription&lt;/li>
+&lt;li>Networking changes (EDGE mode)&lt;/li>
+&lt;li>CloudWatch tweaks/customizations&lt;/li>
+&lt;li>Capacity changes&lt;/li>
+&lt;/ul>
+&lt;h2 id="over-subscription">Over-subscription&lt;/h2>
+&lt;p>Over-subscription refers to the practice of expanding your computer beyond its limits. Over-subscription applies only to node controllers. You may modify disks and cores to allow enough usage buffer for your instance. Navigate to &lt;code>/etc/eucalyptus/&lt;/code> and locate the &lt;code>eucalyptus.conf&lt;/code> file. Edit the following values to define the appropriate size buffers for your instances: &lt;code>NC_WORK_SIZE&lt;/code> Defines the amount of disk space available for instances to be run. Defaults to 1/3 of the currently available disk space on the NC, and NC_CACHE_SIZE defaults to the other 2/3.&lt;/p>
+&lt;p>&lt;code>NC_CACHE_SIZE&lt;/code> Defines how much disk space is needed for images to be cached. &lt;code>MAX_CORES&lt;/code> Defines the maximum number of cores that can be provided to VMs on each NC. If it is 0 or not present, then the only limit on the number of instances is the number of cores available on the NC. If it is present, any value greater than 256 is treated as 256. In order for these changes to take effect, you must restart the NC.&lt;/p>
+&lt;h2 id="networking-changes-edge-modes">Networking Changes (EDGE modes)&lt;/h2>
+&lt;p>You can modify the default by adding network IPs to your cloud. Adding public IPs does not require shutting down the whole system.&lt;/p>
+&lt;p>To add network IPs:In EDGE mode, adding or changing the IP involves creating a JSON file and uploading it the Cloud Controller (CLC). See &lt;a href="https://www.eucastack.io/docs/install_guide/eucalyptus/configuring_euca/configure_network_modes/nw_edge/">Configure for Edge Mode&lt;/a> for more details. No restart needed, changes apply automatically.&lt;/p>
+&lt;h2 id="change-cloudwatch-properties">Change CloudWatch Properties&lt;/h2>
+&lt;p>You can change the following CloudWatch properties:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Property&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">cloud.monitor.default_poll_interval_mins&lt;/td>
+&lt;td style="text-align:left">This is how often the CLC sends a request to the CC for sensor data. Default value is 5 minutes. If you set it to 0 = no reporting. The more often you poll, the more hit on system performance.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloud.monitor.history_size&lt;/td>
+&lt;td style="text-align:left">This is how many data value samples are sent in each sensor data request. The default value is 5. How many samples per poll interval.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudwatch.enable_cloudwatch_service&lt;/td>
+&lt;td style="text-align:left">Disables CloudWatch when set to false.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="change-capacity">Change Capacity&lt;/h2>
+&lt;p>Capacity changes refer to adding another zone or more nodes. To add another zone, &lt;a href="https://www.eucastack.io/docs/install_guide/eucalyptus/install_repos_intro/">install&lt;/a> , &lt;a href="https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/">start&lt;/a> , and &lt;a href="https://www.eucastack.io/docs/install_guide/eucalyptus/register_services/registering_ccs/">register&lt;/a> . To add more nodes, see &lt;a href="https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/add_nodes/">Add a Node Controller&lt;/a> .&lt;/p></description></item><item><title>Docs: Managing Policies</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_policies/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_policies/</guid><description>
+&lt;p>This topic details best practices for managing your cloud policies.&lt;/p>
+&lt;ul>
+&lt;li>Establish a workflow for account creation, including the initial request for a cloud account and the email containing credentials.&lt;/li>
+&lt;li>Limit your use of individual policies. Focus your policies on groups and add individuals to the group.&lt;/li>
+&lt;li>Use groups to assign permissions to individual users. Limit the use of policies for individual users.
+For more information about policy best practices, see &lt;a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html">IAM Best Practices&lt;/a> .&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Networking</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_networking/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_networking/</guid><description>
+&lt;p>This topic addresses networking in the Eucalyptus cloud.&lt;/p>
+&lt;h2 id="networking-modes">Networking Modes&lt;/h2>
+&lt;p>Eucalyptus offers different modes to provide you with a cloud that will fit in your current network. For information what each networking mode has to offer, see &lt;a href="https://www.eucastack.io/docs/install_guide/eucalyptus/planning/planning_networking_modes/">Plan Networking Modes&lt;/a> .&lt;/p>
+&lt;h2 id="ec2-classic-networking">EC2-Classic Networking&lt;/h2>
+&lt;p>Eucalyptus EDGE networking mode supports EC2-Classic networking. Your instances run in a single, flat network that you share with others. For more information about EC2-Classic networking, see &lt;a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-supported-platforms.html#platform-differences">EC2 Supported Platforms&lt;/a> .&lt;/p>
+&lt;h2 id="ec2-vpc-networking">EC2-VPC Networking&lt;/h2>
+&lt;p>Eucalyptus VPCMIDO networking mode resembles the Amazon Virtual Private Cloud (VPC) product wherein the network is fully configurable by users. For more information about EC2-VPC networking, see &lt;a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-vpc.html#differences-ec2-classic-vpc">Differences Between Instances in EC2-Classic and EC2-VPC&lt;/a> .&lt;/p></description></item><item><title>Docs: Monitoring</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_monitoring/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_monitoring/</guid><description>
+&lt;p>This topic includes details about which resources you should monitor.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Component&lt;/th>
+&lt;th style="text-align:left">Running Processes&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">Cloud Controller (CLC)&lt;/td>
+&lt;td style="text-align:left">eucalyptus-cloud, postgres, eucanetd (VPCMIDO mode)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">User-facing services (UFS)&lt;/td>
+&lt;td style="text-align:left">eucalyptus-cloud&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Walrus&lt;/td>
+&lt;td style="text-align:left">eucalyptus-cloud&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Cluster Controller (CC)&lt;/td>
+&lt;td style="text-align:left">eucalyptus-cluster&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Storage Controller (SC)&lt;/td>
+&lt;td style="text-align:left">eucalyptus-sc, tgtd (for DAS and Overlay)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Node Controller (NC)&lt;/td>
+&lt;td style="text-align:left">eucalyptus-node, httpd, dhcpd, eucanetd (EDGE mode), qemu-kvm / 1 per instance&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Management Console&lt;/td>
+&lt;td style="text-align:left">eucaconsole&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>Docs: Backup and Recovery</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_recovery/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_recovery/</guid><description>
+&lt;h1 id="backup-and-recovery">Backup and Recovery&lt;/h1>
+&lt;p>This section provides details on important files to back up and recover.&lt;/p></description></item><item><title>Docs: Troubleshooting</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/</guid><description>
+&lt;h1 id="troubleshooting">Troubleshooting&lt;/h1>
+&lt;p>This topic details how to find information you need to troubleshoot most problems in your cloud. To troubleshoot Eucalyptus, you must have the following:&lt;/p>
+&lt;ul>
+&lt;li>a knowledge about which machines each Eucalyptus component is installed on&lt;/li>
+&lt;li>root access to each machine hosting Eucalyptus components&lt;/li>
+&lt;li>an understanding of the network mode (EDGE, VPCMIDO)&lt;/li>
+&lt;li>an understanding of eucanetd and the configuration connecting the Eucalyptus components&lt;/li>
+&lt;/ul>
+&lt;p>For most problems, the procedure for tracing problems is the same: start at the bottom to verify the bottom-most component, and then work your way up. If you do this, you can be assured that the base is solid. This applies to virtually all Eucalyptus components and also works for proactive, targeted monitoring.&lt;/p></description></item></channel></rss>

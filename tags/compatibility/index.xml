@@ -1,0 +1,104 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – compatibility</title><link>https://www.eucastack.io/tags/compatibility/</link><description>Recent content in compatibility on EucaStack</description><generator>Hugo -- gohugo.io</generator><lastBuildDate>Thu, 05 Jul 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://www.eucastack.io/tags/compatibility/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Using the AWS CLI with Eucalyptus</title><link>https://www.eucastack.io/blog/2018/07/05/using-the-aws-cli-with-eucalyptus/</link><pubDate>Thu, 05 Jul 2018 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2018/07/05/using-the-aws-cli-with-eucalyptus/</guid><description>
+&lt;p>The &lt;a href="https://aws.amazon.com/cli/">AWS Command Line Interface&lt;/a> is a unified tool to manage AWS
+services. You would use the CLI to run EC2 instances, upload objects for storage in S3, and to
+manage users in IAM.&lt;/p>
+&lt;p>In this post we examine how the CLI, and higher level tooling, can be used with your
+Eucalyptus cloud.&lt;/p>
+&lt;h2 id="get-started-with-the-cli">Get started with the CLI&lt;/h2>
+&lt;p>The first step is to get the latest AWS CLI. These instructions will differ depending on your OS,
+we will assume that CentOS/RHEL 7 is in use as that is the OS used with Eucalyptus. You may need
+to alter for your package manager, or to use &lt;code>pip3&lt;/code> rather than &lt;code>pip&lt;/code>.&lt;/p>
+&lt;p>The AWS CLI can be installed using pip, if you do not have pip available you can install it using
+yum (or apt-get, dnf, etc):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; yum install python-pip
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; pip install awscli&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>We then need to configure a few options to allow use of the CLI with Eucalyptus clouds:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; aws configure &lt;span style="color:#204a87">set&lt;/span> s3.signature_version s3v4
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws configure &lt;span style="color:#204a87">set&lt;/span> region eucalyptus
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws configure &lt;span style="color:#204a87">set&lt;/span> output text&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>We&amp;rsquo;ve used the region name &lt;code>eucalyptus&lt;/code>, but you can use any region name for your Eucalyptus cloud.
+We set the output of the CLI to text rather than the JSON default so it is easier to read.&lt;/p>
+&lt;p>The CLI comes with support for TAB completion of commands let&amp;rsquo;s enable it for our current shell:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; &lt;span style="color:#204a87">complete&lt;/span> -C aws_completer aws&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>With this configuration we can run commands by specifying the &lt;code>--endpoint&lt;/code> option and using
+credentials from the environment. This is not very convenient, but fortunately we can do better by
+making use of the endpoint plugin.&lt;/p>
+&lt;h2 id="enter-the-endpoint-plugin">Enter the Endpoint plugin&lt;/h2>
+&lt;p>The &lt;a href="https://github.com/wbingli/awscli-plugin-endpoint">AWS CLI Endpoint plugin&lt;/a> can also be
+installed using pip and allows us to configure the service endpoints we want to use for our
+Eucalyptus cloud.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; pip install awscli-plugin-endpoint
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws configure &lt;span style="color:#204a87">set&lt;/span> plugins.endpoint awscli_plugin_endpoint&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>This installs and enables the plugin.&lt;/p>
+&lt;p>Next we configure the endpoints, making use of a euca2ools command to generate environment
+variables based on euca2ools existing configuration:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; &lt;span style="color:#204a87">eval&lt;/span> &lt;span style="color:#204a87;font-weight:bold">$(&lt;/span>euca-generate-environment-config&lt;span style="color:#204a87;font-weight:bold">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws configure &lt;span style="color:#204a87">set&lt;/span> autoscaling.endpoint_url &lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">AWS_AUTO_SCALING_URL&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws configure &lt;span style="color:#204a87">set&lt;/span> cloudformation.endpoint_url &lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">AWS_CLOUDFORMATION_URL&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws configure &lt;span style="color:#204a87">set&lt;/span> cloudwatch.endpoint_url &lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">AWS_CLOUDWATCH_URL&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws configure &lt;span style="color:#204a87">set&lt;/span> ec2.endpoint_url &lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">EC2_URL&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws configure &lt;span style="color:#204a87">set&lt;/span> elb.endpoint_url &lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">AWS_ELB_URL&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws configure &lt;span style="color:#204a87">set&lt;/span> iam.endpoint_url &lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">AWS_IAM_URL&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws configure &lt;span style="color:#204a87">set&lt;/span> s3.endpoint_url &lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">S3_URL&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws configure &lt;span style="color:#204a87">set&lt;/span> s3api.endpoint_url &lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">S3_URL&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws configure &lt;span style="color:#204a87">set&lt;/span> sts.endpoint_url &lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">TOKEN_URL&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Here we have configured the default endpoints used by the various AWS CLI subcommands. A subcommand
+is a little different from a service, notably we configure the Eucalyptus S3 endpoint for the &lt;code>s3&lt;/code>
+and &lt;code>s3api&lt;/code> subcommands as these both use S3 compatible services.&lt;/p>
+&lt;h2 id="aws-cli-in-action">AWS CLI in action&lt;/h2>
+&lt;p>Now that the CLI is fully configured let&amp;rsquo;s try out a few of the services:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; aws ec2 describe-account-attributes
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ACCOUNTATTRIBUTES supported-platforms
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ATTRIBUTEVALUES EC2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ACCOUNTATTRIBUTES default-vpc
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ATTRIBUTEVALUES none
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws iam list-users
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>USERS arn:aws:iam::000855590299:user/narwhal 2018-07-08T01:37:46.321Z / AIDAAMZJOPZULQOJTH5F5 narwhal
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>USERS arn:aws:iam::000855590299:user/walrus 2018-07-08T01:37:22.949Z / AIDAAWRRN2HWUF3DKLQFP walrus
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>USERS arn:aws:iam::000855590299:user/admin 2018-07-08T01:36:29.632Z / AIDAAX6G7F7VLGONP3LJK admin
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws s3 ls
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2018-07-07 18:39:04 narwhal
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2018-07-07 18:39:15 walrus
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws sts get-caller-identity
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>000855590299 arn:aws:iam::000855590299:user/admin AIDAAX6G7F7VLGONP3LJK
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt;&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>This shows examples of using the &lt;code>ec2&lt;/code>, &lt;code>s3&lt;/code>, and &lt;code>iam&lt;/code> services without having to specify the
+endpoint for each command.&lt;/p>
+&lt;h2 id="using-the-shell">Using the shell&lt;/h2>
+&lt;p>Now that we have the basics working we can try out the &lt;a href="https://github.com/awslabs/aws-shell">AWS CLI shell&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; pip install aws-shell&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>The shell uses the AWS CLI and provides additional functionality such as command completion and
+inline documentation.&lt;/p>
+&lt;img alt="SVG animation, see more examples on the aws-shell site" width="100%" src="tools-awscli-shell.svg">
+&lt;p>As shown here, the shell provides a more interactive experience.&lt;/p>
+&lt;h2 id="all-the-clouds">All the clouds&lt;/h2>
+&lt;p>The basic configuration we have so far is a good start, but if you use multiple Eucalyptus clouds,
+or if use both AWS and Eucalyptus you may need more control over your credentials and endpoints.&lt;/p>
+&lt;p>AWS CLI profiles offer a solution. When exporting the euca2ools configuration you can
+use the &lt;code>--region&lt;/code> option for &lt;code>euca-generate-environment-config&lt;/code> to select the credentials and
+endpoints for export. You then use the &lt;code>--profile&lt;/code> option with the CLI:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; aws --profile euca-profile-1 configure
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; &lt;span style="color:#204a87">eval&lt;/span> &lt;span style="color:#204a87;font-weight:bold">$(&lt;/span>euca-generate-environment-config --region euca-region-1&lt;span style="color:#204a87;font-weight:bold">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws configure --profile euca-profile-1 &lt;span style="color:#204a87">set&lt;/span> s3.endpoint_url &lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">S3_URL&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws configure --profile euca-profile-1 &lt;span style="color:#204a87">set&lt;/span> s3api.endpoint_url &lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">S3_URL&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>The initial configure command will interactively configure the region and credentials to use for
+the profile. The endpoint configuration will then set up the endpoints for the profile, above we
+only show configuration for the S3 endpoint.&lt;/p>
+&lt;p>If you have any issues with this configuration you may need to remove the &lt;code>[plugins]&lt;/code> section from
+the &lt;code>~/.aws/config&lt;/code> file. If you do so, be sure to add it back in once the endpoints are configured.&lt;/p>
+&lt;p>With this configuration you can now specify the profile to use for each command or you can switch
+between CLI profiles by setting an environment variable:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; aws --profile euca-profile-1 s3 ls
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; &lt;span style="color:#204a87">export&lt;/span> &lt;span style="color:#000">AWS_PROFILE&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>euca-profile-1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws s3 ls&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Using this approach to configuration you can more easily use the AWS CLI with both AWS and multiple
+Eucalyptus clouds.&lt;/p></description></item></channel></rss>

@@ -1,0 +1,49 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Users</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/</link><description>Recent content in Users on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Add a User</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/user_add/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/user_add/</guid><description>
+&lt;p>To add a user, perform the steps in this topic.Enter the following command&lt;/p>
+&lt;pre>&lt;code>euare-usercreate -u &amp;lt;user_name&amp;gt; -g &amp;lt;group_name&amp;gt; -k
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus does not return a response.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+If you include the parameter, Eucalyptus returns a response that includes the user&amp;rsquo;s ARN and GUID.
+&lt;/div>
+&lt;/p></description></item><item><title>Docs: Add a User to a Group</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/group_add_user/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/group_add_user/</guid><description>
+&lt;p>To add a user to a group perform the steps listed in this topic.Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-groupadduser -g &amp;lt;group_name&amp;gt; -u &amp;lt;user-name&amp;gt;
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Create a Login Profile</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/user_loginprof/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/user_loginprof/</guid><description>
+&lt;p>To create a login profile, perform the tasks in this topic.Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-useraddloginprofile -u &amp;lt;user_name&amp;gt; -p &amp;lt;password&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus does not return a response.&lt;/p></description></item><item><title>Docs: Generating User Credentials</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/credentials_user_new/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/credentials_user_new/</guid><description>
+&lt;p>The first time you get credentials using the &lt;em>clcadmin-assume-system-credentials&lt;/em> command, a new secret access key is generated. On each subsequent request to get credentials, an existing active secret key is returned. You can also generate new keys using the &lt;em>euare-useraddkey&lt;/em> command.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Each request to get a user&amp;rsquo;s credentials generates a new pair of a private key and X.509 certificate..
+&lt;/div>
+&lt;p>To generate a new key for a user by an account administrator, enter the following&lt;/p>
+&lt;pre>&lt;code>euare-useraddkey USER_NAME
+&lt;/code>&lt;/pre>
+&lt;p>To generate a private key and an X.509 certificate pair, enter the following:&lt;/p>
+&lt;pre>&lt;code>euare-usercreatecert USER_NAME
+&lt;/code>&lt;/pre>
+&lt;p>The cloud administrator can obtain temporary access credentials for any cloud user via the &lt;em>clcadmin-impersonate-user&lt;/em> command.&lt;/p></description></item><item><title>Docs: Uploading a Certificate</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/credentials_user_upload/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/credentials_user_upload/</guid><description>
+&lt;p>To upload a certificate provided by a user:&lt;/p>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-useraddcert -f CERT_FILE USER_NAME
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Modify a User</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/user_rename/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/user_rename/</guid><description>
+&lt;p>Modifying a user is similar to a &amp;ldquo;move&amp;rdquo; operation. To modify a user, you need permission to remove the user from the current path or name, and put that user in the new path or name.For example, if a user changes from one team in a company to another, you can change the user&amp;rsquo;s path from &lt;em>/team_abc/&lt;/em> to &lt;em>/team_efg/&lt;/em> . You need permission to remove the user from &lt;em>/team_abc/&lt;/em> . You also need permission to put the user into &lt;em>/team_efg/&lt;/em> . This means you need permission to call UpdateUser on both &lt;em>arn:aws:iam::123456789012:user/team_abc/&lt;/em>* and &lt;em>arn:aws:iam::123456789012:user/team_efg/&lt;/em>* .&lt;/p>
+&lt;p>To rename a user:&lt;/p>
+&lt;p>Enter the following command to rename a user:&lt;/p>
+&lt;pre>&lt;code>euare-usermod -u &amp;lt;user_name&amp;gt; --new-user-name &amp;lt;new_name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus does not return a message. Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-groupmod -u &amp;lt;user_name&amp;gt; -p &amp;lt;new_path&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus does not return a message.&lt;/p></description></item><item><title>Docs: List Users</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/user_list/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/user_list/</guid><description>
+&lt;p>To list users within a path, perform the steps in this topic.Use the &lt;code>euare-userlistbypath&lt;/code> command to list all the users in an account or to list all the users with a particular path prefix. The output lists the ARN for each resulting user.&lt;/p>
+&lt;pre>&lt;code>euare-userlistbypath -p &amp;lt;path&amp;gt;
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Delete a User</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/user_delete/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/eiam_task_oview/user_tasks/user_delete/</guid><description>
+&lt;p>To delete a user, perform the tasks in this topic.Enter the following command&lt;/p>
+&lt;pre>&lt;code>euare-userdel -u &amp;lt;user_name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus does not return a response.&lt;/p></description></item></channel></rss>

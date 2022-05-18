@@ -1,0 +1,154 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – eucalyptus-5</title><link>https://www.eucastack.io/tags/eucalyptus-5/</link><description>Recent content in eucalyptus-5 on EucaStack</description><generator>Hugo -- gohugo.io</generator><lastBuildDate>Mon, 21 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://www.eucastack.io/tags/eucalyptus-5/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Eucalyptus 5 Released</title><link>https://www.eucastack.io/blog/2020/12/21/eucalyptus-5-released/</link><pubDate>Mon, 21 Dec 2020 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2020/12/21/eucalyptus-5-released/</guid><description>
+&lt;p>Eucalyptus Cloud 5 is now available, this major release includes a new Ansible based installer and
+technical previews for Route53 and SQS (Simple Queue Service)&lt;/p>
+&lt;p>In addition to the headline features, there are many smaller changes to improve the AWS compatibility
+and performance of Eucalyptus Cloud.&lt;/p>
+&lt;h2 id="new-in-eucalyptus-5">New in Eucalyptus 5&lt;/h2>
+&lt;p>Some new features in Eucalyptus 5 are:&lt;/p>
+&lt;ul>
+&lt;li>Ansible &lt;a href="https://docs.eucalyptus.cloud/eucalyptus/5/install_guide/automated_install/">installer&lt;/a>&lt;/li>
+&lt;li>Auto Scaling instance protection&lt;/li>
+&lt;li>CloudFormation support for YAML templates&lt;/li>
+&lt;li>EC2 iam instance profile association&lt;/li>
+&lt;li>EC2 long resource identifiers&lt;/li>
+&lt;li>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/5/user_guide/route53_intro/">Route53 service&lt;/a> technical preview&lt;/li>
+&lt;li>S3 bucket policy support&lt;/li>
+&lt;li>&lt;a href="https://docs.eucalyptus.cloud/eucalyptus/5/user_guide/sqs_intro/">SQS service&lt;/a> technical preview&lt;/li>
+&lt;/ul>
+&lt;p>Other notable changes in Eucalyptus 5 are:&lt;/p>
+&lt;ul>
+&lt;li>Cluster controller now part of main cloud service&lt;/li>
+&lt;li>Java runtime updated to version 11&lt;/li>
+&lt;li>Reporting service removed&lt;/li>
+&lt;/ul>
+&lt;p>Full details of changes in Eucalyptus 5 are available in the
+&lt;a href="https://github.com/orgs/Corymbia/projects/3">Corymbia github project&lt;/a> and
+&lt;a href="https://github.com/Corymbia/eucalyptus/milestone/3?closed=1">milestone&lt;/a>&lt;/p>
+&lt;h2 id="try-eucalyptus-5">Try Eucalyptus 5&lt;/h2>
+&lt;p>You can try Eucalyptus 5 with a FastStart install by running:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; bash &amp;lt;&lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>curl -Ls https://get.eucalyptus.cloud&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>as root, on a CentOS/RHEL 7.9 minimal install with a few IP addresses to spare.&lt;/p>
+&lt;h2 id="miss-eucalyptus-44x">Miss Eucalyptus 4.4.x?&lt;/h2>
+&lt;p>Eucalyptus 5 look a little different from 4.4.x due to changes with instance types and long
+identifiers. If you want to try Eucalyptus 5 but with a 4.4.x feel, you can make changes as
+follows.&lt;/p>
+&lt;p>To disable EC2 long identifiers, run the following as an administrator:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; euctl cloud.short_identifier_prefixes&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#4e9a06">&amp;#39;*&amp;#39;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>changing this setting will cause any new resources to be created with short identifiers (where
+supported). You can have a mix of short and long identifiers depending on settings when those
+resources were created.&lt;/p>
+&lt;p>To change instance types to be the same as 4.4.x, run the following as an administrator:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; euform-create-stack &lt;span style="color:#4e9a06">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#4e9a06">&lt;/span> --template-file /usr/share/eucalyptus/doc/ec2-instance-types-eucalyptus-4.yaml &lt;span style="color:#4e9a06">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#4e9a06">&lt;/span> eucalyptus-4-instance-types
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl cloud.vmtypes.default_type_name&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl services.imaging.worker.instance_type&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl services.loadbalancing.worker.instance_type&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>this will enable 4.4.x instance types and disable the default Eucalyptus 5 instance types. The
+default instance type and the types used for services are updated accordingly.&lt;/p>
+&lt;h2 id="moving-to-eucalyptus-5">Moving to Eucalyptus 5?&lt;/h2>
+&lt;p>Upgrading from previous releases to Eucalyptus 5 is not supported. If moving to Eucalyptus 5
+data such as S3 objects and EBS volumes can be copied from existing deployments before they
+are retired.&lt;/p>
+&lt;h1 id="thanks">Thanks!&lt;/h1>
+&lt;p>Thanks for giving Eucalyptus 5 a try and please use &lt;a href="https://github.com/Corymbia/eucalyptus/issues">github issues&lt;/a>
+to report any problems you encounter to help improve Eucalyptus.&lt;/p></description></item><item><title>Blog: Eucalyptus 5 FastStart Ansible Playbook</title><link>https://www.eucastack.io/blog/2020/03/09/eucalyptus-5-faststart-ansible-playbook/</link><pubDate>Mon, 09 Mar 2020 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2020/03/09/eucalyptus-5-faststart-ansible-playbook/</guid><description>
+&lt;p>A new Ansible based FastStart install for single host Eucalyptus clouds is now
+available for early access to Eucalyptus 5 pre-releases.&lt;/p>
+&lt;p>A FastStart deployment requires a CentOS 7.5-7.7 host with 16G memory and 100G disk
+as the recommended host minimums. Ansible FastStart installs Eucalyptus with
+Walrus object storage, overlay block storage, and vpcmido network mode. The
+deployment is from Eucalyptus 5 nightly builds, so will always have the latest
+pre-release functionality.&lt;/p>
+&lt;h2 id="faststart-install">FastStart install&lt;/h2>
+&lt;p>To install Eucalyptus 5 using the Ansible FastStart run (as root):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; bash &amp;lt;&lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>curl -Ls https://go.euca.me/5eav&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>The interactive installer will check system prerequisites and prompt for the one
+required configuration item, the VPC public IP address CIDR. Currently the installer
+requires between a &lt;code>/24&lt;/code> (~256 addresses) and a &lt;code>/28&lt;/code> (~16 addresses) block, for
+example:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>192.168.100.0/24&lt;/code> for addresses &lt;code>192.168.100.1&lt;/code> - &lt;code>192.168.100.254&lt;/code>&lt;/li>
+&lt;li>&lt;code>192.168.1.128/25&lt;/code> for addresses &lt;code>192.168.1.129&lt;/code> - &lt;code>192.168.1.254&lt;/code>&lt;/li>
+&lt;li>&lt;code>192.168.2.192/26&lt;/code> for addresses &lt;code>192.168.2.193&lt;/code> - &lt;code>192.168.2.254&lt;/code>&lt;/li>
+&lt;li>&lt;code>192.168.3.224/27&lt;/code> for addresses &lt;code>192.168.3.225&lt;/code> - &lt;code>192.168.3.254&lt;/code>&lt;/li>
+&lt;li>&lt;code>192.168.4.240/28&lt;/code> for addresses &lt;code>192.168.4.241&lt;/code> - &lt;code>192.168.4.254&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>If the target hosts IP was &lt;code>10.20.30.40/24&lt;/code> then the CIDR used could be
+&lt;code>10.20.30.240/28&lt;/code>.&lt;/p>
+&lt;p>These addresses should not currently be in use, they will be used by instances in
+the deployment.&lt;/p>
+&lt;h2 id="post-install">Post install&lt;/h2>
+&lt;p>Once the installation completes a few configuration items are listed as next
+steps. You could install machine images (ami/emi) using the new wrapper script:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; eucalyptus-images&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>or get started with the management console by configuring the administrator
+login:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; euare-useraddloginprofile --as-account eucalyptus -u admin -p PASSWORD&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>The installer also sets up the AWS CLI for use with Eucalyptus:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws s3 ls
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2020-03-07 00:46:33 eucalyptus-service-image-v5.0.100
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws ec2 describe-availability-zones
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>AVAILABILITYZONES cloud-1 available cloud-1a
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; aws ec2 describe-account-attributes
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ACCOUNTATTRIBUTES supported-platforms
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ATTRIBUTEVALUES VPC
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ACCOUNTATTRIBUTES default-vpc
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ATTRIBUTEVALUES vpc-6b1e517c04915806c
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt;&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>You might want to review the &lt;a href="https://www.eucastack.io/blog/2019/04/01/eucalyptus-5-beta-1-released/">Eucalyptus 5 beta 1 announcement&lt;/a>
+for more details on the release.&lt;/p>
+&lt;h2 id="feedback">Feedback&lt;/h2>
+&lt;p>Please report any issues you find with the &lt;a href="https://github.com/Corymbia/eucalyptus-ansible/issues">installer&lt;/a>
+or &lt;a href="https://github.com/Corymbia/eucalyptus/issues">Eucalyptus 5&lt;/a> to help
+improve the final release.&lt;/p></description></item><item><title>Blog: Eucalyptus 5 beta 1 Released</title><link>https://www.eucastack.io/blog/2019/04/01/eucalyptus-5-beta-1-released/</link><pubDate>Mon, 01 Apr 2019 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/blog/2019/04/01/eucalyptus-5-beta-1-released/</guid><description>
+&lt;p>Eucalyptus Cloud 5 beta 1 has been released, this release provides early access for trying out new
+functionality on non-production deployments.&lt;/p>
+&lt;p>We are exited to make 5.0 available as a preview to a wider audience to get feedback on new features
+in advance of the final release of Eucalyptus Cloud 5.&lt;/p>
+&lt;h2 id="new-in-eucalyptus-5">New in Eucalyptus 5&lt;/h2>
+&lt;p>Some new features in Eucalyptus 5 are:&lt;/p>
+&lt;ul>
+&lt;li>Auto Scaling instance protection&lt;/li>
+&lt;li>CloudFormation support for YAML templates&lt;/li>
+&lt;li>EC2 iam instance profile association&lt;/li>
+&lt;li>EC2 long resource identifiers&lt;/li>
+&lt;li>S3 bucket policy support&lt;/li>
+&lt;li>SQS service technical preview&lt;/li>
+&lt;/ul>
+&lt;p>Other notable changes in Eucalyptus 5 are:&lt;/p>
+&lt;ul>
+&lt;li>Cluster controller now part of main cloud service&lt;/li>
+&lt;li>Java runtime updated to version 11&lt;/li>
+&lt;li>Reporting service removed&lt;/li>
+&lt;/ul>
+&lt;p>Full details of changes in Eucalyptus 5 are available in the
+&lt;a href="https://github.com/orgs/Corymbia/projects/3">Corymbia github project&lt;/a>&lt;/p>
+&lt;h2 id="try-eucalyptus-5">Try Eucalyptus 5&lt;/h2>
+&lt;p>You can try Eucalyptus 5 with a FastStart install by running:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; bash &amp;lt;&lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>curl -Ls https://eucalyptus.cloud/install5ea&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>as root, on a CentOS 7.6 minimal install with a few IP addresses to spare.&lt;/p>
+&lt;h2 id="miss-eucalyptus-44x">Miss Eucalyptus 4.4.x?&lt;/h2>
+&lt;p>Eucalyptus 5 look a little different from 4.4.x due to changes with instance types and long
+identifiers. If you want to try Eucalyptus 5 but with a 4.4.x feel, you can make changes as
+follows.&lt;/p>
+&lt;p>To disable EC2 long identifiers, run the following as an administrator:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; euctl cloud.short_identifier_prefixes&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#4e9a06">&amp;#39;*&amp;#39;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>changing this setting will cause any new resources to be created with short identifiers (where
+supported). You can have a mix of short and long identifiers depending on settings when those
+resources were created.&lt;/p>
+&lt;p>To change instance types to be the same as 4.4.x, run the following as an administrator:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&amp;gt; euform-create-stack &lt;span style="color:#4e9a06">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#4e9a06">&lt;/span> --template-file /usr/share/eucalyptus/doc/ec2-instance-types-eucalyptus-4.yaml &lt;span style="color:#4e9a06">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#4e9a06">&lt;/span> eucalyptus-4-instance-types
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl cloud.vmtypes.default_type_name&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl services.imaging.worker.instance_type&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;gt; euctl services.loadbalancing.worker.instance_type&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>m1.medium&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>this will enable 4.4.x instance types and disable the default Eucalyptus 5 instance types. The
+default instance type and the types used for services are updated accordingly.&lt;/p>
+&lt;h1 id="thanks">Thanks!&lt;/h1>
+&lt;p>Thanks for giving Eucalyptus 5 a try and please use &lt;a href="https://github.com/Corymbia/eucalyptus/issues">github issues&lt;/a>
+to report any problems you encounter to help improve the final release of Eucalyptus 5.&lt;/p></description></item></channel></rss>

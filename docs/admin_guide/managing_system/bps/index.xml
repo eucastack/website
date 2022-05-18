@@ -1,0 +1,42 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Cloud Best Practices</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/bps/</link><description>Recent content in Cloud Best Practices on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/admin_guide/managing_system/bps/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Synchronize Clocks</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/bps/securing_system/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/bps/securing_system/</guid><description>
+&lt;p>Eucalyptus checks message timestamps across components in the cloud infrastructure. This assures command integrity and provides better security.Eucalyptus components receive and exchange messages using either Query or SOAP interfaces (or both). Messages received over these interfaces are required to have some form of a time stamp (as defined by AWS specification) to prevent message replay attacks. Because Eucalyptus enforces strict policies when checking timestamps in the received messages, for the correct functioning of the cloud infrastructure, it is crucial to have clocks constantly synchronized (for example, with ntpd) on all machines hosting Eucalyptus components. To prevent user command failures, it is also important to have clocks synchronized on the client machines.&lt;/p>
+&lt;p>Following the AWS specification, all Query interface requests containing the Timestamp element are rejected as expired after 15 minutes of the timestamp. Requests containing the Expires element expire at the time specified by the element. SOAP interface requests using WS-Security expire as specified by the WS-Security Timestamp element.&lt;/p>
+&lt;p>When checking the timestamps for expiration, Eucalyptus allows up to 20 seconds of clock drift between the machines. This is a default setting. You can change this value for the CLC at runtime by setting the &lt;code>bootstrap.webservices.clock_skew_sec&lt;/code> property as follows:&lt;/p>
+&lt;pre>&lt;code>euctl bootstrap.webservices.clock_skew_sec=&amp;lt;new_value_in_seconds&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>For additional protection from the message replay attacks, the CLC implements a replay detection algorithm and rejects messages with the same signatures received within 15 minutes. Replay detection parameters can be tuned as described in &lt;a href="https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/security_task_replays/">Configure Replay Protection&lt;/a> .&lt;/p></description></item><item><title>Docs: Configure SSL</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/bps/configuring_ssl/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/bps/configuring_ssl/</guid><description>
+&lt;p>In order to connect to Eucalyptus using SSL/TLS, you must have a valid certificate for the Cloud Controller (CLC)&lt;/p>
+&lt;p>If you have more than one host (other than node controllers), note the following:&lt;/p>
+&lt;ul>
+&lt;li>The keystore must be updated on each host running the eucalyptus-cloud service&lt;/li>
+&lt;li>The [key_alias] must be the same on each host&lt;/li>
+&lt;li>Use a wildcard certificate (i.e. *.&amp;lt;system.dns.dnsdomain&amp;gt;), since UFS is responsible for all service API endpoints&lt;/li>
+&lt;/ul>
+&lt;h2 id="create-a-keystore">Create a keystore&lt;/h2>
+&lt;p>Eucalyptus uses a PKCS12-format keystore. If you are using a certificate signed by a trusted root CA, use the following command to convert your trusted certificate and key into an appropriate format:&lt;/p>
+&lt;pre>&lt;code>openssl pkcs12 -export -in [YOURCERT.crt] -inkey [YOURKEY.key] \
+-out tmp.p12 -name [key_alias]
+&lt;/code>&lt;/pre>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The above command will request an export password, which is used in the following steps.
+&lt;/div>
+&lt;p>Save a backup of the Eucalyptus keystore, at &lt;em>/var/lib/eucalyptus/keys/euca.p12&lt;/em> , and then import your keystore into the Eucalyptus keystore as follows:&lt;/p>
+&lt;pre>&lt;code>keytool -importkeystore \
+-srckeystore tmp.p12 -srcstoretype pkcs12 -srcstorepass [export_password] \
+-destkeystore /var/lib/eucalyptus/keys/euca.p12 -deststoretype pkcs12 \
+-deststorepass eucalyptus -alias [key_alias] \
+-srckeypass [export_password]
+&lt;/code>&lt;/pre>
+&lt;h2 id="enable-the-cloud-controller-to-use-this-keystore">Enable the Cloud Controller to use this keystore&lt;/h2>
+&lt;p>Run the following commands on the Cloud Controller (CLC):&lt;/p>
+&lt;pre>&lt;code>euctl bootstrap.webservices.ssl.server_alias=[key_alias]
+&lt;/code>&lt;/pre>
+&lt;h2 id="optional-redirect-requests-to-use-port-443">Optional: Redirect Requests to use Port 443&lt;/h2>
+&lt;p>To allow user facing services requests on port 443 instead of the default 8773, run the following commands on the CLC:&lt;/p>
+&lt;pre>&lt;code>euctl bootstrap.webservices.port=443
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Storage Volumes</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/bps/bp_storage/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/bps/bp_storage/</guid><description>
+&lt;p>Eucalyptus manages storage volumes for your private cloud. Volume management strategies are application specific, but this topic includes some general guidelines.When setting up your Storage Controller, consider whether performance (bandwidth and latency of read/write operations) or availability is more important for your application. For example, using several smaller volumes will allow snapshots to be taken on a rolling basis, decreasing each snapshot creation time and potentially making restore operations faster if the restore can be isolated to a single volume. However, a single larger volume allows for faster read/write operations from the VM to the storage volume.&lt;/p>
+&lt;p>An appropriate network configuration is an important part of optimizing the performance of your storage volumes. For best performance, each Node Controller should be connected to a distinct storage network that enables the NC to communicate with the SC or Ceph, without interfering with normal NC/VM-instance network traffic.&lt;/p>
+&lt;p>Eucalyptus includes configurable limits on the size of a single volume, as well as the aggregate size of all volumes on an SC. The SC can push snapshots from Ceph, where the volumes reside, to object storage, where the snapshots become available across multiple clusters. Smaller volumes will be much faster to snapshot and transfer, whereas large volumes will take longer. However, if many concurrent snapshot requests are sent to the SC, operations may take longer to complete.&lt;/p>
+&lt;p>EBS volumes are created from snapshots on the SC or Ceph, after the snapshot has been downloaded from object storage to the device. Creating an EBS volume from a snapshot on the same cluster as the source volume of the snapshot will reduce delays caused by having to transfer snapshots from object storage.&lt;/p></description></item></channel></rss>

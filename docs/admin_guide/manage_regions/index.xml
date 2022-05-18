@@ -1,0 +1,76 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Manage Regions</title><link>https://www.eucastack.io/docs/admin_guide/manage_regions/</link><description>Recent content in Manage Regions on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/admin_guide/manage_regions/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Regions Overview</title><link>https://www.eucastack.io/docs/admin_guide/manage_regions/regions_overview/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/manage_regions/regions_overview/</guid><description>
+&lt;p>Eucalytpus provides support for the notion of federation of identity.Federation of identity information means that a Cloud Administrator can create a federation of (otherwise independent) Eucalyptus &amp;ldquo;clouds&amp;rdquo; where a Cloud User, using the same credentials as always, can use any of these federated Eucalyptus cloud regions. For the parts of Identify Access Management (IAM) and Security Token Service (STS) that Eucalyptus implements, the experience exposed to the Cloud User is the same as that seen by an AWS user working across AWS regions.&lt;/p>
+&lt;p>A user can interact with any region using the same credentials, subjected to the same policies, and having uniformly accessible and structured principals (Accounts, Users, Groups, Roles, etc.). The globality also includes the STS service functionality, the temporary credentials produced by the STS service also work globally.&lt;/p>
+&lt;p>Notably, this feature is restricted to IAM/STS and does not include other services which have pseudo-global characteristics, such as global bucket name space for S3. The following are general principles associated with regions:&lt;/p>
+&lt;ul>
+&lt;li>A region needs to be Registered as a federated region&lt;/li>
+&lt;li>Registered regions should be discoverable via the EC2 DescribeRegions response&lt;/li>
+&lt;li>A cloud user&amp;rsquo;s credentials should be accepted by any federated cloud&lt;/li>
+&lt;li>There is a global IAM service (identities and policies are global for all registered regions)&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Region Configuration File Format</title><link>https://www.eucastack.io/docs/admin_guide/manage_regions/regions_config_file_format/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/manage_regions/regions_config_file_format/</guid><description>
+&lt;p>This section describes the necessary configuration properties that need to be addressed.For federation to be successfully configured, each cloud (i.e. region) that will be part of the federated cloud needs to have the following properties set (at a minimum):&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Property Name&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">region.region_name&lt;/td>
+&lt;td style="text-align:left">This cloud property identifies the local region. This is required and should be valid for use in a DNS name.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">region.region_configuration&lt;/td>
+&lt;td style="text-align:left">This property is a JSON document that will be the same for all federated regions.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>Docs: Examples</title><link>https://www.eucastack.io/docs/admin_guide/manage_regions/region_examples/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/manage_regions/region_examples/</guid><description>
+&lt;p>In this example, there will be two clouds used (10.111.5.32 and 10.111.1.1). Before setting up federation, the clouds must meet the following requirements:&lt;/p>
+&lt;ul>
+&lt;li>Eucalyptus installed&lt;/li>
+&lt;li>Eucalyptus DNS enabled&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Federation Differences Between AWS and Eucalyptus</title><link>https://www.eucastack.io/docs/admin_guide/manage_regions/regions_aws_euca_diffs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/manage_regions/regions_aws_euca_diffs/</guid><description>
+&lt;p>This section outlines the differences between AWS and Eucalyptus with respect to federation in the following platforms:&lt;/p>
+&lt;ul>
+&lt;li>Euca2ools vs. AWS EC2 API Tools&lt;/li>
+&lt;li>Eucalyptus OSG vs. AWS S3&lt;/li>
+&lt;li>Eucalyptus Resource-Level vs. AWS Resource-Level Permissions&lt;/li>
+&lt;li>Global Cloud Administration (Local vs. Federated)&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Troubleshooting</title><link>https://www.eucastack.io/docs/admin_guide/manage_regions/regions_troubleshooting/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/manage_regions/regions_troubleshooting/</guid><description>
+&lt;p>This section is presented in a Q&amp;amp;A format to provide a quick reference to the most frequently asked questions.&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Can Cloud Administrators federate existing clouds (i.e. clouds that already have non-system Eucalyptus accounts)? &lt;strong>A.&lt;/strong> No, this is currently not supported. If a cloud administrator wants to federate an Eucalyptus clouds, this must be done prior to any non-system Eucalyptus account/user/group creation.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Is Eucalyptus DNS required for federating Eucalyptus clouds? &lt;strong>A.&lt;/strong> No, however its highly recommended to enable it.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Are supported for more granular IAM access policies per region? &lt;strong>A.&lt;/strong> As of 4.2, no. IAM policies apply globally (for all regions). In order to get more granular IAM access, use availability zone restrictions under each region. For more information, see &lt;a href="https://github.com/eucalyptus/architecture/wiki/iam-3.4-cluster-policies#Restrict_Image_to_Availability_Zone">Restrict Image to Availability Zone&lt;/a> .&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>What services/resources span globally? Which span regionally? &lt;strong>A.&lt;/strong> Currently, only Eucalyptus IAM and STS are global services/resources. All other services/resources are region-based (i.e. Eucalyptus cloud-specific). The only resource that can be either global or regional are keypairs. This is because users can import the same keypair to each region, therefore, the keypair is globally accessible. For additional information, please refer to the AWS EC2 Documentation regarding &lt;a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/resources.html">Resource Locations&lt;/a> .&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Are Eucalyptus system accounts global in a federated setup? &lt;strong>A.&lt;/strong> No. Any Eucalyptus system account is limited to that region. Examples of Eucalyptus system accounts are as follows:&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>eucalyptus&lt;/li>
+&lt;li>(eucalyptus)blockstorage&lt;/li>
+&lt;li>(eucalyptus)aws-exec-read&lt;/li>
+&lt;li>(eucalyptus)cloudformation&lt;/li>
+&lt;/ul>
+&lt;ol>
+&lt;li>
+&lt;p>Is and supported? &lt;strong>A.&lt;/strong> No. There have been no improvements associated with Object Storage Gateway (OSG) regarding cross-regional behavior similar to AWS.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>If a user uploads an object to an Object Storage Gateway in one region, will copies show up in other regions (similar to the behavior on AWS)? &lt;strong>A.&lt;/strong> No, this is currently unsupported.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Do federated Eucalyptus clouds follow the same globally? &lt;strong>A.&lt;/strong> No, Eucalyptus IAM limitations are regionally scoped.&lt;/p>
+&lt;/li>
+&lt;/ol></description></item></channel></rss>

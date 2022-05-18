@@ -1,0 +1,62 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Component Workarounds</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_general/</link><description>Recent content in Component Workarounds on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_general/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Access and Identities</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_general/ts_access/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_general/ts_access/</guid><description>
+&lt;p>This topic contains information about access-related problems and solutions.
+Need to verify an existing LIC file.&lt;/p>
+&lt;ol>
+&lt;li>Enter the following command: The output from the example above shows the name of the LIC file and status of the synchronization (set to false).&lt;/li>
+&lt;/ol></description></item><item><title>Docs: Elastic Load Balancing</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_general/ts_elb/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_general/ts_elb/</guid><description>
+&lt;p>This topic explains suggestions for problems you might have with Elastic Load Balancing (ELB).
+Can&amp;rsquo;t synchronize with time server
+Eucalyptus sets up NTP automatically for any instance that has an internet connection to a public network. If an instance doesn&amp;rsquo;t have such a connection, set the cloud property &lt;code>loadbalancing.loadbalancer_vm_ntp_server&lt;/code> to a valid NTP server IP address. For example:&lt;/p>
+&lt;pre>&lt;code>euctl loadbalancing.loadbalancer_vm_ntp_server=169.254.169.254
+PROPERTY loadbalancing.loadbalancer_vm_ntp_server 169.254.169.254 was {}
+&lt;/code>&lt;/pre>
+&lt;p>Need to debug an ELB instance
+To debug an ELB instance, set the &lt;code>loadbalancing.loadbalancer_vm_keyname&lt;/code> cloud property to the keypair of the instance you want to debug. For example:&lt;/p>
+&lt;pre>&lt;code># euctl loadbalancing.loadbalancer_vm_keyname=sshlogin
+PROPERTY loadbalancing.loadbalancer_vm_keyname sshlogin was {}
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Imaging Worker</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_general/ts_img_worker/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_general/ts_img_worker/</guid><description>
+&lt;p>This topic contains troubleshooting tips for the Imaging Worker.Some requests that require the Imaging Worker might remain in pending for a long time. For example: an import task or a paravirtual instance run. If request remains in pending, the Imaging Worker instance might not able to run because of a lack of resources (for example, instance slots or IP addresses).&lt;/p>
+&lt;p>You can check for this scenario by listing latest AutoScaling activities:&lt;/p>
+&lt;pre>&lt;code>euscale-describe-scaling-activities -g asg-euca-internal-imaging-worker-01
+&lt;/code>&lt;/pre>
+&lt;p>Check for failures that indicate inadequate resources such as:&lt;/p>
+&lt;pre>&lt;code>ACTIVITY 1950c4e5-0db9-4b80-ad3b-5c7c59d9c82e 2014-08-12T21:05:32.699Z asg-euca-internal-imaging-worker-01 Failed Not enough resources available: addresses; please stop or terminate unwanted instances or release unassociated elastic IPs and try again, or run with private addressing only
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Instances</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_general/ts_instances/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_general/ts_instances/</guid><description>
+&lt;p>This topic contains information to help you troubleshoot your instances.
+Inaccurate IP addresses display in the output of euca-describe-addresses.
+This can occur if you add IPs from the wrong subnet into your public IP pool, do a restart on the CC, swap out the wrong ones for the right ones, and do another restart on the CC. To resolve this issue, run the following commands.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+A restart should only be performed when no instances are running, or when instance service interruption can be tolerated. A restart causes the CC to reset its networking configuration, regardless of whether or not it is in use.
+&lt;/div>
+&lt;pre>&lt;code>systemctl stop eucalyptus-cloud.service
+systemctl stop eucalyptus-cluster.service
+iptables -F
+systemctl restart eucalyptus-cluster.service
+systemctl start eucalyptus-cloud.service
+&lt;/code>&lt;/pre>
+&lt;p>NC does not recalculate disk size correctly
+This can occur when trying to add extra disk space for instance ephemeral storage. To resolve this, you need to delete the instance cache and restart the NC.&lt;/p>
+&lt;p>For example:&lt;/p>
+&lt;pre>&lt;code>rm -rf /var/lib/eucalyptus/instances/*
+systemctl restart eucalyptus-node.service
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Walrus and Storage</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_general/ts_walrus/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_general/ts_walrus/</guid><description>
+&lt;p>This topic contains information about Walrus-related problems and solutions.
+Walrus decryption failed.
+On Ubuntu 10.04 LTS, kernel version 2.6.32-31 includes a bug that prevents Walrus from decrypting images. This can be determined from the following line in cloud-output.log&lt;/p>
+&lt;pre>&lt;code>javax.crypto.
+BadPaddingException: pad block corrupted
+&lt;/code>&lt;/pre>
+&lt;p>If you are running this kernel:&lt;/p>
+&lt;ol>
+&lt;li>Update to kernel version 2.6.32-33 or higher.&lt;/li>
+&lt;li>De-register the failed image ( ).&lt;/li>
+&lt;li>Re-register the bundle that you uploaded ( ).&lt;/li>
+&lt;/ol>
+&lt;p>Walrus physical disk is not large enough.&lt;/p>
+&lt;ol>
+&lt;li>Stop the CLC.&lt;/li>
+&lt;li>Add a disk.&lt;/li>
+&lt;li>Migrate your data.
+Make sure you use LVM with your new disk drive(s).&lt;/li>
+&lt;/ol></description></item></channel></rss>

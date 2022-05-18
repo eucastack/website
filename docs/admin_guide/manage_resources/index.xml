@@ -1,0 +1,128 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Manage Resources</title><link>https://www.eucastack.io/docs/admin_guide/manage_resources/</link><description>Recent content in Manage Resources on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/admin_guide/manage_resources/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Manage Auto Scaling Resources</title><link>https://www.eucastack.io/docs/admin_guide/manage_resources/manage_resources_as/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/manage_resources/manage_resources_as/</guid><description>
+&lt;p>You can list, delete, update, and suspend your Eucalyptus cloud&amp;rsquo;s Autoscaling resources by passing the option with the keyword with the appropriate command.The followings are some examples you can use to act on your Auto Scaling resources.&lt;/p>
+&lt;p>To show all launch configurations in your cloud, run the following command:&lt;/p>
+&lt;pre>&lt;code>euscale-describe-launch-configs --show-long verbose
+&lt;/code>&lt;/pre>
+&lt;p>To show all Auto Scaling instances in your cloud, run the following command:&lt;/p>
+&lt;pre>&lt;code>euscale-describe-auto-scaling-groups --show-long verbose
+&lt;/code>&lt;/pre>
+&lt;p>To show all Auto Scaling instances in your cloud, run the following command:&lt;/p>
+&lt;pre>&lt;code>euscale-describe-auto-scaling-groups --show-long verbose
+&lt;/code>&lt;/pre>
+&lt;p>To delete an Auto Scaling resource in your cloud, first get the ARN of the resource, as in this example:&lt;/p>
+&lt;pre>&lt;code>$ euscale-describe-launch-configs --show-long verbose
+LAUNCH-CONFIG TestLaunchConfig emi-06663A57 m1.medium 2013-10-30T22:52:39.392Z true
+arn:aws:autoscaling::961915002812:launchConfiguration:5ac29caf-9aad-4bdb-b228-5f
+ce841dc062:launchConfigurationName/TestLaunchConfig
+&lt;/code>&lt;/pre>
+&lt;p>Then run the following command with the ARN:&lt;/p>
+&lt;pre>&lt;code>euscale-delete-launch-config
+arn:aws:autoscaling::961915002812:launchConfiguration:5ac29caf-9aad-4bdb-b228-5f
+ce841dc062:launchConfigurationName/TestLaunchConfig
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Manage CloudWatch Resources</title><link>https://www.eucastack.io/docs/admin_guide/manage_resources/manage_resources_cw/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/manage_resources/manage_resources_cw/</guid><description>
+&lt;p>To manage CloudWatch resources on a Eucalyptus cloud, use the option in any command that lists, deletes, modifies, or sets a CloudWatch resource.The following are examples of what you can do with your CloudWatch resources.&lt;/p>
+&lt;p>To list all alarms for the cloud, run the following command:&lt;/p>
+&lt;pre>&lt;code>euwatch-describe-alarms verbose
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Manage Compute Resources</title><link>https://www.eucastack.io/docs/admin_guide/manage_resources/manage_resources_ec2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/manage_resources/manage_resources_ec2/</guid><description>
+&lt;p>To manage compute resources on a Eucalyptus cloud, use the option in any command.The following are some examples you can use to view various compute resources.&lt;/p>
+&lt;p>To see all instances running on your cloud, enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-describe-instances verbose
+&lt;/code>&lt;/pre>
+&lt;p>To see all volumes in your cloud, enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-describe-volumes verbose
+&lt;/code>&lt;/pre>
+&lt;p>To see all keypairs in your cloud, enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-describe-keypairs verbose
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Manage ELB Resources</title><link>https://www.eucastack.io/docs/admin_guide/manage_resources/manage_resources_elb/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/manage_resources/manage_resources_elb/</guid><description>
+&lt;p>To list and delete ELB resources on a Eucalyptus cloud, use the option with any command.The following are some examples.&lt;/p>
+&lt;p>To list all detailed configuration information for the load balancers in your cloud, run the following command:&lt;/p>
+&lt;pre>&lt;code>eulb-describe-lbs verbose
+&lt;/code>&lt;/pre>
+&lt;p>To list the details of policies for all load balancers in your cloud, run the following command:&lt;/p>
+&lt;pre>&lt;code>eulb-describe-lb-policies verbose
+&lt;/code>&lt;/pre>
+&lt;p>To list meta information for all load balancer policies in your cloud, run the following command:&lt;/p>
+&lt;pre>&lt;code>eulb-describe-lb-policy-types verbose
+&lt;/code>&lt;/pre>
+&lt;p>To delete any load balancer or any load balancer resource on the cloud, instead of using the ELB name, use the DNS name. For example:&lt;/p>
+&lt;pre>&lt;code>$ eulb-describe-lbs verbose
+LOAD_BALANCER MyLoadBalancer MyLoadBalancer-961915002812.lb.foobar.eucalyptus-systems.com 2013-10-30T03:02:53.39Z
+$ eulb-delete-lb MyLoadBalancer-961915002812.lb.foobar.eucalyptus-systems.com
+$ eulb-describe-lbs verbose
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Manage IAM Resources</title><link>https://www.eucastack.io/docs/admin_guide/manage_resources/manage_resources_euare/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/manage_resources/manage_resources_euare/</guid><description>
+&lt;p>To manage Euare (IAM) resources on your Eucalyptus cloud, use the option with any command that describes, adds, deletes, or modifies resources. This option allows you to assume the role of the admin user for a given account. You can also use a policy to control and limit instances to specific availability zones. The following are some examples.&lt;/p>
+&lt;p>To list all groups in an account, enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-grouplistbypath --as-account &amp;lt;account-name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The &lt;em>as-account&lt;/em> option is for the Euare service only. To run commands for an account with any service use the &lt;em>clcadmin-impersonate-user&lt;/em> command.
+&lt;/div>
+&lt;p>To list all users in an account, enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-userslistbypath --as-account &amp;lt;account-name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>To delete the login profile of a user in an account, enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-userdelloginprofile --as-account &amp;lt;account-name&amp;gt; -u &amp;lt;user_name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>To modify the login profile of a user in an account, enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-usermod --as-account &amp;lt;account-name&amp;gt; -u &amp;lt;user_name&amp;gt; -n
+&amp;lt;new_user_name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>To restrict an image to a specific availability zone, edit and attach this sample policy to a user:&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Statement&amp;quot;:[
+{
+&amp;quot;Effect&amp;quot;:&amp;quot;Allow&amp;quot;,
+&amp;quot;Action&amp;quot;:&amp;quot;ec2:*&amp;quot;,
+&amp;quot;Resource&amp;quot;:&amp;quot;*&amp;quot;
+},
+{
+&amp;quot;Effect&amp;quot;: &amp;quot;Deny&amp;quot;,
+&amp;quot;Action&amp;quot;: [ &amp;quot;ec2:*&amp;quot; ],
+&amp;quot;Resource&amp;quot;: &amp;quot;arn:aws:ec2:::availabilityzone/PARTI00&amp;quot;,
+&amp;quot;Condition&amp;quot;: {
+&amp;quot;ArnLike&amp;quot;: {
+&amp;quot;ec2:TargetImage&amp;quot;: &amp;quot;arn:aws:ec2:*:*:image/emi-239D37F2&amp;quot;
+}
+}
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;p>To restrict a user to actions only within a specific availability zone, edit and attach this sample policy to a user:&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Version&amp;quot;: &amp;quot;2012-10-17&amp;quot;,
+&amp;quot;Statement&amp;quot;: [{
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Action&amp;quot;: [ &amp;quot;ec2:TerminateInstances&amp;quot; ],
+&amp;quot;Resource&amp;quot;: &amp;quot;*&amp;quot;,
+&amp;quot;Condition&amp;quot;: {
+&amp;quot;StringEquals&amp;quot;: {
+&amp;quot;ec2:AvailabilityZone&amp;quot;: &amp;quot;PARTI00&amp;quot;
+}
+}
+}]
+}
+&lt;/code>&lt;/pre>
+&lt;p>To deny actions at the account level, edit and attach this example policy to an account:&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Statement&amp;quot;: [ {
+&amp;quot;Effect&amp;quot;: &amp;quot;Deny&amp;quot;,
+&amp;quot;Action&amp;quot;: [ &amp;quot;ec2:RunInstances&amp;quot; ],
+&amp;quot;Resource&amp;quot;: &amp;quot;arn:aws:ec2:::availabilityzone/PARTI00&amp;quot;,
+&amp;quot;Condition&amp;quot;: {
+&amp;quot;ArnLike&amp;quot;: {
+&amp;quot;ec2:TargetImage&amp;quot;: &amp;quot;arn:aws:ec2:*:*:image/emi-239D37F2&amp;quot;
+}
+}
+} ]
+}
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Manage Walrus Resources</title><link>https://www.eucastack.io/docs/admin_guide/manage_resources/manage_resources_walrus/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/manage_resources/manage_resources_walrus/</guid><description>
+&lt;p>This topic explains Walrus resources.&lt;/p>
+&lt;ul>
+&lt;li>Access Control Lists (ACLs) allow an account to explicitly grant access to a bucket or object to another account. ACLs only work between accounts, not IAM users. You specify accounts with the CanonicalID or the email address associated with the account (for Eucalyptus this is the email of the account admin).&lt;/li>
+&lt;li>These are set by the admin of an account to control the access of users within that specific account. This is how an admin controls what users in that specific account are allowed to do. Policies can specify allow/deny on specific S3 operations (e.g. s3:GetObject, or s3:PutObject). IAM policies are set by sending the policy to the IAM (Euare) endpoint, not S3 (Walrus).&lt;/li>
+&lt;li>These are IAM-like policies set by the bucket owner are not supported in Eucalyptus.
+For more information about bucket ACLs, go to &lt;a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/ACLOverview.html">Access Control List (ACL) Overview&lt;/a> and &lt;a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/acl-using-rest-api.html">Managing ACLs Using the REST API&lt;/a> .&lt;/li>
+&lt;/ul>
+&lt;p>For more information about IAM policies, go to &lt;a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingIAMPolicies.html">Using IAM Policies&lt;/a> .&lt;/p></description></item></channel></rss>

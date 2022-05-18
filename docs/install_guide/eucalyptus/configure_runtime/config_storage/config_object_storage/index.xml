@@ -1,0 +1,62 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Configure Object Storage</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/config_storage/config_object_storage/</link><description>Recent content in Configure Object Storage on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/config_storage/config_object_storage/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Use Ceph-RGW</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/config_storage/config_object_storage/config_storage_ceph_rgw/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/config_storage/config_object_storage/config_storage_ceph_rgw/</guid><description>
+&lt;p>This topic describes how to configure Ceph Rados Gateway (RGW) as the backend for the Object Storage Gateway (OSG).&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ul>
+&lt;li>Successful completion of all the install sections prior to this section.&lt;/li>
+&lt;li>The UFS must be registered and enabled.&lt;/li>
+&lt;li>A Ceph storage cluster is available.&lt;/li>
+&lt;li>The ceph-radosgw service has been installed (on the UFS or any other host) and configured to use the Ceph storage cluster. recommends using civetweb with ceph-radosgw service. is a lightweight web server and is included in the ceph-radosgw installation. It is relatively easier to install and configure than the alternative option – a combination of Apache and Fastcgi modules.&lt;/li>
+&lt;/ul>
+&lt;p>For more information on Ceph-RGW, see the &lt;a href="http://docs.ceph.com/docs/master/radosgw/">Ceph-RGW documentation&lt;/a>.&lt;/p>
+&lt;h2 id="configure-ceph-rgw-object-storage">Configure Ceph-RGW object storage&lt;/h2>
+&lt;p>You must execute the steps below as a administrator.&lt;/p>
+&lt;p>Configure &lt;strong>ceph-rgw&lt;/strong> as the storage provider using the &lt;em>euctl&lt;/em> command:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euctl objectstorage.providerclient&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>ceph-rgw
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Configure &lt;em>objectstorage.s3provider.s3endpoint&lt;/em> to the &lt;strong>ip:port&lt;/strong> of the host running the ceph-radosgw service:&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Depending on the front end web server used by ceph-radosgw service, the default port is 80 for apache and 7480 for civetweb.
+&lt;/div>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euctl objectstorage.s3provider.s3endpoint&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&amp;lt;radosgw-host-ip&amp;gt;:&amp;lt;radosgw-webserver-port&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Configure &lt;em>objectstorage.s3provider.s3accesskey&lt;/em> and &lt;em>objectstorage.s3provider.s3secretkey&lt;/em> with the radosgw user credentials:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euctl objectstorage.s3provider.s3accesskey&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&amp;lt;radosgw-user-accesskey&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>euctl objectstorage.s3provider.s3secretkey&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&amp;lt;radosgw-user-secretkey&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The Ceph-RGW backend and OSG are now ready for production.&lt;/p></description></item><item><title>Docs: Use MinIO Backend</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/config_storage/config_object_storage/config_storage_minio/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/config_storage/config_object_storage/config_storage_minio/</guid><description>
+&lt;p>This topic describes how to configure MinIO as the object storage backend provider for the Object Storage Gateway (OSG).&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ul>
+&lt;li>The UFS must be registered and enabled.&lt;/li>
+&lt;li>Install and start MinIO&lt;/li>
+&lt;/ul>
+&lt;p>For more information on MinIO installation and configuration see the &lt;a href="https://docs.min.io/">MinIO Server Documentation&lt;/a>&lt;/p>
+&lt;h2 id="to-configure-minio-object-storage">To configure MinIO object storage&lt;/h2>
+&lt;p>You must execute the steps below as a administrator.&lt;/p>
+&lt;p>Configure &lt;strong>minio&lt;/strong> as the storage provider using the &lt;em>euctl&lt;/em> command:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euctl objectstorage.providerclient&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>minio
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Configure &lt;em>objectstorage.s3provider.s3endpoint&lt;/em> to the &lt;strong>ip:port&lt;/strong> of a host running the minio server:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euctl objectstorage.s3provider.s3endpoint&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&amp;lt;minio-host-ip&amp;gt;:&amp;lt;minio-port&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The default port for MinIO is 9000
+&lt;/div>
+&lt;p>Configure &lt;em>objectstorage.s3provider.s3accesskey&lt;/em> and &lt;em>objectstorage.s3provider.s3secretkey&lt;/em> with credentials for minio:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euctl objectstorage.s3provider.s3accesskey&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&amp;lt;minio-accesskey&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>euctl objectstorage.s3provider.s3secretkey&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&amp;lt;minio-secretkey&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Configure the expected response code for minio:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euctl objectstorage.s3provider.s3endpointheadresponse&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#0000cf;font-weight:bold">400&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The MinIO backend and OSG are now ready for production.&lt;/p></description></item><item><title>Docs: Use Walrus Backend</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/config_storage/config_object_storage/config_storage_walrus/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/config_storage/config_object_storage/config_storage_walrus/</guid><description>
+&lt;p>This topic describes how to configure Walrus as the object storage backend provider for the Object Storage Gateway (OSG).&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ul>
+&lt;li>Successful completion of all the install sections prior to this section.&lt;/li>
+&lt;li>The UFS must be registered and enabled.&lt;/li>
+&lt;/ul>
+&lt;h2 id="to-configure-walrus-object-storage">To configure Walrus object storage&lt;/h2>
+&lt;p>You must execute the steps below as a administrator.&lt;/p>
+&lt;p>Configure &lt;strong>walrus&lt;/strong> as the storage provider using the &lt;em>euctl&lt;/em> command.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euctl objectstorage.providerclient&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>walrus
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Check that the OSG is enabled.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euserv-describe-services
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If the state appears as &lt;strong>disabled&lt;/strong> or &lt;strong>broken&lt;/strong> , check the cloud-*.log files in the &lt;em>/var/log/eucalyptus&lt;/em> directory. A &lt;strong>disabled&lt;/strong> state generally indicates that there is a problem with your network or credentials. See &lt;a href="https://www.eucastack.io/docs/admin_guide/ops_oview/ops_ts/ts_logs/">Log File Location and Content&lt;/a> for more information.&lt;/p>
+&lt;p>The Walrus backend and OSG are now ready for production.&lt;/p></description></item></channel></rss>

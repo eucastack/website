@@ -1,0 +1,231 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Configure the Runtime Environment</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/</link><description>Recent content in Configure the Runtime Environment on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Configure Eucalyptus DNS</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/setting_up_dns/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/setting_up_dns/</guid><description>
+&lt;p>Eucalyptus provides a DNS service that maps service names, bucket names, and more to IP addresses. This section details how to configure the Eucalyptus DNS service.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+administration tools are designed to work with DNS-enabled clouds, so configuring this service is highly recommended. The remainder of this guide is written with the assumption that your cloud is DNS-enabled.
+&lt;/div>
+The DNS service will automatically try to bind to port 53. If port 53 cannot be used, DNS will be disabled. Typically, other system services like dnsmasq are configured to run on port 53. To use the Eucalyptus DNS service, you must disable these services.&lt;/p>
+&lt;h2 id="configure-the-domain-and-subdomain">Configure the Domain and Subdomain&lt;/h2>
+&lt;p>Before using the DNS service, configure the DNS subdomain name that you want Eucalyptus to handle using the steps that follow.&lt;/p>
+&lt;p>Log in to the CLC and enter the following:&lt;/p>
+&lt;pre>&lt;code>euctl system.dns.dnsdomain=mycloud.example.com
+&lt;/code>&lt;/pre>
+&lt;p>You can configure the load balancer DNS subdomain. To do so, log in to the CLC and enter the following:&lt;/p>
+&lt;pre>&lt;code>euctl services.loadbalancing.dns_subdomain=lb
+&lt;/code>&lt;/pre>
+&lt;h2 id="turn-on-ip-mapping">Turn on IP Mapping&lt;/h2>
+&lt;p>To enable mapping of instance IPs to DNS host names:&lt;/p>
+&lt;p>Enter the following command on the CLC:&lt;/p>
+&lt;pre>&lt;code>euctl bootstrap.webservices.use_instance_dns=true
+&lt;/code>&lt;/pre>
+&lt;p>When this option is enabled, public and private DNS entries are created for each launched instance in Eucalyptus . This also enables virtual hosting for Walrus. Buckets created in Walrus can be accessed as hosts. For example, the bucket &lt;code>mybucket&lt;/code> is accessible as &lt;code>mybucket.objectstorage.mycloud.example.com&lt;/code> .&lt;/p>
+&lt;p>Instance IP addresses will be mapped as &lt;code>euca-A-B-C-D.eucalyptus.mycloud.example.com&lt;/code> , where &lt;code>A-B-C-D&lt;/code> is the IP address (or addresses) assigned to your instance.&lt;/p>
+&lt;p>If you want to modify the subdomain that is reported as part of the instance DNS name, enter the following command:&lt;/p>
+&lt;pre>&lt;code>euctl cloud.vmstate.instance_subdomain=.custom-dns-subdomain
+&lt;/code>&lt;/pre>
+&lt;p>When this value is modified, the public and private DNS names reported for each instance will contain the specified custom DNS subdomain name, instead of the default value, which is &lt;code>eucalyptus&lt;/code> . For example, if this value is set to &lt;code>foobar&lt;/code> , the instance DNS names will appear as &lt;code>euca-A-B-C-D.foobar.mycloud.example.com&lt;/code> .&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The code example above correctly begins with &amp;ldquo;.&amp;rdquo; before .
+&lt;/div>
+&lt;h2 id="enable-dns-delegation">Enable DNS Delegation&lt;/h2>
+&lt;p>DNS delegation allows you to forward DNS traffic for the Eucalyptus subdomain to the Eucalyptus CLC host. This host acts as a name server. This allows interruption-free access to Eucalyptus cloud services in the event of a failure. The CLC host is capable of mapping cloud host names to IP addresses of the CLC and UFS / OSG host machines.&lt;/p>
+&lt;p>For example, if the IP address of the CLC is &lt;code>192.0.2.5&lt;/code> , and the IP address of Walrus is &lt;code>192.0.2.6&lt;/code> , the host &lt;code>compute.mycloud.example.com&lt;/code> resolves to &lt;code>192.0.2.5&lt;/code> and &lt;code>objectstorage.mycloud.example.com&lt;/code> resolves to &lt;code>192.0.2.6&lt;/code> .&lt;/p>
+&lt;p>To enable DNS delegation:&lt;/p>
+&lt;p>Enter the following command on the CLC:&lt;/p>
+&lt;pre>&lt;code>euctl bootstrap.webservices.use_dns_delegation=true
+&lt;/code>&lt;/pre>
+&lt;h2 id="configure-the-master-dns-server">Configure the Master DNS Server&lt;/h2>
+&lt;p>Set up your master DNS server to delegate the Eucalyptus subdomain to the UFS host machines, which act as name servers.&lt;/p>
+&lt;p>The following example shows how the Linux name server &lt;code>bind&lt;/code> is set up to delegate the Eucalyptus subdomain.&lt;/p>
+&lt;p>Open &lt;em>/etc/named.conf&lt;/em> and set up the &lt;code>example.com&lt;/code> zone. For example, your &lt;em>/etc/named.conf&lt;/em> may look like the following:&lt;/p>
+&lt;pre>&lt;code>zone &amp;quot;example.com&amp;quot; IN {
+type master;
+file &amp;quot;/etc/bind/db.example.com&amp;quot;;
+};
+&lt;/code>&lt;/pre>
+&lt;p>Create &lt;em>/etc/bind/db.example.com&lt;/em> if it does not exist. If your master DNS is already set up for &lt;code>example.com&lt;/code> , you will need to add a name server entry for UFS host machines. For example:&lt;/p>
+&lt;pre>&lt;code>$ORIGIN example.com.
+$TTL 604800
+@ IN SOA ns1 admin.example.com 1 604800 86400 2419200 604800
+NS ns1
+ns1 A MASTER.DNS.SERVER_IP
+ufs1 A UFS1_IP
+mycloud NS ufs1
+&lt;/code>&lt;/pre>
+&lt;p>After this, you will be able to resolve your instances&amp;rsquo; public DNS names such as &lt;code>euca-A-B-C-D.eucalyptus.mycloud.example.com&lt;/code> .&lt;/p>
+&lt;p>Restart the bind nameserver &lt;code>service named restart&lt;/code> . Verify your setup by pointing &lt;em>/etc/resolv.conf&lt;/em> on your client to your primary DNS server and attempt to resolve &lt;code>compute.example.com&lt;/code> using ping or nslookup. It should return the IP address of a UFS host machine.&lt;/p>
+&lt;h2 id="advanced-dns-options">Advanced DNS Options&lt;/h2>
+&lt;p>Recursive lookups and split-horizon DNS are available in Eucalyptus .&lt;/p>
+&lt;p>To enable any of the DNS resolvers, set &lt;code>dns.enabled&lt;/code> to &lt;code>true&lt;/code> . To enable the recursive DNS resolver, set &lt;code>dns.recursive.enabled&lt;/code> to &lt;code>true&lt;/code> . To enable split-horizon DNS resolution for internal instance public DNS name queries, set &lt;code>dns.split_horizon.enabled&lt;/code> to &lt;code>true&lt;/code> .&lt;/p>
+&lt;h2 id="optional-configure-eucalyptus-dns-to-spoof-aws-endpoints">Optional: Configure Eucalyptus DNS to Spoof AWS Endpoints&lt;/h2>
+&lt;p>You can configure instances to use AWS region FQDNs for service endpoints by enabling DNS spoofing.&lt;/p>
+&lt;p>Set up a Eucalyptus cloud with Eucalyptus DNS and HTTPS endpoints. When creating CSR, make sure and add Subject Alternative Names for all the supported AWS services for the given region that’s being tested. For example:&lt;/p>
+&lt;pre>&lt;code>$ openssl req -in wildcard.c-06.autoqa.qa1.eucalyptus-systems.com.csr
+-noout -text | less X509v3 Subject Alternative Name:
+DNS:ec2.us-east-1.amazonaws.com, DNS:autoscaling.us-east-1.amazonaws.com,
+DNS:cloudformation.us-east-1.amazonaws.com, DNS:monitoring.us-east-1.amazonaws.com,
+DNS:elasticloadbalancing.us-east-1.amazonaws.com, DNS:s3.amazonaws.com,
+DNS:sts.us-east-1.amazonaws.com
+&lt;/code>&lt;/pre>
+&lt;p>Set DNS spoofing:&lt;/p>
+&lt;pre>&lt;code>[root@d-17 ~]# euctl dns.spoof_regions --region euca-admin@future
+dns.spoof_regions.enabled = true
+dns.spoof_regions.region_name =
+dns.spoof_regions.spoof_aws_default_regions = true
+dns.spoof_regions.spoof_aws_regions = true
+&lt;/code>&lt;/pre>
+&lt;p>Launch an instance, and allow SSH access. SSH into the instance and install AWS CLI.&lt;/p>
+&lt;pre>&lt;code>ubuntu@euca-172-31-12-59:~$ sudo apt-get install -y python-pip
+ubuntu@euca-172-31-12-59:~$ sudo -H pip install --upgrade pip
+ubuntu@euca-172-31-12-59:~$ sudo -H pip install --upgrade awscli
+&lt;/code>&lt;/pre>
+&lt;p>Run &lt;code>aws configure&lt;/code> and set access and secret key information if not using instance profile. Confirm AWS CLI works with HTTPS Eucalyptus service endpoint:&lt;/p>
+&lt;pre>&lt;code>ubuntu@euca-172-31-12-59:~$ aws --ca-bundle euca-ca-0.crt
+--endpoint-url https://ec2.c-06.autoqa.qa1.eucalyptus-systems.com/ ec2 describe-key-pairs
+{
+&amp;quot;KeyPairs&amp;quot;: [
+{
+&amp;quot;KeyName&amp;quot;: &amp;quot;devops-admin&amp;quot;,
+&amp;quot;KeyFingerprint&amp;quot;: &amp;quot;ee:4f:93:a8:87:8d:80:8d:2c:d6:d5:60:20:a3:2d:b2&amp;quot;
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;p>Test against AWS FQDN service endpoint that matches one of the SANs in the signed certificate:&lt;/p>
+&lt;pre>&lt;code>ubuntu@euca-172-31-12-59:~$ aws --ca-bundle euca-ca-0.crt
+--endpoint-url https://ec2.us-east-1.amazonaws.com ec2 describe-key-pairs{
+&amp;quot;KeyPairs&amp;quot;: [
+{
+&amp;quot;KeyName&amp;quot;: &amp;quot;devops-admin&amp;quot;,
+&amp;quot;KeyFingerprint&amp;quot;: &amp;quot;ee:4f:93:a8:87:8d:80:8d:2c:d6:d5:60:20:a3:2d:b2&amp;quot;
+}
+]
+}
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Create the Eucalyptus Cloud Administrator User</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/credentials_admin_create/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/credentials_admin_create/</guid><description>
+&lt;p>After your cloud is running and DNS is functional, create a user and access key for day-to-day cloud administration.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ul>
+&lt;li>cloud services must be installed and registered.&lt;/li>
+&lt;li>DNS must be configured.&lt;/li>
+&lt;/ul>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+This is where you would begin using the admin role, if you want to use that feature.
+&lt;/div>
+&lt;h2 id="create-a-cloud-admin-user">Create a cloud admin user&lt;/h2>
+&lt;p>Eucalyptus admin tools and Euca2ools commands need configuration from &lt;em>~/.euca&lt;/em> . If the directory does not yet exist, create it:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>mkdir ~/.euca
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Choose a name for the new user and create it along with an access key:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euare-usercreate -wld DOMAIN USER &amp;gt;~/.euca/FILE.ini
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>where:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>DOMAIN&lt;/strong> must match the DNS domain for the cloud.&lt;/li>
+&lt;li>&lt;strong>USER&lt;/strong> is the name of the new admin user.&lt;/li>
+&lt;li>&lt;strong>FILE&lt;/strong> can be anything; we recommend a descriptive name that includes the user&amp;rsquo;s name.&lt;/li>
+&lt;/ul>
+&lt;p>This creates a file with a region name that matches that of your cloud&amp;rsquo;s DNS domain; you can edit the file to change the region name if needed.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+This creates an admin user in the built-in &lt;strong>eucalyptus&lt;/strong> account. The admin user has full control of all aspects of the cloud. For additional security, you might instead want to create a new account and grant it access to a more limited administration role.
+&lt;/div>
+&lt;p>Switch to the new admin user:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># eval `clcadmin-release-credentials`&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># export AWS_DEFAULT_REGION=REGION&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>where:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>REGION&lt;/strong> must match the region name from the previous step. By default, this is the same as the cloud&amp;rsquo;s DNS domain.&lt;/li>
+&lt;/ul>
+&lt;p>As long as this file exists in &lt;em>~/.euca&lt;/em> , you can use it by repeating the &lt;code>export&lt;/code> command above. These &lt;code>euca2ools.ini&lt;/code> configuration files are a flexible means of managing cloud regions and users.&lt;/p>
+&lt;p>Alternatively you can configure the default region in the &lt;strong>global&lt;/strong> section of your Euca2ools configuration:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># cat ~/.euca/global.ini&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>global&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>default-region &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> REGION
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>setting the &lt;strong>REGION&lt;/strong> to the one from the earlier step means you do not have to use &lt;em>export&lt;/em> to select the region.&lt;/p>
+&lt;h2 id="user-impersonation">User impersonation&lt;/h2>
+&lt;p>The &lt;strong>eucalyptus&lt;/strong> account can act as other accounts for administrative purposes. To act as the &lt;em>admin&lt;/em> user in the &lt;em>account-1&lt;/em> account run:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># eval `clcadmin-impersonate-user -a account-1 -u admin`&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Impersonating an account allows you to view and modify resources for that account. For example, you can clean up resources in an account before deleting it.&lt;/p>
+&lt;p>To stop impersonating run:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>clcadmin-release-credentials
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="next-steps">Next steps&lt;/h2>
+&lt;p>The remainder of this guide assumes you have completed the above steps.&lt;/p>
+&lt;p>Use these credentials after this point.&lt;/p></description></item><item><title>Docs: Upload the Network Configuration</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/nw_json_upload/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/nw_json_upload/</guid><description>
+&lt;p>This topic describes how to upload the network configuration created earlier in the installation process. To upload your networking configuration:&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+This step can only be run after getting your credentials in &lt;a href="https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/credentials_admin_create/">Create the Eucalyptus Cloud Administrator User&lt;/a>.
+&lt;/div>
+&lt;p>Run the following command to upload the configuration file to the CLC (with valid Eucalyptus admin credentials):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euctl cloud.network.network_configuration&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>@/path/to/your/network_config_file
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>To review the existing network configuration run:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euctl --dump --format&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>raw cloud.network.network_configuration
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>When you use the Ansible playbook for deployment a network configuration file is available at &lt;em>/etc/eucalyptus/network.yaml&lt;/em> on the CLC.&lt;/p></description></item><item><title>Docs: Configure Eucalyptus Storage</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/config_storage/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/config_storage/</guid><description>
+&lt;h1 id="configure-storage">Configure Storage&lt;/h1>
+&lt;p>These are the types of storage available for your Eucalyptus cloud. Object storage Eucalyptus provides an AWS S3 compatible object storage service that provides users with web-based general purpose storage, designed to be scalable, reliable and inexpensive. You choose the object storage backend provider: Walrus or Ceph RGW. The Object Storage Gateway (OSG) provides access to objects via the backend provider you choose.&lt;/p>
+&lt;p>Block storage Eucalyptus provides an AWS EBS compatible block storage service that provides block storage for EC2 instances. Volumes can be created as needed and dynamically attached and detached to instances as required. EBS provides persistent data storage for instances: the volume, and the data on it, can exist beyond the lifetime of an instance. You choose the block storage backend provider for a deployment.&lt;/p></description></item><item><title>Docs: Install and Configure the Imaging Service</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/configure_imaging_service/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/configure_imaging_service/</guid><description>
+&lt;p>The Eucalyptus Imaging Service, introduced in Eucalyptus 4.0, makes it easier to deploy EBS images in your Eucalyptus cloud and automates many of the labor-intensive processes required for uploading data into EBS images.&lt;/p>
+&lt;p>The Eucalyptus Imaging Service is implemented as a system-controlled &amp;ldquo;worker&amp;rdquo; virtual machine that is monitored and controlled via Auto Scaling. Once the Imaging Service is configured, the Imaging Service VM will be started automatically upon the first request that requires it: such as an EBS volume ingress. Specifically, in this release of Eucalyptus , these are the usage scenarios for the Eucalyptus Imaging Service:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Importing a raw disk image as a volume:&lt;/strong> If you have a raw disk image (containing either a data partition or a full operating system with a boot record, e.g., an HVM image), you can use the Imaging Service to import this into your cloud as a volume. This is accomplished with the &lt;code>euca-import-volume&lt;/code> command. If the volume was populated with a bootable disk, that volume can be snapshotted and registered as an image.&lt;/li>
+&lt;li>&lt;strong>Importing a raw disk image as an instance:&lt;/strong> If you have a raw disk image containing a bootable operating system, you can import this disk image into as an instance: the Imaging Service automatically creates a volume, registers the image, and launches an instance from the image. This is accomplished with the &lt;code>euca-import-instance&lt;/code> command, which has options for specifying the instance type and the SSH key for the instance to use.&lt;/li>
+&lt;/ul>
+&lt;h2 id="install-and-register-the-imaging-worker-image">Install and Register the Imaging Worker Image&lt;/h2>
+&lt;p>Eucalyptus provides a command-line tool for installing and registering the Imaging Worker image. Once you have run the tool, the Imaging Worker will be ready to use.Run the following commands on the machine where you installed the &lt;code>eucalyptus-service-image&lt;/code> RPM package (it will set the &lt;code>imaging.imaging_worker_emi&lt;/code> property to the newly created EMI of the imaging worker):&lt;/p>
+&lt;pre>&lt;code>esi-install-image --region localhost --install-default
+&lt;/code>&lt;/pre>
+&lt;p>Consider setting the &lt;code>imaging.imaging_worker_keyname&lt;/code> property to an SSH keyname (previously created with the &lt;code>euca-create-keypair&lt;/code> command), so that you can perform troubleshooting inside the Imaging Worker instance, if necessary:&lt;/p>
+&lt;pre>&lt;code>euctl services.imaging.worker.keyname=mykey
+&lt;/code>&lt;/pre>
+&lt;h2 id="managing-the-imaging-worker-instance">Managing the Imaging Worker Instance&lt;/h2>
+&lt;p>Eucalyptus automatically starts Imaging Worker instances when there are tasks for workers to perform.The cloud administrator can list the running Imaging Worker instances, if any, by running the command:&lt;/p>
+&lt;pre>&lt;code>euca-describe-instances --filter tag-value=euca-internal-imaging-workers
+&lt;/code>&lt;/pre>
+&lt;p>To delete / stop the imaging worker:&lt;/p>
+&lt;pre>&lt;code>esi-manage-stack -a delete imaging
+&lt;/code>&lt;/pre>
+&lt;p>To create / start the imaging worker:&lt;/p>
+&lt;pre>&lt;code>esi-manage-stack -a create imaging
+&lt;/code>&lt;/pre>
+&lt;p>Consider setting the &lt;code>imaging.imaging_worker_instance_type&lt;/code> property to an Instance Type with enough ephemeral disk to convert any of your paravirtual images. The Imaging Worker root filesystem takes up about 2GB, so the maximum paravirtual image that the Imaging Worker will be able to convert is the disk allocation of the Instance Type minus 2GBs.&lt;/p>
+&lt;pre>&lt;code>euctl services.imaging.worker.instance_type=m3.xlarge
+&lt;/code>&lt;/pre>
+&lt;h2 id="troubleshooting-imaging-worker">Troubleshooting Imaging Worker&lt;/h2>
+&lt;p>If the Imaging Worker is configured correctly, users will be able to import data into EBS volumes with &lt;code>euca-import-*&lt;/code> commands, and paravirtual EMIs will run as instances. In some cases, though, paravirtual images may fail to convert (e.g., due to intermittent network failures or a network setup that doesn&amp;rsquo;t allow the Imaging Worker to communicate with the CLC), leaving the images in a special state. To troubleshoot:If the Imaging Worker Instance Type does not provide sufficient disk space for converting all paravirtual images, the administrator may have to change the Instance Type used by the Imaging Worker. After changing the instance type, the Imaging Worker instance should be restarted by terminating the old Imaging Worker instance:&lt;/p>
+&lt;pre>&lt;code>euctl services.imaging.worker.instance_type=m2.2xlarge
+euca-terminate-instances $(euca-describe-instances --filter tag-value=euca-internal-imaging-workers | grep INSTANCE | cut -f 2)
+&lt;/code>&lt;/pre>
+&lt;p>If the status of the conversion operation is &amp;lsquo;Image conversion failed&amp;rsquo;, but the image is marked as &amp;lsquo;available&amp;rsquo; (in the output of euca-describe-images), the conversion can be retried by running the EMI again:&lt;/p>
+&lt;pre>&lt;code>euca-run-instances ...
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Configure the Load Balancer</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/configure_load_balancer/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/configure_load_balancer/</guid><description>
+&lt;h2 id="install-and-register-the-load-balancer-image">Install and Register the Load Balancer Image&lt;/h2>
+&lt;p>Eucalyptus provides a tool for installing and registering the Load Balancer image. Once you have run the tool, your Load Balancer will be ready to use.&lt;/p>
+&lt;p>Run the following commands on the machine where you installed the &lt;code>eucalyptus-service-image&lt;/code> RPM package (it will set the &lt;code>imaging.imaging_worker_emi&lt;/code> property to the newly created EMI of the imaging worker):&lt;/p>
+&lt;pre>&lt;code>esi-install-image --install-default
+&lt;/code>&lt;/pre>
+&lt;h2 id="verify-load-balancer-configuration">Verify Load Balancer Configuration&lt;/h2>
+&lt;p>If you would like to verify that Load Balancer support is enabled you can list installed Load Balancers. The currently active Load Balancer will be listed as enabled. If no Load Balancers are listed, or none are marked as enabled, then your Load Balancer support has not been configured properly.Run the following command to list installed Load Balancer images:&lt;/p>
+&lt;pre>&lt;code>esi-describe-images
+&lt;/code>&lt;/pre>
+&lt;p>This will produce output similar to the followin:&lt;/p>
+&lt;pre>&lt;code>SERVICE VERSION ACTIVE IMAGE INSTANCES
+imaging 2.2 * emi-573925e5 0
+loadbalancing 2.2 * emi-573925e5 0
+database 2.2 * emi-573925e5 0
+&lt;/code>&lt;/pre>
+&lt;p>You can also check the enabled Load Balancer EMI with:&lt;/p>
+&lt;pre>&lt;code>euctl services.loadbalancing.worker.image
+&lt;/code>&lt;/pre>
+&lt;p>If you need to manually set the enabled Load Balancer EMI use:&lt;/p>
+&lt;pre>&lt;code>euctl services.loadbalancing.worker.image=emi-12345678
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Configure Node Controller</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/configuring_nc/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/configuring_nc/</guid><description>
+&lt;p>On some Linux installations, a sufficiently large amount of local disk activity can slow down process scheduling. This can cause other operations (e.g., network communication and instance provisioning) appear to stall. Examples of disk-intensive operations include preparing disk images for launch and creating ephemeral storage.&lt;/p>
+&lt;ol>
+&lt;li>Log in to an NC server and open the &lt;em>/etc/eucalyptus/eucalyptus.conf&lt;/em> file.&lt;/li>
+&lt;li>Change the &lt;code>CONCURRENT_DISK_OPS&lt;/code> parameter to the number of disk-intensive operations you want the NC to perform at once.
+&lt;ol>
+&lt;li>Set &lt;code>CONCURRENT_DISK_OPS&lt;/code> to 1 to serialize all disk-intensive operations. Or &amp;hellip;&lt;/li>
+&lt;li>Set it to a higher number to increase the amount of disk-intensive operations the NC will perform in parallel.&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol></description></item></channel></rss>

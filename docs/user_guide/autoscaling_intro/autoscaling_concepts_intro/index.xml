@@ -1,0 +1,55 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Auto Scaling Concepts</title><link>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_concepts_intro/</link><description>Recent content in Auto Scaling Concepts on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_concepts_intro/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Understanding Launch Configurations</title><link>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_concepts_intro/autoscaling_concepts_launch_configuration/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_concepts_intro/autoscaling_concepts_launch_configuration/</guid><description>
+&lt;p>The launch configuration defines the settings used by the Eucalyptus instances launched within an Auto Scaling group. This includes the image name, the instance type, key pairs, security groups, and block device mappings. You associate the launch configuration with an Auto Scaling group. Each Auto Scaling group can have one (and only one) associated launch configuration.&lt;/p>
+&lt;p>Once you&amp;rsquo;ve created a launch configuration, you can&amp;rsquo;t change it; you must create a new launch configuration and then associate it with an Auto Scaling group. After you&amp;rsquo;ve created and attached a new launch configuration to an Auto Scaling group, any new instances will be launched using parameters defined in the new launch configuration; existing instances in the Auto Scaling group are not affected.&lt;/p>
+&lt;p>For more information, see &lt;a href="https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_examples_intro/autoscaling_examples_basic_config/">Creating a Basic Auto Scaling Configuration&lt;/a> .&lt;/p></description></item><item><title>Docs: Understanding Auto Scaling Groups</title><link>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_concepts_intro/autoscaling_concepts_auto_scaling_group/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_concepts_intro/autoscaling_concepts_auto_scaling_group/</guid><description>
+&lt;p>An Auto Scaling group is the central component of Auto Scaling. An Auto Scaling group defines the parameters for the Eucalyptus instances are used for scaling, as well as the minimum, maximum, and (optionally) the desired number of instances to use for Auto Scaling your application. If you don&amp;rsquo;t specify the desired number of instances in your Auto Scaling group, the default value will be the same as the minimum number of instances defined.&lt;/p>
+&lt;p>In addition to instance and capacity definitions, each Auto Scaling group must specify one (and only one) launch configuration.&lt;/p>
+&lt;p>For more information, see &lt;a href="https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_examples_intro/autoscaling_examples_basic_config/">Creating a Basic Auto Scaling Configuration&lt;/a> .&lt;/p></description></item><item><title>Docs: Understanding Auto Scaling Policies</title><link>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_concepts_intro/autoscaling_concepts_auto_scaling_policy/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_concepts_intro/autoscaling_concepts_auto_scaling_policy/</guid><description>
+&lt;p>An Auto Scaling policy defines how to perform scaling actions in response to CloudWatch alarms. Auto scaling policies can either &lt;em>scale-in&lt;/em> , which terminates instances in your Auto Scaling group, or &lt;em>scale-out&lt;/em> , which will launch new instances in your Auto Scaling group. You can define an Auto Scaling policy based on demand, or based on a fixed schedule.&lt;/p>
+&lt;p>&lt;strong>Demand-Based Auto Scaling Policies&lt;/strong>&lt;/p>
+&lt;p>Demand-based Auto Scaling policies scale your application dynamically based on CloudWatch metrics (such as average CPU utilization) gathered from the instances running in your scaling group. For example, you can configure a CloudWatch alarm to monitor the CPU usages of the instances in your Auto Scaling group. A CloudWatch alarm definition includes &lt;em>thresholds&lt;/em> - minimum and maximum values for the defined metric - that will cause the alarm to fire.&lt;/p>
+&lt;p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For more information on CloudWatch, go to .
+&lt;/div>
+For example, you can define the lower and upper thresholds of the CloudWatch alarm at 40% and 80% CPU usage. Once you&amp;rsquo;ve created the CloudWatch alarm, you can create a scale-out policy that launches 10 new instances when the CloudWatch alarm breaches the upper threshold (the average CPU usage is at or above 80%), and a scale-in policy that terminates 10 instances when the CloudWatch alarm breaches the lower threshold (the average CPU usage of the instances in the Auto Scaling group falls below 40%). Your Auto Scaling group will execute the appropriate Auto Scaling policy when it receives the message from the CloudWatch alarm.&lt;/p>
+&lt;p>&lt;strong>Cooldown Period&lt;/strong>&lt;/p>
+&lt;p>A &lt;em>cooldown period&lt;/em> is the amount of time after an Auto Scaling activity takes place where further Auto Scaling activity is suspended. This is to allow time for the Auto Scaling activities (such as new instance launches or terminations) to fully complete so that resources are not unnecessarily launched or terminated. You can specify this amount of time; if you don&amp;rsquo;t specify a cooldown period, Auto Scaling uses a default cooldown period of 300 seconds (5 minutes).&lt;/p>
+&lt;p>For more information, go to &lt;a href="https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_examples_intro/autoscaling_examples_scaling_plan_demand/">Configuring a Demand-Based Scaling Policy&lt;/a> .&lt;/p></description></item><item><title>Docs: Understanding Health Checks</title><link>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_concepts_intro/autoscaling_concepts_health_checks/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_concepts_intro/autoscaling_concepts_health_checks/</guid><description>
+&lt;p>Auto scaling periodically performs &lt;em>health checks&lt;/em> on the instances in your Auto Scaling group. By default, Auto Scaling group determines the health state of each instance by periodically checking the results of Eucalyptus instance status checks. When Auto Scaling determines that an instance is unhealthy, it terminates that instance and launches a new one.&lt;/p>
+&lt;p>If your Auto Scaling group is using elastic load balancing, Auto Scaling can determine the health status of the instances by checking the results of both Eucalyptus instance status checks and elastic load balancing instance health.&lt;/p>
+&lt;p>Auto scaling determines an instance is unhealthy if the calls to either Eucalyptus instance status checks or elastic load balancing instance health status checks return any state other than &lt;code>OK&lt;/code> (or  &lt;code>InService&lt;/code> ).&lt;/p>
+&lt;p>If there are multiple elastic load balancers associated with your Auto Scaling group, Auto Scaling will make health check calls to each load balancer. If any of the health check calls return any state other than  &lt;code>InService&lt;/code> , that instance will be marked as unhealthy. After Auto Scaling marks an instance as unhealthy, it will remain marked in that state, even if subsequent calls from other load balancers return an  &lt;code>InService&lt;/code>  state for the same instance.&lt;/p>
+&lt;p>For more information, go to &lt;a href="https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_examples_intro/autoscaling_examples_health_checks/">Configuring Health Checks&lt;/a> .&lt;/p></description></item><item><title>Docs: Understanding Instance Termination Policies</title><link>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_concepts_intro/autoscaling_concepts_termination_policy/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_concepts_intro/autoscaling_concepts_termination_policy/</guid><description>
+&lt;p>Before Auto Scaling selects an instance to terminate, it first identifies the availability zone used by the group that contains the most instances. If all availability zones have the same number of instances, Auto Scaling selects a random availability zone, and then uses the termination policy to select the instance within that randomly selected availability zone for termination.&lt;/p>
+&lt;p>By default, Auto Scaling chooses the instance that was launched with the oldest launch configuration. If more than one instance was launched using the oldest launch configuration, Auto Scaling the instance that was created first using the oldest launch configuration.&lt;/p>
+&lt;p>You can override the default instance termination policy for your Auto Scaling group with one of the following options:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Option&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">OldestInstance&lt;/td>
+&lt;td style="text-align:left">The oldest instance in the Auto Scaling group should be terminated.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">NewestInstance&lt;/td>
+&lt;td style="text-align:left">The newest instance in the Auto Scaling group should be terminated.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">OldestLaunchConfiguration&lt;/td>
+&lt;td style="text-align:left">The first instance created using the oldest launch configuration should be terminated.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Default&lt;/td>
+&lt;td style="text-align:left">Use the default instance termination policy.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>You can have more than one termination policy per Auto Scaling group. The termination policies are executed in the order they were created.&lt;/p>
+&lt;p>For more information, go to &lt;a href="https://www.eucastack.io/docs/user_guide/autoscaling_intro/autoscaling_examples_intro/autoscaling_examples_instance_termination_policy/">Configuring an Instance Termination Policy&lt;/a> .&lt;/p></description></item></channel></rss>

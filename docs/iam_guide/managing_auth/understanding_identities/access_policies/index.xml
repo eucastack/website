@@ -1,0 +1,431 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Policy Overview</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/access_policies/</link><description>Recent content in Policy Overview on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/access_policies/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Default Permissions</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/access_policies/access_policy_perms/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/access_policies/access_policy_perms/</guid><description>
+&lt;p>Different identities have different default access permissions. When no policy is associated with them, these identities have the permission listed in the following table.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Identity&lt;/th>
+&lt;th style="text-align:left">Permission&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">System admin&lt;/td>
+&lt;td style="text-align:left">Access to all resources in the system&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Account admin&lt;/td>
+&lt;td style="text-align:left">Access to all account resources, including those shared resources from other accounts like public images and shared snapshots&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Regular user&lt;/td>
+&lt;td style="text-align:left">No access to any resource&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>Docs: Quotas</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/access_policies/access_policy_quota/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/access_policies/access_policy_quota/</guid><description>
+&lt;p>Eucalyptus adds quota enforcement to resource usage. To avoid introducing another configuration language into Eucalyptus, and simplify the management, we extend the IAM policy language to support quotas.The only addition added to the language is the new &lt;code>limit&lt;/code> effect. If a policy statement’s &lt;code>effect&lt;/code> is &lt;code>limit&lt;/code> , it is a quota statement.&lt;/p>
+&lt;p>A quota statement also has action and resource fields. You can use these fields to match specific requests, for example, quota only being checked on matched requests. The actual quota type and value are specified using special quota keys, and listed in the &lt;code>condition&lt;/code> part of the statement. Only condition type &lt;code>NumericLessThanEquals&lt;/code> can be used with quota keys.&lt;/p>
+&lt;p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+An account can only have a quota policy. Accounts can only accept IAM policies where Effect is &amp;ldquo;Deny&amp;rdquo; or &amp;ldquo;Limit&amp;rdquo;. If you attach an IAM policy to an account where the Effect is &amp;ldquo;Allow&amp;rdquo;, you will get unexpected results.
+&lt;/div>
+The following quota policy statement limits the attached user to only launch a maximum of 16 instances in an account.&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Version&amp;quot;:&amp;quot;2011-04-01&amp;quot;,
+&amp;quot;Statement&amp;quot;:[{
+&amp;quot;Sid&amp;quot;:&amp;quot;4&amp;quot;,
+&amp;quot;Effect&amp;quot;:&amp;quot;Limit&amp;quot;,
+&amp;quot;Action&amp;quot;:&amp;quot;ec2:RunInstances&amp;quot;,
+&amp;quot;Resource&amp;quot;:&amp;quot;*&amp;quot;,
+&amp;quot;Condition&amp;quot;:{
+“NumericLessThanEquals”:{
+“ec2:quota-vminstancenumber”:”16”
+}
+}
+}]
+}
+&lt;/code>&lt;/pre>
+&lt;p>You can attach quotas to both users and accounts, although some of the quotas only apply to accounts. Quota attached to groups will take no effect.&lt;/p>
+&lt;p>When a quota policy is attached to an account, it actually is attached to the account administrator user. Since only system administrator can specify account quotas, the account administrator can only inspect quotas but can&amp;rsquo;t change the quotas attached to herself.&lt;/p>
+&lt;p>The following is all the quota keys implemented in Eucalyptus:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Quota Key&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;th style="text-align:left">Applies to&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">autoscaling:quota-autoscalinggroupnumber&lt;/td>
+&lt;td style="text-align:left">The number of Autoscaling Groups&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">autoscaling:quota-launchconfigurationnumber&lt;/td>
+&lt;td style="text-align:left">Number of Autoscaling Group Launch Configurations&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">autoscaling:quota-scalingpolicynumber&lt;/td>
+&lt;td style="text-align:left">Number of Autoscaling Group Scaling Policies&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">cloudformation:quota-stacknumber&lt;/td>
+&lt;td style="text-align:left">Number of Cloudformation stacks allowed to create&lt;/td>
+&lt;td style="text-align:left">account&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ec2:quota-addressnumber&lt;/td>
+&lt;td style="text-align:left">Number of elastic IPs&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ec2:quota-cputotalsize&lt;/td>
+&lt;td style="text-align:left">Number of Total CPUs Used by EC2 Instances&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ec2:quota-disktotalsize&lt;/td>
+&lt;td style="text-align:left">Number of Total Disk Space (in GB) of EC2 Instances&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ec2:quota-imagenumber&lt;/td>
+&lt;td style="text-align:left">Number of EC2 images&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ec2:quota-internetgatewaynumber&lt;/td>
+&lt;td style="text-align:left">Number of EC2 VPC Internet Gateways&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ec2:quota-memorytotalsize&lt;/td>
+&lt;td style="text-align:left">Number of Total Amount of Memory Used by EC2 Instances&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ec2:quota-securitygroupnumber&lt;/td>
+&lt;td style="text-align:left">Number of EC2 security groups&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ec2:quota-snapshotnumber&lt;/td>
+&lt;td style="text-align:left">Number of EC2 snapshots&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ec2:quota-vminstancenumber&lt;/td>
+&lt;td style="text-align:left">Number of EC2 instances&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ec2:quota-vminstanceactivenumber&lt;/td>
+&lt;td style="text-align:left">Number of EC2 Instances Using Node Resources (pending, running, shutting-down, etc.)&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ec2:quota-volumenumber&lt;/td>
+&lt;td style="text-align:left">Number of EC2 volumes&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ec2:quota-volumetotalsize&lt;/td>
+&lt;td style="text-align:left">Number of total volume size, in GB&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">ec2:quota-vpcnumber&lt;/td>
+&lt;td style="text-align:left">Number of EC2 VPCs&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">elasticloadbalancing:quota-loadbalancernumber&lt;/td>
+&lt;td style="text-align:left">Number of Elastic Load Balancers&lt;/td>
+&lt;td style="text-align:left">account&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">iam:quota-groupnumber&lt;/td>
+&lt;td style="text-align:left">Number of IAM groups&lt;/td>
+&lt;td style="text-align:left">account&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">iam:quota-instanceprofilenumber&lt;/td>
+&lt;td style="text-align:left">Number of IAM Instance Profiles&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">iam:quota-rolenumber&lt;/td>
+&lt;td style="text-align:left">Number of IAM Roles&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">iam:quota-servercertificatenumber&lt;/td>
+&lt;td style="text-align:left">Number of IAM Server Certificates&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">iam:quota-usernumber&lt;/td>
+&lt;td style="text-align:left">Number of IAM users&lt;/td>
+&lt;td style="text-align:left">account&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">s3:quota-bucketnumber&lt;/td>
+&lt;td style="text-align:left">Number of S3 buckets&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">s3:quota-bucketobjectnumber&lt;/td>
+&lt;td style="text-align:left">Number of objects in each bucket&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">s3:quota-bucketsize&lt;/td>
+&lt;td style="text-align:left">Size of bucket, in MB&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">s3:quota-buckettotalsize&lt;/td>
+&lt;td style="text-align:left">total size of all buckets, in MB&lt;/td>
+&lt;td style="text-align:left">account and user&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="default-quota">Default Quota&lt;/h2>
+&lt;p>Contrary to IAM policies, by default, there is no quota limits (except the hard system limit) on any resource allocations for a user or an account. Also, system administrators are not constrained by any quota. Account administrators are only be constrained by account quota.&lt;/p></description></item><item><title>Docs: Algorithms</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/access_policies/access_policy_algorithms/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/access_policies/access_policy_algorithms/</guid><description>
+&lt;p>This topic describes the algorithms used by Eucalyptus to determine access.&lt;/p>
+&lt;h2 id="policy-evaluation-algorithm">Policy Evaluation Algorithm&lt;/h2>
+&lt;p>You can associated multiple policies and permission statements with a user. The way these are combined together to control the access to resources in an account is defined by the policy evaluation algorithm. Eucalyptus implements the &lt;a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/AccessPolicyLanguage_EvaluationLogic.html">same policy evaluation algorithm as AWS IAM&lt;/a> :&lt;/p>
+&lt;ol>
+&lt;li>If the request user is account admin, access is allowed.&lt;/li>
+&lt;li>Otherwise, collect all the policy statements associated with the request user (attached to the user and all the groups the user belongs to), which match the incoming request (i.e. based on the API being invoked and the resources it is going to access).&lt;/li>
+&lt;/ol>
+&lt;h2 id="access-evaluation-algorithm">Access Evaluation Algorithm&lt;/h2>
+&lt;p>Now we give the overall access evaluation combining both account level permissions and IAM permissions, which decides whether a request is accepted by Eucalyptus:&lt;/p>
+&lt;ol>
+&lt;li>If the request user is sys admin, access is allowed.&lt;/li>
+&lt;li>Otherwise, check account level permissions, e.g. image launch permission, to see if the request user’s account has access to the specific resources.&lt;/li>
+&lt;/ol>
+&lt;h2 id="quota-evaluation-algorithm">Quota Evaluation Algorithm&lt;/h2>
+&lt;p>Like the normal IAM policies, a user may be associated with multiple quota policies (and multiple quota statements). How all the quota policies are combined to take effect is defined by the quota evaluation algorithm:&lt;/p>
+&lt;ol>
+&lt;li>If the request user is sys admin, there is no limit on resource usage.&lt;/li>
+&lt;li>Otherwise, collect all the quotas associated with the request user, including those attached to the request user’s account and those attached to the request user himself/herself (for account admin, we only need collect account quotas).&lt;/li>
+&lt;li>Evaluate each quota one by one. Reject the request as long as there is one quota being exceeded by the request. Otherwise, accept the request.&lt;/li>
+&lt;/ol>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The hard limits on some resources override quota limits. For example, (system property) overrides the (quota key).
+&lt;/div></description></item><item><title>Docs: Sample Policies</title><link>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/access_policies/policies_samples/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/iam_guide/managing_auth/understanding_identities/access_policies/policies_samples/</guid><description>
+&lt;p>A few example use cases and associated policies.Here are some example use cases and associated polices. You can edit these polices for your use, or use them as examples of JSON syntax and form.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For more information about JSON syntax used with AWS resources, go to .
+&lt;/div>
+&lt;h2 id="examples-allowing-specific-actions">Examples: Allowing Specific Actions&lt;/h2>
+&lt;p>The following policy allows a user to only run instances and describe things.&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Statement&amp;quot;:[{
+&amp;quot;Effect&amp;quot;:&amp;quot;Allow&amp;quot;,
+&amp;quot;Action&amp;quot;:[&amp;quot;ec2:*Describe*&amp;quot;,​&amp;quot;ec2:*Run*&amp;quot;],
+&amp;quot;Resource&amp;quot;:&amp;quot;*&amp;quot;,
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;p>The following policy allows a user to only list things:&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Sid&amp;quot;: &amp;quot;Stmt1313686153864&amp;quot;,
+&amp;quot;Action&amp;quot;: [
+&amp;quot;iam:List*&amp;quot;
+],
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;*&amp;quot;
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;p>The following policy grants a generic basic user permission for running instances and describing things.&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Sid&amp;quot;: &amp;quot;Stmt1313605116084&amp;quot;,
+&amp;quot;Action&amp;quot;: [
+&amp;quot;ec2:AllocateAddress&amp;quot;,
+&amp;quot;ec2:AssociateAddress&amp;quot;,
+&amp;quot;ec2:AttachVolume&amp;quot;,
+&amp;quot;ec2:Authorize*&amp;quot;,
+&amp;quot;ec2:CreateKeyPair&amp;quot;,
+&amp;quot;ec2:CreateSecurityGroup&amp;quot;,
+&amp;quot;ec2:CreateSnapshot&amp;quot;,
+&amp;quot;ec2:CreateVolume&amp;quot;,
+&amp;quot;ec2:DeleteKeyPair&amp;quot;,
+&amp;quot;ec2:DeleteSecurityGroup&amp;quot;,
+&amp;quot;ec2:DeleteSnapshot&amp;quot;,
+&amp;quot;ec2:DeleteVolume&amp;quot;,
+&amp;quot;ec2:Describe*&amp;quot;,
+&amp;quot;ec2:DetachVolume&amp;quot;,
+&amp;quot;ec2:DisassociateAddress&amp;quot;,
+&amp;quot;ec2:GetConsoleOutput&amp;quot;,
+&amp;quot;ec2:RunInstances&amp;quot;,
+&amp;quot;ec2:TerminateInstances&amp;quot;
+&amp;quot;ec2:ReleaseAddress&amp;quot;
+],
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;*&amp;quot;
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;h2 id="examples-denying-specific-actions">Examples: Denying Specific Actions&lt;/h2>
+&lt;p>The following policy allows a user to do anything but delete.&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Action&amp;quot;: [
+&amp;quot;ec2:Delete*&amp;quot;
+],
+&amp;quot;Effect&amp;quot;: &amp;quot;Deny&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;*&amp;quot;
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;p>The following policy denies a user from creating other users.&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Sid&amp;quot;: &amp;quot;Stmt1313686153864&amp;quot;,
+&amp;quot;Action&amp;quot;: [
+&amp;quot;iam:CreateUser&amp;quot;
+],
+&amp;quot;Effect&amp;quot;: &amp;quot;Deny&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;*&amp;quot;
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;h2 id="examples-specifying-time-limits">Examples: Specifying Time Limits&lt;/h2>
+&lt;p>The following policy allows a user to run instances within a specific time.&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Sid&amp;quot;: &amp;quot;Stmt1313453084396&amp;quot;,
+&amp;quot;Action&amp;quot;: [
+&amp;quot;ec2:RunInstances&amp;quot;
+],
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;*&amp;quot;,
+&amp;quot;Condition&amp;quot;: {
+&amp;quot;DateLessThanEquals&amp;quot;: {
+&amp;quot;aws:CurrentTime&amp;quot;: &amp;quot;2011-08-16T00:00:00Z&amp;quot;
+}
+}
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;p>The following policy blocks users from running instances at a specific time.&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Sid&amp;quot;: &amp;quot;Stmt1313453084396&amp;quot;,
+&amp;quot;Action&amp;quot;: [
+&amp;quot;ec2:RunInstances&amp;quot;
+],
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;*&amp;quot;,
+&amp;quot;Condition&amp;quot;: {
+&amp;quot;DateLessThanEquals&amp;quot;: {
+&amp;quot;aws:CurrentTime&amp;quot;: &amp;quot;2011-08-16T00:00:00Z&amp;quot;
+}
+}
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;p>The following policy keeps alive an instance for 1,000 hours (60,000 minutes).&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Action&amp;quot;: [&amp;quot;ec2:RunInstances&amp;quot; ],
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;*&amp;quot;,
+&amp;quot;Condition&amp;quot;: { &amp;quot;NumericEquals&amp;quot;:{&amp;quot;ec2:KeepAlive&amp;quot;:&amp;quot;60000&amp;quot;}}
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;p>The following policy sets an expiration date on running instances.&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Action&amp;quot;: [&amp;quot;ec2:RunInstances&amp;quot; ],
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;*&amp;quot;,
+&amp;quot;Condition&amp;quot;: { &amp;quot;DateEquals&amp;quot;:{&amp;quot;ec2:ExpirationTime&amp;quot;:&amp;quot;2011-08-16T00:00:00Z&amp;quot;}}
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;h2 id="examples-restricting-resources">Examples: Restricting Resources&lt;/h2>
+&lt;p>The following policy allows users to only launch instances with a large image type.&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Action&amp;quot;: [
+&amp;quot;ec2:RunInstances&amp;quot;
+],
+&amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;arn:aws:ec2:::vmtype/m1.xlarge&amp;quot;
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;p>The following policy restricts users from launching instances with a specific image ID.&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Action&amp;quot;: [
+&amp;quot;ec2:RunInstances&amp;quot;
+],
+&amp;quot;Effect&amp;quot;: &amp;quot;Deny&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;arn:aws:ec2:::image/emi-0FFF1874&amp;quot;
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;p>The following policy restricts users from allocating addresses to a specific elastic IP address.&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Sid&amp;quot;: &amp;quot;Stmt1313626078249&amp;quot;,
+&amp;quot;Action&amp;quot;: &amp;quot;*&amp;quot;,
+&amp;quot;Effect&amp;quot;: &amp;quot;Deny&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;arn:aws:ec2:::address/192.168.10.140&amp;quot;
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;p>The following policy denies volume access.&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;Statement&amp;quot;: [
+{
+&amp;quot;Action&amp;quot;: [
+&amp;quot;ec2:*&amp;quot;
+],
+&amp;quot;Effect&amp;quot;: &amp;quot;Deny&amp;quot;,
+&amp;quot;Resource&amp;quot;: &amp;quot;arn:aws:ec2:::volume/*&amp;quot;
+}
+]
+}
+&lt;/code>&lt;/pre>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For policies attached to an account, quota limits can be specified. See the Quotas section for further details.
+&lt;/div></description></item></channel></rss>

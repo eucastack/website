@@ -1,0 +1,126 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Configure Dependencies</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/</link><description>Recent content in Configure Dependencies on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Configure Bridges</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/configuring_bridge/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/configuring_bridge/</guid><description>
+&lt;p>To configure a bridge on CentOS 7 or RHEL 7, you need to create a file with bridge configuration (for example, ifcfg-brX) and modify the file for the physical interface (for example, ifcfg-ethX). The following steps describe how to set up a bridge on both CentOS 7 and RHEL 7. We show examples for configuring bridge devices that either obtain IP addresses using DHCP or statically.&lt;/p>
+&lt;p>Install the &lt;code>bridge-utils&lt;/code> package.&lt;/p>
+&lt;pre>&lt;code>yum install bridge-utils
+&lt;/code>&lt;/pre>
+&lt;p>Go to the &lt;em>/etc/sysconfig/network-scripts&lt;/em> directory:&lt;/p>
+&lt;pre>&lt;code>cd /etc/sysconfig/network-scripts
+&lt;/code>&lt;/pre>
+&lt;p>Open the network script for the device you are adding to the bridge and add your bridge device to it. The edited file should look similar to the following:&lt;/p>
+&lt;pre>&lt;code>DEVICE=eth0
+# change the hardware address to match the hardware address your NIC uses
+HWADDR=00:16:76:D6:C9:45
+ONBOOT=yes
+BRIDGE=br0
+NM_CONTROLLED=no
+&lt;/code>&lt;/pre>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The device name may vary. See the .
+&lt;/div>
+&lt;p>Create a new network script in the &lt;em>/etc/sysconfig/network-scripts&lt;/em> directory called &lt;em>ifcfg-br0&lt;/em> or something similar. The br0 is the name of the bridge, but this can be anything as long as the name of the file is the same as the &lt;code>DEVICE&lt;/code> parameter, and the name is specified correctly in the previously created physical interface configuration (ifcfg-ethX).
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Choose names and use them consistently for all NCs (both the file name and the in the file).
+&lt;/div>
+If you are using DHCP, the configuration will look similar to:&lt;/p>
+&lt;pre>&lt;code>DEVICE=br0
+TYPE=Bridge
+BOOTPROTO=dhcp
+ONBOOT=yes
+DELAY=0
+&lt;/code>&lt;/pre>
+&lt;p>If you are using a static IP address, the configuration will look similar to:&lt;/p>
+&lt;pre>&lt;code>DEVICE=br0
+TYPE=Bridge
+BOOTPROTO=static
+IPADDR=static_IP_address
+NETMASK=netmask
+GATEWAY=gateway
+ONBOOT=yes
+&lt;/code>&lt;/pre>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>systemctl restart network.service
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Disable FirewallD on RHEL 7</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/rhel7_disable_firewalld/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/rhel7_disable_firewalld/</guid><description>
+&lt;p>This topic describes how to stop and disable FirewallD on RHEL 7.&lt;strong>Prerequisites&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>You should have successfully installed RHEL 7 before this task.
+If you have existing firewall rules on your host machines, you must disable the firewall in order to install Eucalyptus . You should re-enable it after installation.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The firewall on a RHEL 7 system is enabled by default. Before you restart the CLC, you must disable the firewalld service on all host machines.
+&lt;/div>
+&lt;/li>
+&lt;/ul>
+&lt;p>For more information, see &lt;a href="https://www.certdepot.net/rhel7-get-started-firewalld/">FirewallD on RHEL 7&lt;/a> or &lt;a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-firewalld-on-centos-7">FirewallD on CentOS&lt;/a> .&lt;/p>
+&lt;p>&lt;strong>To stop and disable FirewallD&lt;/strong> Check the status of the firewalld service:&lt;/p>
+&lt;pre>&lt;code>systemctl status firewalld.service
+&lt;/code>&lt;/pre>
+&lt;p>The status displays as &lt;code>active (running)&lt;/code> or &lt;code>inactive (dead)&lt;/code> . If the firewall is active / running, enter this command to stop it:&lt;/p>
+&lt;pre>&lt;code>systemctl stop firewalld.service
+&lt;/code>&lt;/pre>
+&lt;p>To completely disable the firewalld service, so it does not reload when you restart the host machine:&lt;/p>
+&lt;pre>&lt;code>systemctl disable firewalld.service
+&lt;/code>&lt;/pre>
+&lt;p>Verify the status of the firewalld service:&lt;/p>
+&lt;pre>&lt;code>systemctl status firewalld.service
+&lt;/code>&lt;/pre>
+&lt;p>The status should display as &lt;code>disabled&lt;/code> and &lt;code>inactive (dead)&lt;/code> .&lt;/p>
+&lt;pre>&lt;code>firewalld.service - firewalld - dynamic firewall daemon
+Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; vendor preset: enabled)
+Active: inactive (dead)
+&lt;/code>&lt;/pre>
+&lt;p>Repeat these steps for all host machines. The firewalld service is stopped and disabled. You can now start the CLC and other host machines.&lt;/p>
+&lt;p>&lt;strong>Postrequisites&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>You should re-enable the firewall after installation is complete.&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Configure NTP</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/configure_ntp/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/configure_ntp/</guid><description>
+&lt;p>To use NTP:&lt;/p>
+&lt;p>Install NTP on the machines that will host Eucalyptus components.&lt;/p>
+&lt;pre>&lt;code>yum install ntp
+&lt;/code>&lt;/pre>
+&lt;p>Open the &lt;em>/etc/ntp.conf&lt;/em> file and add NTP servers, if necessary, as in the following example.&lt;/p>
+&lt;pre>&lt;code>server 0.pool.ntp.org
+server 1.pool.ntp.org
+server 2.pool.ntp.org
+&lt;/code>&lt;/pre>
+&lt;p>Save and close the file. Synchronize your server.&lt;/p>
+&lt;pre>&lt;code>ntpdate -u YOUR_NTP_SERVER
+&lt;/code>&lt;/pre>
+&lt;p>Configure NTP to run at reboot.&lt;/p>
+&lt;pre>&lt;code>systemctl enable ntpd.service
+&lt;/code>&lt;/pre>
+&lt;p>Start NTP.&lt;/p>
+&lt;pre>&lt;code>systemctl start ntpd.service
+&lt;/code>&lt;/pre>
+&lt;p>Synchronize your system clock, so that when your system is rebooted, it does not get out of sync.&lt;/p>
+&lt;pre>&lt;code>hwclock --systohc
+&lt;/code>&lt;/pre>
+&lt;p>Repeat on each host machine that will run a Eucalyptus service.&lt;/p></description></item><item><title>Docs: Configure Java</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/configure_java/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/configure_java/</guid><description>
+&lt;p>For the supported version of the Java Virtual Machine (JVM), see the Compatibility Matrix in the Release Notes .&lt;/p>
+&lt;p>As of Eucalyptus 4.3, JVM 8 is required. Eucalyptus RPM packages require java-1.8.0-openjdk, which will be installed automatically.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+If your network mode is VPCMIDO, MidoNet will install JVM 1.7 as a dependency (it is acceptable to have both JVM 1.7 and JVM 1.8 installed).
+&lt;/div>
+&lt;p>&lt;strong>To use Java with Eucalyptus cloud:&lt;/strong>&lt;/p>
+&lt;p>Open the &lt;em>/etc/eucalyptus/eucalyptus.conf&lt;/em> file. Verify that the CLOUD_OPTS setting does not set &amp;ndash;java-home , or that &amp;ndash;java-home points to a supported JVM version.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Although it is possible to set , we do not recommend it unless there is a specific reason to do so.
+&lt;/div>
+If you are upgrading to Eucalyptus 4.3, note that Java 8 does not have permanent generation memory. Remove any JAVA_OPTS MaxPermSize settings at upgrade time. Save and close the file. Repeat on each host machine that will run a Eucalyptus service.&lt;/p></description></item><item><title>Docs: Configure an MTA</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/config_mail/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/config_mail/</guid><description>
+&lt;p>You can use Sendmail, Exim, postfix, or something simpler. The MTA server does not have to be able to receive incoming mail.&lt;/p>
+&lt;p>Many Linux distributions satisfy this requirement with their default MTA. For details about configuring your MTA, go to the documentation for your specific product.&lt;/p>
+&lt;p>To test your mail relay for localhost, send email to yourself from the terminal using &lt;code>mail&lt;/code> .&lt;/p></description></item><item><title>Docs: Install MidoNet</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/install_midonet/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/install_midonet/</guid><description>
+&lt;h1 id="install-midonet">Install MidoNet&lt;/h1>
+&lt;p>Eucalyptus requires MidoNet for VPC functionality. This section describes how to install MidoNet for use with Eucalyptus.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+If you are not using VPC with Eucalyptus, you do not need to install MidoNet. See &lt;a href="https://www.eucastack.io/docs/install_guide/eucalyptus/configuring_euca/configure_network_modes/nw_edge/">Configure EDGE Network Mode&lt;/a>.
+&lt;/div>
+&lt;p>&lt;strong>Before you begin:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>See the &lt;a href="https://www.eucastack.io/docs/install_guide/eucalyptus/planning/planning_networking_modes/">Planning your Network&lt;/a> section of the guide to create a map of how MidoNet / will be deployed into your environment.&lt;/li>
+&lt;li>See the &lt;a href="https://docs.midonet.org/docs/latest-en/quick-start-guide/rhel-7_newton-rdo/content/_midonet_installation.html">MidoNet Installation Guide&lt;/a> to become familiar with the general MidoNet installation procedure and concepts.&lt;/li>
+&lt;/ul></description></item></channel></rss>

@@ -1,0 +1,97 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Cloud Tasks</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/</link><description>Recent content in Cloud Tasks on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Inspect System Health</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/inspect_health/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/inspect_health/</guid><description>
+&lt;p>Eucalyptus provides access to the current view of service state and the ability to manipulate the state. You can inspect the service state to either ensure system health or to identify faulty services. You can modify a service state to maintain activities and apply external service placement policies.&lt;/p>
+&lt;h2 id="view-service-state">View Service State&lt;/h2>
+&lt;p>Use the &lt;code>euserv-describe-services&lt;/code> command to view the service state. The output indicates:&lt;/p>
+&lt;ul>
+&lt;li>Component type of the service&lt;/li>
+&lt;li>Partition in which the service is registered&lt;/li>
+&lt;li>Unique name of the service&lt;/li>
+&lt;li>Current view of service state&lt;/li>
+&lt;li>Last reported epoch (this can be safely ignored)&lt;/li>
+&lt;li>Service URI&lt;/li>
+&lt;li>Fully qualified name of the service (This is needed for manipulating services that did not get unique names during registration. For example: internal services like DNS)
+The default output includes the services that are registered during configuration, as well as information about the DNS service, if present. You can obtain additional service state information, such as internal services, by providing the &lt;code>-a&lt;/code> flag.&lt;/li>
+&lt;/ul>
+&lt;p>You can also make requests to retrieve service information that is filtered by either:&lt;/p>
+&lt;ul>
+&lt;li>current state (for example, )&lt;/li>
+&lt;li>host where service is registered&lt;/li>
+&lt;li>partition where service is registered&lt;/li>
+&lt;li>type of service (for example, CC or Walrus)
+When you investigate service failures, you can specify &lt;code>-events&lt;/code> to return a summary of the last fault. You can retrieve extended information (primarily useful for debugging) by specifying &lt;code>-events -events-verbose&lt;/code> .&lt;/li>
+&lt;/ul>
+&lt;h2 id="heartbeat-service">Heartbeat Service&lt;/h2>
+&lt;p>&lt;code>http://CLCIPADDRESS:8773/services/Heartbeat&lt;/code> provides a list of components and their respective statuses. This allows you to find out if a service is enabled without requiring cloud credentials.&lt;/p>
+&lt;h2 id="modify-service-state">Modify Service State&lt;/h2>
+&lt;p>To modify a service:&lt;/p>
+&lt;p>Enter the following command on the CLC, Walrus, or SC machines:&lt;/p>
+&lt;pre>&lt;code>systemctl stop eucalyptus-cloud.service
+&lt;/code>&lt;/pre>
+&lt;p>On the CC, use the following command:&lt;/p>
+&lt;pre>&lt;code>systemctl stop eucalyptus-cluster.service
+&lt;/code>&lt;/pre>
+&lt;p>If you want to shut down the SC for maintenance. The SC is &lt;code>SC00&lt;/code> is &lt;code>ENABLED&lt;/code> and needs to be &lt;code>DISABLED&lt;/code> for maintenance.&lt;/p>
+&lt;p>To stop &lt;code>SC00&lt;/code> first verify that no volumes or snapshots are being created and that no volumes are being attached or detached, and then enter the following command on SC00:&lt;/p>
+&lt;pre>&lt;code>systemctl stop eucalyptus-cloud.service
+&lt;/code>&lt;/pre>
+&lt;p>To check status of services, you would enter:&lt;/p>
+&lt;pre>&lt;code>euserv-describe-services
+&lt;/code>&lt;/pre>
+&lt;p>When maintenance is complete, you can start the eucalyptus-cloud process on &lt;code>SC00&lt;/code> , which will enter the &lt;code>DISABLED&lt;/code> state by default.&lt;/p>
+&lt;pre>&lt;code>systemctl start eucalyptus-cloud.service
+&lt;/code>&lt;/pre>
+&lt;p>Monitor the state of services using &lt;code>euserv-describe-services&lt;/code> until &lt;code>SC00&lt;/code> is &lt;code>ENABLED&lt;/code> .&lt;/p></description></item><item><title>Docs: View User Resources</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/view_user_resources/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/view_user_resources/</guid><description>
+&lt;p>To see resource use by your cloud users, Eucalyptus provides the following commands with the flag.&lt;/p>
+&lt;ul>
+&lt;li>: Returns information about security groups in your account, including output type identifier, security group ID, security group name, security group description, output type identifier, account ID of the group owner, name of group granting permission, type of rule, protocol to allow, start of port range, end of port range, source (for ingress rules) or destination (for egress rules), and any tags assigned to the security group.&lt;/li>
+&lt;li>: Returns information about your instances, including output type identifier, reservation ID, name of each security group the instance is in, output type identifier, instance ID for each running instance, EMI ID of the image on which the instance is based, public DNS name associated with the instance (for instances in the running state), private DNS name associated with the instance (for instances in running state), instance state, key name, launch index, instance type, launch time, availability zone, kernel ID, ramdisk ID, monitoring state, public IP address, private IP address, type of root device (ebs or instance-store), placement group the cluster instance is in, virtualization type (paravirtual or hvm), any tags assigned to the instance, hypervisor type, block device identifier for each EBS volume the instance is using, along with the device name, the volume ID, and the timestamp.&lt;/li>
+&lt;li>: Returns information about key pairs available to you, including keypair identifier, keypair name, and private key fingerprint.&lt;/li>
+&lt;li>: Returns information about EBS snapshots available to you, including snapshot identifier, ID of the snapshot, ID of the volume, snapshot state (pending, completed, error), timestamp when snapshot initiated, percentage of completion, ID of the owner, volume sized, description, and any tags assigned to the snapshot.&lt;/li>
+&lt;li>: Describes your EBS volumes, including volume identifier, volume ID, size of the volume in GiBs, snapshot from which the volume was created, availability zone, volume state (creating, available, in-use, deleting, deleted, error), timestamp of the volume creation, and any tags assigned to the volume.&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Change Network Configuration</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/change_net_config/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/change_net_config/</guid><description>
+&lt;h1 id="change-network-configuration">Change Network Configuration&lt;/h1>
+&lt;p>You might want to change the original network configuration of your cloud. To change your network configuration, perform the tasks listed in this topic.Log in to the CLC and open the &lt;em>/etc/eucalyptus/eucalyptus.conf&lt;/em> file. Navigate to the Networking Configuration section and make your edits. Save the file. Restart the Cluster Controller.&lt;/p>
+&lt;pre>&lt;code>systemctl restart eucalyptus-cluster.service
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Add a Node Controller</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/add_nodes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/add_nodes/</guid><description>
+&lt;p>If you want to increase your system’s capacity, you’ll want to add more Node Controllers (NCs).To add an NC, perform the following tasks:&lt;/p>
+&lt;p>Log in to the CLC and enter the following command:&lt;/p>
+&lt;pre>&lt;code>clusteradmin-register-nodes node0_IP_address ... [nodeN_IP_address]
+&lt;/code>&lt;/pre>
+&lt;p>When prompted, enter the password to log into each node. Eucalyptus requires this password to propagate the cryptographic keys.&lt;/p></description></item><item><title>Docs: Migrate Instances Between Node Controllers</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/manage_nodes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/manage_nodes/</guid><description>
+&lt;p>In order to ensure optimal system performance, or to perform system maintenance, it is sometimes necessary to move running instances between Node Controllers (NCs). You can migrate instances individually, or migrate all instances from a given NC.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For migrations to succeed, you must have set to the same value in the file on each NC.
+&lt;/div>
+To migrate a single instance to another NC, enter the following command:&lt;/p>
+&lt;pre>&lt;code>euserv-migrate-instances -i INSTANCE_ID
+&lt;/code>&lt;/pre>
+&lt;p>You can also optionally specify &lt;code>--include-dest HOST_NC_IP&lt;/code> or &lt;code>--exclude-dest HOST_NC_IP&lt;/code> , to ensure that the instance is migrated to one of the specified NCs, or to avoid migrating the instance to any of the specified NCs. These flags may be used more than once to specify multiple NCs.&lt;/p>
+&lt;p>To migrate all instances away from an NC, enter the following command:&lt;/p>
+&lt;pre>&lt;code>euserv-migrate-instances --source HOST_NC_IP
+&lt;/code>&lt;/pre>
+&lt;p>You can also optionally specify &lt;code>euserv-modify-service -s stop HOST_NC_IP&lt;/code> , to stop the specified NC and ensure that no new instances are started on that NC while the migration occurs. This allows you to safely remove the NC without interrupting running instances. The NC will remain in the DISABLED state until it is explicitly enabled using &lt;code>euserv-modify-service -s start HOST_NC_IP&lt;/code> .&lt;/p>
+&lt;p>In some cases, timeouts may cause a migration to initially fail. Run the command again to complete the migration.&lt;/p>
+&lt;p>If the migration fails, check the &lt;em>nc.log&lt;/em> file on the source and destination NCs. If you see an error similar to:&lt;/p>
+&lt;pre>&lt;code>libvirt: Cannot get interface MTU on 'br0': No such device (code=38)
+&lt;/code>&lt;/pre>
+&lt;p>&amp;hellip; then ensure the NCs have the same interface and bridge device names, as described in &lt;a href="https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/configuring_bridge/">&lt;/a> .&lt;/p></description></item><item><title>Docs: Remove a Node Controller</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/del_nodes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/del_nodes/</guid><description>
+&lt;p>Describes how to delete NCs in your system.If you want to decrease your system’s capacity, you’ll need to decrease NC servers. To delete an NC, perform the following tasks.&lt;/p>
+&lt;p>Log in to the CC and enter the following command:&lt;/p>
+&lt;pre>&lt;code>clusteradmin-deregister-nodes node0_IP_address ... [nodeN_IP_address]
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Restart Eucalyptus</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/restart_euca/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/restart_euca/</guid><description>
+&lt;h1 id="restart-eucalyptus">Restart Eucalyptus&lt;/h1>
+&lt;p>Describes the recommended processes to restart Eucalyptus, including terminating instances and restarting Eucalyptus components.You must restart Eucalyptus whenever you make a physical change (e.g., switch out routers), or edit the eucalyptus.conf file. To restart Eucalyptus, perform the following tasks in the order presented.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Before you restart Eucalyptus, we recommend that you notify all users that you are terminating all instances.
+&lt;/div></description></item><item><title>Docs: Shut Down Eucalyptus</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/shut_down/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/shut_down/</guid><description>
+&lt;h1 id="shut-down-eucalyptus">Shut Down Eucalyptus&lt;/h1>
+&lt;p>Describes the recommended processes to shut down Eucalyptus.There may be times when you need to shut down Eucalyptus. This might be because of a physical failure, topological change, backing up, or making an upgrade. We recommend that you shut down Eucalyptus components in the reverse order of how you started them. To stop the system, shut down the components in the order listed.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Before you shut Eucalyptus down, we recommend that you notify all users that you are terminating all instances.
+&lt;/div></description></item><item><title>Docs: Disable CloudWatch</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/disable_cw/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/disable_cw/</guid><description>
+&lt;p>To disable CloudWatch, run the following command.&lt;/p>
+&lt;pre>&lt;code>euctl cloudwatch.enable_cloudwatch_service=true
+&lt;/code>&lt;/pre></description></item></channel></rss>

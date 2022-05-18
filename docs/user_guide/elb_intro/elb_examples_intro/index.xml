@@ -1,0 +1,640 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Eucalyptus Load Balancing Usage Examples</title><link>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/</link><description>Recent content in Eucalyptus Load Balancing Usage Examples on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Eucalyptus ELB Listener Configurations</title><link>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_listener_configs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_listener_configs/</guid><description>
+&lt;p>This section provides a reference to various possible ways to configure your listener, depending on how secure you want your load balancer. Currently, Eucalyptus supports the following HTTP/HTTPS Load Balancer use cases:&lt;/p>
+&lt;ul>
+&lt;li>Basic HTTP load balancer&lt;/li>
+&lt;li>Secure website or application using ELB to offload SSL decryption.&lt;/li>
+&lt;li>Secure website or application using end-to-end encryption&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Use Case&lt;/th>
+&lt;th style="text-align:left">Front-end Protocol&lt;/th>
+&lt;th style="text-align:left">Front-end Options&lt;/th>
+&lt;th style="text-align:left">Back-end Protocol&lt;/th>
+&lt;th style="text-align:left">Back-end Options&lt;/th>
+&lt;th style="text-align:left">Notes&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">Basic HTTP load balancer&lt;/td>
+&lt;td style="text-align:left">HTTP&lt;/td>
+&lt;td style="text-align:left">NA&lt;/td>
+&lt;td style="text-align:left">HTTP&lt;/td>
+&lt;td style="text-align:left">NA&lt;/td>
+&lt;td style="text-align:left">Supports X-forward for header. Go to AWS X-forwarding for more information.&lt;a href="">&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Secure website or application using Elastic Load Balancing to offload SSL decryption&lt;/td>
+&lt;td style="text-align:left">HTTPS&lt;/td>
+&lt;td style="text-align:left">SSL Negotiation.&lt;/td>
+&lt;td style="text-align:left">HTTP&lt;/td>
+&lt;td style="text-align:left">NA&lt;/td>
+&lt;td style="text-align:left">Supports X-forward for header. Go to AWS X-forwarding for more information. Requires an SSL certificate installed on the load balancer.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Secure website or application using end-to-end encryption&lt;/td>
+&lt;td style="text-align:left">HTTPS&lt;/td>
+&lt;td style="text-align:left">SSL Negotiation.&lt;/td>
+&lt;td style="text-align:left">HTTPS&lt;/td>
+&lt;td style="text-align:left">Back-end authentication&lt;/td>
+&lt;td style="text-align:left">Supports X-forward for header. Go to AWS X-forwarding for more information. Requires an SSL certificate installed on the load balancer and registered instances.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>Docs: Creating a Basic Elastic Load Balancing Configuration</title><link>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_basic_config/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_basic_config/</guid><description>
+&lt;p>Elastic load balancing requires two basic elements to function properly: a load balancer and instances registered with that load balancer. The following examples show how to set up the basic elements of an elastic load balancer configuration.&lt;/p>
+&lt;h2 id="create-a-load-balancer">Create a Load Balancer&lt;/h2>
+&lt;p>The load balancer manages incoming traffic, and monitors the health of your instances. The load balancer ensures that traffic is only sent to healthy instances.To create a load balancer:&lt;/p>
+&lt;p>Enter the following command, specifying availability zones:&lt;/p>
+&lt;pre>&lt;code>eulb-create-lb -z one -l &amp;quot;lb-port=80, protocol=HTTP, instance-port=80,
+instance-protocol=HTTP&amp;quot; MyLoadBalancer
+&lt;/code>&lt;/pre>
+&lt;p>To verify the elastic load balancer has been created, enter the following command: &lt;code>eulb-describe-lbs MyLoadBalancer&lt;/code> You should see output similar to the following:&lt;/p>
+&lt;pre>&lt;code>LOAD_BALANCER MyLoadBalancer MyLoadBalancer-587773761872.lb.localhost 2013-01-01T01:23:45.678Z
+&lt;/code>&lt;/pre>
+&lt;p>Optionally, you can create listeners for the load balancer as follows:&lt;/p>
+&lt;pre>&lt;code>eulb-create-lb-listeners --listener &amp;quot;lb-port=80, protocol=HTTP,
+instance-port=80, instance-protocol=HTTP&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>You&amp;rsquo;ve now created an elastic load balancer.&lt;/p>
+&lt;h2 id="register-instances-with-the-load-balancer">Register instances with the Load Balancer&lt;/h2>
+&lt;p>The load balancer monitors the health of registered instances, and balances incoming traffic across the healthy instances.To register an instance with the load balancer: Enter the following command:&lt;/p>
+&lt;pre>&lt;code>eulb-register-instances-with-lb --instances i-e0636aca,i-0c9c3967 MyLoadBalancer
+&lt;/code>&lt;/pre>
+&lt;p>Enter the following command to verify that the instances are registered with the load balancer: &lt;code>eulb-describe-instance-health MyLoadBalancer&lt;/code> This command will return output similar to the following:&lt;/p>
+&lt;pre>&lt;code>INSTANCE i-6FAD3F7B InService
+INSTANCE i-70FE4541 InService
+&lt;/code>&lt;/pre>
+&lt;p>Once you&amp;rsquo;ve created the load balancer and registered your instances with it, the load balancer will automatically route traffic from its endpoint URL to healthy instances.&lt;/p></description></item><item><title>Docs: Configuring the Health Check</title><link>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_healthcheck_configuration/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_healthcheck_configuration/</guid><description>
+&lt;p>To determine which instances are healthy, the load balancer periodically polls the registered instances. You can use the command as described in this topic.Perform the following step to configure how the instances should be polled, how long to wait for a response, and how many consecutive successes or failures are required to mark an instance as healthy or unhealthy.&lt;/p>
+&lt;p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+After you initially set up your load balancer, Eucalyptus automatically performs a health check to protect against potential side-effects caused by instances being terminated without being deregistered. This health check uses the instance port defined in the load balancer configuration
+&lt;/div>
+The following shows an example health check configuration command:&lt;/p>
+&lt;pre>&lt;code>eulb-configure-healthcheck --healthy-threshold 5 --unhealthy-threshold 5 --interval 30 --timeout 120 --target HTTP:80/ MyLoadBalancer
+&lt;/code>&lt;/pre>
+&lt;p>Use &lt;code>--healthy-threshold&lt;/code> and &lt;code>--unhealthy-threshold&lt;/code> to specify the number of consecutive health checks required to mark an instance as Healthy or Unhealthy respectively. Use &lt;code>--target&lt;/code> to specify the connection target on your instances for these health checks. Use &lt;code>--interval&lt;/code> and &lt;code>--timeout&lt;/code> to specify the approximate frequency and maximum duration of these health checks.&lt;/p></description></item><item><title>Docs: Modifying an Elastic Load Balancing Configuration</title><link>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_modify_elb/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_modify_elb/</guid><description>
+&lt;p>Elastic load balancing requires two basic elements to function properly: a load balancer and instances registered with that load balancer. The following examples show how to modify the basic elements of an elastic load balancer configuration.&lt;/p>
+&lt;h2 id="de-register-instances-from-the-load-balancer">De-register instances from the Load Balancer&lt;/h2>
+&lt;p>The load balancer monitors the health of registered instances, and balances incoming traffic across the healthy instances.To deregister an instance from the load balancer: Enter the following command:&lt;/p>
+&lt;pre>&lt;code>eulb-deregister-instances-from-lb --instances INSTANCE1,INSTANCE2,... MyLoadBalancer
+&lt;/code>&lt;/pre>
+&lt;p>Enter the following command to verify that the instances are deregistered from the load balancer: &lt;code>eulb-describe-instance-health MyLoadBalancer&lt;/code> This command will return output similar to the following:&lt;/p>
+&lt;pre>&lt;code>INSTANCE i-6FAD3F7B InService
+&lt;/code>&lt;/pre>
+&lt;h2 id="delete-load-balancer-listeners">Delete Load Balancer Listeners&lt;/h2>
+&lt;p>To delete a load balancer listener:&lt;/p>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>eulb-delete-lb-listeners --lb-ports PORT1,PORT2,... MyLoadBalancer
+&lt;/code>&lt;/pre>
+&lt;h2 id="delete-load-balancer">Delete Load Balancer&lt;/h2>
+&lt;p>To delete a load balancer:&lt;/p>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>eulb-delete-lb MyLoadBalancer
+&lt;/code>&lt;/pre>
+&lt;p>You&amp;rsquo;ve now deleted the elastic load balancer.&lt;/p></description></item><item><title>Docs: Creating Elastic Load Balancing Sticky Sessions</title><link>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_sticky_sessions/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_sticky_sessions/</guid><description>
+&lt;p>By default, a load balancer routes each request independently to the application instance with the smallest load. However, you can use the sticky session feature (also known as session affinity) which enables the load balancer to bind a user&amp;rsquo;s session to a specific application instance. This ensures that all requests coming from the user during the session will be sent to the same application instance.&lt;/p>
+&lt;h2 id="enable-duration-based-session-stickiness">Enable Duration-Based Session Stickiness&lt;/h2>
+&lt;p>To enable duration-based sticky sessions for a load balancer:&lt;/p>
+&lt;p>Use the &lt;code>eulb-create-lb-cookie-stickiness-policy&lt;/code> command to create a load-balancer-generated cookie stickiness policy with a cookie expiration period of 60 seconds. &lt;code>eulb-create-lb-cookie-stickiness-policy MyLoadBalancer --policy-name MyLoadBalancerPolicy --expiration-period 60&lt;/code> Use the &lt;code>eulb-set-lb-policies-of-listener&lt;/code> command to enable session stickiness for a load balancer using the MyLoadBalancerPolicy. &lt;code>eulb-set-lb-policies-of-listener MyLoadBalancer --lb-port 80 --policy-names MyLoadBalancerPolicy&lt;/code> You can use the &lt;code>eulb-describe-lb-policies&lt;/code> command to list the policies created for the load balancer. &lt;code>eulb-describe-lb-policies MyLoadBalancer --show-long&lt;/code>&lt;/p>
+&lt;h2 id="enable-application-controlled-session-stickiness">Enable Application-Controlled Session Stickiness&lt;/h2>
+&lt;p>To enable application-controlled session stickiness: Use the &lt;code>eulb-create-app-cookie-stickiness-policy&lt;/code> command to create a load application-generated cookie stickiness policy: &lt;code>eulb-create-app-cookie-stickiness-policy my-load-balancer -p my-app-cookie-lb-policy -c my-cookie&lt;/code> Use the &lt;code>eulb-set-lb-policies-of-listener&lt;/code> command to enable session stickiness for a load balancer using the my-load-balancer policy. &lt;code>eulb-set-lb-policies-of-listener example-lb --lb-port 80 --policy-names my-app-cookie-lb-policy&lt;/code> You can use the &lt;code>eulb-describe-lb-policies&lt;/code> command to list the policies created for the load balancer. &lt;code>eulb-describe-lb-policies example-lb --show-long&lt;/code>&lt;/p></description></item><item><title>Docs: Uploading SSL Certificates for Elastic Load Balancing</title><link>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_ssl_certificates/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_ssl_certificates/</guid><description>
+&lt;p>You must install an X.509 certificate on your load balancer in order to use HTTPS or SSL termination. The X.509 certificate is issued by a central Certificate Authority (CA) and contains identifying information, including a digital signature. X.509 certificates have a validity period. Once an X.509 certificate expires, you must create and install a new certificate.&lt;/p>
+&lt;h2 id="upload-a-certificate">Upload a Certificate&lt;/h2>
+&lt;p>Once you&amp;rsquo;ve created a certificate, you must upload it to your cloud using the command.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+You must create the certificate and get it signed by a certificate authority (CA) before you can upload the certificate using the AWS Identity and Access Management (IAM) service. For instructions, go to .
+&lt;/div>
+To upload a certificate :&lt;/p>
+&lt;p>Enter the &lt;code>euare-servercertupload&lt;/code> command, specifying the name of your certificate, the contents of the PEM-encoded public- and private-keys:&lt;/p>
+&lt;pre>&lt;code>euare-servercertupload -s cert-name --certificate-file ssl_server_cert.crt --private-key-file ssl_server_cert.pem
+&lt;/code>&lt;/pre>
+&lt;p>You&amp;rsquo;ve now created an elastic load balancer.&lt;/p>
+&lt;h2 id="verify-server-certificate">Verify Server Certificate&lt;/h2>
+&lt;p>You can verify that an uploaded certificate is stored in IAM. Each certificate object has a unique Amazon Resource Name (ARN) and ID.To verify an uploaded certificate: Use the &lt;code>euare-servercertlistbypath&lt;/code> command to verify the certificate is stored in IAM:&lt;/p>
+&lt;pre>&lt;code>euare-servercertgetattributes -s elb-ssl-cert
+&lt;/code>&lt;/pre>
+&lt;p>The command will return the ARN, followed by the GUID. For example:&lt;/p>
+&lt;pre>&lt;code>arn:aws:iam::495375389014:server-certificate/elb-ssl-cert
+ASCWDKTJBXPSZTHWFERVP
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Adding SSL Support</title><link>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_ssl_support/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_ssl_support/</guid><description>
+&lt;p>This topic describes how to add SSL support to a new or existing load balancer.&lt;/p>
+&lt;h2 id="creating-a-new-listener-with-ssl-support">Creating a new listener with SSL support&lt;/h2>
+&lt;p>This task shows how to create a new listener with SSL support.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+In order to use HTTPS support, you&amp;rsquo;ll need to install an SSL server certificate on your load balancer. If you haven&amp;rsquo;t already done this, see .
+&lt;/div>
+To add a new listener to your load balancer: Using the ARN for the certificate you installed, use the &lt;code>eulb-create-listener&lt;/code> command to create a new listener. For example: &lt;code>eulb-create-lb-listeners MyLoadBalancer --listener &amp;quot;protocol=HTTPS,lb-port=443,instance-port=80,instance-protocol=HTTP, cert-id=arn:aws:iam::12345678901:my-server-certificate/testing/myNewCert&amp;quot;&lt;/code> Use the &lt;code>eulb-describe-lbs&lt;/code> command to see the details of your load balancer. For example: &lt;code>eulb-describe-lbs MyLoadBalancer&lt;/code>&lt;/p>
+&lt;h2 id="updating-a-listener-with-a-new-ssl-certificate">Updating a listener with a new SSL certificate&lt;/h2>
+&lt;p>This task shows how to replace an SSL server certificate configured with listeners&amp;quot;
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+In order to use HTTPS support, you&amp;rsquo;ll need to install an SSL server certificate on your load balancer. If you haven&amp;rsquo;t already done this, see .
+&lt;/div>
+To update an existing listener with SSL support: Use the &lt;code>eulb-set-lb-listener-ssl-certcommand&lt;/code> with the ARN of your new server certificate to replace the certificate configured with listeners For example: &lt;code>eulb-set-lb-listener-ssl-cert MyLoadBalancer --lb-port 443 --cert-id arn:aws:iam::12345678901:my-server-certificate/testing/myNewCert&lt;/code> Use the &lt;code>eulb-describe-lbs&lt;/code> command to see the details of your load balancer. For example: &lt;code>eulb-describe-lbs MyLoadBalancer&lt;/code>&lt;/p></description></item><item><title>Docs: Updating the SSL Negotiation Configuration</title><link>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_ssl_negotiation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_ssl_negotiation/</guid><description>
+&lt;p>Eucalyptus Elastic Load Balancing (ELB) uses SSL negotiation configurations to determine how SSL connections to your load balancer behave. This topic shows how to update an existing load balancer with an SSL negotiation configuration.&lt;/p>
+&lt;p>Get a list of predefined security policies using the &lt;code>eulb-describe-lb-policies&lt;/code> command: &lt;code>eulb-describe-lb-policies&lt;/code> This produces output similar to the following:&lt;/p>
+&lt;pre>&lt;code>POLICY ELBSample-AppCookieStickinessPolicy AppCookieStickinessPolicyType
+POLICY ELBSample-LBCookieStickinessPolicy LBCookieStickinessPolicyType
+POLICY ELBSecurityPolicy-2014-10 SSLNegotiationPolicyType
+POLICY ELBSecurityPolicy-2015-02 SSLNegotiationPolicyType
+POLICY ELBSecurityPolicy-2011-08 SSLNegotiationPolicyType
+POLICY ELBSecurityPolicy-2015-05 SSLNegotiationPolicyType
+POLICY ELBSecurityPolicy-2014-01 SSLNegotiationPolicyType
+&lt;/code>&lt;/pre>
+&lt;p>Use the &lt;code>eulb-create-lb-policy&lt;/code> command to update the SSL negotiation configuration to use one of the predefined security policies. For example: &lt;code>eulb-create-lb-policy --policy-name mypredefinedsslpolicy --policy-type SSLNegotiationPolicyType --attributes &amp;quot;Reference-Security-Policy=ELBSecurityPolicy-2011-08&amp;quot; myloadbalancer&lt;/code> Use the &lt;code>eulb-describe-lbs&lt;/code> command to verify the update. For example: &lt;code>eulb-describe-lbs myloadbalancer&lt;/code>&lt;/p></description></item><item><title>Docs: Adding and Editing Predefined Security Policies</title><link>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_adding_security_policies/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_adding_security_policies/</guid><description>
+&lt;p>This topic describes how to add and edit ELB security policies.Default ELB policies are stored as JSON files in the &lt;code>/etc/eucalyptus/cloud.d/elb-security-policy&lt;/code> directory. You can add or edit policy files here, and the changes will take effect when the CLC is restarted.&lt;/p>
+&lt;p>Copy one of the ELB policy files to a new file and edit the file. You must change the &lt;code>PolicyName&lt;/code> attribute to a new name, with the name ending in a date. For example: &lt;code>ELBSecurityPolicy-2015-09&lt;/code> The policy file with the most recent date appended to the name will be used as the default policy when users create HTTPS/SSL listeners. The following is an example of an ELB policy file. You can modify this file and save it with a new filename in the &lt;code>/etc/eucalyptus/cloud.d/elb-security-policy&lt;/code> directory.&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;PolicyAttributeDescriptions&amp;quot;: [
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;Protocol-SSLv2&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;Protocol-TLSv1&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;Protocol-SSLv3&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;Protocol-TLSv1.1&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;Protocol-TLSv1.2&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;Server-Defined-Cipher-Order&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ECDHE-ECDSA-AES128-GCM-SHA256&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ECDHE-RSA-AES128-GCM-SHA256&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ECDHE-ECDSA-AES128-SHA256&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ECDHE-RSA-AES128-SHA256&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ECDHE-ECDSA-AES128-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ECDHE-RSA-AES128-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-RSA-AES128-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ECDHE-ECDSA-AES256-GCM-SHA384&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ECDHE-RSA-AES256-GCM-SHA384&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ECDHE-ECDSA-AES256-SHA384&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ECDHE-RSA-AES256-SHA384&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ECDHE-RSA-AES256-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ECDHE-ECDSA-AES256-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;AES128-GCM-SHA256&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;AES128-SHA256&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;AES128-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;AES256-GCM-SHA384&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;AES256-SHA256&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;AES256-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-DSS-AES128-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;CAMELLIA128-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;EDH-RSA-DES-CBC3-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DES-CBC3-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;true&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ECDHE-RSA-RC4-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;RC4-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ECDHE-ECDSA-RC4-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-DSS-AES256-GCM-SHA384&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-RSA-AES256-GCM-SHA384&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-RSA-AES256-SHA256&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-DSS-AES256-SHA256&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-RSA-AES256-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-DSS-AES256-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-RSA-CAMELLIA256-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-DSS-CAMELLIA256-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;CAMELLIA256-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;EDH-DSS-DES-CBC3-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-DSS-AES128-GCM-SHA256&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-RSA-AES128-GCM-SHA256&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-RSA-AES128-SHA256&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-DSS-AES128-SHA256&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-RSA-CAMELLIA128-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-DSS-CAMELLIA128-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ADH-AES128-GCM-SHA256&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ADH-AES128-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ADH-AES128-SHA256&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ADH-AES256-GCM-SHA384&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ADH-AES256-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ADH-AES256-SHA256&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ADH-CAMELLIA128-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ADH-CAMELLIA256-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ADH-DES-CBC3-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ADH-DES-CBC-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ADH-RC4-MD5&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;ADH-SEED-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DES-CBC-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-DSS-SEED-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DHE-RSA-SEED-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;EDH-DSS-DES-CBC-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;EDH-RSA-DES-CBC-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;IDEA-CBC-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;RC4-MD5&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;SEED-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DES-CBC3-MD5&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;DES-CBC-MD5&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;RC2-CBC-MD5&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;PSK-AES256-CBC-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;PSK-3DES-EDE-CBC-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;KRB5-DES-CBC3-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;KRB5-DES-CBC3-MD5&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;PSK-AES128-CBC-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;PSK-RC4-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;KRB5-RC4-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;KRB5-RC4-MD5&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;KRB5-DES-CBC-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;KRB5-DES-CBC-MD5&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;EXP-EDH-RSA-DES-CBC-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;EXP-EDH-DSS-DES-CBC-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;EXP-ADH-DES-CBC-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;EXP-DES-CBC-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;EXP-RC2-CBC-MD5&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;EXP-KRB5-RC2-CBC-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;EXP-KRB5-DES-CBC-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;EXP-KRB5-RC2-CBC-MD5&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;EXP-KRB5-DES-CBC-MD5&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;EXP-ADH-RC4-MD5&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;EXP-RC4-MD5&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;EXP-KRB5-RC4-SHA&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+},
+{
+&amp;quot;AttributeName&amp;quot;: &amp;quot;EXP-KRB5-RC4-MD5&amp;quot;,
+&amp;quot;AttributeValue&amp;quot;: &amp;quot;false&amp;quot;
+}
+],
+&amp;quot;PolicyName&amp;quot;: &amp;quot;ELBSecurityPolicy-2015-05&amp;quot;,
+&amp;quot;PolicyTypeName&amp;quot;: &amp;quot;SSLNegotiationPolicyType&amp;quot;
+}
+&lt;/code>&lt;/pre>
+&lt;p>Using a text editor, change the &lt;code>PolicyName&lt;/code> attribute. For example: &lt;code>&amp;quot;PolicyName&amp;quot;: &amp;quot;ELBSecurityPolicy-2015-05&amp;quot;&lt;/code> Once you&amp;rsquo;ve edited and saved the JSON file, restart the CLC. Once the CLC has restarted, use the &lt;code>eulb-describe-lb-policies&lt;/code> command to verify that your new policy is listed. For example:&lt;/p>
+&lt;pre>&lt;code>POLICY ELBSample-AppCookieStickinessPolicy AppCookieStickinessPolicyType
+POLICY ELBSample-LBCookieStickinessPolicy LBCookieStickinessPolicyType
+POLICY ELBSecurityPolicy-2014-10 SSLNegotiationPolicyType
+POLICY ELBSecurityPolicy-2015-02 SSLNegotiationPolicyType
+POLICY ELBSecurityPolicy-2011-08 SSLNegotiationPolicyType
+POLICY ELBSecurityPolicy-2015-05 SSLNegotiationPolicyType
+POLICY ELBSecurityPolicy-2014-01 SSLNegotiationPolicyType
+POLICY MyNewELBSecurityPolicy-2015-09 SSLNegotiationPolicyType
+&lt;/code>&lt;/pre>
+&lt;p>You can now use your new security policy using the &lt;code>eulb-create-lb-policy&lt;/code> command. For more information, see &lt;a href="https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_ssl_negotiation/">Updating the SSL Negotiation Configuration&lt;/a> .&lt;/p></description></item><item><title>Docs: Configuring Back-end Server Authentication</title><link>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_backend_server_authentication/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_backend_server_authentication/</guid><description>
+&lt;p>When running a web application with HTTPS or SSL as the backend server’s protocol, you might want to authenticate the back-end servers using the public key of the back-end server’s certificate. This authentication can be used to ensure that back-end servers accept only encrypted communication and to ensure that the back-end servers have the correct certificate.To configure back-end server authentication:&lt;/p>
+&lt;p>Create a new loadbalancer with HTTPS as backend instance’s protocol:&lt;/p>
+&lt;pre>&lt;code>eulb-create-lb -l &amp;quot;protocol=HTTPS,lb-port=443,instance-protocol=HTTPS,instance-port=8443,cert-id=arn:aws:iam::000550595745:server-certificate/mycert01&amp;quot;\
+-z one myloadbalancer
+&lt;/code>&lt;/pre>
+&lt;p>Create a new PublicKeyPolicyType policy for the load balancer. In the example below, ‘server.crt’ is the file containing the public key of the backend server’s certificate.&lt;/p>
+&lt;pre>&lt;code>eulb-create-lb-policy -n webservercert -t PublicKeyPolicyType -a &amp;quot;name=PublicKey, value=$(&amp;lt;./server.crt)&amp;quot; myloadbalancer
+&lt;/code>&lt;/pre>
+&lt;p>Use the &lt;code>eulb-describe-lb-policies&lt;/code> to ensure that the policy was created. For example:&lt;/p>
+&lt;pre>&lt;code>eulb-describe-lb-policies -p webservercert myloadbalancer
+&lt;/code>&lt;/pre>
+&lt;p>Create a new &lt;code>BackendServerAuthenticationPolicyType&lt;/code> policy that refers to the public key policy created above.&lt;/p>
+&lt;pre>&lt;code>eulb-create-lb-policy -n webserverauthentication -t BackendServerAuthenticationPolicyType -a &amp;quot;name=PublicKeyPolicyName, value=webservercert&amp;quot; myloadbalancer
+&lt;/code>&lt;/pre>
+&lt;p>Make sure the policy is created. For example:&lt;/p>
+&lt;pre>&lt;code>eulb-describe-lb-policies -p webserverauthentication myloadbalancer
+&lt;/code>&lt;/pre>
+&lt;p>Set the created policy to the listener by specifying the instance&amp;rsquo;s port number. For example:&lt;/p>
+&lt;pre>&lt;code>eulb-set-lb-policies-for-backend-server -i 443 -p webserverauthentication myloadbalancer
+&lt;/code>&lt;/pre>
+&lt;p>Make sure the policy is attached to the intended listener. For example:&lt;/p>
+&lt;pre>&lt;code>eulb-describe-lbs --show-long myloadbalancer
+LOAD_BALANCER myloadbalancer
+myloadbalancer-000550595745.lb.c-04.autoqa.qa1.eucalyptus-systems.com
+{interval=30,target=TCP:8443,timeout=5,healthy-threshold=3,unhealthy-threshold=3} one \
+{protocol=HTTPS,lb-port=443,instance-protocol=HTTPS,instance-port=8443,cert-id=arn:aws:iam::000550595745:server-certificate/mycert01,\
+{ELBSecurityPolicy-2015-05}}
+{instance-port=8443,policies={webserverauthentication}}
+{ELBSecurityPolicy-2015-05,webservercert,webserverauthentication}
+{owner-alias=000936883517,group-name=euca-internal-000550595745-myloadbalancer}
+2015-10-12T20:55:52.08Z
+internet-facing
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Enabling Cross-Zone Load Balancing</title><link>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_cross_zone_lbs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_cross_zone_lbs/</guid><description>
+&lt;p>When an ELB has instances in multiple available zones, enabling cross-zone load balancing will distribute traffics to instances across availability zones. If disabled, the load balancer in a zone will distribute traffics to instances within the zone. For example, if a Zone A has 10 instances, and a Zone B has 1 instance, and the client happens to use the load balancer of Zone B (via round-robin DNS), cross-zone load balancing will ensure that the clients will use all 11 instances, not just the one instance in Zone B.To enable cross-zone load balancing:&lt;/p>
+&lt;p>By default, cross-zone load balancing is not enabled for a new load balancer. To enable, modify the load balancer attribute using the eulb-modify-lb-attributes command. For example: &lt;code>eulb-modify-lb-attributes myloadbalancer CrossZoneLoadBalancing.Enabled=true&lt;/code> Make sure the attribute is enabled. For example:&lt;/p>
+&lt;pre>&lt;code>eulb-describe-lb-attributes myloadbalancer
+AccessLog.Enabled false
+ConnectionDraining.Enabled false
+ConnectionSettings.IdleTimeout 60
+CrossZoneLoadBalancing.Enabled true
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Accessing Load Balancer Logs</title><link>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_access_logs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/elb_intro/elb_examples_intro/elb_examples_access_logs/</guid><description>
+&lt;p>To help analyze an application’s performances or troubleshoot problems, you can capture detailed information for all requests coming through your load balancers. When enabled, such access logs will be captured and stored in the S3 bucket.To access ELB logs:&lt;/p>
+&lt;p>Before enabling the access logs, update the access control of your S3 (Eucalyptus object-storage-gateway) bucket so that Eucalyptus’ load balancer has write permissions. The access control list requires the canonical ID of the grantee. To obtain the canonical ID of the load balancing service:
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+If your cloud is using VPCMIDO networking mode, use the command in the next step.
+&lt;/div>
+&lt;/p>
+&lt;pre>&lt;code>eulb-describe-lbs --show-long --region devops-admin@region-1
+LOAD_BALANCER myloadbalancer
+myloadbalancer-000476918024.lb.a-18.autoqa.qa1.eucalyptus-systems.com
+{interval=30,target=TCP:80,timeout=5,healthy-threshold=3,unhealthy-threshold=3
+cash,money i-6f2a1874,i-be660343
+{protocol=HTTP,lb-port=80,instance-protocol=HTTP,instance-port=80}
+{owner-alias=000865102303,group-name=euca-internal-000476918024-myloadbalancer}
+2015-09-29T18:11:33.761Z
+internet-facing
+&lt;/code>&lt;/pre>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Save the number at the end of the output to update the bucket&amp;rsquo;s ACL in .
+&lt;/div>
+&lt;p>To obtain the canonical ID of the load balancing service in VPCMIDO networking mode:
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+If your cloud is not using VPCMIDO networking mode, use the command in the previous step.
+&lt;/div>
+&lt;/p>
+&lt;pre>&lt;code>euserv-describe-services --filter service-type=loadbalancing --expert
+SERVICE arn:euca:bootstrap:API_10.111.1.19:loadbalancing:API_10.111.1.19.loadbalancing/ enabled 25
+http://10.111.1.19:8773/services/LoadBalancing
+(eucalyptus)loadbalancing=000036660381:28323c32338354b20255a633830524c1224434cb1a5254c1d614614841586042
+&lt;/code>&lt;/pre>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Save the number at the end of the output to update the bucket&amp;rsquo;s ACL in .
+&lt;/div>
+&lt;p>Use any S3 client tools to update the bucket’s ACL. For example:&lt;/p>
+&lt;pre>&lt;code># aws --endpoint-url http://objectstorage.a-18.autoqa.qa1.eucalyptus-systems.com:8773/ s3 s3://webserverlog
+# aws --endpoint-url http://objectstorage.a-18.autoqa.qa1.eucalyptus-systems.com:8773/ s3api put-bucket-acl --grant-write &amp;quot;id=000865102303&amp;quot; --bucket s3://webserverlog
+&lt;/code>&lt;/pre>
+&lt;p>Modify your load balancer’s attributes to enable the access logs. For example:&lt;/p>
+&lt;pre>&lt;code>eulb-modify-lb-attributes myloadbalancer AccessLog.Enabled=true AccessLog.S3BucketName=webserverlog AccessLog.EmitInterval=5 AccessLog.S3BucketPrefix=myprefix
+&lt;/code>&lt;/pre>
+&lt;p>Check that the attribute has been updated correctly by using the &lt;code>eulb-describe-lb-attributes&lt;/code> command:&lt;/p>
+&lt;pre>&lt;code>eulb-describe-lb-attributes myloadbalancer
+AccessLog.EmitInterval 5
+AccessLog.Enabled true
+AccessLog.S3BucketName webserverlog
+AccessLog.S3BucketPrefix myprefix
+ConnectionDraining.Enabled false
+ConnectionSettings.IdleTimeout 60
+CrossZoneLoadBalancing.Enabled true
+&lt;/code>&lt;/pre></description></item></channel></rss>

@@ -1,0 +1,49 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Use Ceph-RBD</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/config_storage/config_block_storage/config_storage_ceph_rbd/</link><description>Recent content in Use Ceph-RBD on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/config_storage/config_block_storage/config_storage_ceph_rbd/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Configure Hypervisor Support for Ceph-RBD</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/config_storage/config_block_storage/config_storage_ceph_rbd/config_storage_ceph_rbd_hyperviser/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/config_storage/config_block_storage/config_storage_ceph_rbd/config_storage_ceph_rbd_hyperviser/</guid><description>
+&lt;p>This topic describes how to configure the hypervisor for Ceph-RBD support.The following instructions will walk you through steps for verifying and or installing the required hypervisor for Ceph-RBD support. &lt;strong>Repeat this process for every NC in the Eucalyptus zone&lt;/strong>&lt;/p>
+&lt;p>Verify if &lt;code>qemu-kvm&lt;/code> and &lt;code>qemu-img&lt;/code> are already installed.&lt;/p>
+&lt;pre>&lt;code>rpm -q qemu-kvm qemu-img
+&lt;/code>&lt;/pre>
+&lt;p>Proceed to the preparing the RHEV qemu packages step if they are not installed.&lt;/p>
+&lt;p>Verify qemu support for the &lt;code>ceph-rbd&lt;/code> driver.&lt;/p>
+&lt;pre>&lt;code>qemu-img --help
+qemu-img version 0.12.1, Copyright (c) 2004-2008 Fabrice Bellard
+...
+Supported formats: raw cow qcow vdi vmdk cloop dmg bochs vpc vvfat qcow2 qed vhdx parallels nbd blkdebug host_cdrom
+host_floppy host_device file gluster gluster gluster gluster rbd
+&lt;/code>&lt;/pre>
+&lt;p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+If &amp;lsquo;rbd&amp;rsquo; is listed as one of the supported formats, no further action is required; otherwise proceed to the next step.
+&lt;/div>
+If the &lt;code>eucalyptus-node&lt;/code> service is running, terminate/stop all instances. After all instances are terminated, stop the eucalyptus-node service.&lt;/p>
+&lt;pre>&lt;code>systemctl stop eucalyptus-node.service
+&lt;/code>&lt;/pre>
+&lt;p>Prepare the RHEV qemu packages:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>If this NC is a RHEL system and the RHEV subscription to qemu packages is available, consult the RHEV package procedure to install the qemu-kvm-ev and qemu-img-ev packages. Blacklist the RHEV packages in the repository to ensure that packages from the RHEV repository are installed.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>If this NC is a RHEL system and RHEV subscription to qemu packages is unavailable, built and maintained qemu-rhev packages may be used. These packages are available in the same yum repository as other packages. Note that using built RHEV packages voids the original RHEL support for the qemu packages.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>If this NC is a non-RHEL (CentOS) system, -built and maintained qemu-rhev packages may be used. These packages are available in the same yum repository as other packages.
+If you are &lt;em>not&lt;/em> using the RHEV package procedure to install the &lt;code>qemu-kvm-ev&lt;/code> and &lt;code>qemu-img-ev&lt;/code> packages, install Eucalyptus -built RHEV packages: &lt;code>qemu-kvm-ev&lt;/code> and &lt;code>qemu-img-ev&lt;/code> , which can be found in the same yum repository as other Eucalyptus packages.&lt;/p>
+&lt;p>yum install qemu-kvm-ev qemu-img-ev&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>Start the &lt;code>libvirtd&lt;/code> service.&lt;/p>
+&lt;pre>&lt;code>systemctl start libvirtd.service
+&lt;/code>&lt;/pre>
+&lt;p>Verify &lt;code>qemu&lt;/code> support for the &lt;code>ceph-rbd&lt;/code> driver.&lt;/p>
+&lt;pre>&lt;code>qemu-img --help
+qemu-img version 0.12.1, Copyright (c) 2004-2008 Fabrice Bellard
+...
+Supported formats: raw cow qcow vdi vmdk cloop dmg bochs vpc vvfat qcow2 qed vhdx parallels nbd blkdebug host_cdrom
+host_floppy host_device file gluster gluster gluster gluster rbd
+&lt;/code>&lt;/pre>
+&lt;p>Make sure the eucalyptus-node service is started.&lt;/p>
+&lt;pre>&lt;code>systemctl start eucalyptus-node.service
+&lt;/code>&lt;/pre>
+&lt;p>Your hypervisor is ready for Eucalyptus Ceph-RBD support. You are now ready to &lt;a href="https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/config_storage/config_block_storage/config_storage_ceph_rbd/">configure Ceph-RBD&lt;/a> for Eucalyptus .&lt;/p></description></item></channel></rss>

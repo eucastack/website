@@ -1,0 +1,947 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Using CloudFormation</title><link>https://www.eucastack.io/docs/user_guide/cf_overview/</link><description>Recent content in Using CloudFormation on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/cf_overview/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: CloudFormation Use Case</title><link>https://www.eucastack.io/docs/user_guide/cf_overview/cf_usecase/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/cf_overview/cf_usecase/</guid><description>
+&lt;p>This topic describes a use case for creating a stack, checking the stack progress, and deleting the stack. For this use case, we will use the following template:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87;font-weight:bold">Parameters&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">MyImageId&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Description&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">Image id&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Type&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">String&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">MyKeyPair&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Description&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">Key Pair&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Type&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">String&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline">&lt;/span>&lt;span style="color:#204a87;font-weight:bold">Resources&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">MySecurityGroup&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Type&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">AWS::EC2::SecurityGroup&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Properties&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">GroupDescription&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">Security Group with Ingress Rule for MyInstance&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">SecurityGroupIngress&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>- &lt;span style="color:#204a87;font-weight:bold">IpProtocol&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">tcp&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">FromPort&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#4e9a06">&amp;#39;22&amp;#39;&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">ToPort&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#4e9a06">&amp;#39;22&amp;#39;&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">CidrIp&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#4e9a06">&amp;#39;0.0.0.0/0&amp;#39;&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">MyInstance&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Type&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">AWS::EC2::Instance&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Properties&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">ImageId&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>!&lt;span style="color:#000">Ref &amp;#39;MyImageId&amp;#39;&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">SecurityGroups&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>- !&lt;span style="color:#000">Ref &amp;#39;MySecurityGroup&amp;#39;&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">KeyName&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>!&lt;span style="color:#000">Ref &amp;#39;MyKeyPair&amp;#39;&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This template creates an instance with a security group that allows global SSH access (port 22), but uses a keypair to log in. It requires two parameters, &lt;em>MyImageId&lt;/em> , which is the image ID of the instance to create, and &lt;em>MyKeyPair&lt;/em> , which is the name of the keypair to use to log in with. You could use both values with the &lt;em>euca-run-instances&lt;/em> or &lt;em>aws ec2 run-instances&lt;/em> commands to create an instance manually (for example, &lt;code>euca-run-instances -k mykey emi-371ada125a928669e&lt;/code> ) so the arguments needed here are standard instance arguments.&lt;/p>
+&lt;p>The steps to run this template through the system are explained in the following steps.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+These steps require that you have an available image and that the CloudFormation service is running
+&lt;/div>
+&lt;p>Verify connectivity to the CloudFormation service.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euform-describe-stacks
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># Or&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>aws cloudformation describe-stacks
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You should not see anything returned, including any errors. Create a file called &lt;em>ex_template.yaml&lt;/em> that contains the YAML template content shown in the introduction above.&lt;/p>
+&lt;p>Create a keypair.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euca-create-keypair myKey &amp;gt; myKey.pem
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># Or&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>aws ec2 create-key-pair --key-name myKey &amp;gt; myKey.pem
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Set the permissions on the keypair.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>chmod &lt;span style="color:#0000cf;font-weight:bold">0600&lt;/span> myKey.pem
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Find what resources have been created., run the command and the euca-describe-groups commands. Make note of the output for later. Run:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euca-describe-images -a
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># Or&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>aws ec2 describe-images
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Note the output for later use.&lt;/p>
+&lt;p>Create the stack referencing the existing resources.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># euform-create-stack --template-file ex_template.yaml -p MyImageId=&amp;lt;image_id&amp;gt; -p MyKeyPair=myKey MyStack&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>arn:aws:cloudformation::000575948401:stack/MyStack/26daf046-3776-4b97-9444-5edae2f2eceb
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>of with the AWS CLI:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># aws cloudformation create-stack --template-body file://ex_template.yaml --parameters ParameterKey=MyImageId,ParameterValue=emi-371ada125a928669e ParameterKey=MyKeyPair,ParameterValue=myKey --stack-name MyStack&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>arn:aws:cloudformation::000575948401:stack/MyStack/26daf046-3776-4b97-9444-5edae2f2eceb
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Run the checks you want on your stack. Check the status of the stack.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># euform-describe-stacks&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>STACK MyStack CREATE_COMPLETE 2020-10-20T18:31:15.662Z
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PARAMETER MyImageId emi-371ada125a928669e
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PARAMETER MyKeyPair myKey
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># aws cloudformation describe-stacks&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>STACKS 2020-10-20T18:31:15.662Z False 2020-10-20T18:31:51.316Z arn:aws:cloudformation::000575948401:stack/MyStack/26daf046-3776-4b97-9444-5edae2f2eceb MyStack CREATE_COMPLETE
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PARAMETERS MyImageId emi-371ada125a928669e
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PARAMETERS MyKeyPair myKey
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Check the stack at any time to see all the events that have occurred during the stack lifecycle.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># euform-describe-stack-events MyStack&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>EVENT MyStack d87c4381-b765-4d44-a5ba-a952855ffd79 AWS::CloudFormation::Stack MyStack arn:aws:cloudformation::000575948401:stack/MyStack/26daf046-3776-4b97-9444-5edae2f2eceb 2020-10-20T18:31:51.310Z CREATE_COMPLETE
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>EVENT MyStack MyInstance-CREATE_COMPLETE-1603218711063 AWS::EC2::Instance MyInstance i-687f112f4c99e9a98 2020-10-20T18:31:51.063Z CREATE_COMPLETE
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>EVENT MyStack MyInstance-CREATE_IN_PROGRESS-1603218676951 AWS::EC2::Instance MyInstance i-687f112f4c99e9a98 2020-10-20T18:31:16.951Z CREATE_IN_PROGRESS Resource creation Initiated
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>EVENT MyStack MyInstance-CREATE_IN_PROGRESS-1603218676783 AWS::EC2::Instance MyInstance 2020-10-20T18:31:16.783Z CREATE_IN_PROGRESS
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>EVENT MyStack MySecurityGroup-CREATE_COMPLETE-1603218676599 AWS::EC2::SecurityGroup MySecurityGroup MyStack-MySecurityGroup-SWUBTU8TQ9MBV 2020-10-20T18:31:16.599Z CREATE_COMPLETE
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>EVENT MyStack MySecurityGroup-CREATE_IN_PROGRESS-1603218676174 AWS::EC2::SecurityGroup MySecurityGroup MyStack-MySecurityGroup-SWUBTU8TQ9MBV 2020-10-20T18:31:16.174Z CREATE_IN_PROGRESS Resource creation Initiated
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>EVENT MyStack MySecurityGroup-CREATE_IN_PROGRESS-1603218676038 AWS::EC2::SecurityGroup MySecurityGroup 2020-10-20T18:31:16.038Z CREATE_IN_PROGRESS
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>EVENT MyStack 9212e1ff-6c7a-4710-96a2-d83606a3c34f AWS::CloudFormation::Stack MyStack arn:aws:cloudformation::000575948401:stack/MyStack/26daf046-3776-4b97-9444-5edae2f2eceb 2020-10-20T18:31:15.780Z CREATE_IN_PROGRESS User Initiated
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Run &lt;em>euca-describe-instances&lt;/em> and &lt;em>euca-describe-groups&lt;/em> to see the newly created resources:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># euca-describe-instances i-687f112f4c99e9a98&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>RESERVATION r-2381c3e652dd942f2 000575948401 MyStack-MySecurityGroup-SWUBTU8TQ9MBV
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>INSTANCE i-687f112f4c99e9a98 emi-371ada125a928669e euca-192-168-134-181.eucalyptus.mycloud.example.com euca-172-31-15-210.eucalyptus.internal running myKey 0 t2.micro 2020-10-20T18:31:16.920Z cloud-1a monitoring-disabled 192.168.134.181 172.31.15.210 vpc-837bc081de161f8c0 subnet-1503566df094fe78a instance-store hvm sg-98da12246d91375e3 x86_64
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>NETWORKINTERFACE eni-42a4a3bf7d1075735 subnet-1503566df094fe78a vpc-837bc081de161f8c0 000575948401 in-use 172.31.15.210 euca-172-31-15-210.eucalyptus.internal &lt;span style="color:#204a87">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ATTACHMENT eni-attach-cc38f4f4ef78a6469 0 attached 2020-10-20T18:31:16.923Z &lt;span style="color:#204a87">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ASSOCIATION 192.168.134.181 172.31.15.210
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>GROUP sg-98da12246d91375e3 MyStack-MySecurityGroup-SWUBTU8TQ9MBV
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PRIVATEIPADDRESS 172.31.15.210 euca-172-31-15-210.eucalyptus.internal primary
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TAG instance i-687f112f4c99e9a98 aws:cloudformation:logical-id MyInstance
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TAG instance i-687f112f4c99e9a98 aws:cloudformation:stack-id arn:aws:cloudformation::000575948401:stack/MyStack/26daf046-3776-4b97-9444-5edae2f2eceb
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TAG instance i-687f112f4c99e9a98 aws:cloudformation:stack-name MyStack
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TAG instance i-687f112f4c99e9a98 euca:node 10.117.111.18
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># euca-describe-groups sg-98da12246d91375e3&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>GROUP sg-98da12246d91375e3 000575948401 MyStack-MySecurityGroup-SWUBTU8TQ9MBV Security Group with Ingress Rule &lt;span style="color:#204a87;font-weight:bold">for&lt;/span> MyInstance vpc-837bc081de161f8c0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PERMISSION 000575948401 MyStack-MySecurityGroup-SWUBTU8TQ9MBV ALLOWS tcp 22 22 FROM CIDR 0.0.0.0/0 ingress
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PERMISSION 000575948401 MyStack-MySecurityGroup-SWUBTU8TQ9MBV ALLOWS -1 TO CIDR 0.0.0.0/0 egress
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TAG security-group sg-98da12246d91375e3 aws:cloudformation:logical-id MySecurityGroup
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TAG security-group sg-98da12246d91375e3 aws:cloudformation:stack-id arn:aws:cloudformation::000575948401:stack/MyStack/26daf046-3776-4b97-9444-5edae2f2eceb
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TAG security-group sg-98da12246d91375e3 aws:cloudformation:stack-name MyStack
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>To SSH into the instance:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>ssh -i myKey.pem root@192.168.134.181
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Username might depend on the image, and might be root, centos, ubuntu or ec2-user.
+&lt;/div>
+&lt;p>Delete the stack.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euform-delete-stack MyStack
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># Or&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>aws cloudformation delete-stack --stack-name MyStack
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You can run &lt;em>euform-describe-stacks&lt;/em> and all the other describe commands to check the progress until the delete is complete.&lt;/p></description></item><item><title>Docs: CloudFormation Templates</title><link>https://www.eucastack.io/docs/user_guide/cf_overview/cf_templates/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/cf_overview/cf_templates/</guid><description>
+&lt;p>This topic details templates that have been tested with Eucalyptus.&lt;/p>
+&lt;div class="alert alert-warning" role="alert">
+&lt;h4 class="alert-heading">Warning&lt;/h4>
+These examples use the older JSON format, YAML format is recommended for Eucalyptus 5
+&lt;/div>
+&lt;h2 id="accesskeystemplate">AccessKeys.template&lt;/h2>
+&lt;pre>&lt;code>{
+&amp;quot;AWSTemplateFormatVersion&amp;quot;:&amp;quot;2010-09-09&amp;quot;,
+&amp;quot;Parameters&amp;quot;:{
+&amp;quot;Username&amp;quot;:{
+&amp;quot;Description&amp;quot;:&amp;quot;Username&amp;quot;,
+&amp;quot;Type&amp;quot;:&amp;quot;String&amp;quot;
+}
+},
+&amp;quot;Resources&amp;quot;:{
+&amp;quot;Key1&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::IAM::AccessKey&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;UserName&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;Username&amp;quot;},
+&amp;quot;Serial&amp;quot;:&amp;quot;1&amp;quot;,
+&amp;quot;Status&amp;quot;:&amp;quot;Active&amp;quot;
+}
+},
+&amp;quot;Key2&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::IAM::AccessKey&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;UserName&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;Username&amp;quot;},
+&amp;quot;Serial&amp;quot;:&amp;quot;1&amp;quot;,
+&amp;quot;Status&amp;quot;:&amp;quot;Inactive&amp;quot;
+}
+}
+},
+&amp;quot;Outputs&amp;quot;:{
+&amp;quot;Key1AK&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;Key1&amp;quot;}
+},
+&amp;quot;Key1SK&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::GetAtt&amp;quot;:[&amp;quot;Key1&amp;quot;,&amp;quot;SecretAccessKey&amp;quot;]}
+},
+&amp;quot;Key2AK&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;Key2&amp;quot;}
+},
+&amp;quot;Key2SK&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::GetAtt&amp;quot;:[&amp;quot;Key2&amp;quot;,&amp;quot;SecretAccessKey&amp;quot;]}
+}
+}
+}
+&lt;/code>&lt;/pre>
+&lt;h2 id="autoscalinggroupsandcloudwatchalarmtemplate">AutoscalingGroupsAndCloudWatchAlarm.template&lt;/h2>
+&lt;pre>&lt;code>{
+&amp;quot;AWSTemplateFormatVersion&amp;quot;:&amp;quot;2010-09-09&amp;quot;,
+&amp;quot;Parameters&amp;quot;:{
+&amp;quot;ImageId&amp;quot;:{
+&amp;quot;Description&amp;quot;:&amp;quot;Image id&amp;quot;,
+&amp;quot;Type&amp;quot;:&amp;quot;String&amp;quot;
+}
+},
+&amp;quot;Resources&amp;quot;:{
+&amp;quot;LaunchConfig&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::AutoScaling::LaunchConfiguration&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;ImageId&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;ImageId&amp;quot;},
+&amp;quot;InstanceType&amp;quot;:&amp;quot;m1.small&amp;quot;,
+&amp;quot;BlockDeviceMappings&amp;quot;:[
+{&amp;quot;DeviceName&amp;quot;:&amp;quot;/dev/sdc&amp;quot;,&amp;quot;VirtualName&amp;quot;:&amp;quot;ephemeral0&amp;quot;},
+{&amp;quot;DeviceName&amp;quot;:&amp;quot;/dev/sdc&amp;quot;,&amp;quot;Ebs&amp;quot;:{&amp;quot;VolumeSize&amp;quot;:&amp;quot;10&amp;quot;}}
+],
+&amp;quot;SecurityGroups&amp;quot;:[{&amp;quot;Ref&amp;quot;:&amp;quot;InstanceSecurityGroup&amp;quot;}]}
+},
+&amp;quot;ASG1&amp;quot;:{
+&amp;quot;UpdatePolicy&amp;quot;:{
+&amp;quot;AutoScalingRollingUpdate&amp;quot;:{
+&amp;quot;MinInstancesInService&amp;quot;:&amp;quot;1&amp;quot;,
+&amp;quot;MaxBatchSize&amp;quot;:&amp;quot;1&amp;quot;,
+&amp;quot;PauseTime&amp;quot;:&amp;quot;PT12M5S&amp;quot;
+}
+},
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::AutoScaling::AutoScalingGroup&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;AvailabilityZones&amp;quot;:{&amp;quot;Fn::GetAZs&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;AWS::Region&amp;quot;}
+},
+&amp;quot;LaunchConfigurationName&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;LaunchConfig&amp;quot;},
+&amp;quot;MaxSize&amp;quot;:&amp;quot;3&amp;quot;,
+&amp;quot;MinSize&amp;quot;:&amp;quot;1&amp;quot;
+}
+},
+&amp;quot;ScaleUpPolicy&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::AutoScaling::ScalingPolicy&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;AdjustmentType&amp;quot;:&amp;quot;ChangeInCapacity&amp;quot;,
+&amp;quot;AutoScalingGroupName&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;ASG1&amp;quot;},
+&amp;quot;Cooldown&amp;quot;:&amp;quot;1&amp;quot;,
+&amp;quot;ScalingAdjustment&amp;quot;:&amp;quot;1&amp;quot;
+}
+},
+&amp;quot;CPUAlarmHigh&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::CloudWatch::Alarm&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;EvaluationPeriods&amp;quot;:&amp;quot;1&amp;quot;,
+&amp;quot;Statistic&amp;quot;:&amp;quot;Average&amp;quot;,
+&amp;quot;Threshold&amp;quot;:&amp;quot;10&amp;quot;,
+&amp;quot;AlarmDescription&amp;quot;:&amp;quot;Alarm if CPU too high or metric disappears indicating instance is down&amp;quot;,
+&amp;quot;Period&amp;quot;:&amp;quot;60&amp;quot;,
+&amp;quot;AlarmActions&amp;quot;:[{&amp;quot;Ref&amp;quot;:&amp;quot;ScaleUpPolicy&amp;quot;}],
+&amp;quot;Namespace&amp;quot;:&amp;quot;AWS/EC2&amp;quot;,
+&amp;quot;Dimensions&amp;quot;:[{
+&amp;quot;Name&amp;quot;:&amp;quot;AutoScalingGroupName&amp;quot;,
+&amp;quot;Value&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;ASG1&amp;quot;}
+}],
+&amp;quot;ComparisonOperator&amp;quot;:&amp;quot;GreaterThanThreshold&amp;quot;,
+&amp;quot;MetricName&amp;quot;:&amp;quot;CPUUtilization&amp;quot;
+}
+},
+&amp;quot;InstanceSecurityGroup&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::SecurityGroup&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;GroupDescription&amp;quot;:&amp;quot;Cloudformation Group&amp;quot;,
+&amp;quot;SecurityGroupIngress&amp;quot;:[{
+&amp;quot;IpProtocol&amp;quot;:&amp;quot;tcp&amp;quot;,
+&amp;quot;FromPort&amp;quot;:&amp;quot;22&amp;quot;,
+&amp;quot;ToPort&amp;quot;:&amp;quot;22&amp;quot;,
+&amp;quot;CidrIp&amp;quot;:&amp;quot;0.0.0.0/0&amp;quot;
+}]
+}
+},
+&amp;quot;IngressRule&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::SecurityGroupIngress&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;GroupName&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;InstanceSecurityGroup&amp;quot;},
+&amp;quot;FromPort&amp;quot;:&amp;quot;80&amp;quot;,
+&amp;quot;ToPort&amp;quot;:&amp;quot;80&amp;quot;,
+&amp;quot;IpProtocol&amp;quot;:&amp;quot;tcp&amp;quot;,
+&amp;quot;SourceSecurityGroupName&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;InstanceSecurityGroup&amp;quot;}
+}
+}
+}
+}
+&lt;/code>&lt;/pre>
+&lt;h2 id="blockdevicemappingstemplate">BlockDeviceMappings.template&lt;/h2>
+&lt;pre>&lt;code>{
+&amp;quot;AWSTemplateFormatVersion&amp;quot;:&amp;quot;2010-09-09&amp;quot;,
+&amp;quot;Description&amp;quot;:&amp;quot;Create an EC2 instance running a specified EMI with block device mappings.&amp;quot;,
+&amp;quot;Parameters&amp;quot;:{
+&amp;quot;ImageId&amp;quot;:{
+&amp;quot;Description&amp;quot;:&amp;quot;Image id&amp;quot;,
+&amp;quot;Type&amp;quot;:&amp;quot;String&amp;quot;
+},
+&amp;quot;KeyName&amp;quot;:{
+&amp;quot;Description&amp;quot;:&amp;quot;KeyName&amp;quot;,
+&amp;quot;Type&amp;quot;:&amp;quot;String&amp;quot;
+},
+&amp;quot;SnapshotId&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;String&amp;quot;
+}
+},
+&amp;quot;Resources&amp;quot;:{
+&amp;quot;Ec2Instance1&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::Instance&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;ImageId&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;ImageId&amp;quot;},
+&amp;quot;BlockDeviceMappings&amp;quot;:[{&amp;quot;DeviceName&amp;quot;:&amp;quot;/dev/sdc&amp;quot;,&amp;quot;VirtualName&amp;quot;:&amp;quot;ephemeral0&amp;quot;}]
+}
+},
+&amp;quot;Ec2Instance2&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::Instance&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;ImageId&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;ImageId&amp;quot;},
+&amp;quot;KeyName&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;KeyName&amp;quot;},
+&amp;quot;BlockDeviceMappings&amp;quot;:[{
+&amp;quot;DeviceName&amp;quot;:&amp;quot;/dev/sdc&amp;quot;,
+&amp;quot;Ebs&amp;quot;:{&amp;quot;SnapshotId&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;SnapshotId&amp;quot;},&amp;quot;DeleteOnTermination&amp;quot;:&amp;quot;false&amp;quot;}
+}]
+}
+},
+&amp;quot;Ec2Instance3&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::Instance&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;ImageId&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;ImageId&amp;quot;},
+&amp;quot;KeyName&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;KeyName&amp;quot;},
+&amp;quot;BlockDeviceMappings&amp;quot;:[{
+&amp;quot;DeviceName&amp;quot;:&amp;quot;/dev/sdc&amp;quot;,
+&amp;quot;Ebs&amp;quot;:{&amp;quot;VolumeSize&amp;quot;:&amp;quot;10&amp;quot;,&amp;quot;DeleteOnTermination&amp;quot;:&amp;quot;true&amp;quot;}
+}]
+}
+}
+}
+}
+&lt;/code>&lt;/pre>
+&lt;h2 id="conditionsandfunctionstemplate">ConditionsAndFunctions.template&lt;/h2>
+&lt;pre>&lt;code>{
+&amp;quot;Mappings&amp;quot;:{
+&amp;quot;Mapping01&amp;quot;:{
+&amp;quot;Key01&amp;quot;:{&amp;quot;Value&amp;quot;:[&amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;]},
+&amp;quot;Key02&amp;quot;:{&amp;quot;Value&amp;quot;:&amp;quot;3&amp;quot;},
+&amp;quot;Key03&amp;quot;:{&amp;quot;Value&amp;quot;:&amp;quot;4&amp;quot;}
+}
+},
+&amp;quot;AWSTemplateFormatVersion&amp;quot;:&amp;quot;2010-09-09&amp;quot;,
+&amp;quot;Description&amp;quot;:&amp;quot;Create an EC2 instance running a specified EMI, also test functions and conditions.&amp;quot;,
+&amp;quot;Parameters&amp;quot;:{
+&amp;quot;ImageId&amp;quot;:{
+&amp;quot;Description&amp;quot;:&amp;quot;Image id&amp;quot;,
+&amp;quot;Type&amp;quot;:&amp;quot;String&amp;quot;,
+&amp;quot;NoEcho&amp;quot;:&amp;quot;True&amp;quot;
+},
+&amp;quot;Split&amp;quot;:{
+&amp;quot;Default&amp;quot;:&amp;quot;1,2,3&amp;quot;,
+&amp;quot;Type&amp;quot;:&amp;quot;CommaDelimitedList&amp;quot;
+}
+},
+&amp;quot;Resources&amp;quot;:{
+&amp;quot;Ec2Instance1&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::Instance&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;ImageId&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;ImageId&amp;quot;}
+},
+&amp;quot;Condition&amp;quot;:&amp;quot;True&amp;quot;
+},
+&amp;quot;Ec2Instance2&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::Instance&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;ImageId&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;ImageId&amp;quot;}
+},
+&amp;quot;Condition&amp;quot;:&amp;quot;False&amp;quot;
+}
+},
+&amp;quot;Conditions&amp;quot;:{
+&amp;quot;True&amp;quot;:{&amp;quot;Fn::Equals&amp;quot;:[&amp;quot;x&amp;quot;,&amp;quot;x&amp;quot;]},
+&amp;quot;False&amp;quot;:{&amp;quot;Fn::Not&amp;quot;:[{&amp;quot;Condition&amp;quot;:&amp;quot;True&amp;quot;}]},
+&amp;quot;NotTrue&amp;quot;:{&amp;quot;Fn::Not&amp;quot;:[{&amp;quot;Condition&amp;quot;:&amp;quot;True&amp;quot;}]},
+&amp;quot;NotFalse&amp;quot;:{&amp;quot;Fn::Not&amp;quot;:[{&amp;quot;Condition&amp;quot;:&amp;quot;False&amp;quot;}]},
+&amp;quot;TrueAndTrue&amp;quot;:{&amp;quot;Fn::And&amp;quot;:[{&amp;quot;Condition&amp;quot;:&amp;quot;True&amp;quot;},{&amp;quot;Condition&amp;quot;:&amp;quot;True&amp;quot;}]},
+&amp;quot;TrueAndFalse&amp;quot;:{&amp;quot;Fn::And&amp;quot;:[{&amp;quot;Condition&amp;quot;:&amp;quot;True&amp;quot;},{&amp;quot;Condition&amp;quot;:&amp;quot;False&amp;quot;}]},
+&amp;quot;FalseAndTrue&amp;quot;:{&amp;quot;Fn::And&amp;quot;:[{&amp;quot;Condition&amp;quot;:&amp;quot;False&amp;quot;},{&amp;quot;Condition&amp;quot;:&amp;quot;True&amp;quot;}]},
+&amp;quot;FalseAndFalse&amp;quot;:{&amp;quot;Fn::And&amp;quot;:[{&amp;quot;Condition&amp;quot;:&amp;quot;False&amp;quot;},{&amp;quot;Condition&amp;quot;:&amp;quot;False&amp;quot;}]},
+&amp;quot;TrueOrTrue&amp;quot;:{&amp;quot;Fn::Or&amp;quot;:[{&amp;quot;Condition&amp;quot;:&amp;quot;True&amp;quot;},{&amp;quot;Condition&amp;quot;:&amp;quot;True&amp;quot;}]},
+&amp;quot;TrueOrFalse&amp;quot;:{&amp;quot;Fn::Or&amp;quot;:[{&amp;quot;Condition&amp;quot;:&amp;quot;True&amp;quot;},{&amp;quot;Condition&amp;quot;:&amp;quot;False&amp;quot;}]},
+&amp;quot;FalseOrTrue&amp;quot;:{&amp;quot;Fn::Or&amp;quot;:[{&amp;quot;Condition&amp;quot;:&amp;quot;False&amp;quot;},{&amp;quot;Condition&amp;quot;:&amp;quot;True&amp;quot;}]},
+&amp;quot;FalseOrFalse&amp;quot;:{&amp;quot;Fn::Or&amp;quot;:[{&amp;quot;Condition&amp;quot;:&amp;quot;False&amp;quot;},{&amp;quot;Condition&amp;quot;:&amp;quot;False&amp;quot;}]}
+},
+&amp;quot;Outputs&amp;quot;:{
+&amp;quot;Region&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;AWS::Region&amp;quot;}
+},
+&amp;quot;JoinAndAZ&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::Join&amp;quot;:[&amp;quot;,&amp;quot;,{&amp;quot;Fn::GetAZs&amp;quot;:&amp;quot;&amp;quot;}]}
+},
+&amp;quot;FindInMap1AndSelect&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::Select&amp;quot;:[&amp;quot;0&amp;quot;,{&amp;quot;Fn::FindInMap&amp;quot;:[&amp;quot;Mapping01&amp;quot;,&amp;quot;Key01&amp;quot;,&amp;quot;Value&amp;quot;]}]}
+},
+&amp;quot;FindInMap2AndSelect&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::Select&amp;quot;:[&amp;quot;1&amp;quot;,&amp;quot;Fn::FindInMap&amp;quot;:[&amp;quot;Mapping01&amp;quot;,&amp;quot;Key01&amp;quot;,&amp;quot;Value&amp;quot;]}]}
+},
+&amp;quot;FindInMap3AndSelect&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::FindInMap&amp;quot;:[&amp;quot;Mapping01&amp;quot;,&amp;quot;Key02&amp;quot;,&amp;quot;Value&amp;quot;]}
+},
+&amp;quot;FindInMap4AndSelect&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::FindInMap&amp;quot;:[&amp;quot;Mapping01&amp;quot;,&amp;quot;Key03&amp;quot;,&amp;quot;Value&amp;quot;]}
+},
+&amp;quot;GetAtt&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::GetAtt&amp;quot;:[&amp;quot;Ec2Instance1&amp;quot;,&amp;quot;PrivateIp&amp;quot;]}
+},
+&amp;quot;StackId&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;AWS::StackId&amp;quot;}
+},
+&amp;quot;StackName&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;AWS::StackName&amp;quot;}
+},
+&amp;quot;AccountId&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;AWS::AccountId&amp;quot;}
+},
+&amp;quot;True&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::Join&amp;quot; : [&amp;quot;,&amp;quot;,[{&amp;quot;Fn::If&amp;quot;: [&amp;quot;True&amp;quot;,&amp;quot;True&amp;quot;,&amp;quot;False&amp;quot;]}]]}},
+},
+&amp;quot;False&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::Join&amp;quot; : [&amp;quot;,&amp;quot;,[{&amp;quot;Fn::If&amp;quot;: [&amp;quot;False&amp;quot;,&amp;quot;True&amp;quot;,&amp;quot;False&amp;quot;]}]]}},
+},
+&amp;quot;NotTrue&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::Join&amp;quot; : [&amp;quot;,&amp;quot;,[{&amp;quot;Fn::If&amp;quot;: [&amp;quot;NotTrue&amp;quot;,&amp;quot;True&amp;quot;,&amp;quot;False&amp;quot;]}]]}},
+},
+&amp;quot;NotFalse&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::Join&amp;quot; : [&amp;quot;,&amp;quot;,[{&amp;quot;Fn::If&amp;quot;: [&amp;quot;NotFalse&amp;quot;,&amp;quot;True&amp;quot;,&amp;quot;False&amp;quot;]}]]}},
+},
+&amp;quot;TrueAndTrue&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::Join&amp;quot; : [&amp;quot;,&amp;quot;,[{&amp;quot;Fn::If&amp;quot;: [&amp;quot;TrueAndTrue&amp;quot;,&amp;quot;True&amp;quot;,&amp;quot;False&amp;quot;]}]]}},
+},
+&amp;quot;TrueAndFalse&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::Join&amp;quot; : [&amp;quot;,&amp;quot;,[{&amp;quot;Fn::If&amp;quot;: [&amp;quot;TrueAndFalse&amp;quot;,&amp;quot;True&amp;quot;,&amp;quot;False&amp;quot;]}]]}},
+},
+&amp;quot;FalseAndTrue&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::Join&amp;quot; : [&amp;quot;,&amp;quot;,[{&amp;quot;Fn::If&amp;quot;: [&amp;quot;FalseAndTrue&amp;quot;,&amp;quot;True&amp;quot;,&amp;quot;False&amp;quot;]}]]}},
+},
+&amp;quot;FalseAndFalse&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::Join&amp;quot; : [&amp;quot;,&amp;quot;,[{&amp;quot;Fn::If&amp;quot;: [&amp;quot;FalseAndFalse&amp;quot;,&amp;quot;True&amp;quot;,&amp;quot;False&amp;quot;]}]]}},
+},
+&amp;quot;TrueOrTrue&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::Join&amp;quot; : [&amp;quot;,&amp;quot;,[{&amp;quot;Fn::If&amp;quot;: [&amp;quot;TrueOrTrue&amp;quot;,&amp;quot;True&amp;quot;,&amp;quot;False&amp;quot;]}]]}},
+},
+&amp;quot;TrueOrFalse&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::Join&amp;quot; : [&amp;quot;,&amp;quot;,[{&amp;quot;Fn::If&amp;quot;: [&amp;quot;TrueOrFalse&amp;quot;,&amp;quot;True&amp;quot;,&amp;quot;False&amp;quot;]}]]}},
+},
+&amp;quot;FalseOrTrue&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::Join&amp;quot; : [&amp;quot;,&amp;quot;,[{&amp;quot;Fn::If&amp;quot;: [&amp;quot;FalseOrTrue&amp;quot;,&amp;quot;True&amp;quot;,&amp;quot;False&amp;quot;]}]]}},
+},
+&amp;quot;FalseOrFalse&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::Join&amp;quot; : [&amp;quot;,&amp;quot;,[{&amp;quot;Fn::If&amp;quot;: [&amp;quot;FalseOrFalse&amp;quot;,&amp;quot;True&amp;quot;,&amp;quot;False&amp;quot;]}]]}},
+}
+}
+}
+&lt;/code>&lt;/pre>
+&lt;h2 id="elasticiptemplate">ElasticIP.template&lt;/h2>
+&lt;p>This template attaches an Elastic IP to a new and existing instance. You must pass along the existing instance ID.&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;AWSTemplateFormatVersion&amp;quot;:&amp;quot;2010-09-09&amp;quot;,
+&amp;quot;Description&amp;quot;:&amp;quot;Create an EC2 instance running a specified EMI and some elastic IP addresses.&amp;quot;,
+&amp;quot;Parameters&amp;quot;:{
+&amp;quot;ImageId&amp;quot;:{
+&amp;quot;Description&amp;quot;:&amp;quot;Image id&amp;quot;,
+&amp;quot;Type&amp;quot;:&amp;quot;String&amp;quot;
+},
+&amp;quot;OtherInstanceId&amp;quot;:{
+&amp;quot;Description&amp;quot;:&amp;quot;Other instance id&amp;quot;,
+&amp;quot;Type&amp;quot;:&amp;quot;String&amp;quot;
+}
+},
+&amp;quot;Resources&amp;quot;:{
+&amp;quot;Ec2Instance1&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::Instance&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;ImageId&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;ImageId&amp;quot;}
+}
+},
+&amp;quot;EIP1&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::EIP&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;InstanceId&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;Ec2Instance1&amp;quot;}
+}
+},
+&amp;quot;EIP2&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::EIP&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+}
+},
+&amp;quot;EIPAssociation2&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::EIPAssociation&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;InstanceId&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;OtherInstanceId&amp;quot;},
+&amp;quot;EIP&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;EIP2&amp;quot;}
+}
+}
+},
+&amp;quot;Outputs&amp;quot;:{
+&amp;quot;Output1&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;EIPAssociation2&amp;quot;}
+}
+}
+}
+&lt;/code>&lt;/pre>
+&lt;h2 id="elasticloadbalancertemplate">ElasticLoadBalancer.template&lt;/h2>
+&lt;p>There is a hard-coded image ID in the &lt;code>Mapping&lt;/code> section here to test &lt;code>FindInMap&lt;/code> . Change the value to an instance that exists in your cloud.&lt;/p>
+&lt;pre>&lt;code>{
+&amp;quot;AWSTemplateFormatVersion&amp;quot;:&amp;quot;2010-09-09&amp;quot;,
+&amp;quot;Description&amp;quot;:&amp;quot;Based on the AWS Cloudformation Sample Template for ELB. Modify this template, and put the correct emi-XXXX in the value fields with a blank key of the AWSRegionArch2AMI mapping.&amp;quot;,
+&amp;quot;Parameters&amp;quot;:{
+&amp;quot;InstanceType&amp;quot;:{
+&amp;quot;Description&amp;quot;:&amp;quot;WebServer EC2 instance type&amp;quot;,
+&amp;quot;Type&amp;quot;:&amp;quot;String&amp;quot;,
+&amp;quot;Default&amp;quot;:&amp;quot;m1.small&amp;quot;,
+&amp;quot;AllowedValues&amp;quot;:[&amp;quot;t1.micro&amp;quot;,&amp;quot;m1.small&amp;quot;,&amp;quot;m1.medium&amp;quot;,&amp;quot;m1.large&amp;quot;,&amp;quot;m1.xlarge&amp;quot;,&amp;quot;m2.xlarge&amp;quot;,&amp;quot;m2.2xlarge&amp;quot;,
+&amp;quot;m2.4xlarge&amp;quot;,&amp;quot;m3.xlarge&amp;quot;,&amp;quot;m3.2xlarge&amp;quot;,&amp;quot;c1.medium&amp;quot;,&amp;quot;c1.xlarge&amp;quot;,&amp;quot;cc1.4xlarge&amp;quot;,
+&amp;quot;cc2.8xlarge&amp;quot;,&amp;quot;cg1.4xlarge&amp;quot;],
+&amp;quot;ConstraintDescription&amp;quot;:&amp;quot;must be a valid EC2 instance type.&amp;quot;
+},
+&amp;quot;WebServerPort&amp;quot;:{
+&amp;quot;Description&amp;quot;:&amp;quot;TCP/IP port of the web server&amp;quot;,
+&amp;quot;Type&amp;quot;:&amp;quot;String&amp;quot;,
+&amp;quot;Default&amp;quot;:&amp;quot;8888&amp;quot;
+},
+&amp;quot;KeyName&amp;quot;:{
+&amp;quot;Description&amp;quot;:&amp;quot;Name of an existing EC2 KeyPair to enable SSH access to the instances&amp;quot;,
+&amp;quot;Type&amp;quot;:&amp;quot;String&amp;quot;,
+&amp;quot;MinLength&amp;quot;:&amp;quot;1&amp;quot;,
+&amp;quot;MaxLength&amp;quot;:&amp;quot;255&amp;quot;,
+&amp;quot;AllowedPattern&amp;quot;:&amp;quot;[\\x20-\\x7E]*&amp;quot;,
+&amp;quot;ConstraintDescription&amp;quot;:&amp;quot;can contain only ASCII characters.&amp;quot;
+},
+&amp;quot;SSHLocation&amp;quot;:{
+&amp;quot;Description&amp;quot;:&amp;quot;The IP address range that can be used to SSH to the EC2 instances&amp;quot;,
+&amp;quot;Type&amp;quot;:&amp;quot;String&amp;quot;,
+&amp;quot;MinLength&amp;quot;:&amp;quot;9&amp;quot;,
+&amp;quot;MaxLength&amp;quot;:&amp;quot;18&amp;quot;,
+&amp;quot;Default&amp;quot;:&amp;quot;0.0.0.0/0&amp;quot;,
+&amp;quot;AllowedPattern&amp;quot;:&amp;quot;(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})&amp;quot;,
+&amp;quot;ConstraintDescription&amp;quot;:&amp;quot;must be a valid IP CIDR range of the form x.x.x.x/x.&amp;quot;
+}
+},
+&amp;quot;Mappings&amp;quot;:{
+&amp;quot;AWSInstanceType2Arch&amp;quot;:{
+&amp;quot;t1.micro&amp;quot;:{&amp;quot;Arch&amp;quot;:&amp;quot;64&amp;quot;},
+&amp;quot;m1.small&amp;quot;:{&amp;quot;Arch&amp;quot;:&amp;quot;64&amp;quot;},
+&amp;quot;m1.medium&amp;quot;:{&amp;quot;Arch&amp;quot;:&amp;quot;64&amp;quot;},
+&amp;quot;m1.large&amp;quot;:{&amp;quot;Arch&amp;quot;:&amp;quot;64&amp;quot;},
+&amp;quot;m1.xlarge&amp;quot;:{&amp;quot;Arch&amp;quot;:&amp;quot;64&amp;quot;},
+&amp;quot;m2.xlarge&amp;quot;:{&amp;quot;Arch&amp;quot;:&amp;quot;64&amp;quot;},
+&amp;quot;m2.2xlarge&amp;quot;:{&amp;quot;Arch&amp;quot;:&amp;quot;64&amp;quot;},
+&amp;quot;m3.xlarge&amp;quot;:{&amp;quot;Arch&amp;quot;:&amp;quot;64&amp;quot;},
+&amp;quot;m3.2xlarge&amp;quot;:{&amp;quot;Arch&amp;quot;:&amp;quot;64&amp;quot;},
+&amp;quot;m2.4xlarge&amp;quot;:{&amp;quot;Arch&amp;quot;:&amp;quot;64&amp;quot;},
+&amp;quot;c1.medium&amp;quot;:{&amp;quot;Arch&amp;quot;:&amp;quot;64&amp;quot;},
+&amp;quot;c1.xlarge&amp;quot;:{&amp;quot;Arch&amp;quot;:&amp;quot;64&amp;quot;}
+},
+&amp;quot;AWSRegionArch2AMI&amp;quot;:{
+&amp;quot;&amp;quot;:{&amp;quot;32&amp;quot;:&amp;quot;emi-ddbacddf&amp;quot;,&amp;quot;64&amp;quot;:&amp;quot;emi-ddbacddf&amp;quot;}
+}
+},
+&amp;quot;Resources&amp;quot;:{
+&amp;quot;ElasticLoadBalancer&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::ElasticLoadBalancing::LoadBalancer&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;AvailabilityZones&amp;quot;:{&amp;quot;Fn::GetAZs&amp;quot;:&amp;quot;&amp;quot;},
+&amp;quot;Instances&amp;quot;:[{&amp;quot;Ref&amp;quot;:&amp;quot;Ec2Instance1&amp;quot;},{&amp;quot;Ref&amp;quot;:&amp;quot;Ec2Instance2&amp;quot;}],
+&amp;quot;Listeners&amp;quot;{&amp;quot;LoadBalancerPort&amp;quot;:&amp;quot;80&amp;quot;,&amp;quot;InstancePort&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;WebServerPort&amp;quot;},&amp;quot;Protocol&amp;quot;:&amp;quot;HTTP&amp;quot;}],
+&amp;quot;HealthCheck&amp;quot;:{
+&amp;quot;Target&amp;quot;:{&amp;quot;Fn::Join&amp;quot;:[&amp;quot;&amp;quot;,[&amp;quot;HTTP:&amp;quot;,{&amp;quot;Ref&amp;quot;:&amp;quot;WebServerPort&amp;quot;},&amp;quot;/&amp;quot;]]},
+&amp;quot;HealthyThreshold&amp;quot;:&amp;quot;3&amp;quot;,
+&amp;quot;UnhealthyThreshold&amp;quot;:&amp;quot;5&amp;quot;,
+&amp;quot;Interval&amp;quot;:&amp;quot;30&amp;quot;,
+&amp;quot;Timeout&amp;quot;:&amp;quot;5&amp;quot;
+}
+}
+},
+&amp;quot;Ec2Instance1&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::Instance&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;SecurityGroups&amp;quot;:[{&amp;quot;Ref&amp;quot;:&amp;quot;InstanceSecurityGroup&amp;quot;}],
+&amp;quot;KeyName&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;KeyName&amp;quot;},
+&amp;quot;InstanceType&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;InstanceType&amp;quot;},
+&amp;quot;ImageId&amp;quot;:{
+&amp;quot;Fn::FindInMap&amp;quot;:[
+&amp;quot;AWSRegionArch2AMI&amp;quot;,
+{&amp;quot;Ref&amp;quot;:&amp;quot;AWS::Region&amp;quot;},
+{&amp;quot;Fn::FindInMap&amp;quot;:[&amp;quot;AWSInstanceType2Arch&amp;quot;,{&amp;quot;Ref&amp;quot;:&amp;quot;InstanceType&amp;quot;},&amp;quot;Arch&amp;quot;]}
+]
+},
+&amp;quot;UserData&amp;quot;:{&amp;quot;Fn::Base64&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;WebServerPort&amp;quot;}}
+}
+},
+&amp;quot;Ec2Instance2&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::Instance&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;SecurityGroups&amp;quot;:[{&amp;quot;Ref&amp;quot;:&amp;quot;InstanceSecurityGroup&amp;quot;}],
+&amp;quot;KeyName&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;KeyName&amp;quot;},
+&amp;quot;InstanceType&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;InstanceType&amp;quot;},
+&amp;quot;ImageId&amp;quot;:{
+&amp;quot;Fn::FindInMap&amp;quot;:[
+&amp;quot;AWSRegionArch2AMI&amp;quot;,
+{&amp;quot;Ref&amp;quot;:&amp;quot;AWS::Region&amp;quot;},
+{&amp;quot;Fn::FindInMap&amp;quot;:[&amp;quot;AWSInstanceType2Arch&amp;quot;,{&amp;quot;Ref&amp;quot;:&amp;quot;InstanceType&amp;quot;},&amp;quot;Arch&amp;quot;]}
+]
+},
+&amp;quot;UserData&amp;quot;:{&amp;quot;Fn::Base64&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;WebServerPort&amp;quot;}}
+}
+},
+&amp;quot;InstanceSecurityGroup&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::SecurityGroup&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;GroupDescription&amp;quot;:&amp;quot;Enable SSH access and HTTP access on the inbound port&amp;quot;,
+&amp;quot;SecurityGroupIngress&amp;quot;:[
+{
+&amp;quot;IpProtocol&amp;quot;:&amp;quot;tcp&amp;quot;,
+&amp;quot;FromPort&amp;quot;:&amp;quot;22&amp;quot;,
+&amp;quot;ToPort&amp;quot;:&amp;quot;22&amp;quot;,
+&amp;quot;CidrIp&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;SSHLocation&amp;quot;}
+},
+{
+&amp;quot;IpProtocol&amp;quot;:&amp;quot;tcp&amp;quot;,
+&amp;quot;FromPort&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;WebServerPort&amp;quot;},
+&amp;quot;ToPort&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;WebServerPort&amp;quot;},
+&amp;quot;CidrIp&amp;quot;:&amp;quot;0.0.0.0/0&amp;quot;
+}
+]
+}
+}
+},
+&amp;quot;Outputs&amp;quot;:{
+&amp;quot;URL&amp;quot;:{
+&amp;quot;Description&amp;quot;:&amp;quot;URL of the sample website&amp;quot;,
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::Join&amp;quot;:[&amp;quot;&amp;quot;,[&amp;quot;http://&amp;quot;,{&amp;quot;Fn::GetAtt&amp;quot;:[&amp;quot;ElasticLoadBalancer&amp;quot;,&amp;quot;DNSName&amp;quot;]}]]}
+}
+}
+}
+&lt;/code>&lt;/pre>
+&lt;h2 id="iamgrouptemplate">IAMGroup.template&lt;/h2>
+&lt;pre>&lt;code>{
+&amp;quot;AWSTemplateFormatVersion&amp;quot;:&amp;quot;2010-09-09&amp;quot;,
+&amp;quot;Resources&amp;quot;:{
+&amp;quot;Group1&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::IAM::Group&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;Path&amp;quot;:&amp;quot;/myapplication/&amp;quot;,
+&amp;quot;Policies&amp;quot;:[{
+&amp;quot;PolicyName&amp;quot;:&amp;quot;myapppolicy&amp;quot;,
+&amp;quot;PolicyDocument&amp;quot;:{
+&amp;quot;Version&amp;quot;:&amp;quot;2012-10-17&amp;quot;,
+&amp;quot;Statement&amp;quot;:[
+{&amp;quot;Effect&amp;quot;:&amp;quot;Allow&amp;quot;,&amp;quot;Action&amp;quot;:[&amp;quot;ec2:*&amp;quot;],&amp;quot;Resource&amp;quot;:[&amp;quot;*&amp;quot;]},
+{&amp;quot;Effect&amp;quot;:&amp;quot;Deny&amp;quot;,&amp;quot;Action&amp;quot;:[&amp;quot;s3:*&amp;quot;],&amp;quot;NotResource&amp;quot;:[&amp;quot;*&amp;quot;]}
+]
+}
+}]
+}
+}
+},
+&amp;quot;Outputs&amp;quot;:{
+&amp;quot;Group1Ref&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;Group1&amp;quot;}
+},
+&amp;quot;Group1Arn&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::GetAtt&amp;quot;:[&amp;quot;Group1&amp;quot;,&amp;quot;Arn&amp;quot;]}
+}
+}
+}
+&lt;/code>&lt;/pre>
+&lt;h2 id="iamroletemplate">IAMRole.template&lt;/h2>
+&lt;pre>&lt;code>{
+&amp;quot;AWSTemplateFormatVersion&amp;quot;:&amp;quot;2010-09-09&amp;quot;,
+&amp;quot;Resources&amp;quot;:{
+&amp;quot;Role1&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::IAM::Role&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;AssumeRolePolicyDocument&amp;quot;:{
+&amp;quot;Version&amp;quot;:&amp;quot;2012-10-17&amp;quot;,
+&amp;quot;Statement&amp;quot;:[{
+&amp;quot;Effect&amp;quot;:&amp;quot;Allow&amp;quot;,
+&amp;quot;Principal&amp;quot;:{&amp;quot;Service&amp;quot;:[&amp;quot;ec2.amazonaws.com&amp;quot;]},
+&amp;quot;Action&amp;quot;:[&amp;quot;sts:AssumeRole&amp;quot;]
+}]
+},
+&amp;quot;Path&amp;quot;:&amp;quot;/&amp;quot;,
+&amp;quot;Policies&amp;quot;:[{
+&amp;quot;PolicyName&amp;quot;:&amp;quot;root&amp;quot;,
+&amp;quot;PolicyDocument&amp;quot;:{
+&amp;quot;Version&amp;quot;:&amp;quot;2012-10-17&amp;quot;,
+&amp;quot;Statement&amp;quot;:[{&amp;quot;Effect&amp;quot;:&amp;quot;Allow&amp;quot;,&amp;quot;Action&amp;quot;:&amp;quot;*&amp;quot;,&amp;quot;Resource&amp;quot;:&amp;quot;*&amp;quot;}]
+}
+}]
+}
+},
+&amp;quot;IP1&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::IAM::InstanceProfile&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;Path&amp;quot;:&amp;quot;/&amp;quot;,
+&amp;quot;Roles&amp;quot;:[{&amp;quot;Ref&amp;quot;:&amp;quot;Role1&amp;quot;}]
+}
+}
+},
+&amp;quot;Outputs&amp;quot;:{
+&amp;quot;Role1Ref&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;Role1&amp;quot;}
+},
+&amp;quot;Role1Arn&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::GetAtt&amp;quot;:[&amp;quot;Role1&amp;quot;,&amp;quot;Arn&amp;quot;]}
+},
+&amp;quot;IP1Ref&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;IP1&amp;quot;}
+},
+&amp;quot;IP1Arn&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::GetAtt&amp;quot;:[&amp;quot;IP1&amp;quot;,&amp;quot;Arn&amp;quot;]}
+}
+}
+}
+&lt;/code>&lt;/pre>
+&lt;h2 id="iam_users_groups_and_policiestemplate">IAM_Users_Groups_and_Policies.template&lt;/h2>
+&lt;pre>&lt;code>{
+&amp;quot;AWSTemplateFormatVersion&amp;quot;:&amp;quot;2010-09-09&amp;quot;,
+&amp;quot;Description&amp;quot;:&amp;quot;AWS CloudFormation Sample Template IAM_Users_Groups_and_Policies: Sample template showing how to create IAM users, groups and policies. It creates a single user that is a member of a users group and an admin group. The groups each have different IAM policies associated with them. Note: This example also creates an AWSAccessKeyId/AWSSecretKey pair associated with the new user. The example is somewhat contrived since it creates all of the users and groups, typically you would be creating policies, users and/or groups that contain references to existing users or groups in your environment. Note that you will need to specify the CAPABILITY_IAM flag when you create the stack to allow this template to execute. You can do this through the AWS management console by clicking on the check box acknowledging that you understand this template creates IAM resources or by specifying the CAPABILITY_IAM flag to the cfn-create-stack command line tool or CreateStack API call. &amp;quot;,
+&amp;quot;Parameters&amp;quot;:{
+&amp;quot;Password&amp;quot;:{
+&amp;quot;NoEcho&amp;quot;:&amp;quot;true&amp;quot;,
+&amp;quot;Type&amp;quot;:&amp;quot;String&amp;quot;,
+&amp;quot;Description&amp;quot;:&amp;quot;New account password&amp;quot;,
+&amp;quot;MinLength&amp;quot;:&amp;quot;1&amp;quot;,
+&amp;quot;MaxLength&amp;quot;:&amp;quot;41&amp;quot;
+}
+},
+&amp;quot;Resources&amp;quot;:{
+&amp;quot;CFNUser&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::IAM::User&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;LoginProfile&amp;quot;:{&amp;quot;Password&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;Password&amp;quot;}}
+}
+},
+&amp;quot;Role1&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::IAM::Role&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;AssumeRolePolicyDocument&amp;quot;:{
+&amp;quot;Version&amp;quot;:&amp;quot;2012-10-17&amp;quot;,
+&amp;quot;Statement&amp;quot;:[{
+&amp;quot;Effect&amp;quot;:&amp;quot;Allow&amp;quot;,
+&amp;quot;Principal&amp;quot;:{&amp;quot;Service&amp;quot;:[&amp;quot;ec2.amazonaws.com&amp;quot;]},
+&amp;quot;Action&amp;quot;:[&amp;quot;sts:AssumeRole&amp;quot;]
+}]
+},
+&amp;quot;Path&amp;quot;:&amp;quot;/&amp;quot;,
+&amp;quot;Policies&amp;quot;:[{
+&amp;quot;PolicyName&amp;quot;:&amp;quot;root&amp;quot;,
+&amp;quot;PolicyDocument&amp;quot;:{
+&amp;quot;Version&amp;quot;:&amp;quot;2012-10-17&amp;quot;,
+&amp;quot;Statement&amp;quot;:[{&amp;quot;Effect&amp;quot;:&amp;quot;Allow&amp;quot;,&amp;quot;Action&amp;quot;:&amp;quot;*&amp;quot;,&amp;quot;Resource&amp;quot;:&amp;quot;*&amp;quot;}]
+}
+}]
+}
+},
+&amp;quot;CFNUserGroup&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::IAM::Group&amp;quot;
+},
+&amp;quot;CFNAdminGroup&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::IAM::Group&amp;quot;
+},
+&amp;quot;Users&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::IAM::UserToGroupAddition&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;GroupName&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;CFNUserGroup&amp;quot;},
+&amp;quot;Users&amp;quot;:[{&amp;quot;Ref&amp;quot;:&amp;quot;CFNUser&amp;quot;}]
+}
+},
+&amp;quot;Admins&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::IAM::UserToGroupAddition&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;GroupName&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;CFNAdminGroup&amp;quot;},
+&amp;quot;Users&amp;quot;:[{&amp;quot;Ref&amp;quot;:&amp;quot;CFNUser&amp;quot;}]
+}
+},
+&amp;quot;CFNUserPolicies&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::IAM::Policy&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;PolicyName&amp;quot;:&amp;quot;CFNUsers&amp;quot;,
+&amp;quot;PolicyDocument&amp;quot;:{
+&amp;quot;Statement&amp;quot;:[{
+&amp;quot;Effect&amp;quot;:&amp;quot;Allow&amp;quot;,
+&amp;quot;Action&amp;quot;:[&amp;quot;cloudformation:Describe*&amp;quot;,&amp;quot;cloudformation:List*&amp;quot;,&amp;quot;cloudformation:Get*&amp;quot;],
+&amp;quot;Resource&amp;quot;:&amp;quot;*&amp;quot;
+}]
+},
+&amp;quot;Groups&amp;quot;:[{&amp;quot;Ref&amp;quot;:&amp;quot;CFNUserGroup&amp;quot;}],
+&amp;quot;Users&amp;quot;:[{&amp;quot;Ref&amp;quot;:&amp;quot;CFNUser&amp;quot;}],
+&amp;quot;Roles&amp;quot;:[{&amp;quot;Ref&amp;quot;:&amp;quot;Role1&amp;quot;}]
+}
+},
+&amp;quot;CFNAdminPolicies&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::IAM::Policy&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;PolicyName&amp;quot;:&amp;quot;CFNAdmins&amp;quot;,
+&amp;quot;PolicyDocument&amp;quot;:{
+&amp;quot;Statement&amp;quot;:[{&amp;quot;Effect&amp;quot;:&amp;quot;Allow&amp;quot;,&amp;quot;Action&amp;quot;:&amp;quot;cloudformation:*&amp;quot;,&amp;quot;Resource&amp;quot;:&amp;quot;*&amp;quot;}]
+},
+&amp;quot;Groups&amp;quot;:[{&amp;quot;Ref&amp;quot;:&amp;quot;CFNAdminGroup&amp;quot;}]
+}
+},
+&amp;quot;CFNKeys&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::IAM::AccessKey&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;UserName&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;CFNUser&amp;quot;}
+}
+}
+},
+&amp;quot;Outputs&amp;quot;:{
+&amp;quot;AccessKey&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;CFNKeys&amp;quot;},
+&amp;quot;Description&amp;quot;:&amp;quot;AWSAccessKeyId of new user&amp;quot;
+},
+&amp;quot;SecretKey&amp;quot;:{
+&amp;quot;Value&amp;quot;:{&amp;quot;Fn::GetAtt&amp;quot;:[&amp;quot;CFNKeys&amp;quot;,&amp;quot;SecretAccessKey&amp;quot;]},
+&amp;quot;Description&amp;quot;:&amp;quot;AWSSecretKey of new user&amp;quot;
+}
+}
+}
+&lt;/code>&lt;/pre>
+&lt;h2 id="iamusertemplate">IAMUser.template&lt;/h2>
+&lt;pre>&lt;code>{
+&amp;quot;AWSTemplateFormatVersion&amp;quot;:&amp;quot;2010-09-09&amp;quot;,
+&amp;quot;Parameters&amp;quot;:{
+&amp;quot;Password&amp;quot;:{
+&amp;quot;NoEcho&amp;quot;:&amp;quot;true&amp;quot;,
+&amp;quot;Type&amp;quot;:&amp;quot;String&amp;quot;,
+&amp;quot;Description&amp;quot;:&amp;quot;New account password&amp;quot;,
+&amp;quot;MinLength&amp;quot;:&amp;quot;1&amp;quot;,
+&amp;quot;MaxLength&amp;quot;:&amp;quot;41&amp;quot;
+}
+},
+&amp;quot;Resources&amp;quot;:{
+&amp;quot;CFNUserGroup&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::IAM::Group&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;Policies&amp;quot;:[{
+&amp;quot;PolicyName&amp;quot;:&amp;quot;CFNUsers&amp;quot;,
+&amp;quot;PolicyDocument&amp;quot;:{
+&amp;quot;Statement&amp;quot;:[{
+&amp;quot;Effect&amp;quot;:&amp;quot;Allow&amp;quot;,
+&amp;quot;Action&amp;quot;:[&amp;quot;cloudformation:Describe*&amp;quot;,&amp;quot;cloudformation:List*&amp;quot;,&amp;quot;cloudformation:Get*&amp;quot;],
+&amp;quot;Resource&amp;quot;:&amp;quot;*&amp;quot;
+}]
+}
+}]
+}
+},
+&amp;quot;CFNAdminGroup&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::IAM::Group&amp;quot;
+},
+&amp;quot;CFNUser&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::IAM::User&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;LoginProfile&amp;quot;:{&amp;quot;Password&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;Password&amp;quot;}},
+&amp;quot;Groups&amp;quot;:[{&amp;quot;Ref&amp;quot;:&amp;quot;CFNUserGroup&amp;quot;},{&amp;quot;Ref&amp;quot;:&amp;quot;CFNAdminGroup&amp;quot;}],
+&amp;quot;Policies&amp;quot;:[{
+&amp;quot;PolicyName&amp;quot;:&amp;quot;CFNUsers&amp;quot;,
+&amp;quot;PolicyDocument&amp;quot;:{
+&amp;quot;Statement&amp;quot;:[{
+&amp;quot;Effect&amp;quot;:&amp;quot;Allow&amp;quot;,
+&amp;quot;Action&amp;quot;:[&amp;quot;cloudformation:Describe*&amp;quot;,&amp;quot;cloudformation:List*&amp;quot;,&amp;quot;cloudformation:Get*&amp;quot;],
+&amp;quot;Resource&amp;quot;:&amp;quot;*&amp;quot;
+}]
+}
+}]
+}
+}
+}
+}
+&lt;/code>&lt;/pre>
+&lt;h2 id="securitygroupruletemplate">SecurityGroupRule.template&lt;/h2>
+&lt;pre>&lt;code>{
+&amp;quot;AWSTemplateFormatVersion&amp;quot;:&amp;quot;2010-09-09&amp;quot;,
+&amp;quot;Description&amp;quot;:&amp;quot;Create an EC2 instance running a specified EMI, a security group, and an ingress rule.&amp;quot;,
+&amp;quot;Parameters&amp;quot;:{
+&amp;quot;ImageId&amp;quot;:{
+&amp;quot;Description&amp;quot;:&amp;quot;Image id&amp;quot;,
+&amp;quot;Type&amp;quot;:&amp;quot;String&amp;quot;
+}
+},
+&amp;quot;Resources&amp;quot;:{
+&amp;quot;Ec2Instance1&amp;quot;:{
+&amp;quot;Description&amp;quot;:&amp;quot;My instance&amp;quot;,
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::Instance&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;ImageId&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;ImageId&amp;quot;}
+},
+&amp;quot;DependsOn&amp;quot;:&amp;quot;Ec2Instance2&amp;quot;
+},
+&amp;quot;Ec2Instance2&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::Instance&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;ImageId&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;ImageId&amp;quot;},
+&amp;quot;SecurityGroups&amp;quot;:[{&amp;quot;Ref&amp;quot;:&amp;quot;InstanceSecurityGroup&amp;quot;}]
+}
+},
+&amp;quot;InstanceSecurityGroup&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::SecurityGroup&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;GroupDescription&amp;quot;:&amp;quot;Cloudformation Group&amp;quot;,
+&amp;quot;SecurityGroupIngress&amp;quot;:[{&amp;quot;IpProtocol&amp;quot;:&amp;quot;tcp&amp;quot;,&amp;quot;FromPort&amp;quot;:&amp;quot;22&amp;quot;,&amp;quot;ToPort&amp;quot;:&amp;quot;22&amp;quot;,&amp;quot;CidrIp&amp;quot;:&amp;quot;0.0.0.0/0&amp;quot;}]
+}
+},
+&amp;quot;IngressRule&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::SecurityGroupIngress&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;GroupName&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;InstanceSecurityGroup&amp;quot;},
+&amp;quot;FromPort&amp;quot;:&amp;quot;80&amp;quot;,
+&amp;quot;ToPort&amp;quot;:&amp;quot;80&amp;quot;,
+&amp;quot;IpProtocol&amp;quot;:&amp;quot;tcp&amp;quot;,
+&amp;quot;SourceSecurityGroupName&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;InstanceSecurityGroup&amp;quot;}
+}
+}
+}
+}
+&lt;/code>&lt;/pre>
+&lt;h2 id="volumestemplate">Volumes.template&lt;/h2>
+&lt;pre>&lt;code>{
+&amp;quot;AWSTemplateFormatVersion&amp;quot;:&amp;quot;2010-09-09&amp;quot;,
+&amp;quot;Description&amp;quot;:&amp;quot;Create an EC2 instance running a specified EMI and attached volumes.&amp;quot;,
+&amp;quot;Parameters&amp;quot;:{
+&amp;quot;ImageId&amp;quot;:{
+&amp;quot;Description&amp;quot;:&amp;quot;Image id&amp;quot;,
+&amp;quot;Type&amp;quot;:&amp;quot;String&amp;quot;
+}
+},
+&amp;quot;Resources&amp;quot;:{
+&amp;quot;Volume1&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::Volume&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;Size&amp;quot;:&amp;quot;5&amp;quot;,
+&amp;quot;AvailabilityZone&amp;quot;:{&amp;quot;Fn::GetAtt&amp;quot;:[&amp;quot;Instance1&amp;quot;,&amp;quot;AvailabilityZone&amp;quot;]}
+}
+},
+&amp;quot;Volume2&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::Volume&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;Size&amp;quot;:&amp;quot;5&amp;quot;,
+&amp;quot;AvailabilityZone&amp;quot;:{&amp;quot;Fn::GetAtt&amp;quot;:[&amp;quot;Instance1&amp;quot;,&amp;quot;AvailabilityZone&amp;quot;]}
+}
+},
+&amp;quot;MountPoint1&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::VolumeAttachment&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;InstanceId&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;Instance1&amp;quot;},
+&amp;quot;VolumeId&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;Volume1&amp;quot;},
+&amp;quot;Device&amp;quot;:&amp;quot;/dev/sdc&amp;quot;
+}
+},
+&amp;quot;Instance1&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::Instance&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;ImageId&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;ImageId&amp;quot;}
+}
+},
+&amp;quot;Instance2&amp;quot;:{
+&amp;quot;Type&amp;quot;:&amp;quot;AWS::EC2::Instance&amp;quot;,
+&amp;quot;Properties&amp;quot;:{
+&amp;quot;ImageId&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;ImageId&amp;quot;},
+&amp;quot;Volumes&amp;quot;:[{&amp;quot;VolumeId&amp;quot;:{&amp;quot;Ref&amp;quot;:&amp;quot;Volume2&amp;quot;},&amp;quot;Device&amp;quot;:&amp;quot;/dev/sdc&amp;quot;}]
+}
+}
+}
+}
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Troubleshooting CloudFormation</title><link>https://www.eucastack.io/docs/user_guide/cf_overview/cf_troubleshooting/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/cf_overview/cf_troubleshooting/</guid><description>
+&lt;p>This topic describes some of the issues that can happen with CloudFormation. It also talks about how you can detect these issues, and offers some ways to fix the issues.&lt;/p>
+&lt;h2 id="invalid-json">Invalid JSON&lt;/h2>
+&lt;p>JSON must be syntactically valid. For example, if you don&amp;rsquo;t type in the final &lt;code>}&lt;/code> character in a template, the &lt;code>euform-create-stack&lt;/code> command returns an error message.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euform-create-stack: error &lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>ValidationError&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span>: Unexpected end-of-input:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>expected close marker &lt;span style="color:#204a87;font-weight:bold">for&lt;/span> OBJECT &lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>from &lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>Source: java.io.StringReader@56b3916d&lt;span style="color:#000;font-weight:bold">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>line: 1, column: 0&lt;span style="color:#ce5c00;font-weight:bold">])&lt;/span> at &lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>Source: java.io.StringReader@56b3916d&lt;span style="color:#000;font-weight:bold">;&lt;/span> line: 38,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>column : 849&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you see an error like this, there is most likely something syntactically wrong with your JSON template. Some editors can detect things like unbalanced parentheses, but in the worst case you can paste your template into this URL &lt;a href="http://jsonparseronline.com/">http://jsonparseronline.com/&lt;/a> and it will help you find syntax errors.&lt;/p>
+&lt;h2 id="invalid-argument">Invalid Argument&lt;/h2>
+&lt;p>If you try to create, for example, a stack that already exists, you will get a simple error message.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euform-create-stack: error &lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>AlreadyExists&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span>: Stack already exists
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="invalid-reference">Invalid Reference&lt;/h2>
+&lt;p>If you use an invalid reference to, for example, a resource that doesn&amp;rsquo;t exit, Eucalyptus returns a simple error message.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euform-create-stack: error &lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>ValidationError&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span>: Template format error: Unresolved resource dependencies &lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>MySecurityGroup2&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span> in the Resources block of the template&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="complex-errors">Complex Errors&lt;/h2>
+&lt;p>Not all errors are simple. We recommend that you use &lt;code>euform-describe-stacks&lt;/code> (or &lt;code>aws cloudformation describe-stacks&lt;/code>) and &lt;code>euform-describe-stack-resources&lt;/code> to determine the current state of the stack. If there&amp;rsquo;s an error, it will usually be shown in the &lt;code>euform-describe-stack-events&lt;/code> output. Otherwise, you will have to dig into the &lt;em>cloud-output.log&lt;/em> file for further information. You can also manually delete resources if they are causing issues. If a &lt;code>euform-delete-stack&lt;/code> fails, you can delete the offending resource and try again.&lt;/p></description></item></channel></rss>

@@ -1,0 +1,34 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Image Management Guide</title><link>https://www.eucastack.io/docs/image_guide/</link><description>Recent content in Image Management Guide on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/image_guide/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Image Management Overview</title><link>https://www.eucastack.io/docs/image_guide/overview/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/image_guide/overview/</guid><description>
+&lt;p>Welcome to the Eucalyptus Image Management Guide. This guide contains conceptual overview about what images are, as well as best practices and common tasks for using images in your cloud.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+This guide assumes a moderately high level of expertise with the Linux command line.
+&lt;/div>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Because of the wide variety of Linux distributions (and other operating systems) that may be running on an instance, specific examples may vary.
+&lt;/div></description></item><item><title>Docs: Image Overview</title><link>https://www.eucastack.io/docs/image_guide/img_concept_understanding_images/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/image_guide/img_concept_understanding_images/</guid><description>
+&lt;p>An image defines what will run on a guest instance in your Eucalyptus cloud. An image contains everything necessary to boot and run an operating system, e.g. a Linux distribution – CentOS, Fedora, Ubuntu, Debian, etc.&lt;/p>
+&lt;p>Images of two types are supported by Eucalyptus:&lt;/p>
+&lt;ul>
+&lt;li>HVM images are raw disks that can boot independently. HVM stands for Hardware-assisted Virtual Machine because such images can only run efficiently on hardware that supports virtualization. When an HVM image is uploaded and registered, it becomes a Eucalyptus Machine Image (EMI) of type &amp;ldquo;hvm&amp;rdquo;, with a unique ID.&lt;/li>
+&lt;li>Paravirtual images are Linux images that can boot if they are paired with a kernel and ramdisk that are compatible with the host&amp;rsquo;s hypervisor. Currently only root file system images are supported (on AWS, a paravirtual image can be a file system or a full disk). When a paravirtual image is uploaded and registered, it also becomes an EMI of &amp;ldquo;paravirtual&amp;rdquo; type, which needs to be paired with a kernel (EKI) and ramdisk (ERI) images to be usable. EKI contains a kernel (i.e., the ‘vmlinuz’ file typically found in the /boot directory of a Linux system). ERI contains the kernel modules (i.e., the ‘initrd’ file from the /boot directory).&lt;/li>
+&lt;/ul>
+&lt;p>Depending on the method used for upload, an instance&amp;rsquo;s disk will reside on one of two types of storage:&lt;/p>
+&lt;ul>
+&lt;li>volumes are located on temporary disk space that is destroyed when instances shut down. These volumes are based on a template residing in Object Storage. Instance Store can host either HVM or paravirtual images.&lt;/li>
+&lt;li>volumes are disks with lifetimes that can be independent of instances. These volumes are based on snapshots of EBS volumes (instead of templates in Object Storage). Only HVM images can be deployed on EBS in Eucalyptus (in AWS, EBS can also host paravirtual images).&lt;/li>
+&lt;/ul>
+&lt;p>To help get you started, Eucalyptus provides pre-packaged virtual machine images that are ready to run in your cloud. You can download them from the Eucalyptus Machine Image catalog . Both HVM and paravirtual images are available there. Each paravirtual image comes bundled with a corresponding EKI and ERI.&lt;/p>
+&lt;p>If you find that the pre-packaged images don&amp;rsquo;t meet your needs, you can migrate an image from another cloud system (such as Amazon Web Services) or create your own image. See the rest of this guide for more information.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For a list of supported guest operating systems, .
+&lt;/div></description></item><item><title>Docs: Image Tasks</title><link>https://www.eucastack.io/docs/image_guide/img_task_intro/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/image_guide/img_task_intro/</guid><description>
+&lt;h1 id="image-tasks">Image Tasks&lt;/h1>
+&lt;p>An image is the basis for instances that you spin up for your computing needs. This section explains how to create or acquire an image and then add it to your Eucalyptus cloud. There are a few ways you can create or acquire an image for use in a Eucalyptus cloud:&lt;/p>
+&lt;ul>
+&lt;li>Add an image based on an existing image. For more information, see &lt;a href="https://www.eucalyptus.cloud/index.html#Images">https://www.eucalyptus.cloud/index.html#Images&lt;/a>.&lt;/li>
+&lt;li>Add an image that you create from scratch, by installing an operating system into a virtual machine.&lt;/li>
+&lt;li>Migrate an image or an instance from another cloud, such as Amazon Web Services (AWS) or a virtualization platform.&lt;/li>
+&lt;/ul></description></item></channel></rss>

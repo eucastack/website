@@ -1,0 +1,404 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – User Guide</title><link>https://www.eucastack.io/docs/user_guide/</link><description>Recent content in User Guide on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Eucalyptus Overview</title><link>https://www.eucastack.io/docs/user_guide/overview/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/overview/</guid><description>
+&lt;p>Eucalyptus is open source software for building AWS-compatible private and hybrid clouds. As an Infrastructure as a Service product, Eucalyptus allows you to flexibly provision your own collections of resources (both compute and storage), on an as-needed basis.&lt;/p>
+&lt;h2 id="who-should-read-this-guide">Who Should Read this Guide?&lt;/h2>
+&lt;p>This guide is for Eucalyptus users who wish to run application workloads on a Eucalyptus cloud.&lt;/p>
+&lt;h2 id="whats-in-this-guide">What’s in this Guide?&lt;/h2>
+&lt;p>This guide contains instructions for users of the Eucalyptus cloud platform. While these instructions apply generally to all tools capable of interacting with Eucalyptus, such as the Eucalyptus Management Console or the AWS S3 toolset, but the primary focus is on the use of Euca2ools (Eucalyptus command line tools). The following is an overview of the contents of this guide.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">How do I …?&lt;/th>
+&lt;th style="text-align:left">Related Topic&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">Begin using and configuring Eucalyptus&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://www.eucastack.io/docs/user_guide/getting_started/">getting_started&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Run and control with virtual machine (VM) instances&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://www.eucastack.io/docs/user_guide/using_instances/">using_instances&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Use Eucalyptus’ elastic block storage&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://www.eucastack.io/docs/user_guide/using_block_storage/">using_block_storage&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Apply tags and filters&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://www.eucastack.io/docs/user_guide/resource_and_tags/">resource_and_tags&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Manage access for groups and users&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://www.eucastack.io/docs/user_guide/using_access/">using_access&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Understand the Eucalyptus VM networking and security features&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://www.eucastack.io/docs/user_guide/networking_security/">networking_security&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Use Eucalyptus’ Auto Scaling features&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://www.eucastack.io/docs/user_guide/autoscaling_intro/">autoscaling_intro&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Use elastic load balancing&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://www.eucastack.io/docs/user_guide/elb_intro/">elb_intro&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Generate metrics about my cloud&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://www.eucastack.io/docs/user_guide/using_monitoring/">using_monitoring&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Use scalable object storage&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://www.eucastack.io/docs/user_guide/osg_using/">osg_using&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Use CloudFormation&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://www.eucastack.io/docs/user_guide/cf_overview/">cf_overview&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">Use Virtual Private Cloud&lt;/td>
+&lt;td style="text-align:left">&lt;a href="https://www.eucastack.io/docs/user_guide/vpc_intro/">vpc_intro&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="eucalyptus-features">Eucalyptus Features&lt;/h2>
+&lt;p>Eucalyptus offers ways to implement, manage, and maintain your own collection of virtual resources (machines, network, and storage). The following is an overview of these features.&lt;/p>
+&lt;h3 id="aws-api-compatibility">AWS API compatibility&lt;/h3>
+&lt;p>Eucalyptus provides API compatibility with Amazon Web Services, to allow you to use familiar tools and commands to provision your cloud.&lt;/p>
+&lt;h3 id="block--and-bucket-based-storage-abstractions">Block- and bucket-based storage abstractions&lt;/h3>
+&lt;p>Eucalyptus provides storage options compatible with Amazon&amp;rsquo;s EBS (block-based) and S3 (bucket-based) storage products.&lt;/p>
+&lt;h3 id="self-service-capabilities">Self-service capabilities&lt;/h3>
+&lt;p>Eucalyptus offers a Management Console, allowing your users to request the resources they need, and automatically provisioning those resources where available.&lt;/p>
+&lt;h3 id="web-based-interface">Web-based Interface&lt;/h3>
+&lt;p>The Eucalyptus Management Console is accessible from any device via a browser. The Console initial page provides a Dashboard view of components available to you to manage, configure, provision, and generate various reports.&lt;/p>
+&lt;h2 id="resource-management">Resource Management&lt;/h2>
+&lt;p>Eucalyptus offers tools to seamlessly manage a variety of virtual resources. The following is an overview of the types of resources your cloud platform.&lt;/p>
+&lt;h3 id="ssh-key-management">SSH Key Management&lt;/h3>
+&lt;p>Eucalyptus employs public and private keypairs to validate your identity when you log into VMs using SSH. You can add, describe, and delete keypairs.&lt;/p>
+&lt;h3 id="image-management">Image Management&lt;/h3>
+&lt;p>Before running instances, someone must prepare VM images for use in the cloud. This can be an administrator or a user. Eucalyptus allows you to bundle, upload, register, describe, download, unbundle, and deregister VM images.&lt;/p>
+&lt;h3 id="linux-guest-os-support">Linux Guest OS Support&lt;/h3>
+&lt;p>Eucalyptus lets you run your own VMs in the cloud. You can run, describe, terminate, and reboot a wide variety of Linux-based VMs that were prepared using image management commands.&lt;/p>
+&lt;h3 id="ip-address-management">IP Address Management&lt;/h3>
+&lt;p>Eucalyptus can allocate, associate, disassociate, describe, and release IP addresses. Depending on the networking mode, you might have access to public IP addresses that are not statically associated with a VM ( Elastic IPs ). Eucalyptus provides tools to allow users to reserve and dynamically associate these elastic IPs with virtual machines.&lt;/p>
+&lt;h3 id="security-group-management">Security Group Management&lt;/h3>
+&lt;p>Security groups are sets of firewall rules applied to VMs associated with the group. Eucalyptus lets you create, describe, delete, authorize, and revoke security groups. How much of these things can a typical user actually do?&lt;/p>
+&lt;h3 id="volume-and-snapshot-management">Volume and Snapshot Management&lt;/h3>
+&lt;p>Eucalyptus allows you to create dynamic block volumes. A dynamic block volume is similar to a raw block storage device that can be used with virtual machines. You can create, attach, detach, describe, bundle, and delete volumes. You can also create and delete snapshots of volumes and create new volumes from snapshots.&lt;/p></description></item><item><title>Docs: Getting Started</title><link>https://www.eucastack.io/docs/user_guide/getting_started/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/getting_started/</guid><description>
+&lt;h1 id="getting-started">Getting Started&lt;/h1>
+&lt;p>This section helps you get started using your Eucalyptus cloud, and covers setting up your user credentials, installing and configuring command line tools, and working with images and instances. As a cloud user, you can access the Eucalyptus cloud using a command line interface such as the AWS CLI, or by using a web-based interface such as the Eucalyptus Management Console.&lt;/p>
+&lt;p>To access Eucalyptus via the command line, you can use the AWS CLI or Euca2ools with access key credentials. To access Eucalyptus with the Management Console, you&amp;rsquo;ll need a password. Talk to your cloud administrator to get your keys and passwords.&lt;/p></description></item><item><title>Docs: Using Instances</title><link>https://www.eucastack.io/docs/user_guide/using_instances/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_instances/</guid><description>
+&lt;h1 id="using-instances">Using Instances&lt;/h1>
+&lt;p>Any application that runs on a cloud, whether public or private or hybrid, runs inside at least one . To start using the cloud, you must launch one or more instances. Every instance is created from stored . An image contains the basic operating system and often other software that will be needed when the instance is running. When you launch an instance, you tell the cloud what image to base the instance on. Your cloud administrator should have set up a catalog of standard or customized images for you to use.To find out more about what instances are, see &lt;a href="https://www.eucastack.io/docs/user_guide/using_instances/understanding_instances/">Instance Overview&lt;/a> .&lt;/p>
+&lt;p>To find out how to use CloudWatch, see &lt;a href="https://www.eucastack.io/docs/user_guide/using_instances/working_instance/">Instance Tasks&lt;/a> .&lt;/p></description></item><item><title>Docs: Using EBS</title><link>https://www.eucastack.io/docs/user_guide/using_block_storage/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_block_storage/</guid><description>
+&lt;h1 id="using-ebs">Using EBS&lt;/h1>
+&lt;p>This section details what you need to know about Eucalyptus Elastic Block Storage (EBS).&lt;/p></description></item><item><title>Docs: Using Tags and Filters</title><link>https://www.eucastack.io/docs/user_guide/resource_and_tags/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/resource_and_tags/</guid><description>
+&lt;h1 id="using-tags-and-filters">Using Tags and Filters&lt;/h1>
+&lt;p>This section describes features and tasks that enable you to manage your cloud resources, such as EMIs, instances, EBS volumes, and snapshots.&lt;/p></description></item><item><title>Docs: Managing Access</title><link>https://www.eucastack.io/docs/user_guide/using_access/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_access/</guid><description>
+&lt;h1 id="managing-access">Managing Access&lt;/h1>
+&lt;p>Eucalyptus manages access to the cloud by policies attached to accounts, groups, and users. This section details access-related tasks you can perform once your administrator allows you access to Eucalyptus. These tasks are split into the following areas: tasks for groups, and tasks for users, and tasks for credential management.&lt;/p></description></item><item><title>Docs: Using VM Networking and Security</title><link>https://www.eucastack.io/docs/user_guide/networking_security/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/networking_security/</guid><description>
+&lt;h1 id="using-vm-networking-and-security">Using VM Networking and Security&lt;/h1>
+&lt;p>The Eucalyptus networking mode used, and it&amp;rsquo;s configuration, determine the features available to users; such as elastic IPs, which are public (external) IP addresses that users can reserve and dynamically associate with VM instance; and security groups, which are sets of firewall rules applied to VM instances associated with the group.&lt;/p>
+&lt;p>Euca2ools or the AWS CLI provide means for users to interact with these features with commands for allocating and associating IP addresses, as well as creating, deleting, and modifying security groups.&lt;/p></description></item><item><title>Docs: Using Auto Scaling</title><link>https://www.eucastack.io/docs/user_guide/autoscaling_intro/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/autoscaling_intro/</guid><description>
+&lt;h1 id="using-auto-scaling">Using Auto Scaling&lt;/h1>
+&lt;p>Eucalyptus Auto Scaling automatically adds and removes instances based on demand. Auto Scaling scales dynamically based on metrics (for example, CPU utilization). The Auto Scaling service works in conjunction with the ElasticLoad Balancing and CloudWatch services.&lt;/p></description></item><item><title>Docs: Using Elastic Load Balancing</title><link>https://www.eucastack.io/docs/user_guide/elb_intro/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/elb_intro/</guid><description>
+&lt;h1 id="using-elastic-load-balancing">Using Elastic Load Balancing&lt;/h1>
+&lt;p>Elastic Load Balancing automatically distributes incoming traffic across your Eucalyptus cloud. It enables you to achieve even greater fault tolerance by automatically detecting instances that are overloaded, and rerouting traffic to other instances as needed.Elastic Load Balancing works in conjunction with Eucalyptus&amp;rsquo;s Auto Scaling and Cloud Watch services, to make your cloud more robust and efficient.&lt;/p>
+&lt;p>The following section describes how load balancing works, provides an overview of load balancing concepts, and includes a series of usage scenarios that will show you how to perform common load balancing tasks.&lt;/p></description></item><item><title>Docs: Using CloudWatch</title><link>https://www.eucastack.io/docs/user_guide/using_monitoring/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_monitoring/</guid><description>
+&lt;h1 id="using-cloudwatch">Using CloudWatch&lt;/h1>
+&lt;p>CloudWatch is a Eucalyptus service that enables you to monitor, manage, and publish various metrics, as well as configure alarm actions based on data from metrics. You can use the default metrics that come with Eucalyptus, or you can use your own metrics.CloudWatch collects raw data from your cloud&amp;rsquo;s resources and generates the information into readable, near real-time metrics. These metrics are recorded for a period of two weeks. This allows you to access historical information and provides you with information about how your resource is performing.&lt;/p>
+&lt;p>To find out more about what CloudWatch is, see &lt;a href="https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_oview/">CloudWatch Overview&lt;/a> .&lt;/p>
+&lt;p>To find out how to use CloudWatch, see &lt;a href="https://www.eucastack.io/docs/user_guide/using_monitoring/monitoring_tasks/">CloudWatch Tasks&lt;/a> .&lt;/p></description></item><item><title>Docs: Using Object Storage</title><link>https://www.eucastack.io/docs/user_guide/osg_using/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/osg_using/</guid><description>
+&lt;h1 id="using-object-storage">Using Object Storage&lt;/h1>
+&lt;p>Scalable object storage is composed of two parts: the object storage gateway and the object storage backend. This section explains storage and how to access it.The object storage gateway (OSG) receives user requests and authorizes these requests using the Eucalyptus identity services. For more information about identity services, see &lt;a href="https://www.eucastack.io/docs/user_guide/using_access/">Managing Access&lt;/a> .&lt;/p></description></item><item><title>Docs: Using Route53</title><link>https://www.eucastack.io/docs/user_guide/route53_intro/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/route53_intro/</guid><description>
+&lt;h1 id="using-route53">Using Route53&lt;/h1>
+&lt;p>Eucalyptus Route53 is an integrated Domain Name System (DNS) web service. Route53 allows end users to access your cloud resources using names that you control.&lt;/p>
+&lt;p>Route53 seamlessly connects user requests to Eucalyptus controlled infrastructure – including EC2 instances, Elastic Load Balancers, and S3 buckets – it can also be used to route users to external infrastructure.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Route53 is a tech preview service so should be used accordingly.
+&lt;/div></description></item><item><title>Docs: Using Simple Queue Service</title><link>https://www.eucastack.io/docs/user_guide/sqs_intro/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/sqs_intro/</guid><description>
+&lt;h1 id="using-simple-queue-service">Using Simple Queue Service&lt;/h1>
+&lt;p>Eucalyptus Simple Queue Service (SQS) is a message queuing service that enables you to decouple your services and distributed systems.&lt;/p>
+&lt;p>SQS reduces the overhead of managing and operating message oriented middleware and facilitates robust cloud architectures when used with other services such as Auto Scaling.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Simple Queue Service (SQS) is a tech preview service so should be used accordingly.
+&lt;/div></description></item><item><title>Docs: Using CloudFormation</title><link>https://www.eucastack.io/docs/user_guide/cf_overview/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/cf_overview/</guid><description>
+&lt;p>This topic describes the Eucalyptus implementation of the AWS CloudFormation web service, how CloudFormation works, and some details and examples of how to add CloudFormation to your Eucalyptus deployment.&lt;/p>
+&lt;h2 id="why-use-cloudformation">Why use CloudFormation?&lt;/h2>
+&lt;p>Cloud computing allows for application repeatability and redundancy. This means that you can spin up as many virtual machines as you need, but the application configuration only needs to happen when the images are created. CloudFormation takes this concept to the next level: it allows you to configure an entire set of resources (instances, security groups, user roles and policies, and more) in a single template. Then you can create a stack of all those resources from the template using a single command. So, you don&amp;rsquo;t just get machine repeatability, you get environment repeatability. CloudFormation allows you to clone environments in different cloud setups, as well as giving applications the ability to be set up and torn down in a repeatable manner.&lt;/p>
+&lt;h2 id="how-does-cloudformation-work">How does CloudFormation Work?&lt;/h2>
+&lt;p>CloudFormation manages a set of resources, called a stack, in batch operations (create, update, or delete). Stacks are described in templates, which can be simple, as the following example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87;font-weight:bold">Resources&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">MyInstance&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Type&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">AWS::EC2::Instance&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Properties&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">ImageId&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">emi-371ada125a928669e&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This stack creates a single instance, based on the image with ID &lt;code>emi-371ada125a928669e&lt;/code>. However, this stack is not portable because different clouds might have different image IDs.&lt;/p>
+&lt;p>CloudFormation allows stack customization through user parameters that are passed in at stack creation time. The following is an example of the template above with a user parameter called &lt;em>MyImageId&lt;/em>.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87;font-weight:bold">Parameters&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">MyImageId&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Description&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">Image id&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Type&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">String&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline">&lt;/span>&lt;span style="color:#204a87;font-weight:bold">Resources&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">MyInstance&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Type&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">AWS::EC2::Instance&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Properties&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">ImageId&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>!&lt;span style="color:#000">Ref MyImageId&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This stack creates a single instance, but the image ID will be required to be passed in using the command line. For example, the following example uses the &lt;em>euform-create-stack&lt;/em> command in Euca2ools:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>euform-create-stack --template-file template.yaml -p &lt;span style="color:#000">MyImageId&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>emi-371ada125a928669e MyStack
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>or using the AWS CLI:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>aws cloudformation create-stack --template-body file://template.yaml --parameters &lt;span style="color:#000">ParameterKey&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>MyImageId,ParameterValue&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>emi-371ada125a928669e --stack-name MyStack
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>These example commands pass the parameter &lt;em>MyImageId&lt;/em> with value &lt;code>emi-371ada125a928669e&lt;/code> into the stack creation process.&lt;/p>
+&lt;p>You can also use templates to create multiple resources and associate them with each other. For example, the following template creates an instance with its own security group and ingress rule.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87;font-weight:bold">Parameters&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">MyImageId&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Description&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">Image id&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Type&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">String&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline">&lt;/span>&lt;span style="color:#204a87;font-weight:bold">Resources&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">MySecurityGroup&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Type&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">AWS::EC2::SecurityGroup&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Properties&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">GroupDescription&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">Security Group with Ingress Rule for MyInstance&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">SecurityGroupIngress&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>- &lt;span style="color:#204a87;font-weight:bold">IpProtocol&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">tcp&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">FromPort&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#4e9a06">&amp;#39;22&amp;#39;&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">ToPort&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#4e9a06">&amp;#39;22&amp;#39;&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">CidrIp&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#4e9a06">&amp;#39;0.0.0.0/0&amp;#39;&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">MyInstance&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Type&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#000">AWS::EC2::Instance&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">Properties&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">ImageId&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>!&lt;span style="color:#000">Ref &amp;#39;MyImageId&amp;#39;&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>&lt;span style="color:#204a87;font-weight:bold">SecurityGroups&lt;/span>&lt;span style="color:#000;font-weight:bold">:&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f8f8f8;text-decoration:underline"> &lt;/span>- !&lt;span style="color:#000">Ref &amp;#39;MySecurityGroup&amp;#39;&lt;/span>&lt;span style="color:#f8f8f8;text-decoration:underline">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Templates can be more complicated than the ones shown above, but CloudFormation allows many resources to be deployed in one operation. Resources from most Eucalyptus services are supported.&lt;/p>
+&lt;h2 id="cloudformation-requirements">CloudFormation Requirements&lt;/h2>
+&lt;p>To run CloudFormation on Eucalyptus, you need the following:&lt;/p>
+&lt;ul>
+&lt;li>A running Eucalyptus cloud, version 4.0 or later, with at least one Cloud Controller, Node Controller, and Cluster Controller up, running and registered&lt;/li>
+&lt;li>At least one active running service of each of the following: CloudWatch, AutoScaling, Load Balancing, Compute, and IAM&lt;/li>
+&lt;li>A registered active CloudFormation service&lt;/li>
+&lt;/ul>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Eucalyptus versions earlier than 5 support JSON CloudFormation templates but not the newer YAML format
+&lt;/div>
+&lt;h2 id="supported-resources">Supported Resources&lt;/h2>
+&lt;p>The following resources are supported by CloudFormation in Eucalyptus.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Resource&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">AWS::AutoScaling::AutoScalingGroup&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported except: HealthCheckType.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::AutoScaling::LaunchConfiguration&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported except AssociatePublicIpAddress.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::AutoScaling::ScalingPolicy&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::CloudFormation::Stack&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::CloudFormation::WaitCondition&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::CloudFormation::WaitConditionHandle.&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::CloudWatch::Alarm&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::CustomerGateway&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::DHCPOptions&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::EIP&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::EIPAssociation&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported except: PrivateIpAddress.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::Instance&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported except: SourceDestCheck, Tags, and Tenancy.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::InternetGateway&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::LaunchTemplate&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::NatGateway&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::NetworkAcl&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::NetworkAclEntry&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::NetworkInterface&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::NetworkInterfaceAttachment&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::Route&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::RouteTable&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::SecurityGroup&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::SecurityGroupEgress&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::SecurityGroupIngress&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported except SourceSecurityGroupId.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::Subnet&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::SubnetNetworkAclAssociation&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::SubnetRouteTableAssociation&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::Volume&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported except: HealthCheckType and Tags.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::VolumeAttachment&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::VPC&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::VPCDHCPOptionsAssociation&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::EC2::VPCGatewayAttachment&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::ElasticLoadBalancing::LoadBalancer&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported except: AccessLoggingPolicy, ConnectionDrainingPolicy, CrossZone, Policies.InstancePorts, and Policies.LoadBalanerPorts. All other properties are passed through to the LoadBalancing service internally but some features are not implemented so properties may be ignored there.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::IAM::AccessKey&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported except Serial.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::IAM::Group&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::IAM::InstanceProfile&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::IAM::ManagedPolicy&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::IAM::Policy&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::IAM::Role&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::IAM::User&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::IAM::UserToGroupAddition&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::Route53::HostedZone&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::Route53::RecordSet&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::Route53::RecordSetGroup&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::S3::Bucket&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::S3::BucketPolicy&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::SQS::Queue&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">AWS::SQS::QueuePolicy&lt;/td>
+&lt;td style="text-align:left">All properties in the Template Reference section of the AWS CloudFormation User Guide are supported.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="cloudformation-endpoint">CloudFormation Endpoint&lt;/h2>
+&lt;p>The service endpoint for CloudFormation is of the form:&lt;/p>
+&lt;pre tabindex="0">&lt;code>http://cloudformation.mycloud.example.com:8773/
+&lt;/code>&lt;/pre>&lt;p>If DNS is not availble for your cloud, then an endpoint with a service path can be used:&lt;/p>
+&lt;pre tabindex="0">&lt;code>http://&amp;lt;host-ip&amp;gt;:8773/services/CloudFormation
+&lt;/code>&lt;/pre>&lt;p>CloudFormation follows the same convention as the other user facing services.&lt;/p></description></item><item><title>Docs: Using Virtual Private Cloud</title><link>https://www.eucastack.io/docs/user_guide/vpc_intro/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/vpc_intro/</guid><description>
+&lt;h1 id="using-virtual-private-cloud">Using Virtual Private Cloud&lt;/h1>
+&lt;p>Eucalyptus Virtual Private Cloud (VPC) is an implementation of Amazon VPC that allows you to define a logically isolated virtual network that can contain Eucalyptus resources. A virtual network enhances security by allowing you to have fine-grained, explicit control over network gateways, subnets, IP address ranges, and inbound and outbound connectivity. This section of the User Guide covers how Eucalyptus VPC works and how to use it.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For more information about Amazon Virtual Private Cloud, see the .
+&lt;/div>
+&lt;/p></description></item></channel></rss>

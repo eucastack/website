@@ -1,0 +1,52 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Introduction to Eucalyptus</title><link>https://www.eucastack.io/docs/install_guide/intro/</link><description>Recent content in Introduction to Eucalyptus on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/install_guide/intro/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Eucalyptus Overview</title><link>https://www.eucastack.io/docs/install_guide/intro/oview/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/intro/oview/</guid><description>
+&lt;p>Eucalyptus was designed to be easy to install and as non-intrusive as possible. The software framework is modular, with industry-standard, language-agnostic communication.&lt;/p>
+&lt;p>Eucalyptus provides a virtual network overlay that both isolates network traffic of different users and allows two or more clusters to appear to belong to the same Local Area Network (LAN). Also, Eucalyptus offers API compatibility with Amazon’s EC2, S3, IAM, ELB, Auto Scaling, CloudFormation, and CloudWatch services. This offers you the capability of a hybrid cloud.&lt;/p></description></item><item><title>Docs: Eucalyptus Components</title><link>https://www.eucastack.io/docs/install_guide/intro/euca_components/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/intro/euca_components/</guid><description>
+&lt;p>This topic describes the various components that comprise a Eucalyptus cloud.The following image shows a high-level architecture of Eucalyptus with its main components.&lt;/p>
+&lt;p>&lt;img src="https://www.eucastack.io/images/euca_cloud_arch_basics.png" alt="image">
+A detailed description of each Eucalyptus component follows.&lt;/p>
+&lt;h2 id="cloud-controller">Cloud Controller&lt;/h2>
+&lt;p>In many deployments, the Cloud Controller (CLC) service and the User-Facing Services (UFS) are on the same host machine. This server is the entry-point into the cloud for administrators, developers, project managers, and end-users. The CLC handles persistence and is the backend for the UFS. A Eucalyptus cloud must have exactly one CLC.&lt;/p>
+&lt;h2 id="user-facing-services">User-Facing Services&lt;/h2>
+&lt;p>The User-Facing Services (UFS) serve as endpoints for the AWS-compatible services offered by Eucalyptus : EC2 (compute), AS (AutoScaling), CW (CloudWatch), ELB (LoadBalancing), IAM (Euare), and STS (tokens). A Eucalyptus cloud can have several UFS host machines.&lt;/p>
+&lt;h2 id="object-storage-gateway">Object Storage Gateway&lt;/h2>
+&lt;p>The Object Storage Gateway (OSG) is part of the UFS. The OSG passes requests to object storage providers and talks to the persistence layer (DB) to authenticate requests. You can use Walrus, Riak CS, or Ceph-RGW as the object storage provider.&lt;/p>
+&lt;h2 id="object-storage-provider">Object Storage Provider&lt;/h2>
+&lt;p>The Object Storage Provider (OSP) can be either the Eucalyptus Walrus backend, Riak CS, or Ceph-RGW. Walrus is intended for light S3 usage and is a single service. &lt;a href="https://github.com/basho/riak">Riak&lt;/a> is an open source scalable general purpose data platform; it is intended for deployments with heavy S3 usage. Ceph-RGW is an object storage interface built on top of Librados.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+&lt;/div>
+&lt;h2 id="management-console">Management Console&lt;/h2>
+&lt;p>The Eucalyptus Management Console is an easy-to-use web-based interface that allows you to manage your Eucalyptus cloud. The Management Console is often deployed on the same host machine as the UFS. A Eucalyptus cloud can have multiple Management Console host machines.&lt;/p>
+&lt;h2 id="cluster-controller">Cluster Controller&lt;/h2>
+&lt;p>The Cluster Controller (CC) service must run on a host machine that has network connectivity to the host machines running the Node Controllers (NCs) and to the host machine for the CLC. CCs gather information about a set of NCs and schedules virtual machine (VM) execution on specific NCs. All NCs associated with a single CC must be in the same subnet.&lt;/p>
+&lt;h2 id="storage-controller">Storage Controller&lt;/h2>
+&lt;p>The Storage Controller (SC) service provides functionality similar to Amazon Elastic Block Store (Amazon EBS). The SC can interface with various storage systems. Elastic block storage exports storage volumes that can be attached by a VM and mounted or accessed as a raw block device. EBS volumes can persist past VM termination and are commonly used to store persistent data. An EBS volume cannot be shared between multiple VMs at once and can be accessed only within the same availability zone in which the VM is running. Users can create snapshots from EBS volumes. Snapshots are stored by the OSG and made available across availability zones.&lt;/p>
+&lt;h2 id="node-controller">Node Controller&lt;/h2>
+&lt;p>The Node Controller (NC) service runs on any machine that hosts VM instances. The NC controls VM activities, including the execution, inspection, and termination of VM instances. It also fetches and maintains a local cache of instance images, and it queries and controls the system software (host OS and the hypervisor) in response to queries and control requests from the CC.&lt;/p>
+&lt;h2 id="eucanetd">Eucanetd&lt;/h2>
+&lt;p>The eucanetd service implements artifacts to manage and define Eucalyptus cloud networking. Eucanetd runs alongside the CLC or NC services, depending on the configured networking mode.&lt;/p></description></item><item><title>Docs: System Requirements</title><link>https://www.eucastack.io/docs/install_guide/intro/system_requirements/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/intro/system_requirements/</guid><description>
+&lt;p>To install Eucalyptus, your system must meet the baseline requirements described in this topic.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The specific requirements of your deployment, including the number of physical machines, structure of the physical network, storage requirements, and access to software are ultimately determined by the features you choose for your cloud and the availability of infrastructure required to support those features.
+&lt;/div>
+&lt;h2 id="compute-requirements">Compute Requirements&lt;/h2>
+&lt;ul>
+&lt;li>Physical Machines: All services must be installed on physical servers, not virtual machines.&lt;/li>
+&lt;li>Central Processing Units (CPUs): We recommend that each host machine in your cloud contain either an Intel or AMD processor with a minimum of 4 2GHz cores.&lt;/li>
+&lt;li>Operating Systems: supports the following Linux distributions: CentOS 7.9 and RHEL 7.9. supports only 64-bit architecture.&lt;/li>
+&lt;li>Machine Clocks: Each host machine and any client machine clocks must be synchronized (for example, using NTP). These clocks must be synchronized all the time, not only during the installation process.&lt;/li>
+&lt;/ul>
+&lt;h2 id="storage-and-memory-requirements">Storage and Memory Requirements&lt;/h2>
+&lt;ul>
+&lt;li>Each machine needs a minimum of 100GB of storage.&lt;/li>
+&lt;li>We recommend at least 500GB for Walrus and SC hosts.&lt;/li>
+&lt;li>We recommend 200GB per NC host running Linux VMs. Note that larger available disk space enables a greater number of VMs.&lt;/li>
+&lt;li>Each machine needs a minimum of 16GB RAM. However, we recommend more RAM for improved caching and on NCs to support more instances.&lt;/li>
+&lt;/ul>
+&lt;h2 id="network-requirements">Network Requirements&lt;/h2>
+&lt;ul>
+&lt;li>For VPCMIDO, Eucalyptus needs MidoNet to be installed.&lt;/li>
+&lt;li>The network connecting machines that host components (except the CC and NC) must support UDP multicast for IP address 239.193.7.3. Note that UDP multicast is not used over the network that connects the CC to the NCs.&lt;/li>
+&lt;/ul>
+&lt;p>Once you are satisfied that your systems requirements are met, you are ready to plan your Eucalyptus installation.&lt;/p></description></item></channel></rss>

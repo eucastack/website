@@ -1,0 +1,30 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Restart Eucalyptus</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/restart_euca/</link><description>Recent content in Restart Eucalyptus on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/restart_euca/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Shut Down All Instances</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/restart_euca/instance_shutdown/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/restart_euca/instance_shutdown/</guid><description>
+&lt;p>To terminate all instances on all NCs perform the steps listed in this topic. To terminate all instances on all NCs:&lt;/p>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-terminate-instances &amp;lt;instance_id&amp;gt;
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Restart the CLC</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/restart_euca/clc_restart/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/restart_euca/clc_restart/</guid><description>
+&lt;p>Log in to the CLC and enter the following command:&lt;/p>
+&lt;pre>&lt;code>systemctl restart eucalyptus-cloud.service
+&lt;/code>&lt;/pre>
+&lt;p>All Eucalyptus components on this server will restart.&lt;/p></description></item><item><title>Docs: Restart Walrus</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/restart_euca/walrus_restart/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/restart_euca/walrus_restart/</guid><description>
+&lt;p>Log in to Walrus and enter the following command:&lt;/p>
+&lt;pre>&lt;code>systemctl restart eucalyptus-cloud.service
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Restart the CC</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/restart_euca/cc_restart_normal/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/restart_euca/cc_restart_normal/</guid><description>
+&lt;p>Log in to the CC and enter the following command:&lt;/p>
+&lt;pre>&lt;code>systemctl restart eucalyptus-cluster.service
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Restart the SC</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/restart_euca/sc_restart/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/restart_euca/sc_restart/</guid><description>
+&lt;p>Log in to the SC and enter the following command:&lt;/p>
+&lt;pre>&lt;code>systemctl restart eucalyptus-cloud.service
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Restart an NC</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/restart_euca/nc_restart/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/restart_euca/nc_restart/</guid><description>
+&lt;p>To restart an NC perform the steps listed in this topic.Log in to the NC and enter the following command:&lt;/p>
+&lt;pre>&lt;code>systemctl restart eucalyptus-node.service
+&lt;/code>&lt;/pre>
+&lt;p>Repeat for each NC. Verify that the following is even needed. If so, replicate for other NC-tasks. You can automate the restart command for all of your NCs. Store a list of your NCs in a file called &lt;em>nc-hosts&lt;/em> that looks like:&lt;/p>
+&lt;pre>&lt;code>nc-host-00
+nc-host-01
+...
+nc-host-nn
+&lt;/code>&lt;/pre>
+&lt;p>To restart all of your NCs, run the following command:&lt;/p>
+&lt;pre>&lt;code>cat nc-hosts | xargs -i ssh root@{} systemctl restart eucalyptus-node.service
+&lt;/code>&lt;/pre></description></item></channel></rss>

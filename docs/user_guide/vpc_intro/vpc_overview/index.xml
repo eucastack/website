@@ -1,0 +1,21 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – How VPC Works</title><link>https://www.eucastack.io/docs/user_guide/vpc_intro/vpc_overview/</link><description>Recent content in How VPC Works on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/vpc_intro/vpc_overview/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Default VPCs</title><link>https://www.eucastack.io/docs/user_guide/vpc_intro/vpc_overview/vpc_overview_default_vpc/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/vpc_intro/vpc_overview/vpc_overview_default_vpc/</guid><description>
+&lt;p>Starting with Eucalyptus versions 4.1 and later, when you create an account in your Eucalyptus cloud in VPCMIDO network mode, you get a default VPC with a single public subnet and an attached Internet gateway. All instances that are created in this account that do not explicitly specify a VPC are placed into this default VPC and given a public IP address and behave like &amp;lsquo;classic&amp;rsquo; AWS EC2 instances.&lt;/p></description></item><item><title>Docs: Subnets and IP Addressing</title><link>https://www.eucastack.io/docs/user_guide/vpc_intro/vpc_overview/vpc_concepts_ip_addressing/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/vpc_intro/vpc_overview/vpc_concepts_ip_addressing/</guid><description>
+&lt;p>A virtual private cloud (VPC) is a virtual network that is logically isolated from other virtual networks in your Eucalyptus cloud.&lt;/p>
+&lt;p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For more information about CIDR notation, see the on Wikipedia.
+&lt;/div>
+&lt;strong>Private IP Addresses&lt;/strong>&lt;/p>
+&lt;p>When you create a VPC, you can specify the range of IP addresses for your VPC using Classless Inter-Domain Routing (CIDR) notation. When you launch an instance (VM) in your VPC, you can assign a private IP address to the instance from this IP address range. If you don&amp;rsquo;t explicitly assign a private IP address, one is assigned to the instance for you.&lt;/p>
+&lt;p>&lt;strong>Public IP Addresses&lt;/strong>&lt;/p>
+&lt;p>By default, instances launched into the default subnet in your VPC receive a public IP address. This public IP address is assigned from a pool of public IP addresses, and is not associated with your account. This public IP address can&amp;rsquo;t be manually added or removed from the VPC instance. The public IP address is mapped to the instance&amp;rsquo;s private IP address using Network Address Translation (NAT).&lt;/p>
+&lt;p>You can control whether or not your VPC instances get a public IP address by either enabling/disabling the public IP address attribute of the subnet, or by overriding the subnet&amp;rsquo;s behavior when launching an instance into the VPC.&lt;/p>
+&lt;p>If you want a persistent IP address for your VPC instance, you can use the &lt;code>euca-allocate-address&lt;/code> to create an elastic IP address, and then use &lt;code>euca-associate-address&lt;/code> to assign this address.&lt;/p>
+&lt;p>&lt;strong>Subnets&lt;/strong>&lt;/p>
+&lt;p>Once you&amp;rsquo;ve created a VPC, you can create one or more subnets inside the VPC. A subnet is simply a logical subdivision of a network of IP addresses. Subnets can be used to enable tighter security, allow separate administration of the network by organization, and enable more efficient network traffic by containing traffic between nodes in a subnet and using route tables for traffic that needs to move between subnets.&lt;/p>
+&lt;p>Note that subnets in a VPC cannot overlap; and the first four IP addresses and the last IP address are reserved for internal use. For example, of the 16 IP addresses of a /28 subnet, 11 are available for instances; of the 256 IP addresses of a /24 subnet, 251 are available for instances. Subnets must be larger than /28 and smaller than /16.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For more information about subnets, see the on Wikipedia.
+&lt;/div></description></item></channel></rss>

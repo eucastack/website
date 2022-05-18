@@ -1,0 +1,82 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Install Repositories</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/install_repos_intro/</link><description>Recent content in Install Repositories on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/install_guide/eucalyptus/install_repos_intro/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Software Signing</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/install_repos_intro/installing_euca_software_signing/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/install_repos_intro/installing_euca_software_signing/</guid><description>
+&lt;p>This topic describes Eucalyptus software signing keys.We use a number of GPG keys to sign our software packages and package repositories. The necessary public keys are provided with the relevant products and can be used to automatically verify software updates. You can also verify the packages or package repositories manually using the keys on this page.&lt;/p>
+&lt;p>Use the &lt;code>rpm --checksig&lt;/code> command on a download file to verify a RPM package for an Eucalyptus product. For example:&lt;/p>
+&lt;pre>&lt;code>rpm --checksig -v myfilename.rpm
+&lt;/code>&lt;/pre>
+&lt;p>Follow the procedure detailed on Debian&amp;rsquo;s &lt;a href="http://wiki.debian.org/SecureApt#How_to_manually_check_for_package.27s_integrity">SecureApt&lt;/a> web page to verify a deb package for an Eucalyptus product.&lt;/p>
+&lt;p>Please do not use package signing keys to encrypt email messages.&lt;/p>
+&lt;p>The following keys are used for signing Eucalyptus software:&lt;/p>
+&lt;h2 id="c1240596-eucalyptus-systems-inc-release-key-securityeucalyptuscom">c1240596: Eucalyptus Systems, Inc. (release key) &lt;a href="mailto:security@eucalyptus.com">security@eucalyptus.com&lt;/a>&lt;/h2>
+&lt;p>This key is used for signing Eucalyptus products released after July 2011 and their updates.&lt;/p>
+&lt;ul>
+&lt;li>&lt;/li>
+&lt;li>&lt;/li>
+&lt;li>Fingerprint:&lt;/li>
+&lt;/ul>
+&lt;h2 id="0260cf4e-eucalyptus-systems-inc-pre-release-key-securityeucalyptuscom">0260cf4e: Eucalyptus Systems, Inc. (pre-release key) &lt;a href="mailto:security@eucalyptus.com">security@eucalyptus.com&lt;/a>&lt;/h2>
+&lt;p>This key is used for signing Eucalyptus pre-release products due for release after July 2011.&lt;/p>
+&lt;ul>
+&lt;li>&lt;/li>
+&lt;li>&lt;/li>
+&lt;li>Fingerprint:&lt;/li>
+&lt;/ul>
+&lt;h2 id="9d7b073c-eucalyptus-systems-inc-nightly-release-key-securityeucalyptuscom">9d7b073c: Eucalyptus Systems, Inc. (nightly release key) &lt;a href="mailto:security@eucalyptus.com">security@eucalyptus.com&lt;/a>&lt;/h2>
+&lt;p>This key is used for signing nightly builds of Eucalyptus products published after July 2011.&lt;/p>
+&lt;ul>
+&lt;li>&lt;/li>
+&lt;li>&lt;/li>
+&lt;li>Fingerprint:&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Install Eucalyptus Release Packages</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/install_repos_intro/installing_euca_release/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/install_repos_intro/installing_euca_release/</guid><description>
+&lt;p>To install Eucalyptus from release packages, perform the tasks listed in this topic.&lt;/p>
+&lt;p>&lt;strong>Prerequisites&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>The prerequisite hardware and software should be in place.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>To install Eucalyptus from release packages&lt;/strong>&lt;/p>
+&lt;p>Configure the Eucalyptus package repository on each host machine that will run a Eucalyptus service:&lt;/p>
+&lt;pre>&lt;code>yum install https://downloads.eucalyptus.cloud/software/eucalyptus/5/rhel/7/x86_64/eucalyptus-release-5-1.11.as.el7.noarch.rpm
+&lt;/code>&lt;/pre>
+&lt;p>Enter &lt;code>y&lt;/code> when prompted to install this package.&lt;/p>
+&lt;p>Configure the Euca2ools package repository on each host machine that will run a Eucalyptus service or Euca2ools:&lt;/p>
+&lt;pre>&lt;code>yum install https://downloads.eucalyptus.cloud/software/euca2ools/3.4/rhel/7/x86_64/euca2ools-release-3.4-2.2.as.el7.noarch.rpm
+&lt;/code>&lt;/pre>
+&lt;p>Enter &lt;code>y&lt;/code> when prompted to install this package.&lt;/p>
+&lt;p>Configure the EPEL package repository on each host machine that will run a Eucalyptus service or Euca2ools:&lt;/p>
+&lt;pre>&lt;code>yum install epel-release
+&lt;/code>&lt;/pre>
+&lt;p>Enter &lt;code>y&lt;/code> when prompted to install this package.&lt;/p>
+&lt;p>If you are installing on RHEL 7, you must enable the Optional repository in Red Hat Network for each NC, as follows: Go to &lt;a href="http://rhn.redhat.com">http://rhn.redhat.com&lt;/a> and navigate to the system that will run the NC. Click Alter Channel Subscriptions . Make sure the RHEL Server Optional check-box is selected. Click Change Subscriptions .&lt;/p>
+&lt;p>On CentOS enable the QEMU Enterprise Virtualization repository for each NC:&lt;/p>
+&lt;pre>&lt;code>yum install centos-release-qemu-ev
+&lt;/code>&lt;/pre>
+&lt;p>The following steps should be performed on each NC host machine. Install the Eucalyptus Node Controller software on each NC host:&lt;/p>
+&lt;pre>&lt;code>yum install eucalyptus-node
+&lt;/code>&lt;/pre>
+&lt;p>Remove the default libvirt network. This step allows the eucanetd dhcpd server to start.&lt;/p>
+&lt;pre>&lt;code>virsh net-destroy default
+virsh net-autostart default --disable
+&lt;/code>&lt;/pre>
+&lt;p>Check that the KVM device node has proper permissions. Run the following command:&lt;/p>
+&lt;pre>&lt;code>ls -l /dev/kvm
+&lt;/code>&lt;/pre>
+&lt;p>Verify the output shows that the device node is owned by user root and group kvm.&lt;/p>
+&lt;pre>&lt;code>crw-rw-rw- 1 root kvm 10, 232 Nov 30 10:27 /dev/kvm
+&lt;/code>&lt;/pre>
+&lt;p>If your KVM device node does not have proper permissions, you need to reboot your NC host.&lt;/p>
+&lt;p>On each CLC host machine, install the Eucalyptus Cloud Controller software.&lt;/p>
+&lt;pre>&lt;code>yum install eucalyptus-cloud
+&lt;/code>&lt;/pre>
+&lt;p>Install the backend service image package on the machine hosting the CLC:&lt;/p>
+&lt;pre>&lt;code>yum install eucalyptus-service-image
+&lt;/code>&lt;/pre>
+&lt;p>This installs worker images for both the load balancer and imaging services. On the UFS host machine, install the Eucalyptus Cloud Controller software.&lt;/p>
+&lt;pre>&lt;code>yum install eucalyptus-cloud
+&lt;/code>&lt;/pre>
+&lt;p>(Optional) On the UFS host machine, also install the Management Console.&lt;/p>
+&lt;pre>&lt;code>yum install eucaconsole
+&lt;/code>&lt;/pre>
+&lt;p>The Management Console can run on any host machine, even one that does not have other Eucalyptus services . Install the software for the remaining Eucalyptus services. The following example shows services being installed on the same host machine.&lt;/p>
+&lt;pre>&lt;code>yum install eucalyptus-cluster eucalyptus-sc eucalyptus-walrus
+&lt;/code>&lt;/pre>
+&lt;p>This installs the cloud controller (CC), storage controller (SC), and Walrus Backend (Optional) services.&lt;/p>
+&lt;p>Your package installation is complete. You are now ready to &lt;a href="https://www.eucastack.io/docs/install_guide/eucalyptus/configuring_euca/">Configure Eucalyptus&lt;/a> .&lt;/p></description></item></channel></rss>

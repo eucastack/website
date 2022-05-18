@@ -1,0 +1,18 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Manage Security</title><link>https://www.eucastack.io/docs/admin_guide/security_section/</link><description>Recent content in Manage Security on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/admin_guide/security_section/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Security Overview</title><link>https://www.eucastack.io/docs/admin_guide/security_section/security_oview/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/security_section/security_oview/</guid><description>
+&lt;p>This topic is intended for people who are currently using Eucalyptus and who want to harden the cloud and underlying configuration.&lt;/p>
+&lt;p>This topic covers available controls and best practices for securing your Eucalyptus cloud. Cloud security depends on security across many layers of infrastructure and technology:&lt;/p>
+&lt;ul>
+&lt;li>Security of the physical infrastructure and hosts&lt;/li>
+&lt;li>Security of the virtual infrastructure&lt;/li>
+&lt;li>Security of instances&lt;/li>
+&lt;li>Security of storage and data&lt;/li>
+&lt;li>Security of users and accounts&lt;/li>
+&lt;/ul>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For information about securing applications in AWS cloud, we recommend the Amazon Web Services whitepaper. The practices in this in this paper also apply to your Eucalyptus cloud.
+&lt;/div></description></item><item><title>Docs: Best Practices</title><link>https://www.eucastack.io/docs/admin_guide/security_section/bp_security/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/security_section/bp_security/</guid><description>
+&lt;h1 id="best-practices">Best Practices&lt;/h1>
+&lt;p>This topic contains recommendations for hardening your Eucalyptus cloud.&lt;/p></description></item><item><title>Docs: Security Tasks</title><link>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/</guid><description>
+&lt;h1 id="tasks">Tasks&lt;/h1>
+&lt;p>This section details the tasks needed to make your cloud secure.&lt;/p></description></item></channel></rss>

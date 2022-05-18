@@ -1,0 +1,28 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Shut Down Eucalyptus</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/shut_down/</link><description>Recent content in Shut Down Eucalyptus on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/shut_down/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Shut Down All Instances</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/shut_down/instance_shutdown/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/shut_down/instance_shutdown/</guid><description>
+&lt;p>To terminate all instances on all NCs perform the steps listed in this topic.To terminate all instances on all NCs:&lt;/p>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euca-terminate-instances &amp;lt;instance_id&amp;gt;
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Shut Down the NCs</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/shut_down/nc_shutdown/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/shut_down/nc_shutdown/</guid><description>
+&lt;p>To shut down the NCs perform the steps listed in this topic.To shut down the NCs:&lt;/p>
+&lt;p>Log in as root to a machine hosting an NC. Enter the following command:&lt;/p>
+&lt;pre>&lt;code>systemctl stop eucalyptus-node.service
+&lt;/code>&lt;/pre>
+&lt;p>Repeat for each machine hosting an NC.&lt;/p></description></item><item><title>Docs: Shut Down the CCs</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/shut_down/cc_shutdown/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/shut_down/cc_shutdown/</guid><description>
+&lt;p>To shut down the CCs:&lt;/p>
+&lt;p>Log in as root to a machine hosting a CC. Enter the following command:&lt;/p>
+&lt;pre>&lt;code>systemctl stop eucalyptus-cluster.service
+&lt;/code>&lt;/pre>
+&lt;p>Repeat for each machine hosting a CC.&lt;/p></description></item><item><title>Docs: Shut Down the SCs</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/shut_down/sc_shutdown/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/shut_down/sc_shutdown/</guid><description>
+&lt;p>To shut down the SC:&lt;/p>
+&lt;p>Log in as root to the physical machine that hosts the SC. Enter the following command:&lt;/p>
+&lt;pre>&lt;code>systemctl stop eucalyptus-cloud.service
+&lt;/code>&lt;/pre>
+&lt;p>Repeat for any other machine hosting an SC.&lt;/p></description></item><item><title>Docs: Shut Down Walrus</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/shut_down/walrus_shutdown/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/shut_down/walrus_shutdown/</guid><description>
+&lt;p>To shut down Walrus:&lt;/p>
+&lt;p>Log in as root to the physical machine that hosts Walrus. Enter the following command:&lt;/p>
+&lt;pre>&lt;code>systemctl stop eucalyptus-cloud.service
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Shut Down the CLC</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/shut_down/clc_shutdown/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/shut_down/clc_shutdown/</guid><description>
+&lt;p>To shut down the CLC:&lt;/p>
+&lt;p>Log in as root to the physical machine that hosts the CLC. Enter the following command:&lt;/p>
+&lt;pre>&lt;code>systemctl stop eucalyptus-cloud.service
+&lt;/code>&lt;/pre></description></item></channel></rss>

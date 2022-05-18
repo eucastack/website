@@ -1,0 +1,39 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Users</title><link>https://www.eucastack.io/docs/user_guide/using_access/user_tasks/</link><description>Recent content in Users on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/user_guide/using_access/user_tasks/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Add a User</title><link>https://www.eucastack.io/docs/user_guide/using_access/user_tasks/user_add/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_access/user_tasks/user_add/</guid><description>
+&lt;p>To add a user, perform the steps in this topic.Enter the following command&lt;/p>
+&lt;pre>&lt;code>euare-usercreate -u &amp;lt;user_name&amp;gt; -g &amp;lt;group_name&amp;gt; -k
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus does not return a response.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+If you include the parameter, Eucalyptus returns a response that includes the user&amp;rsquo;s ARN and GUID.
+&lt;/div>
+&lt;/p></description></item><item><title>Docs: Create a Login Profile</title><link>https://www.eucastack.io/docs/user_guide/using_access/user_tasks/user_loginprof/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_access/user_tasks/user_loginprof/</guid><description>
+&lt;p>To create a login profile, perform the tasks in this topic.Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-useraddloginprofile -u &amp;lt;user_name&amp;gt; -p &amp;lt;password&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus does not return a response.&lt;/p></description></item><item><title>Docs: Modify a User</title><link>https://www.eucastack.io/docs/user_guide/using_access/user_tasks/user_rename/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_access/user_tasks/user_rename/</guid><description>
+&lt;p>Modifying a user is similar to a &amp;ldquo;move&amp;rdquo; operation. To modify a user, you need permission to remove the user from the current path or name, and put that user in the new path or name.For example, if a user changes from one team in a company to another, you can change the user&amp;rsquo;s path from &lt;em>/team_abc/&lt;/em> to &lt;em>/team_efg/&lt;/em> . You need permission to remove the user from &lt;em>/team_abc/&lt;/em> . You also need permission to put the user into &lt;em>/team_efg/&lt;/em> . This means you need permission to call UpdateUser on both &lt;em>arn:aws:iam::123456789012:user/team_abc/&lt;/em>* and &lt;em>arn:aws:iam::123456789012:user/team_efg/&lt;/em>* .&lt;/p>
+&lt;p>To rename a user:&lt;/p>
+&lt;p>Enter the following command to rename a user:&lt;/p>
+&lt;pre>&lt;code>euare-usermod -u &amp;lt;user_name&amp;gt; --new-user-name &amp;lt;new_name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus does not return a message. Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-groupmod -u &amp;lt;user_name&amp;gt; -p &amp;lt;new_path&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus does not return a message.&lt;/p></description></item><item><title>Docs: Change User Path</title><link>https://www.eucastack.io/docs/user_guide/using_access/user_tasks/user_change_path/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_access/user_tasks/user_change_path/</guid><description>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-usermod -u &amp;lt;user_name&amp;gt; -p &amp;lt;new_path&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus does not return a message.&lt;/p></description></item><item><title>Docs: Change User Password</title><link>https://www.eucastack.io/docs/user_guide/using_access/user_tasks/user_password/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_access/user_tasks/user_password/</guid><description>
+&lt;p>To change a user&amp;rsquo;s password using the CLI:&lt;/p>
+&lt;p>Enter the following command:&lt;/p>
+&lt;pre>&lt;code>euare-usermodloginprofile -u [username] -p [password]
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus does not return a message.&lt;/p></description></item><item><title>Docs: List Users</title><link>https://www.eucastack.io/docs/user_guide/using_access/user_tasks/user_list/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_access/user_tasks/user_list/</guid><description>
+&lt;p>To list users within a path, perform the steps in this topic.Use the &lt;code>euare-userlistbypath&lt;/code> command to list all the users in an account or to list all the users with a particular path prefix. The output lists the ARN for each resulting user.&lt;/p>
+&lt;pre>&lt;code>euare-userlistbypath -p &amp;lt;path&amp;gt;
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Delete a User</title><link>https://www.eucastack.io/docs/user_guide/using_access/user_tasks/user_delete/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/user_guide/using_access/user_tasks/user_delete/</guid><description>
+&lt;p>To delete a user, perform the tasks in this topic.Enter the following command&lt;/p>
+&lt;pre>&lt;code>euare-userdel -u &amp;lt;user_name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>Eucalyptus does not return a response.&lt;/p></description></item></channel></rss>

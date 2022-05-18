@@ -1,0 +1,37 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Recover Eucalyptus Cloud Data</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_recovery/euca_recover/</link><description>Recent content in Recover Eucalyptus Cloud Data on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/admin_guide/ops_oview/ops_recovery/euca_recover/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Restore the Database</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_recovery/euca_recover/restore_postgres/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_recovery/euca_recover/restore_postgres/</guid><description>
+&lt;p>To restore the cloud database follow the steps listed in this topic.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Sometimes you&amp;rsquo;ll get this message on both startup and shutdown of the database: &amp;hellip; where is actually your current directory, meaning if you run the command from , then the path in the output will be instead of . The message is completely benign and can be ignored.
+&lt;/div>
+&lt;strong>To restore the database&lt;/strong>&lt;/p>
+&lt;p>Stop the CLC service.&lt;/p>
+&lt;pre>&lt;code>systemctl stop eucalyptus-cloud.service
+&lt;/code>&lt;/pre>
+&lt;p>Remove traces of the old database.&lt;/p>
+&lt;pre>&lt;code>rm -rf /var/lib/eucalyptus/db
+&lt;/code>&lt;/pre>
+&lt;p>Restore the cloud security credentials in the keys directory.&lt;/p>
+&lt;pre>&lt;code>tar -xvf ~/eucalyptus-keydir.tgz -C /
+&lt;/code>&lt;/pre>
+&lt;p>Re-initialize the database structure.&lt;/p>
+&lt;pre>&lt;code>clcadmin-initialize-cloud
+&lt;/code>&lt;/pre>
+&lt;p>Start the database manually.&lt;/p>
+&lt;pre>&lt;code>su eucalyptus -s /bin/bash -c &amp;quot;/usr/bin/pg_ctl start -w \
+-s -D/var/lib/eucalyptus/db/data -o '-h0.0.0.0/0 -p8777 -i'&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>Restore the backup.&lt;/p>
+&lt;pre>&lt;code>psql -U root -d postgres -p 8777 -h /var/lib/eucalyptus/db/data -f/root/eucalyptus_pg_dumpall-backup.sql
+&lt;/code>&lt;/pre>
+&lt;p>Stop the database manually.&lt;/p>
+&lt;pre>&lt;code>su eucalyptus -s /bin/bash -c &amp;quot;/usr/bin/pg_ctl stop -D/var/lib/eucalyptus/db/data&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>Start CLC service
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+If you are upgrading, skip this step (you don&amp;rsquo;t want to start the CLC service now because you haven&amp;rsquo;t restored the rest of the cloud data yet; starting the CLC appears in the installation steps, later).
+&lt;/div>
+&lt;/p>
+&lt;pre>&lt;code>systemctl start eucalyptus-cloud.service
+&lt;/code>&lt;/pre></description></item></channel></rss>

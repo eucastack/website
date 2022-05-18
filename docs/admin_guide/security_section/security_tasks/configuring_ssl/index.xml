@@ -1,0 +1,53 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Configure SSL</title><link>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/configuring_ssl/</link><description>Recent content in Configure SSL on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/configuring_ssl/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Configure and Enable SSL for the Management Console</title><link>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/configuring_ssl/config_ssl_uc/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/configuring_ssl/config_ssl_uc/</guid><description>
+&lt;p>You can use secure HTTP for your console.To run your console over Secure HTTP:&lt;/p>
+&lt;p>Install nginx on your console server with the following command: &lt;code>yum install nginx&lt;/code> Overwrite the default &lt;code>nginx.conf&lt;/code> file with the template provided in &lt;code>/usr/share/doc/eucaconsole-/nginx.conf.&lt;/code> &lt;code>cp /usr/share/doc/eucaconsole-/nginx.conf /etc/nginx/nginx.conf&lt;/code> Uncomment the &amp;rsquo;listen&amp;rsquo; directive and uncomment/modify the SSL certificate paths in &lt;code>/etc/nginx/nginx.conf&lt;/code> (search for &amp;ldquo;SSL configuration&amp;rdquo;). For example:&lt;/p>
+&lt;pre>&lt;code># SSL configuration
+listen 443 ssl;
+# ssl_certificate /path/to/ssl/pem_file;
+# EXAMPLE:
+ssl_certificate /etc/eucaconsole/console.crt;
+# ssl_certificate_key /path/to/ssl/certificate_key;
+# EXAMPLE:
+ssl_certificate_key /etc/eucaconsole/console.key;
+# end of SSL configuration
+&lt;/code>&lt;/pre>
+&lt;p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For more information on generating self-signed SSL certificates, go to .
+&lt;/div>
+Restart nginx using the following command: &lt;code>systemctl restart nginx.service&lt;/code> Edit the &lt;code>/etc/eucaconsole/console.ini&lt;/code> file, locate the &lt;code>session.secure = false&lt;/code> parameter, change &lt;code>false&lt;/code> to &lt;code>true&lt;/code> , then add the &lt;code>sslcert&lt;/code> and &lt;code>sslkey&lt;/code> lines immediately following, per this example:&lt;/p>
+&lt;pre>&lt;code>session.secure = true
+sslcert=/etc/eucaconsole/eucalyptus.com.chained.crt
+sslkey=/etc/eucaconsole/eucalyptus.com.key
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Configure and Enable SSL for the UFS</title><link>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/configuring_ssl/config_ssl_ufs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/security_section/security_tasks/configuring_ssl/config_ssl_ufs/</guid><description>
+&lt;p>This topic details tasks to configure SSL/TLS for the User-Facing Services (UFS)&lt;/p>
+&lt;p>If you have more than one host (other than node controllers), note the following:&lt;/p>
+&lt;ul>
+&lt;li>The keystore must be updated on each host running the eucalyptus-cloud service&lt;/li>
+&lt;li>The [key_alias] must be the same on each host&lt;/li>
+&lt;li>Use a wildcard certificate (i.e. *.&amp;lt;system.dns.dnsdomain&amp;gt;), since UFS is responsible for all service API endpoints&lt;/li>
+&lt;/ul>
+&lt;h2 id="create-a-keystore">Create a Keystore&lt;/h2>
+&lt;p>Eucalyptus uses a PKCS12-format keystore. If you are using a certificate signed by a trusted root CA, perform the following steps.&lt;/p>
+&lt;p>Enter the following command to convert your trusted certificate and key into an appropriate format:&lt;/p>
+&lt;pre>&lt;code>openssl pkcs12 -export -in [YOURCERT.crt] -inkey [YOURKEY.key] \
+-out tmp.p12 -name [key_alias]
+&lt;/code>&lt;/pre>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+The above command will request an export password, which is used in the following steps.
+&lt;/div>
+&lt;p>Save a backup of the Eucalyptus keystore, at &lt;em>/var/lib/eucalyptus/keys/euca.p12&lt;/em> . Import your keystore into the Eucalyptus keystore on the UFS:&lt;/p>
+&lt;pre>&lt;code>keytool -importkeystore -srckeystore tmp.p12 -srcstoretype pkcs12 \
+-srcstorepass [export_password] -destkeystore /var/lib/eucalyptus/keys/euca.p12 \
+-deststoretype pkcs12 -deststorepass eucalyptus -alias [key_alias] -destkeypass eucalyptus
+&lt;/code>&lt;/pre>
+&lt;h2 id="enable-the-ufs-to-use-the-keystore">Enable the UFS to Use the Keystore&lt;/h2>
+&lt;p>To enable the UFS to use the keystore, perform the following steps in the CLC because the UFS gets all its configuration information from the CLC. Run the following commands on the CLC:&lt;/p>
+&lt;pre>&lt;code>euctl bootstrap.webservices.ssl.server_alias=[key_alias]
+&lt;/code>&lt;/pre>
+&lt;h2 id="optional-redirect-requests-to-use-port-443">Optional: Redirect Requests to use Port 443&lt;/h2>
+&lt;p>To allow user facing services requests on port 443 instead of the default 8773, run the following commands on the CLC:&lt;/p>
+&lt;pre>&lt;code>euctl bootstrap.webservices.port=443
+&lt;/code>&lt;/pre></description></item></channel></rss>

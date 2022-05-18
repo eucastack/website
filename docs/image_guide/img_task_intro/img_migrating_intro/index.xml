@@ -1,0 +1,196 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Migrate an Image</title><link>https://www.eucastack.io/docs/image_guide/img_task_intro/img_migrating_intro/</link><description>Recent content in Migrate an Image on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/image_guide/img_task_intro/img_migrating_intro/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Create an Image from an Existing EBS-Backed Instance</title><link>https://www.eucastack.io/docs/image_guide/img_task_intro/img_migrating_intro/img_task_modify_existing_ebs_image/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/image_guide/img_task_intro/img_migrating_intro/img_task_modify_existing_ebs_image/</guid><description>
+&lt;p>A common way to create a new image is to customize an existing instance. This topic describes how to create a new image by modifying an existing EBS-backed instance.This example shows how to create a new EBS-backed Eucalyptus image based on an existing EBS-backed Eucalyptus instance.&lt;/p>
+&lt;p>Log on to an existing Eucalyptus EBS-backed instance and customize the instance. Prepare the image. See &lt;a href="">&lt;/a> for instructions. Create a new image based on the image you just modified by using the eucalyptus-create-image command, specifying a name, a description, and the instance ID of the Eucalyptus instance you customized in the previous step. For example: &lt;code>euca-create-image -n &amp;quot;mynewimage&amp;quot; -d &amp;quot;This is my new custom recycled image&amp;quot; i-1ABCDEFF&lt;/code> This command will show the ID of the new machine image and exit immediately. In the background, Eucalyptus will begin the process of creating a new image based on the instance you supplied.&lt;/p>
+&lt;p>You can monitor the status of the image using the euca-describe-images command, supplying the ID of the image returned from the euca-create-image command. For example:&lt;/p>
+&lt;p>&lt;code>euca-describe-images i-e12398ab&lt;/code>&lt;/p></description></item><item><title>Docs: Create an Image from an Existing Instance-Store Instance</title><link>https://www.eucastack.io/docs/image_guide/img_task_intro/img_migrating_intro/img_task_modify_existing_instance_store_image/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/image_guide/img_task_intro/img_migrating_intro/img_task_modify_existing_instance_store_image/</guid><description>
+&lt;p>A common way to create a new image is to customize an existing instance.This example shows how to create a new instance store Eucalyptus image based on an existing instance store Eucalyptus instance. This topic describes how to create a new image by modifying an existing instance-store instance.&lt;/p>
+&lt;p>Log on to an existing Eucalyptus instance-store instance and customize the instance. See Prepare a Linux Image for Eucalyptus &lt;a href="">&lt;/a> for instructions on required changes the instance needs before re-bundling. Create a new image based on the image you just modified by using the &lt;code>euca-bundle-instance&lt;/code> command, specifying a name, a description, and the instance ID of the Eucalyptus instance you customized in the previous step. For example:&lt;/p>
+&lt;pre>&lt;code>euca-bundle-instance -b mybundle -p mycentos6 -o $EC2_ACCESS_KEY -w $EC2_SECRET_KEY i-96154365
+BUNDLE bun-96154365 i-96154365 mybundle mycentos 62013-11-05T21:37:23.469Z2013-11-05T21:37:23.469Z pending 0
+&lt;/code>&lt;/pre>
+&lt;p>This command will the bundle task ID and exit immediately. In the background, Eucalyptus will begin the bundling process. Depending on the size of the instance, it can take several minutes for the bundling task to complete.&lt;/p>
+&lt;p>You can monitor the status of the bundle task using the &lt;code>euca-describe-bundle-tasks&lt;/code> command, supplying the ID of the image returned from the &lt;code>eucalyptus-bundle-instance&lt;/code> command. For example:&lt;/p>
+&lt;pre>&lt;code>euca-describe-bundle-tasks
+BUNDLE bun-96154365 i-96154365 mybundle mycentos6 2013-11-05T21:37:23.469Z2013-11-05T21:37:58.446Z storing 0
+&lt;/code>&lt;/pre>
+&lt;p>Once the bundle task is complete, you can register thebundle as an instance-store image using the euca-register command, specifying the path to the bundle manifest in the format &lt;code>[bucket]/[prefix].manifest.xml&lt;/code> .
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+You should always explicitly declare the instance type of a bundle created with as an HVM type using &amp;ndash;virtualization-type parameter. For example:
+&lt;/div>
+&lt;code>euca-register --virtualization-type=hvm mybundle/mycentos6.manifest.xml.&lt;/code> Your new image is now ready for use in your Eucalyptus cloud.&lt;/p></description></item><item><title>Docs: Prepare a Linux System for Eucalyptus</title><link>https://www.eucastack.io/docs/image_guide/img_task_intro/img_migrating_intro/img_task_prepare_image/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/image_guide/img_task_intro/img_migrating_intro/img_task_prepare_image/</guid><description>
+&lt;p>This section explains how to prepare a running Linux system (cloud instance, virtual machine, or a system running on bare metal) before importing it for use in Eucalyptus.&lt;strong>Install cloud software and drivers:&lt;/strong> Make sure Virtio drivers are installed if the image is going to be run in a KVM cluster which has virtio enabled, and verify use if possible (ie. set disks and network interface in hypervisor, try hot plug in for disks, etc). For most recent Linux distributions nothing is needed to be done. Make sure appropriate init scripts are in place; for example: cloud-init packages (if appropriate), and rc.local or similar scripts to prepare new instances at boot time utilizing user/meta-data.&lt;/p>
+&lt;p>Install cloud-init:&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+For more information on cloud-init, go to &lt;a href="https://help.ubuntu.com/community/CloudInit">https://help.ubuntu.com/community/CloudInit&lt;/a>
+&lt;/div>
+&lt;p>For Red Hat Enterprise Linux, and CentOS 7:&lt;/p>
+&lt;pre>&lt;code>yum install cloud-init
+&lt;/code>&lt;/pre>
+&lt;p>Install and configure ssh: For Red Hat and CentOS:&lt;/p>
+&lt;pre>&lt;code>yum install openssh-server
+systemctl enable sshd.service
+&lt;/code>&lt;/pre>
+&lt;p>Install Euca2ools: For Red Hat and CentOS:&lt;/p>
+&lt;pre>&lt;code>yum install euca2ools
+&lt;/code>&lt;/pre>
+&lt;p>Optionally, update existing packages. For RHEL and CentOS:&lt;/p>
+&lt;pre>&lt;code>yum update
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>Prepare the network:&lt;/strong> Disable the firewall. It is recommended that the firewall is disabled and network rules are instead enforced in the security-group the instances run in. If the guest&amp;rsquo;s firewall is not disabled, review the existing rules and make sure they are appropriate for the guest&amp;rsquo;s future use within a cloud environment. Clear or disable iptable rules: Save the rules in case you want to restore them later:&lt;/p>
+&lt;pre>&lt;code>sudo iptables-save &amp;gt; /root/firewall.rules
+&lt;/code>&lt;/pre>
+&lt;p>Clear the rules:&lt;/p>
+&lt;pre>&lt;code>iptables -F
+iptables -X
+iptables -t nat -F
+iptables -t nat -X
+iptables -t mangle -F
+iptables -t mangle -X
+iptables -P INPUT ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD ACCEPT
+&lt;/code>&lt;/pre>
+&lt;p>For RHEL and CentOS 7, see the Red Hat Migration and Planning Guide &lt;a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Migration_Planning_Guide/sect-Red_Hat_Enterprise_Linux-Migration_Planning_Guide-Security_and_Access_Control.html">Security and Access Control section&lt;/a> .&lt;/p>
+&lt;p>Make sure there is only a single primary network interface. Check the configuration for:&lt;/p>
+&lt;ul>
+&lt;li>Enabled on boot (ONBOOT=&amp;ldquo;yes&amp;rdquo;)&lt;/li>
+&lt;li>IP provisioning is done via DHCP (BOOTPROTO=&amp;ldquo;dhcp&amp;rdquo;)&lt;/li>
+&lt;li>MAC address is commented out (for example: #HWADDR=&amp;ldquo;AA:BB:CC:DD:EE:FF&amp;rdquo;)&lt;/li>
+&lt;/ul>
+&lt;p>For RHEL and CentOS images, the configuration for the default network interface can usually be found in the following file:&lt;/p>
+&lt;pre>&lt;code>/etc/sysconfig/network-scripts/ifcfg-eth0
+&lt;/code>&lt;/pre>
+&lt;p>The following is an example of an &lt;code>ifcfg-eth0&lt;/code> configuration file:&lt;/p>
+&lt;pre>&lt;code>DEVICE=eth0
+ONBOOT=yes
+#THE HWADDR LINE MUST BE COMMENTED OUT OR REMOVED
+#HWADDR=AA:BB:CC:DD:EE:FF
+TYPE=Ethernet
+BOOTPROTO=dhcp
+PERSISTENT_DHCLIENT=yes
+&lt;/code>&lt;/pre>
+&lt;p>Remove persistent udev rules:&lt;/p>
+&lt;pre>&lt;code>echo &amp;quot;&amp;quot; &amp;gt; /etc/udev/rules.d/70-persistent-net.rules
+echo &amp;quot;&amp;quot; &amp;gt; /lib/udev/rules.d/75-persistent-net-generator.rules
+&lt;/code>&lt;/pre>
+&lt;p>On CentOS and RHEL, disable zeroconf by adding an entry to the &lt;code>/etc/sysconfig/network&lt;/code> file:&lt;/p>
+&lt;pre>&lt;code>NETWORKING=yes
+NOZEROCONF=yes
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>Clean the image:&lt;/strong> We recommend that you remove all non-root, non-administrator users before bundling the image. Remove root/Administrator password. We recommend that you remove root&amp;rsquo;s password for Linux systems.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Once these passwords are removed, access to this system will be limited or blocked until this image is recreated as a cloud instance. SSH host and authorization keys for Linux will be used going forward.
+&lt;/div>
+Remove any unwanted programs. Configure a serial port by adding an option to the end of the &lt;code>/boot/grub/menu.lst&lt;/code> file: &lt;code>console=ttyS0&lt;/code> You&amp;rsquo;ve now prepared your instance for image creation.&lt;/p></description></item><item><title>Docs: Migrate a Linux Image from AWS to Eucalyptus</title><link>https://www.eucastack.io/docs/image_guide/img_task_intro/img_migrating_intro/img_task_migrate_image_aws_to_euca/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/image_guide/img_task_intro/img_migrating_intro/img_task_migrate_image_aws_to_euca/</guid><description>
+&lt;p>You can migrate an S3-backed image from AWS to Eucalyptus.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+This topic assumes you are migrating an S3-backed Amazon Machine Image (AMI) that you own. For instructions on creating an S3-backed AMI from an existing AMI, see .
+&lt;/div>
+&lt;/p>
+&lt;p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Specific examples may vary depending on the distro running on the image that you want to migrate.
+&lt;/div>
+Set up your Euca2ools configuration to work with both Eucalyptus and Amazon Web Services. Check ownership of the AMI that you want to migrate to Eucalyptus by using the euca-describe-images command. For example:&lt;/p>
+&lt;pre>&lt;code>euca-describe-images --region us-east-1 --owner 999999999999
+IMAGE ami-e1a1e888 999999999999/precise-test 999999999999 available private x86_64 machine aki-88aa75e1 instance-store paravirtual xen
+BLOCKDEVICEMAPPING EPHEMERAL sda2 ephemeral0
+&lt;/code>&lt;/pre>
+&lt;p>Run the AWS instance.&lt;/p>
+&lt;pre>&lt;code>euca-run-instance ami-e1a1e888 --region us-east-1
+&lt;/code>&lt;/pre>
+&lt;p>Install Euca2ools on the instance. For instructions, see the Euca2ools Guide. Make sure that you have enough space on a volume to hold the bundle that we will create. Bundle the running AWS instance. For example:&lt;/p>
+&lt;pre>&lt;code>sudo -s
+ec2-bundle-vol -b testbucket -d /mnt -u 4299-4227-3585 -k my-aws.pem -c my-aws-cert.pem -r x86_64 -s 2048
+Copying / into the image file /mnt/image...
+Excluding:
+/dev/pts
+/
+/sys
+/proc
+/proc/sys/fs/binfmt_misc
+/dev
+/media
+/mnt
+/proc
+/sys
+/mnt/image
+/mnt/img-mnt
+1+0 records in
+1+0 records out
+1048576 bytes (1.0 MB) copied, 0.00209056 s, 502 MB/s
+mke2fs 1.42.3 (14-May-2012)
+Bundling image file...
+Splitting /mnt/image.tar.gz.enc...
+Created image.part.00
+Created image.part.01
+[example truncated]
+Created image.part.30
+Generating digests for each part...
+Digests generated.
+Unable to read instance meta-data for ancestor-ami-ids
+Unable to read instance meta-data for ramdisk-id
+Unable to read instance meta-data for product-codes
+Creating bundle manifest...
+ec2-bundle-vol complete.
+&lt;/code>&lt;/pre>
+&lt;p>Switch the Euca2ools configuration file to use Eucalyptus. You can do this by specifying the Eucalyptus region as defined in your Euca2ools configuration file by specifying the &lt;code>--region&lt;/code> parameter on the command line, or by changing the &lt;code>default-region&lt;/code> option in the Euca2ools configuration file:&lt;/p>
+&lt;pre>&lt;code>default-region = euca-release
+&lt;/code>&lt;/pre>
+&lt;p>Download the bundle from the AWS S3 bucket:&lt;/p>
+&lt;pre>&lt;code>euca-download-bundle --bucket testbucket --directory /tmp/aws-image/ --region us-east-1
+&lt;/code>&lt;/pre>
+&lt;p>Unbundle the AWS instance bundle:&lt;/p>
+&lt;pre>&lt;code>euca-unbundle --manifest /tmp/aws-image/image.manifest.xml --source /tmp/aws-image/ --destination /tmp/aws-image/ --region us-east-1
+&lt;/code>&lt;/pre>
+&lt;p>Run some checks to make sure that the image can be used with Eucalyptus: Mount the image via loopback:&lt;/p>
+&lt;pre>&lt;code># sudo mkdir /mnt/aws-image
+# sudo mount -o loop /tmp/aws-image/image /mnt/aws-image
+# df -ah
+……
+/tmp/aws-image/image
+9.9G 1.1G 8.3G 12% /mnt/aws-image
+&lt;/code>&lt;/pre>
+&lt;p>Make sure that the distro repositories in the image do not point to EC2-specific repositories. TODO: Need an actual example here. Install a non-Xen kernel into the image from distro and make sure VirtIO modules are added. TODO: Need an actual example here. Extract the ramdisk and kernel to be bundled, uploaded and registered as ERI and EKI files. In this example, initrd.img-3.2.0-53-virtual and vmlinuz-3.2.0-53-virtual will be copied from /mnt/aws-image/boot to the /tmp/aws-image directory:&lt;/p>
+&lt;pre>&lt;code># sudo cp /mnt/aws-image/boot/initrd.img-3.2.0-53-virtual /tmp/aws-image/.
+# sudo cp /mnt/aws-image/boot/vmlinuz-3.2.0-53-virtual /tmp/aws-image/.
+&lt;/code>&lt;/pre>
+&lt;p>Make sure that the file system of the image is either ext2, ext3, or ext4 by using the file command. For example:&lt;/p>
+&lt;pre>&lt;code># file /tmp/aws-image/image
+/tmp/aws-image/image: Linux rev 1.0 ext4 filesystem data (extents) (large files) (huge files)
+&lt;/code>&lt;/pre>
+&lt;p>Bundle the image using euca-bundle-image:&lt;/p>
+&lt;pre>&lt;code>euca-bundle-image -i /tmp/aws-image/image
+&lt;/code>&lt;/pre>
+&lt;p>Upload the AWS bundled instance to Eucalyptus.&lt;/p>
+&lt;pre>&lt;code>euca-upload-bundle -b hybrid-guide-sample-bucket -m /tmp/aws-image/image.manifest.xml --access-key myaccesskey --secret-key mysecretkey
+&lt;/code>&lt;/pre>
+&lt;p>Test the new uploaded image.&lt;/p>
+&lt;pre>&lt;code>euca-run-instance emi-a6e15bcf
+&lt;/code>&lt;/pre></description></item><item><title>Docs: Migrate a Linux Image from Eucalyptus to AWS</title><link>https://www.eucastack.io/docs/image_guide/img_task_intro/img_migrating_intro/img_task_migrate_image_euca_to_aws/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/image_guide/img_task_intro/img_migrating_intro/img_task_migrate_image_euca_to_aws/</guid><description>
+&lt;p>This topic describes how to migrate an image from Eucalyptus to AWS.
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+These are high-level guidelines for moving an instance from Eucalyptus to AWS. Specific examples will vary depending on the distro running on the image.
+&lt;/div>
+Run an instance from the image you chose.&lt;/p>
+&lt;pre>&lt;code>euca-run-instance emi-1A6338AE
+&lt;/code>&lt;/pre>
+&lt;p>SSH into the instance and verify that the instance is valid for use with AWS: Download the latest ec2-modules from &lt;a href="http://s3.amazonaws.com/ec2-downloads">&lt;/a> and put them into the &lt;code>/lib/modules&lt;/code> directory on the instance. Copy the AWS EC2 certificate and private key from the AWS instance to your local workstation. Shut down unneeded services on the AWS instance (for example, Apache and MySQL). Clear out log files and bash history files. Remove your ssh keys from the instance. Reset passwords for the instance, and for any services that maintain their own password database. Clear out any temporary directories. Install Euca2ools on the instance.&lt;/p>
+&lt;p>Mount a volume that is at least 1.5 times as large as the entire instance. Bundle the running instance.&lt;/p>
+&lt;pre>&lt;code>euca-bundle-instance
+&lt;/code>&lt;/pre>
+&lt;p>Switch the Euca2ools configuration file to use Eucalyptus&lt;/p>
+&lt;pre>&lt;code>default-region = euca-release
+&lt;/code>&lt;/pre>
+&lt;p>Upload the AWS bundled instance to Eucalyptus.&lt;/p>
+&lt;pre>&lt;code>euca-upload-bundle -b bucket_name -m manifest_file
+&lt;/code>&lt;/pre>
+&lt;p>Test the new uploaded image.&lt;/p>
+&lt;pre>&lt;code>euca-run-instance emi-a6e15bcf
+&lt;/code>&lt;/pre></description></item></channel></rss>

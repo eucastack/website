@@ -1,0 +1,46 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Manual Eucalyptus Installation</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/</link><description>Recent content in Manual Eucalyptus Installation on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/install_guide/eucalyptus/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Plan Your Installation</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/planning/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/planning/</guid><description>
+&lt;h1 id="plan-your-installation">Plan Your Installation&lt;/h1>
+&lt;p>Before you install Eucalyptus components on your machines, we recommend that you take the time to plan how you want to install it.&lt;/p>
+&lt;p>To successfully plan for your Eucalyptus installation, you must determine two things:&lt;/p>
+&lt;ul>
+&lt;li>Think about the application workload performance and resource utilization tuning. Think about how many machines you want on your system.&lt;/li>
+&lt;li>Use your existing architecture and policies to determine the networking features you want to enable: EC2 Classic Networking or EC2 VPC Networking.&lt;/li>
+&lt;/ul>
+&lt;p>This section describes how to evaluate each tradeoff to determine the best choice to make, and how to verify that the resource environment can support the features that are enabled as a consequence of making a choice.&lt;/p>
+&lt;p>By the end of this section, you should be able to specify how you will deploy Eucalyptus in your environment, any tradeoffs between feature set and flexibility, and where your deployment will integrate with existing infrastructure systems.&lt;/p></description></item><item><title>Docs: Configure Dependencies</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/installing_dependencies/</guid><description>
+&lt;h1 id="configure-dependencies">Configure Dependencies&lt;/h1>
+&lt;p>Before you install Eucalyptus , ensure you have the appropriate dependencies installed and configured.&lt;/p></description></item><item><title>Docs: Install Repositories</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/install_repos_intro/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/install_repos_intro/</guid><description>
+&lt;h1 id="install-repositories">Install Repositories&lt;/h1>
+&lt;p>This section guides you through installing Eucalyptus from RPM package downloads.The first step to installing Eucalyptus is to download the RPM packages. When you&amp;rsquo;re ready, continue to &lt;a href="https://www.eucastack.io/docs/install_guide/eucalyptus/install_repos_intro/installing_euca_software_signing/">Software Signing&lt;/a> .&lt;/p>
+&lt;p>The following &lt;em>terminology&lt;/em> might help you as you proceed through this section.&lt;/p>
+&lt;p>Eucalyptus open source software — Eucalyptus release packages and dependencies, which enable you to deploy a Eucalyptus cloud.&lt;/p>
+&lt;p>Euca2ools CLI — Euca2ools is the Eucalyptus command line interface for interacting with web services. It is compatible with many Amazon AWS services, so can be used with Eucalyptus as well as AWS.&lt;/p>
+&lt;p>RPM and YUM and software signing — Eucalyptus CentOS and RHEL download packages are in RPM (Red Hat Package Manager) format and use the YUM package management tool. We use GPG keys to sign our software packages and package repositories.&lt;/p>
+&lt;p>EPEL software — EPEL (Extra Packages for Enterprise Linux) are free, open source software, which is fully separated from licensed RHEL distribution. It requires its own package.&lt;/p></description></item><item><title>Docs: Configure Eucalyptus</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/configuring_euca/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/configuring_euca/</guid><description>
+&lt;p>This section describes the parameters you need to set in order to launch Eucalyptus for the first time.&lt;/p>
+&lt;p>The first launch of Eucalyptus is different than a restart of a previously running Eucalyptus deployment in that it sets up the security mechanisms that will be used by the installation to ensure system integrity.&lt;/p>
+&lt;p>Eucalyptus configuration is stored in a text file, &lt;em>/etc/eucalyptus/eucalyptus.conf&lt;/em>, that contains key-value pairs specifying various configuration parameters.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+Perform the following tasks after you install software, but before you start the services.
+&lt;/div></description></item><item><title>Docs: Start Eucalyptus</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/starting_euca/</guid><description>
+&lt;h1 id="start">Start&lt;/h1>
+&lt;p>Start the Eucalyptus services in the order presented in this section. Make sure that each host machine you installed a Eucalyptus service on resolves to an IP address. Edit the &lt;em>/etc/hosts&lt;/em> file if necessary.&lt;/p></description></item><item><title>Docs: Register Eucalyptus Services</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/register_services/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/register_services/</guid><description>
+&lt;h1 id="register-services">Register Services&lt;/h1>
+&lt;p>This section describes how to register Eucalyptus services.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+If you are upgrading, proceed to the section. (You don&amp;rsquo;t need to register the rest (e.g., UFS, Walrus, etc.) during the non-NC upgrade, because those registrations are already listed in the cloud database, which you recovered before getting here.)
+&lt;/div>
+&lt;p>Eucalyptus implements a secure protocol for registering separate services so that the overall system cannot be tricked into including a service run by an unauthorized administrator or user.&lt;/p>
+&lt;p>You need only register services once. Most registration commands run on the CLC server.&lt;/p>
+&lt;p>Note that each registration command will attempt an SSH as root to the remote physical host where the registering service is assumed to be running. The registration command also contacts the service so it must be running at the time the command is issued. If a password is required to allow SSH access, the command will prompt the user for it.&lt;/p>
+&lt;p>Registration commands need the following information:&lt;/p>
+&lt;ul>
+&lt;li>The of service you are registering. Required. For example: .&lt;/li>
+&lt;li>The of the service being registered. Required. The host must be specified by IP address to function correctly.&lt;/li>
+&lt;li>The the service belongs to. This is roughly equivalent to the availability zone in AWS.&lt;/li>
+&lt;li>The you assign to each instance of a service, up to 256 characters. Required. This is the name used to identify the service in a human-friendly way. This name is also used when reporting system state changes that require administrator attention.&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Configure the Runtime Environment</title><link>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/install_guide/eucalyptus/configure_runtime/</guid><description>
+&lt;h1 id="configure-the-runtime-environment">Configure the Runtime Environment&lt;/h1>
+&lt;p>After Eucalyptus is installed and registered, perform the tasks in this section to configure the runtime environment.Now that you have installed Eucalyptus , you&amp;rsquo;re ready to begin configuring and using it.&lt;/p></description></item></channel></rss>

@@ -1,0 +1,39 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Backup and Recovery</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_recovery/</link><description>Recent content in Backup and Recovery on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/admin_guide/ops_oview/ops_recovery/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Back Up Eucalyptus Cloud Data</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_recovery/backup_euca/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_recovery/backup_euca/</guid><description>
+&lt;h1 id="back-up-cloud-data">Back Up Cloud Data&lt;/h1>
+&lt;p>This section explains what you need to back up and protect your cloud data.We recommend that you back up the following data:&lt;/p>
+&lt;ul>
+&lt;li>The cloud database: see&lt;/li>
+&lt;li>Object storage. For objects in Walrus, the frequency depends on current load. Use your own discretion to determine the backup plan and strategy. You must have Walrus running.&lt;/li>
+&lt;li>EBS volumes in each cluster (DAS and Overlay)&lt;/li>
+&lt;li>The configuration file for the cloud is stored on the CLC: .&lt;/li>
+&lt;li>Any configuration file for the cloud stored on any other host (UFS, CC, etc.): .&lt;/li>
+&lt;li>The cloud security credentials on all hosts (you already backed up the CLC keys as part of the database backup). Use the tar command: .&lt;/li>
+&lt;li>The CC and NC configuration files, stored on every CC and NC: .&lt;/li>
+&lt;li>Any Euca2ools (.ini) configuration files, which reside on any Euca2ools host machine. Files can be found in:&lt;/li>
+&lt;li>Management Console config files in should be backed up. Typical files:&lt;/li>
+&lt;li>Ensure you have your instances&amp;rsquo; so you can access the instances later.&lt;/li>
+&lt;li>and LVM snapshots
+Users are responsible for volume backups using EBS snapshots on their defined schedules.&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Recover Eucalyptus Cloud Data</title><link>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_recovery/euca_recover/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/ops_oview/ops_recovery/euca_recover/</guid><description>
+&lt;h1 id="recover-cloud-data">Recover Cloud Data&lt;/h1>
+&lt;p>This topic explains what to include when you recover your cloud.&lt;strong>Recovering Your Cloud Data&lt;/strong>&lt;/p>
+&lt;p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+When you recover your cloud data, you need to stop all services, recover the files, then start all services again.
+&lt;/div>
+We recommend that you recover the following data:&lt;/p>
+&lt;ul>
+&lt;li>The cloud database: see&lt;/li>
+&lt;li>Object storage. For objects in Walrus, the frequency depends on current load. Use your own discretion to determine the restore plan and strategy.&lt;/li>
+&lt;li>EBS volumes in each cluster (DAS and Overlay)&lt;/li>
+&lt;li>The configuration file for the cloud is stored on the CLC: .&lt;/li>
+&lt;li>Any configuration file for the cloud stored on any other host (UFS, CC, etc.): .&lt;/li>
+&lt;li>The cloud security credentials on all hosts (you already restored the CLC keys as part of the database restore). Use the tar command: .&lt;/li>
+&lt;li>The CC and NC configuration files, stored on every CC and NC: .&lt;/li>
+&lt;li>Any Euca2ools (.ini) configuration files, which reside on any Euca2ools host machine. Files in these directories:&lt;/li>
+&lt;li>Management Console config files you backed up from should be restored. Typical files:&lt;/li>
+&lt;li>Ensure you have your instances&amp;rsquo; so you can access the instances.&lt;/li>
+&lt;li>and LVM snapshots
+Users are responsible for volume restore using EBS snapshots.&lt;/li>
+&lt;/ul></description></item></channel></rss>

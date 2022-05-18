@@ -1,0 +1,42 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EucaStack – Change Network Configuration</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/change_net_config/</link><description>Recent content in Change Network Configuration on EucaStack</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/change_net_config/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Networking Configuration Options</title><link>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/change_net_config/configuration_options/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.eucastack.io/docs/admin_guide/managing_system/system_tasks/change_net_config/configuration_options/</guid><description>
+&lt;p>All network-related options specified in /etc/eucalyptus/eucalyptus.conf use the prefix VNET_. The most commonly used VNET options are described in the following table.&lt;/p>
+&lt;div class="alert alert-success" role="alert">
+&lt;h4 class="alert-heading">Note&lt;/h4>
+If you change the value of in the file, you must restart the Cluster Controller.
+&lt;/div>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">Option&lt;/th>
+&lt;th style="text-align:left">Description&lt;/th>
+&lt;th style="text-align:left">Component&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">VNET_BRIDGE&lt;/td>
+&lt;td style="text-align:left">This is the name of the bridge interface to which instances&amp;rsquo; network interfaces should attach. A physical interface that can reach the CC must be attached to this bridge. Common setting for KVM is br0.&lt;/td>
+&lt;td style="text-align:left">Node Controller&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">VNET_DHCPDAEMON&lt;/td>
+&lt;td style="text-align:left">The ISC DHCP executable to use. This is set to a distro-dependent value by packaging. The internal default is /usr/sbin/dhcpd3.&lt;/td>
+&lt;td style="text-align:left">Node Controller&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">VNET_MODE&lt;/td>
+&lt;td style="text-align:left">The networking mode in which to run. The same mode must be specified on all CCs and NCs in your cloud. Valid values: EDGE&lt;/td>
+&lt;td style="text-align:left">All CCs and NCs&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">VNET_PRIVINTERFACE&lt;/td>
+&lt;td style="text-align:left">The name of the network interface that is on the same network as the NCs. Default: eth0&lt;/td>
+&lt;td style="text-align:left">Node Controller&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">VNET_PUBINTERFACE&lt;/td>
+&lt;td style="text-align:left">This is the name of the network interface that is connected to the same network as the CC. Depending on the hypervisor&amp;rsquo;s configuration this may be a bridge or a physical interface that is attached to the bridge. Default: eth0&lt;/td>
+&lt;td style="text-align:left">Node Controller&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item></channel></rss>
