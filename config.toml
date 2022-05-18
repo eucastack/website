@@ -194,7 +194,7 @@ enable = false
   desc = "Development takes place here!"
 [[params.links.developer]]
   name = "Discord"
-  url = "https://discord.gg/A9UPtck4"
+  url = "https://discord.gg/rZfweFv2dM"
   icon = "fab fa-discord"
   desc = "Chat with other project developers"
 
