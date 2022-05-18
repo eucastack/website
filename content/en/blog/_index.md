@@ -1,9 +1,10 @@
 ---
-title: "Docsy Blog"
+title: "Blog"
 linkTitle: "Blog"
 menu:
   main:
     weight: 30
+    pre: <i class='fas fa-rss'></i>
 ---
 
 
