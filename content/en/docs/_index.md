@@ -9,17 +9,24 @@ menu:
     pre: <i class='fas fa-book'></i>
 ---
 
-{{% pageinfo %}}
-This is a placeholder page that shows you how to use this template site.
-{{% /pageinfo %}}
+## Overview
 
+Documentation for Eucalyptus Cloud, the open source software for building AWS-compatible private and hybrid clouds.
 
-This section is where the user documentation for your project lives - all the information your users need to understand and successfully use your project. 
+## Guides
 
-For large documentation sets we recommend adding content under the headings in this section, though if some or all of them don’t apply to your project feel free to remove them or add your own. You can see an example of a smaller Docsy documentation site in the [Docsy User Guide](https://docsy.dev/docs/), which lives in the [Docsy theme repo](https://github.com/google/docsy/tree/master/userguide) if you'd like to copy its docs section. 
+This documentation consists of the following guides:
 
-Other content such as marketing material, case studies, and community updates should live in the [About](/about/) and [Community](/community/) pages.
+## Resources
 
-Find out how to use the Docsy theme in the [Docsy User Guide](https://docsy.dev/docs/). You can learn more about how to organize your documentation (and how we organized this site) in [Organizing Your Content](https://docsy.dev/docs/best-practices/organizing-content/).
+Documentation for earlier releases can be found here:
 
+* [Documentation](https://docs.eucalyptus.cloud/eucalyptus/4.4.6/)
 
+Related guides:
+
+* [Console Guide](https://docs.eucalyptus.cloud/eucalyptus/4.4.6/index.html#shared/console_section.html)
+* [Euca2ools Guide](https://docs.eucalyptus.cloud/eucalyptus/4.4.6/index.html#shared/euca2ools_section.html)
+
+---
+Copyright for portions of this documentation are held by Ent. Services Development Corporation LP, 2017. All other copyright for this documentation is held by AppScale Systems, Inc 2020 
