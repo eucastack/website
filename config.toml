@@ -68,7 +68,7 @@ id = "UA-00000000-0"
 [languages]
 [languages.en]
 title = "EucaStack"
-description = "A Docsy example site"
+description = "An open source AWS-compatible hybrid cloud powered by Eucalyptus"
 languageName ="English"
 # Weight used for sorting.
 weight = 1
